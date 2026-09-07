@@ -1,0 +1,915 @@
+/* =========================================================
+   INTERACTIVE ENERGY JOURNEY
+   ========================================================= */
+
+.energyJourney {
+  position: relative;
+
+  overflow: hidden;
+
+  padding:
+    110px 5vw 100px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  color: #f5f8fa;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(66, 160, 255, 0.06),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #06131a,
+      #071119
+    );
+}
+
+.energyJourneyInner {
+  position: relative;
+  z-index: 2;
+
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+}
+
+/* Background glow */
+
+.energyJourneyGlow {
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  border-radius: 50%;
+
+  filter: blur(100px);
+
+  opacity: 0.14;
+
+  pointer-events: none;
+}
+
+.energyJourneyGlowOne {
+  top: 20%;
+  left: -180px;
+
+  background: #ffc157;
+}
+
+.energyJourneyGlowTwo {
+  right: -180px;
+  bottom: 5%;
+
+  background: #59bdff;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.energyJourneyHeader {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(280px, 0.65fr);
+
+  align-items: end;
+
+  gap: 60px;
+
+  margin-bottom: 62px;
+}
+
+.energyJourneyEyebrow {
+  margin-bottom: 14px;
+
+  color: var(--green-2);
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.energyJourneyHeader h2 {
+  margin: 0;
+
+  font-size:
+    clamp(
+      48px,
+      6vw,
+      92px
+    );
+
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.energyJourneyHeader h2 span {
+  color: var(--green-2);
+}
+
+.energyJourneyHeader > p {
+  margin: 0;
+
+  color: #91a5af;
+
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   SYSTEM SHELL
+   ========================================================= */
+
+.energySystemShell {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.45fr)
+    minmax(320px, 0.55fr);
+
+  gap: 20px;
+}
+
+.energySystemDiagram {
+  position: relative;
+
+  min-height: 500px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 90px
+    1fr 90px
+    1fr 90px
+    1fr;
+
+  align-items: center;
+
+  padding:
+    65px 32px 155px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 27, 36, 0.96),
+      rgba(5, 18, 25, 0.96)
+    );
+
+  box-shadow:
+    inset 0 1px
+      rgba(255, 255, 255, 0.025);
+}
+
+/* =========================================================
+   ENERGY NODE
+   ========================================================= */
+
+.energyNode {
+  position: relative;
+
+  min-width: 0;
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  border-radius: 22px;
+
+  color: #dbe6eb;
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.energyNode:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(145, 239, 91, 0.25);
+
+  background:
+    rgba(145, 239, 91, 0.035);
+}
+
+.energyNode.active {
+  transform:
+    translateY(-5px);
+
+  border-color:
+    rgba(145, 239, 91, 0.55);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(145, 239, 91, 0.085),
+      rgba(145, 239, 91, 0.025)
+    );
+
+  box-shadow:
+    0 20px 45px
+      rgba(0, 0, 0, 0.24),
+    0 0 30px
+      rgba(145, 239, 91, 0.06);
+}
+
+.energyNodeStep {
+  position: absolute;
+
+  top: 13px;
+  left: 14px;
+
+  color: #68808b;
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+}
+
+.energyNodeIcon {
+  width: 62px;
+  height: 62px;
+
+  display: grid;
+  place-items: center;
+
+  margin-bottom: 15px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.09);
+
+  border-radius: 50%;
+
+  color: var(--green-2);
+
+  background: #08161e;
+
+  font-size: 29px;
+
+  box-shadow:
+    0 0 24px
+      rgba(145, 239, 91, 0.07);
+}
+
+.energyNodeSun .energyNodeIcon {
+  color: #ffd376;
+
+  box-shadow:
+    0 0 30px
+      rgba(255, 193, 87, 0.11);
+}
+
+.energyNodeInverter .energyNodeIcon {
+  color: #80d2ff;
+
+  box-shadow:
+    0 0 30px
+      rgba(89, 189, 255, 0.1);
+}
+
+.energyPanelIcon {
+  transform: rotate(-4deg);
+}
+
+.energyNode strong {
+  font-size: 14px;
+  font-weight: 850;
+}
+
+.energyNode small {
+  margin-top: 5px;
+
+  color: #728791;
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   HORIZONTAL CONNECTORS
+   ========================================================= */
+
+.energyConnector {
+  position: relative;
+
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.energyConnectorLine {
+  position: absolute;
+
+  top: 50%;
+  left: 5px;
+  right: 5px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 193, 87, 0.15),
+      rgba(255, 193, 87, 0.7),
+      rgba(255, 193, 87, 0.15)
+    );
+}
+
+.energyConnectorAC
+  .energyConnectorLine {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(89, 189, 255, 0.14),
+      rgba(89, 189, 255, 0.7),
+      rgba(89, 189, 255, 0.14)
+    );
+}
+
+.energyPulse {
+  position: absolute;
+
+  z-index: 2;
+
+  top: calc(50% - 3px);
+  left: 5px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #ffd479;
+
+  box-shadow:
+    0 0 12px
+      rgba(255, 212, 121, 0.8);
+
+  animation:
+    energyFlowHorizontal
+    2.2s linear infinite;
+}
+
+.energyConnectorAC
+  .energyPulse {
+  background: #72ccff;
+
+  box-shadow:
+    0 0 12px
+      rgba(114, 204, 255, 0.85);
+}
+
+@keyframes energyFlowHorizontal {
+  from {
+    left: 5px;
+  }
+
+  to {
+    left:
+      calc(100% - 12px);
+  }
+}
+
+.energyConnector b {
+  position: relative;
+  z-index: 3;
+
+  margin-top: 26px;
+
+  color: #637b86;
+
+  font-size: 7px;
+
+  letter-spacing: 0.13em;
+}
+
+/* =========================================================
+   BATTERY BRANCH
+   ========================================================= */
+
+.energyBatteryBranch {
+  position: absolute;
+
+  top: 300px;
+  left: 50%;
+
+  width: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transform:
+    translateX(-50%);
+}
+
+.batteryVerticalLine {
+  position: relative;
+
+  width: 1px;
+  height: 78px;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(89, 189, 255, 0.15),
+      rgba(145, 239, 91, 0.7),
+      rgba(89, 189, 255, 0.15)
+    );
+}
+
+.batteryPulse {
+  position: absolute;
+
+  left: -3px;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background:
+    var(--green-2);
+
+  box-shadow:
+    0 0 13px
+      rgba(200, 255, 125, 0.85);
+}
+
+.batteryPulseDown {
+  top: 0;
+
+  animation:
+    batteryFlowDown
+    2.1s linear infinite;
+}
+
+.batteryPulseUp {
+  bottom: 0;
+
+  animation:
+    batteryFlowUp
+    2.1s linear infinite;
+}
+
+@keyframes batteryFlowDown {
+  from {
+    top: 0;
+  }
+
+  to {
+    top:
+      calc(100% - 7px);
+  }
+}
+
+@keyframes batteryFlowUp {
+  from {
+    bottom: 0;
+  }
+
+  to {
+    bottom:
+      calc(100% - 7px);
+  }
+}
+
+.batteryFlowLabel {
+  margin:
+    7px 0;
+
+  color: #708793;
+
+  font-size: 6px;
+  font-weight: 800;
+
+  letter-spacing: 0.11em;
+}
+
+.energyBatteryNode {
+  width: 180px;
+  min-height: 135px;
+}
+
+/* =========================================================
+   INFORMATION PANEL
+   ========================================================= */
+
+.energyInfoPanel {
+  min-height: 500px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 28px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0a1a23,
+      #07141b
+    );
+
+  animation:
+    energyInfoEnter
+    0.32s ease;
+}
+
+@keyframes energyInfoEnter {
+  from {
+    opacity: 0.4;
+
+    transform:
+      translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: none;
+  }
+}
+
+.energyInfoTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content:
+    space-between;
+
+  gap: 20px;
+}
+
+.energyInfoStep {
+  display: block;
+
+  color: var(--green-2);
+
+  font-size: 8px;
+  font-weight: 900;
+
+  letter-spacing: 0.15em;
+}
+
+.energyInfoCategory {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #788d97;
+
+  font-size: 10px;
+}
+
+.energyInfoIcon {
+  width: 52px;
+  height: 52px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.16);
+
+  border-radius: 50%;
+
+  color: var(--green-2);
+
+  background:
+    rgba(145, 239, 91, 0.04);
+
+  font-size: 22px;
+}
+
+.energyInfoPanel h3 {
+  margin:
+    55px 0 15px;
+
+  max-width: 500px;
+
+  font-size:
+    clamp(
+      28px,
+      2.5vw,
+      42px
+    );
+
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.energyInfoPanel > p {
+  margin: 0;
+
+  color: #91a5af;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.energyInfoStats {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 8px;
+
+  margin-top: auto;
+
+  padding-top: 35px;
+}
+
+.energyInfoStats > div {
+  padding: 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.065);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.energyInfoStats small {
+  display: block;
+
+  color: #607782;
+
+  font-size: 7px;
+
+  letter-spacing: 0.1em;
+}
+
+.energyInfoStats strong {
+  display: block;
+
+  margin-top: 6px;
+
+  color: #dce7eb;
+
+  font-size: 10px;
+}
+
+.energyInfoHint {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 17px;
+
+  color: #647b86;
+
+  font-size: 8px;
+}
+
+.energyInfoHint span {
+  width: 22px;
+  height: 1px;
+
+  background: var(--green-2);
+}
+
+/* =========================================================
+   BOTTOM SUMMARY
+   ========================================================= */
+
+.energyJourneySummary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  margin-top: 20px;
+
+  padding:
+    18px 24px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.06);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.energyJourneySummary div {
+  text-align: center;
+}
+
+.energyJourneySummary small {
+  display: block;
+
+  color: #637984;
+
+  font-size: 6px;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+}
+
+.energyJourneySummary strong {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #dce6ea;
+
+  font-size: 10px;
+}
+
+.energySummaryArrow {
+  color: var(--green-2);
+
+  opacity: 0.65;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .energySystemShell {
+    grid-template-columns:
+      1fr;
+  }
+
+  .energyInfoPanel {
+    min-height: 350px;
+  }
+
+  .energySystemDiagram {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 900px) {
+  .energyJourneyHeader {
+    grid-template-columns:
+      1fr;
+
+    gap: 20px;
+  }
+
+  .energySystemDiagram {
+    min-height: auto;
+
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+
+    padding: 24px;
+  }
+
+  .energyConnector {
+    width: 44px;
+    height: 54px;
+
+    margin: 0 auto;
+
+    transform:
+      rotate(90deg);
+  }
+
+  .energyNode {
+    width: min(420px, 100%);
+
+    min-height: 150px;
+
+    margin: 0 auto;
+  }
+
+  .energyBatteryBranch {
+    position: relative;
+
+    top: auto;
+    left: auto;
+
+    width: 100%;
+
+    margin:
+      8px auto 0;
+
+    transform: none;
+  }
+
+  .batteryVerticalLine {
+    height: 45px;
+  }
+
+  .energyBatteryNode {
+    width:
+      min(420px, 100%);
+  }
+
+  .energyJourneySummary {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 720px) {
+  .energyJourney {
+    padding:
+      80px 5vw 70px;
+  }
+
+  .energyJourneyHeader {
+    margin-bottom: 35px;
+  }
+
+  .energyJourneyHeader h2 {
+    font-size:
+      clamp(
+        42px,
+        13vw,
+        62px
+      );
+  }
+
+  .energySystemDiagram,
+  .energyInfoPanel {
+    border-radius: 20px;
+  }
+
+  .energyInfoPanel {
+    padding: 22px;
+  }
+
+  .energyInfoPanel h3 {
+    margin-top: 35px;
+  }
+
+  .energyInfoStats {
+    grid-template-columns: 1fr;
+  }
+
+  .energyJourneySummary {
+    gap: 12px;
+  }
+}
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .energyPulse,
+  .batteryPulse {
+    animation: none;
+  }
+
+  .energyNode,
+  .energyInfoPanel {
+    transition: none;
+  }
+}
