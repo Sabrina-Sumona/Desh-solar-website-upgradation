@@ -13,6 +13,8 @@ import FeaturedProjects from "@/components/home/FeaturedProjects";
 import "@/styles/home-featured-projects.css";
 import TechnologyStack from "@/components/home/TechnologyStack";
 import "@/styles/home-technology-stack.css";
+import EngineeringLabPreview from "@/components/home/EngineeringLabPreview";
+import "@/styles/home-engineering-lab.css";
 
 export default function HomePage() {
   return (
@@ -30,6 +32,8 @@ export default function HomePage() {
       <FeaturedProjects />
 
       <TechnologyStack />
+
+      <EngineeringLabPreview />
     </>
   );
 }
