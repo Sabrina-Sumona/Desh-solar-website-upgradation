@@ -35,12 +35,17 @@
   position: relative;
   z-index: 2;
 
-  width: min(1500px, 100%);
+  width: min(
+    1500px,
+    100%
+  );
 
   margin: 0 auto;
 }
 
-/* Background glow */
+/* =========================================================
+   BACKGROUND GLOW
+   ========================================================= */
 
 .energyJourneyGlow {
   position: absolute;
@@ -50,7 +55,8 @@
 
   border-radius: 50%;
 
-  filter: blur(100px);
+  filter:
+    blur(100px);
 
   opacity: 0.14;
 
@@ -61,14 +67,16 @@
   top: 20%;
   left: -180px;
 
-  background: #ffc157;
+  background:
+    #ffc157;
 }
 
 .energyJourneyGlowTwo {
   right: -180px;
   bottom: 5%;
 
-  background: #59bdff;
+  background:
+    #59bdff;
 }
 
 /* =========================================================
@@ -79,8 +87,14 @@
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1.35fr)
-    minmax(280px, 0.65fr);
+    minmax(
+      0,
+      1.35fr
+    )
+    minmax(
+      280px,
+      0.65fr
+    );
 
   align-items: end;
 
@@ -92,13 +106,17 @@
 .energyJourneyEyebrow {
   margin-bottom: 14px;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
   font-size: 10px;
   font-weight: 900;
 
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing:
+    0.18em;
+
+  text-transform:
+    uppercase;
 }
 
 .energyJourneyHeader h2 {
@@ -112,11 +130,14 @@
     );
 
   line-height: 0.94;
-  letter-spacing: -0.055em;
+
+  letter-spacing:
+    -0.055em;
 }
 
 .energyJourneyHeader h2 span {
-  color: var(--green-2);
+  color:
+    var(--green-2);
 }
 
 .energyJourneyHeader > p {
@@ -125,6 +146,7 @@
   color: #91a5af;
 
   font-size: 15px;
+
   line-height: 1.7;
 }
 
@@ -136,8 +158,14 @@
   display: grid;
 
   grid-template-columns:
-    minmax(0, 1.45fr)
-    minmax(320px, 0.55fr);
+    minmax(
+      0,
+      1.45fr
+    )
+    minmax(
+      320px,
+      0.55fr
+    );
 
   gap: 20px;
 }
@@ -145,7 +173,11 @@
 .energySystemDiagram {
   position: relative;
 
-  min-height: 500px;
+  /*
+   * Enough space for
+   * Inverter ↕ Battery.
+   */
+  min-height: 590px;
 
   display: grid;
 
@@ -158,24 +190,46 @@
   align-items: center;
 
   padding:
-    65px 32px 155px;
+    65px 32px 210px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.075);
+    rgba(
+      255,
+      255,
+      255,
+      0.075
+    );
 
-  border-radius: 28px;
+  border-radius:
+    28px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(10, 27, 36, 0.96),
-      rgba(5, 18, 25, 0.96)
+      rgba(
+        10,
+        27,
+        36,
+        0.96
+      ),
+      rgba(
+        5,
+        18,
+        25,
+        0.96
+      )
     );
 
   box-shadow:
-    inset 0 1px
-      rgba(255, 255, 255, 0.025);
+    inset
+    0 1px
+    rgba(
+      255,
+      255,
+      255,
+      0.025
+    );
 }
 
 /* =========================================================
@@ -189,22 +243,37 @@
   min-height: 190px;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
 
   padding: 20px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.08);
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
 
-  border-radius: 22px;
+  border-radius:
+    22px;
 
-  color: #dbe6eb;
+  color:
+    #dbe6eb;
 
   background:
-    rgba(255, 255, 255, 0.025);
+    rgba(
+      255,
+      255,
+      255,
+      0.025
+    );
 
   cursor: pointer;
 
@@ -220,10 +289,20 @@
     translateY(-4px);
 
   border-color:
-    rgba(145, 239, 91, 0.25);
+    rgba(
+      145,
+      239,
+      91,
+      0.25
+    );
 
   background:
-    rgba(145, 239, 91, 0.035);
+    rgba(
+      145,
+      239,
+      91,
+      0.035
+    );
 }
 
 .energyNode.active {
@@ -231,20 +310,45 @@
     translateY(-5px);
 
   border-color:
-    rgba(145, 239, 91, 0.55);
+    rgba(
+      145,
+      239,
+      91,
+      0.55
+    );
 
   background:
     linear-gradient(
       180deg,
-      rgba(145, 239, 91, 0.085),
-      rgba(145, 239, 91, 0.025)
+      rgba(
+        145,
+        239,
+        91,
+        0.085
+      ),
+      rgba(
+        145,
+        239,
+        91,
+        0.025
+      )
     );
 
   box-shadow:
     0 20px 45px
-      rgba(0, 0, 0, 0.24),
+      rgba(
+        0,
+        0,
+        0,
+        0.24
+      ),
     0 0 30px
-      rgba(145, 239, 91, 0.06);
+      rgba(
+        145,
+        239,
+        91,
+        0.06
+      );
 }
 
 .energyNodeStep {
@@ -253,12 +357,15 @@
   top: 13px;
   left: 14px;
 
-  color: #68808b;
+  color:
+    #68808b;
 
   font-size: 8px;
+
   font-weight: 900;
 
-  letter-spacing: 0.1em;
+  letter-spacing:
+    0.1em;
 }
 
 .energyNodeIcon {
@@ -266,62 +373,92 @@
   height: 62px;
 
   display: grid;
+
   place-items: center;
 
   margin-bottom: 15px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.09);
+    rgba(
+      255,
+      255,
+      255,
+      0.09
+    );
 
   border-radius: 50%;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
-  background: #08161e;
+  background:
+    #08161e;
 
   font-size: 29px;
 
   box-shadow:
     0 0 24px
-      rgba(145, 239, 91, 0.07);
+      rgba(
+        145,
+        239,
+        91,
+        0.07
+      );
 }
 
-.energyNodeSun .energyNodeIcon {
-  color: #ffd376;
+.energyNodeSun
+.energyNodeIcon {
+  color:
+    #ffd376;
 
   box-shadow:
     0 0 30px
-      rgba(255, 193, 87, 0.11);
+      rgba(
+        255,
+        193,
+        87,
+        0.11
+      );
 }
 
-.energyNodeInverter .energyNodeIcon {
-  color: #80d2ff;
+.energyNodeInverter
+.energyNodeIcon {
+  color:
+    #80d2ff;
 
   box-shadow:
     0 0 30px
-      rgba(89, 189, 255, 0.1);
+      rgba(
+        89,
+        189,
+        255,
+        0.1
+      );
 }
 
 .energyPanelIcon {
-  transform: rotate(-4deg);
+  transform:
+    rotate(-4deg);
 }
 
 .energyNode strong {
   font-size: 14px;
+
   font-weight: 850;
 }
 
 .energyNode small {
   margin-top: 5px;
 
-  color: #728791;
+  color:
+    #728791;
 
   font-size: 9px;
 }
 
 /* =========================================================
-   HORIZONTAL CONNECTORS
+   HORIZONTAL CONNECTIONS
    ========================================================= */
 
 .energyConnector {
@@ -330,7 +467,9 @@
   height: 44px;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 }
 
@@ -338,6 +477,7 @@
   position: absolute;
 
   top: 50%;
+
   left: 5px;
   right: 5px;
 
@@ -346,20 +486,50 @@
   background:
     linear-gradient(
       90deg,
-      rgba(255, 193, 87, 0.15),
-      rgba(255, 193, 87, 0.7),
-      rgba(255, 193, 87, 0.15)
+      rgba(
+        255,
+        193,
+        87,
+        0.15
+      ),
+      rgba(
+        255,
+        193,
+        87,
+        0.7
+      ),
+      rgba(
+        255,
+        193,
+        87,
+        0.15
+      )
     );
 }
 
 .energyConnectorAC
-  .energyConnectorLine {
+.energyConnectorLine {
   background:
     linear-gradient(
       90deg,
-      rgba(89, 189, 255, 0.14),
-      rgba(89, 189, 255, 0.7),
-      rgba(89, 189, 255, 0.14)
+      rgba(
+        89,
+        189,
+        255,
+        0.14
+      ),
+      rgba(
+        89,
+        189,
+        255,
+        0.7
+      ),
+      rgba(
+        89,
+        189,
+        255,
+        0.14
+      )
     );
 }
 
@@ -368,7 +538,11 @@
 
   z-index: 2;
 
-  top: calc(50% - 3px);
+  top:
+    calc(
+      50% - 3px
+    );
+
   left: 5px;
 
   width: 7px;
@@ -376,24 +550,37 @@
 
   border-radius: 50%;
 
-  background: #ffd479;
+  background:
+    #ffd479;
 
   box-shadow:
     0 0 12px
-      rgba(255, 212, 121, 0.8);
+      rgba(
+        255,
+        212,
+        121,
+        0.8
+      );
 
   animation:
     energyFlowHorizontal
-    2.2s linear infinite;
+    2.2s linear
+    infinite;
 }
 
 .energyConnectorAC
-  .energyPulse {
-  background: #72ccff;
+.energyPulse {
+  background:
+    #72ccff;
 
   box-shadow:
     0 0 12px
-      rgba(114, 204, 255, 0.85);
+      rgba(
+        114,
+        204,
+        255,
+        0.85
+      );
 }
 
 @keyframes energyFlowHorizontal {
@@ -403,37 +590,49 @@
 
   to {
     left:
-      calc(100% - 12px);
+      calc(
+        100% - 12px
+      );
   }
 }
 
 .energyConnector b {
   position: relative;
+
   z-index: 3;
 
   margin-top: 26px;
 
-  color: #637b86;
+  color:
+    #637b86;
 
   font-size: 7px;
 
-  letter-spacing: 0.13em;
+  letter-spacing:
+    0.13em;
 }
 
 /* =========================================================
-   BATTERY BRANCH
+   INVERTER ↕ BATTERY BRANCH
    ========================================================= */
 
 .energyBatteryBranch {
   position: absolute;
 
   top: 300px;
-  left: 50%;
+
+  /*
+   * Directly under
+   * Inverter.
+   */
+  left: 63%;
 
   width: 190px;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
 
   transform:
@@ -451,9 +650,24 @@
   background:
     linear-gradient(
       to bottom,
-      rgba(89, 189, 255, 0.15),
-      rgba(145, 239, 91, 0.7),
-      rgba(89, 189, 255, 0.15)
+      rgba(
+        89,
+        189,
+        255,
+        0.15
+      ),
+      rgba(
+        145,
+        239,
+        91,
+        0.7
+      ),
+      rgba(
+        89,
+        189,
+        255,
+        0.15
+      )
     );
 }
 
@@ -472,7 +686,12 @@
 
   box-shadow:
     0 0 13px
-      rgba(200, 255, 125, 0.85);
+      rgba(
+        200,
+        255,
+        125,
+        0.85
+      );
 }
 
 .batteryPulseDown {
@@ -480,7 +699,8 @@
 
   animation:
     batteryFlowDown
-    2.1s linear infinite;
+    2.1s linear
+    infinite;
 }
 
 .batteryPulseUp {
@@ -488,7 +708,8 @@
 
   animation:
     batteryFlowUp
-    2.1s linear infinite;
+    2.1s linear
+    infinite;
 }
 
 @keyframes batteryFlowDown {
@@ -498,7 +719,9 @@
 
   to {
     top:
-      calc(100% - 7px);
+      calc(
+        100% - 7px
+      );
   }
 }
 
@@ -509,7 +732,9 @@
 
   to {
     bottom:
-      calc(100% - 7px);
+      calc(
+        100% - 7px
+      );
   }
 }
 
@@ -517,16 +742,20 @@
   margin:
     7px 0;
 
-  color: #708793;
+  color:
+    #708793;
 
   font-size: 6px;
+
   font-weight: 800;
 
-  letter-spacing: 0.11em;
+  letter-spacing:
+    0.11em;
 }
 
 .energyBatteryNode {
   width: 180px;
+
   min-height: 135px;
 }
 
@@ -538,15 +767,22 @@
   min-height: 500px;
 
   display: flex;
+
   flex-direction: column;
 
   padding: 28px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.075);
+    rgba(
+      255,
+      255,
+      255,
+      0.075
+    );
 
-  border-radius: 28px;
+  border-radius:
+    28px;
 
   background:
     linear-gradient(
@@ -577,7 +813,10 @@
 
 .energyInfoTop {
   display: flex;
-  align-items: flex-start;
+
+  align-items:
+    flex-start;
+
   justify-content:
     space-between;
 
@@ -587,12 +826,15 @@
 .energyInfoStep {
   display: block;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
   font-size: 8px;
+
   font-weight: 900;
 
-  letter-spacing: 0.15em;
+  letter-spacing:
+    0.15em;
 }
 
 .energyInfoCategory {
@@ -600,7 +842,8 @@
 
   margin-top: 7px;
 
-  color: #788d97;
+  color:
+    #788d97;
 
   font-size: 10px;
 }
@@ -610,27 +853,39 @@
   height: 52px;
 
   display: grid;
+
   place-items: center;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.16);
+    rgba(
+      145,
+      239,
+      91,
+      0.16
+    );
 
   border-radius: 50%;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
   background:
-    rgba(145, 239, 91, 0.04);
+    rgba(
+      145,
+      239,
+      91,
+      0.04
+    );
 
   font-size: 22px;
 }
 
 .energyInfoPanel h3 {
+  max-width: 500px;
+
   margin:
     55px 0 15px;
-
-  max-width: 500px;
 
   font-size:
     clamp(
@@ -640,15 +895,19 @@
     );
 
   line-height: 1;
-  letter-spacing: -0.04em;
+
+  letter-spacing:
+    -0.04em;
 }
 
 .energyInfoPanel > p {
   margin: 0;
 
-  color: #91a5af;
+  color:
+    #91a5af;
 
   font-size: 14px;
+
   line-height: 1.7;
 }
 
@@ -670,22 +929,35 @@
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.065);
+    rgba(
+      255,
+      255,
+      255,
+      0.065
+    );
 
-  border-radius: 14px;
+  border-radius:
+    14px;
 
   background:
-    rgba(255, 255, 255, 0.018);
+    rgba(
+      255,
+      255,
+      255,
+      0.018
+    );
 }
 
 .energyInfoStats small {
   display: block;
 
-  color: #607782;
+  color:
+    #607782;
 
   font-size: 7px;
 
-  letter-spacing: 0.1em;
+  letter-spacing:
+    0.1em;
 }
 
 .energyInfoStats strong {
@@ -693,20 +965,23 @@
 
   margin-top: 6px;
 
-  color: #dce7eb;
+  color:
+    #dce7eb;
 
   font-size: 10px;
 }
 
 .energyInfoHint {
   display: flex;
+
   align-items: center;
 
   gap: 9px;
 
   margin-top: 17px;
 
-  color: #647b86;
+  color:
+    #647b86;
 
   font-size: 8px;
 }
@@ -715,71 +990,163 @@
   width: 22px;
   height: 1px;
 
-  background: var(--green-2);
+  background:
+    var(--green-2);
 }
 
 /* =========================================================
    BOTTOM SUMMARY
+
+   Sun → Panel → Inverter → Loads
+                    ↕
+                 Battery
    ========================================================= */
 
 .energyJourneySummary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
 
-  gap: 20px;
+  min-height: 112px;
+
+  display: flex;
+
+  justify-content: center;
 
   margin-top: 20px;
 
   padding:
-    18px 24px;
+    18px 24px 20px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.06);
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
 
   border-radius: 18px;
 
   background:
-    rgba(255, 255, 255, 0.018);
+    rgba(
+      255,
+      255,
+      255,
+      0.018
+    );
 }
 
-.energyJourneySummary div {
+.energySummaryMainFlow {
+  display: flex;
+
+  align-items:
+    flex-start;
+
+  justify-content:
+    center;
+
+  gap: 22px;
+}
+
+.energySummaryItem {
+  position: relative;
+
+  min-width: 92px;
+
   text-align: center;
 }
 
-.energyJourneySummary small {
+.energySummaryItem small,
+.energySummaryBattery small {
   display: block;
 
-  color: #637984;
+  color:
+    #637984;
 
   font-size: 6px;
+
   font-weight: 900;
 
-  letter-spacing: 0.12em;
+  letter-spacing:
+    0.12em;
 }
 
-.energyJourneySummary strong {
+.energySummaryItem strong,
+.energySummaryBattery strong {
   display: block;
 
   margin-top: 4px;
 
-  color: #dce6ea;
+  color:
+    #dce6ea;
 
   font-size: 10px;
 }
 
 .energySummaryArrow {
-  color: var(--green-2);
+  margin-top: 14px;
 
-  opacity: 0.65;
+  color:
+    var(--green-2);
+
+  font-size: 17px;
+
+  line-height: 1;
+
+  opacity: 0.75;
+}
+
+/* Inverter becomes
+   branch origin */
+
+.energySummaryInverter {
+  position: relative;
+}
+
+.energySummaryBatteryBranch {
+  position: absolute;
+
+  top: 32px;
+  left: 50%;
+
+  display: flex;
+
+  flex-direction:
+    column;
+
+  align-items:
+    center;
+
+  transform:
+    translateX(-50%);
+}
+
+.energySummaryVerticalArrow {
+  margin-bottom: 3px;
+
+  color:
+    var(--green-2);
+
+  font-size: 17px;
+
+  line-height: 1;
+
+  opacity: 0.8;
+}
+
+.energySummaryBattery {
+  min-width: 80px;
+
+  text-align: center;
 }
 
 /* =========================================================
-   RESPONSIVE
+   LAPTOP / SMALL DESKTOP
    ========================================================= */
 
-@media (max-width: 1180px) {
+@media (
+  max-width: 1180px
+) {
   .energySystemShell {
     grid-template-columns:
       1fr;
@@ -790,11 +1157,24 @@
   }
 
   .energySystemDiagram {
-    min-height: 520px;
+    min-height: 590px;
+
+    padding-bottom:
+      210px;
+  }
+
+  .energyBatteryBranch {
+    left: 63%;
   }
 }
 
-@media (max-width: 900px) {
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (
+  max-width: 900px
+) {
   .energyJourneyHeader {
     grid-template-columns:
       1fr;
@@ -805,7 +1185,8 @@
   .energySystemDiagram {
     min-height: auto;
 
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
     gap: 12px;
 
@@ -816,18 +1197,25 @@
     width: 44px;
     height: 54px;
 
-    margin: 0 auto;
+    margin:
+      0 auto;
 
     transform:
       rotate(90deg);
   }
 
   .energyNode {
-    width: min(420px, 100%);
+    width:
+      min(
+        420px,
+        100%
+      );
 
-    min-height: 150px;
+    min-height:
+      150px;
 
-    margin: 0 auto;
+    margin:
+      0 auto;
   }
 
   .energyBatteryBranch {
@@ -850,22 +1238,47 @@
 
   .energyBatteryNode {
     width:
-      min(420px, 100%);
+      min(
+        420px,
+        100%
+      );
   }
 
+  /* Summary stays
+     diagram-like */
+
   .energyJourneySummary {
-    flex-wrap: wrap;
+    min-height:
+      108px;
+
+    overflow-x: auto;
+
+    justify-content:
+      flex-start;
+  }
+
+  .energySummaryMainFlow {
+    min-width: 430px;
+
+    margin: 0 auto;
   }
 }
 
-@media (max-width: 720px) {
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+  max-width: 720px
+) {
   .energyJourney {
     padding:
       80px 5vw 70px;
   }
 
   .energyJourneyHeader {
-    margin-bottom: 35px;
+    margin-bottom:
+      35px;
   }
 
   .energyJourneyHeader h2 {
@@ -879,25 +1292,45 @@
 
   .energySystemDiagram,
   .energyInfoPanel {
-    border-radius: 20px;
+    border-radius:
+      20px;
   }
 
   .energyInfoPanel {
-    padding: 22px;
+    padding:
+      22px;
   }
 
   .energyInfoPanel h3 {
-    margin-top: 35px;
+    margin-top:
+      35px;
   }
 
   .energyInfoStats {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
   }
 
   .energyJourneySummary {
-    gap: 12px;
+    padding:
+      16px 18px 20px;
+
+    border-radius:
+      16px;
+  }
+
+  .energySummaryMainFlow {
+    gap: 14px;
+  }
+
+  .energySummaryItem {
+    min-width: 78px;
   }
 }
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
 @media (
   prefers-reduced-motion:

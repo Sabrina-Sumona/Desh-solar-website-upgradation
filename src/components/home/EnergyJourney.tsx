@@ -26,66 +26,86 @@ const ENERGY_NODES: EnergyNode[] = [
     step: "01",
     icon: "☀",
     shortLabel: "Sun",
-    title: "Solar energy begins with sunlight.",
+    title:
+      "Solar energy begins with sunlight.",
     description:
       "Sunlight reaches the solar array and provides the renewable energy source that starts the entire system.",
-    energy: "Solar Irradiance",
-    role: "Primary Energy Source",
+    energy:
+      "Solar Irradiance",
+    role:
+      "Primary Energy Source",
   },
+
   {
     id: "panel",
     step: "02",
     icon: "▦",
-    shortLabel: "Panel",
-    title: "Solar panels convert sunlight into DC electricity.",
+    shortLabel: "Solar Panel",
+    title:
+      "Solar panels convert sunlight into DC electricity.",
     description:
       "Photovoltaic modules capture sunlight and convert it into direct-current electrical energy that can be managed by the solar system.",
-    energy: "DC Electricity",
-    role: "Energy Generation",
+    energy:
+      "DC Electricity",
+    role:
+      "Energy Generation",
   },
+
   {
     id: "inverter",
     step: "03",
     icon: "↯",
     shortLabel: "Inverter",
-    title: "The inverter manages and converts the energy.",
+    title:
+      "The inverter manages and converts the energy.",
     description:
       "The inverter converts solar DC power into usable AC electricity while coordinating energy between solar generation, battery storage and electrical loads.",
-    energy: "DC → AC",
-    role: "Energy Management",
+    energy:
+      "DC → AC",
+    role:
+      "Energy Management",
   },
+
   {
     id: "battery",
     step: "04",
     icon: "▣",
     shortLabel: "Battery",
-    title: "Battery storage keeps energy available for later.",
+    title:
+      "Battery storage keeps energy available for later.",
     description:
-      "When the system produces surplus energy, the battery can store it. When additional power is required, stored energy can flow back through the inverter.",
-    energy: "Charge ↔ Discharge",
-    role: "Energy Storage",
+      "When the system produces surplus energy, the battery can store it. When additional power is required, stored energy flows back through the inverter before being supplied to connected loads.",
+    energy:
+      "Charge ↔ Discharge",
+    role:
+      "Energy Storage",
   },
+
   {
     id: "loads",
     step: "05",
     icon: "⌂",
     shortLabel: "Loads",
-    title: "Usable electricity reaches everyday electrical loads.",
+    title:
+      "Usable electricity reaches everyday electrical loads.",
     description:
-      "The final usable electricity can power lighting, fans, appliances, electronics, office equipment and other connected loads.",
-    energy: "AC Electricity",
-    role: "Energy Consumption",
+      "The inverter supplies usable AC electricity to lighting, fans, appliances, electronics, office equipment and other connected electrical loads.",
+    energy:
+      "AC Electricity",
+    role:
+      "Energy Consumption",
   },
 ];
 
 export default function EnergyJourney() {
   const [activeNode, setActiveNode] =
-    useState<EnergyNodeId>("inverter");
+    useState<EnergyNodeId>("sun");
 
   const selectedNode =
     ENERGY_NODES.find(
-      (node) => node.id === activeNode
-    ) ?? ENERGY_NODES[2];
+      (node) =>
+        node.id === activeNode
+    ) ?? ENERGY_NODES[0];
 
   return (
     <section
@@ -96,9 +116,9 @@ export default function EnergyJourney() {
       <div className="energyJourneyGlow energyJourneyGlowTwo" />
 
       <div className="energyJourneyInner">
-        {/* ==================================================
-            SECTION INTRO
-            ================================================== */}
+        {/* ================================================
+            SECTION HEADER
+            ================================================ */}
 
         <div className="energyJourneyHeader">
           <div>
@@ -110,7 +130,9 @@ export default function EnergyJourney() {
               See how energy moves
               <br />
               through the{" "}
-              <span>system.</span>
+              <span>
+                system.
+              </span>
             </h2>
           </div>
 
@@ -123,11 +145,15 @@ export default function EnergyJourney() {
           </p>
         </div>
 
-        {/* ==================================================
-            SYSTEM DIAGRAM
-            ================================================== */}
+        {/* ================================================
+            MAIN SYSTEM + INFORMATION
+            ================================================ */}
 
         <div className="energySystemShell">
+          {/* ==============================================
+              MAIN SYSTEM DIAGRAM
+              ============================================== */}
+
           <div className="energySystemDiagram">
             {/* SUN */}
 
@@ -153,19 +179,25 @@ export default function EnergyJourney() {
                 ☀
               </span>
 
-              <strong>Sun</strong>
+              <strong>
+                Sun
+              </strong>
 
               <small>
                 Renewable source
               </small>
             </button>
 
-            {/* FLOW 1 */}
+            {/* SUN → PANEL */}
 
             <div className="energyConnector">
               <span className="energyConnectorLine" />
+
               <span className="energyPulse" />
-              <b>LIGHT</b>
+
+              <b>
+                LIGHT
+              </b>
             </div>
 
             {/* PANEL */}
@@ -178,7 +210,9 @@ export default function EnergyJourney() {
                   : ""
               }`}
               onClick={() =>
-                setActiveNode("panel")
+                setActiveNode(
+                  "panel"
+                )
               }
               aria-pressed={
                 activeNode === "panel"
@@ -201,12 +235,16 @@ export default function EnergyJourney() {
               </small>
             </button>
 
-            {/* FLOW 2 */}
+            {/* PANEL → INVERTER */}
 
             <div className="energyConnector">
               <span className="energyConnectorLine" />
+
               <span className="energyPulse" />
-              <b>DC</b>
+
+              <b>
+                DC
+              </b>
             </div>
 
             {/* INVERTER */}
@@ -214,7 +252,8 @@ export default function EnergyJourney() {
             <button
               type="button"
               className={`energyNode energyNodeInverter ${
-                activeNode === "inverter"
+                activeNode ===
+                "inverter"
                   ? "active"
                   : ""
               }`}
@@ -245,12 +284,16 @@ export default function EnergyJourney() {
               </small>
             </button>
 
-            {/* FLOW 3 */}
+            {/* INVERTER → LOADS */}
 
             <div className="energyConnector energyConnectorAC">
               <span className="energyConnectorLine" />
+
               <span className="energyPulse" />
-              <b>AC</b>
+
+              <b>
+                AC
+              </b>
             </div>
 
             {/* LOADS */}
@@ -279,18 +322,23 @@ export default function EnergyJourney() {
                 ⌂
               </span>
 
-              <strong>Loads</strong>
+              <strong>
+                Loads
+              </strong>
 
               <small>
                 Everyday energy
               </small>
             </button>
 
-            {/* BATTERY BRANCH */}
+            {/* ============================================
+                INVERTER ↕ BATTERY
+                ============================================ */}
 
             <div className="energyBatteryBranch">
               <div className="batteryVerticalLine">
                 <span className="batteryPulse batteryPulseDown" />
+
                 <span className="batteryPulse batteryPulseUp" />
               </div>
 
@@ -335,19 +383,23 @@ export default function EnergyJourney() {
             </div>
           </div>
 
-          {/* ==================================================
+          {/* ==============================================
               DYNAMIC INFORMATION PANEL
-              ================================================== */}
+              ============================================== */}
 
           <div
             className="energyInfoPanel"
-            key={selectedNode.id}
+            key={
+              selectedNode.id
+            }
           >
             <div className="energyInfoTop">
               <div>
                 <span className="energyInfoStep">
                   STEP{" "}
-                  {selectedNode.step}
+                  {
+                    selectedNode.step
+                  }
                 </span>
 
                 <span className="energyInfoCategory">
@@ -358,12 +410,16 @@ export default function EnergyJourney() {
               </div>
 
               <span className="energyInfoIcon">
-                {selectedNode.icon}
+                {
+                  selectedNode.icon
+                }
               </span>
             </div>
 
             <h3>
-              {selectedNode.title}
+              {
+                selectedNode.title
+              }
             </h3>
 
             <p>
@@ -391,7 +447,9 @@ export default function EnergyJourney() {
                 </small>
 
                 <strong>
-                  {selectedNode.role}
+                  {
+                    selectedNode.role
+                  }
                 </strong>
               </div>
             </div>
@@ -406,61 +464,79 @@ export default function EnergyJourney() {
           </div>
         </div>
 
-        {/* ==================================================
-            FLOW SUMMARY
-            ================================================== */}
+        {/* ================================================
+            MINI SYSTEM SUMMARY
+
+            Same architecture as above:
+
+            Sun → Panel → Inverter → Loads
+                            ↕
+                         Battery
+            ================================================ */}
 
         <div className="energyJourneySummary">
-          <div>
-            <small>
-              GENERATION
-            </small>
+          <div className="energySummaryMainFlow">
+            {/* GENERATION */}
 
-            <strong>
-              Sun → Panel
-            </strong>
-          </div>
+            <div className="energySummaryItem">
+              <small>
+                GENERATION
+              </small>
 
-          <span className="energySummaryArrow">
-            →
-          </span>
+              <strong>
+                Sun → Panel
+              </strong>
+            </div>
 
-          <div>
-            <small>
-              MANAGEMENT
-            </small>
+            <span className="energySummaryArrow">
+              →
+            </span>
 
-            <strong>
-              Inverter
-            </strong>
-          </div>
+            {/* MANAGEMENT / INVERTER */}
 
-          <span className="energySummaryArrow">
-            ↕
-          </span>
+            <div className="energySummaryItem energySummaryInverter">
+              <small>
+                MANAGEMENT
+              </small>
 
-          <div>
-            <small>
-              STORAGE
-            </small>
+              <strong>
+                Inverter
+              </strong>
 
-            <strong>
-              Battery
-            </strong>
-          </div>
+              {/* Battery branch */}
 
-          <span className="energySummaryArrow">
-            →
-          </span>
+              <div className="energySummaryBatteryBranch">
+                <span className="energySummaryVerticalArrow">
+                  ↕
+                </span>
 
-          <div>
-            <small>
-              CONSUMPTION
-            </small>
+                <div className="energySummaryBattery">
+                  <small>
+                    STORAGE
+                  </small>
 
-            <strong>
-              Loads
-            </strong>
+                  <strong>
+                    Battery
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <span className="energySummaryArrow">
+              →
+            </span>
+
+            {/* LOADS */}
+
+            <div className="energySummaryItem">
+              <small>
+                CONSUMPTION
+              </small>
+
+              <strong>
+                Loads
+              </strong>
+            </div>
           </div>
         </div>
       </div>
