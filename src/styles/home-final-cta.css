@@ -1,0 +1,429 @@
+/* =========================================================
+   FINAL HOMEPAGE CTA
+   ========================================================= */
+
+.finalHomeCTA {
+  position: relative;
+  isolation: isolate;
+
+  min-height: 72vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  padding:
+    110px 5vw 90px;
+
+  color: #f5f8f9;
+
+  background:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(145, 239, 91, 0.08),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(89, 189, 255, 0.04),
+      transparent 38%
+    ),
+    linear-gradient(
+      180deg,
+      #030b10 0%,
+      #061116 55%,
+      #030a0e 100%
+    );
+}
+
+/* =========================================================
+   GLOW
+   ========================================================= */
+
+.finalHomeCTAGlow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  filter: blur(150px);
+
+  pointer-events: none;
+
+  z-index: -1;
+}
+
+.finalHomeCTAGlowOne {
+  width: 600px;
+  height: 600px;
+
+  top: 5%;
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    rgba(145, 239, 91, 0.055);
+}
+
+.finalHomeCTAGlowTwo {
+  width: 450px;
+  height: 450px;
+
+  right: -200px;
+  bottom: -150px;
+
+  background:
+    rgba(89, 189, 255, 0.035);
+}
+
+/* =========================================================
+   INNER
+   ========================================================= */
+
+.finalHomeCTAInner {
+  position: relative;
+
+  z-index: 2;
+
+  width: min(1200px, 100%);
+
+  margin: 0 auto;
+
+  text-align: center;
+}
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.finalHomeCTAEyebrow {
+  margin-bottom: 18px;
+
+  color:
+    var(--green-2);
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.finalHomeCTA h2 {
+  margin: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  font-size:
+    clamp(
+      72px,
+      8.2vw,
+      145px
+    );
+
+  font-weight: 900;
+
+  line-height: 0.78;
+
+  letter-spacing:
+    -0.075em;
+
+  text-transform: uppercase;
+}
+
+.finalHomeCTA h2 span {
+  display: block;
+}
+
+.finalHomeCTAGreen {
+  color:
+    var(--green-2);
+
+  text-shadow:
+    0 0 45px
+    rgba(145, 239, 91, 0.08);
+}
+
+/* =========================================================
+   COPY
+   ========================================================= */
+
+.finalHomeCTAInner > p {
+  max-width: 610px;
+
+  margin:
+    32px auto 0;
+
+  color: #8096a0;
+
+  font-size: 11px;
+
+  line-height: 1.65;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.finalHomeCTAActions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-top: 28px;
+}
+
+.finalHomeCTAPrimary,
+.finalHomeCTASecondary {
+  min-height: 48px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 28px;
+
+  padding:
+    0 18px;
+
+  border-radius: 999px;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.finalHomeCTAPrimary {
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.45);
+
+  color: #efffe8;
+
+  background:
+    rgba(145, 239, 91, 0.07);
+}
+
+.finalHomeCTASecondary {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.08);
+
+  color: #afc0c7;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.finalHomeCTAPrimary:hover,
+.finalHomeCTASecondary:hover {
+  transform:
+    translateY(-2px);
+}
+
+.finalHomeCTAPrimary:hover {
+  border-color:
+    rgba(145, 239, 91, 0.75);
+
+  background:
+    rgba(145, 239, 91, 0.12);
+
+  box-shadow:
+    0 0 30px
+    rgba(145, 239, 91, 0.06);
+}
+
+.finalHomeCTASecondary:hover {
+  border-color:
+    rgba(145, 239, 91, 0.22);
+
+  background:
+    rgba(255, 255, 255, 0.028);
+}
+
+.finalHomeCTAPrimary span,
+.finalHomeCTASecondary span {
+  color:
+    var(--green-2);
+
+  font-size: 15px;
+}
+
+/* =========================================================
+   BOTTOM LINE
+   ========================================================= */
+
+.finalHomeCTABottomLine {
+  position: absolute;
+
+  left: 50%;
+  bottom: 26px;
+
+  transform:
+    translateX(-50%);
+
+  width:
+    min(1500px, 90%);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  color: #435b65;
+
+  font-size: 5px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    0.1em;
+
+  text-transform: uppercase;
+}
+
+.finalHomeCTABottomLine i {
+  width: 24px;
+  height: 1px;
+
+  background:
+    rgba(145, 239, 91, 0.3);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .finalHomeCTA {
+    min-height: 65vh;
+
+    padding:
+      95px 6vw 85px;
+  }
+
+  .finalHomeCTA h2 {
+    font-size:
+      clamp(
+        64px,
+        12vw,
+        110px
+      );
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+  .finalHomeCTA {
+    min-height: auto;
+
+    padding:
+      90px 5vw 105px;
+  }
+
+  .finalHomeCTA h2 {
+    font-size:
+      clamp(
+        50px,
+        15vw,
+        82px
+      );
+
+    line-height: 0.82;
+  }
+
+  .finalHomeCTAInner > p {
+    max-width: 500px;
+
+    font-size: 10px;
+  }
+
+  .finalHomeCTAActions {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    width: 100%;
+
+    max-width: 420px;
+
+    margin:
+      26px auto 0;
+  }
+
+  .finalHomeCTAPrimary,
+  .finalHomeCTASecondary {
+    width: 100%;
+  }
+
+  .finalHomeCTABottomLine {
+    bottom: 24px;
+
+    flex-wrap: wrap;
+
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 460px) {
+  .finalHomeCTA h2 {
+    font-size:
+      clamp(
+        46px,
+        14vw,
+        65px
+      );
+  }
+
+  .finalHomeCTAEyebrow {
+    font-size: 8px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .finalHomeCTAPrimary,
+  .finalHomeCTASecondary {
+    transition: none;
+  }
+}

@@ -21,6 +21,8 @@ import CustomerJourney from "@/components/home/CustomerJourney";
 import "@/styles/home-customer-journey.css";
 import BangladeshMission from "@/components/home/BangladeshMission";
 import "@/styles/home-bangladesh-mission.css";
+import FinalHomeCTA from "@/components/home/FinalHomeCTA";
+import "@/styles/home-final-cta.css";
 
 export default function HomePage() {
   return (
@@ -46,6 +48,8 @@ export default function HomePage() {
       <CustomerJourney />
 
       <BangladeshMission />
+
+      <FinalHomeCTA />
     </>
   );
 }
