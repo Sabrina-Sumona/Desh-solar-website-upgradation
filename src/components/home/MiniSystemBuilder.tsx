@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 type PropertyType =
   | "home"
@@ -11,263 +11,233 @@ type PropertyType =
   | "filling-station"
   | "other";
 
-const PROPERTY_OPTIONS: {
-  value: PropertyType;
-  label: string;
-  icon: string;
-  description: string;
-}[] = [
+type GoalType =
+  | "reduce-cost"
+  | "backup"
+  | "solar-backup"
+  | "maximize-solar"
+  | "off-grid";
+
+type BackupType =
+  | "none"
+  | "essential"
+  | "partial"
+  | "extended"
+  | "unsure";
+
+const PROPERTY_OPTIONS = [
   {
-    value: "home",
+    value: "home" as PropertyType,
     label: "Home",
     icon: "⌂",
-    description:
-      "Residential rooftop solar and backup planning.",
   },
   {
-    value: "business",
+    value: "business" as PropertyType,
     label: "Business",
     icon: "▤",
-    description:
-      "Office, retail and commercial energy requirements.",
   },
   {
-    value: "factory",
+    value: "factory" as PropertyType,
     label: "Factory",
     icon: "▥",
-    description:
-      "Industrial loads and larger system planning.",
   },
   {
-    value: "agriculture",
+    value: "agriculture" as PropertyType,
     label: "Agriculture",
     icon: "♧",
-    description:
-      "Irrigation, pumps and farm energy requirements.",
   },
   {
-    value: "filling-station",
+    value: "filling-station" as PropertyType,
     label: "Filling Station",
     icon: "⛽",
-    description:
-      "Station operations, lighting and backup loads.",
   },
   {
-    value: "other",
+    value: "other" as PropertyType,
     label: "Other",
     icon: "◇",
-    description:
-      "Mixed or specialized energy requirements.",
+  },
+];
+
+const GOAL_OPTIONS = [
+  {
+    value: "reduce-cost" as GoalType,
+    label: "Cost Saving",
+    icon: "↓",
+  },
+  {
+    value: "backup" as GoalType,
+    label: "Backup",
+    icon: "▣",
+  },
+  {
+    value: "solar-backup" as GoalType,
+    label: "Solar + Backup",
+    icon: "↯",
+  },
+  {
+    value: "maximize-solar" as GoalType,
+    label: "Max Solar",
+    icon: "☀",
+  },
+  {
+    value: "off-grid" as GoalType,
+    label: "Off-Grid",
+    icon: "◎",
   },
 ];
 
 const BACKUP_OPTIONS = [
   {
-    value: "0",
-    label: "No Backup",
-    description:
-      "Mainly reduce electricity use from the grid.",
+    value: "none" as BackupType,
+    label: "None",
   },
   {
-    value: "2",
-    label: "2 Hours",
-    description:
-      "Short backup for essential loads.",
+    value: "essential" as BackupType,
+    label: "Essential",
   },
   {
-    value: "4",
-    label: "4 Hours",
-    description:
-      "Balanced backup for common requirements.",
+    value: "partial" as BackupType,
+    label: "Partial",
   },
   {
-    value: "8",
-    label: "8+ Hours",
-    description:
-      "Extended backup and greater battery storage.",
+    value: "extended" as BackupType,
+    label: "Extended",
+  },
+  {
+    value: "unsure" as BackupType,
+    label: "Not Sure",
   },
 ];
-
-function formatCurrency(value: number) {
-  return new Intl.NumberFormat("en-BD", {
-    maximumFractionDigits: 0,
-  }).format(value);
-}
 
 export default function MiniSystemBuilder() {
   const [property, setProperty] =
     useState<PropertyType>("home");
 
-  const [monthlyBill, setMonthlyBill] =
-    useState(5000);
+  const [goal, setGoal] =
+    useState<GoalType>("solar-backup");
 
-  const [backupHours, setBackupHours] =
-    useState("4");
+  const [backup, setBackup] =
+    useState<BackupType>("essential");
 
   const selectedProperty =
     PROPERTY_OPTIONS.find(
       (item) => item.value === property
     ) ?? PROPERTY_OPTIONS[0];
 
-  /*
-   * Homepage-only planning preview.
-   *
-   * This is intentionally a simple
-   * educational estimate.
-   *
-   * The final 7-step builder will use
-   * appliance/load, roof, backup and
-   * electricity information in much
-   * greater detail.
-   */
-  const preview = useMemo(() => {
-    const assumedTariff = 12;
+  const selectedGoal =
+    GOAL_OPTIONS.find(
+      (item) => item.value === goal
+    ) ?? GOAL_OPTIONS[2];
 
-    const monthlyUnits =
-      monthlyBill / assumedTariff;
+  const selectedBackup =
+    BACKUP_OPTIONS.find(
+      (item) => item.value === backup
+    ) ?? BACKUP_OPTIONS[1];
 
-    const dailyUnits =
-      monthlyUnits / 30;
+  function handleGoalSelect(
+    nextGoal: GoalType
+  ) {
+    setGoal(nextGoal);
 
-    const targetOffset = 0.8;
+    if (
+      nextGoal === "off-grid" &&
+      backup === "none"
+    ) {
+      setBackup("extended");
+    }
+  }
 
-    const requiredDailySolar =
-      dailyUnits * targetOffset;
-
-    const peakSunHours = 4.5;
-
-    const systemEfficiency = 0.82;
-
-    const estimatedPv =
-      requiredDailySolar /
-      (peakSunHours * systemEfficiency);
-
-    const pvKw = Math.max(
-      1,
-      Math.round(estimatedPv * 10) / 10
-    );
-
-    const panelCount = Math.max(
-      2,
-      Math.ceil((pvKw * 1000) / 590)
-    );
-
-    let backupClass = "No battery selected";
-
-    if (backupHours === "2") {
-      backupClass = "Light battery backup";
+  function handleBackupSelect(
+    nextBackup: BackupType
+  ) {
+    if (
+      goal === "off-grid" &&
+      nextBackup === "none"
+    ) {
+      return;
     }
 
-    if (backupHours === "4") {
-      backupClass = "Balanced battery backup";
-    }
-
-    if (backupHours === "8") {
-      backupClass = "Extended battery backup";
-    }
-
-    return {
-      monthlyUnits: Math.round(monthlyUnits),
-      dailyUnits:
-        Math.round(dailyUnits * 10) / 10,
-      pvKw,
-      panelCount,
-      backupClass,
-    };
-  }, [monthlyBill, backupHours]);
+    setBackup(nextBackup);
+  }
 
   const builderHref =
     `/build-your-system?property=${property}` +
-    `&bill=${monthlyBill}` +
-    `&backup=${backupHours}`;
+    `&goal=${goal}` +
+    `&backup=${backup}`;
 
   return (
     <section
       className="miniSystemBuilder"
       id="mini-system-builder"
     >
-      <div className="miniSystemBuilderGlow miniSystemBuilderGlowOne" />
-
-      <div className="miniSystemBuilderGlow miniSystemBuilderGlowTwo" />
+      <div className="miniSystemBuilderGlow" />
 
       <div className="miniSystemBuilderInner">
-        {/* ================================================
-            HEADER
-            ================================================ */}
+        {/* HEADER */}
 
         <div className="miniSystemBuilderHeader">
           <div>
             <div className="miniSystemBuilderEyebrow">
-              Start Planning Your System
+              Build Your System
             </div>
 
             <h2>
-              A few details.
-              <br />
+              Start your{" "}
               <span>
-                A smarter starting point.
+                solar plan.
               </span>
             </h2>
           </div>
 
-          <div className="miniSystemBuilderHeaderCopy">
-            <p>
-              Start with a few basic details and we&apos;ll
-              carry them into the complete Desh Solar
-              system-planning experience.
-            </p>
-
-            <small>
-              QUICK PLANNING PREVIEW — FINAL SYSTEM DESIGN
-              REQUIRES DETAILED LOAD AND SITE INFORMATION.
-            </small>
-          </div>
+          <p>
+            Make three quick choices.
+            We&apos;ll handle the details
+            in the full system builder.
+          </p>
         </div>
 
-        {/* ================================================
-            BUILDER
-            ================================================ */}
+        {/* OPTIONS */}
 
-        <div className="miniSystemBuilderShell">
-          {/* LEFT SIDE */}
+        <div className="miniBuilderSteps">
+          {/* PROPERTY */}
 
-          <div className="miniSystemBuilderForm">
-            {/* --------------------------------------------
-                PROPERTY
-                -------------------------------------------- */}
+          <div className="miniBuilderStep">
+            <div className="miniBuilderStepHeader">
+              <span>
+                01
+              </span>
 
-            <div className="miniBuilderSection">
-              <div className="miniBuilderSectionTop">
-                <div>
-                  <span>01</span>
+              <div>
+                <small>
+                  PROPERTY
+                </small>
 
-                  <div>
-                    <small>
-                      PROPERTY
-                    </small>
-
-                    <strong>
-                      What are we planning for?
-                    </strong>
-                  </div>
-                </div>
+                <strong>
+                  Property type
+                </strong>
               </div>
+            </div>
 
-              <div className="miniPropertyGrid">
-                {PROPERTY_OPTIONS.map((option) => (
+            <div className="miniBuilderOptions miniBuilderPropertyOptions">
+              {PROPERTY_OPTIONS.map(
+                (option) => (
                   <button
                     key={option.value}
                     type="button"
-                    className={`miniPropertyOption ${
-                      property === option.value
+                    className={`miniBuilderOption ${
+                      property ===
+                      option.value
                         ? "active"
                         : ""
                     }`}
                     onClick={() =>
-                      setProperty(option.value)
+                      setProperty(
+                        option.value
+                      )
                     }
                     aria-pressed={
-                      property === option.value
+                      property ===
+                      option.value
                     }
                   >
                     <span>
@@ -278,275 +248,185 @@ export default function MiniSystemBuilder() {
                       {option.label}
                     </strong>
                   </button>
-                ))}
-              </div>
-
-              <p className="miniBuilderSelectionDescription">
-                {selectedProperty.description}
-              </p>
+                )
+              )}
             </div>
+          </div>
 
-            {/* --------------------------------------------
-                MONTHLY BILL
-                -------------------------------------------- */}
+          {/* GOAL */}
 
-            <div className="miniBuilderSection">
-              <div className="miniBuilderSectionTop">
-                <div>
-                  <span>02</span>
+          <div className="miniBuilderStep">
+            <div className="miniBuilderStepHeader">
+              <span>
+                02
+              </span>
 
-                  <div>
-                    <small>
-                      ELECTRICITY
-                    </small>
+              <div>
+                <small>
+                  GOAL
+                </small>
 
-                    <strong>
-                      Approximate monthly electricity bill
-                    </strong>
-                  </div>
-                </div>
-
-                <b>
-                  ৳{formatCurrency(monthlyBill)}
-                </b>
-              </div>
-
-              <input
-                className="miniBuilderRange"
-                type="range"
-                min="1000"
-                max="100000"
-                step="500"
-                value={monthlyBill}
-                aria-label="Approximate monthly electricity bill"
-                onChange={(event) =>
-                  setMonthlyBill(
-                    Number(event.target.value)
-                  )
-                }
-              />
-
-              <div className="miniBuilderRangeLabels">
-                <span>
-                  ৳1,000
-                </span>
-
-                <span>
-                  ৳25,000
-                </span>
-
-                <span>
-                  ৳50,000
-                </span>
-
-                <span>
-                  ৳100,000+
-                </span>
+                <strong>
+                  Energy goal
+                </strong>
               </div>
             </div>
 
-            {/* --------------------------------------------
-                BACKUP
-                -------------------------------------------- */}
-
-            <div className="miniBuilderSection">
-              <div className="miniBuilderSectionTop">
-                <div>
-                  <span>03</span>
-
-                  <div>
-                    <small>
-                      BACKUP
-                    </small>
-
-                    <strong>
-                      How much backup would you like?
-                    </strong>
-                  </div>
-                </div>
-              </div>
-
-              <div className="miniBackupGrid">
-                {BACKUP_OPTIONS.map((option) => (
+            <div className="miniBuilderOptions miniBuilderGoalOptions">
+              {GOAL_OPTIONS.map(
+                (option) => (
                   <button
                     key={option.value}
                     type="button"
-                    className={`miniBackupOption ${
-                      backupHours === option.value
+                    className={`miniBuilderOption ${
+                      goal ===
+                      option.value
                         ? "active"
                         : ""
                     }`}
                     onClick={() =>
-                      setBackupHours(option.value)
+                      handleGoalSelect(
+                        option.value
+                      )
                     }
                     aria-pressed={
-                      backupHours === option.value
+                      goal ===
+                      option.value
                     }
                   >
+                    <span>
+                      {option.icon}
+                    </span>
+
                     <strong>
                       {option.label}
                     </strong>
-
-                    <small>
-                      {option.description}
-                    </small>
                   </button>
-                ))}
-              </div>
+                )
+              )}
             </div>
           </div>
 
-          {/* ==============================================
-              RIGHT SIDE — PLANNING PREVIEW
-              ============================================== */}
+          {/* BACKUP */}
 
-          <aside className="miniSystemPreview">
-            <div className="miniSystemPreviewTop">
+          <div className="miniBuilderStep">
+            <div className="miniBuilderStepHeader">
+              <span>
+                03
+              </span>
+
               <div>
                 <small>
-                  QUICK SYSTEM PREVIEW
+                  BACKUP
                 </small>
 
-                <h3>
-                  {selectedProperty.label}
-                  <br />
-                  <span>
-                    planning snapshot
-                  </span>
-                </h3>
+                <strong>
+                  Backup level
+                </strong>
               </div>
+            </div>
 
-              <span className="miniSystemPreviewIcon">
-                {selectedProperty.icon}
+            <div className="miniBuilderOptions miniBuilderBackupOptions">
+              {BACKUP_OPTIONS.map(
+                (option) => {
+                  const disabled =
+                    goal ===
+                      "off-grid" &&
+                    option.value ===
+                      "none";
+
+                  return (
+                    <button
+                      key={
+                        option.value
+                      }
+                      type="button"
+                      disabled={
+                        disabled
+                      }
+                      className={`miniBuilderOption miniBuilderTextOption ${
+                        backup ===
+                        option.value
+                          ? "active"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        handleBackupSelect(
+                          option.value
+                        )
+                      }
+                      aria-pressed={
+                        backup ===
+                        option.value
+                      }
+                    >
+                      <strong>
+                        {
+                          option.label
+                        }
+                      </strong>
+                    </button>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* RESULT / CTA */}
+
+        <div className="miniBuilderFooter">
+          <div className="miniBuilderSelection">
+            <small>
+              YOUR STARTING POINT
+            </small>
+
+            <div>
+              <span>
+                {
+                  selectedProperty.label
+                }
+              </span>
+
+              <b>
+                →
+              </b>
+
+              <span>
+                {
+                  selectedGoal.label
+                }
+              </span>
+
+              <b>
+                →
+              </b>
+
+              <span>
+                {selectedBackup.label}
               </span>
             </div>
+          </div>
 
-            <p className="miniSystemPreviewLead">
-              Based on the basic information entered above,
-              this gives you an initial direction before the
-              detailed 7-step system builder.
+          <div className="miniBuilderAction">
+            <p>
+              Detailed load, appliance,
+              roof, backup and system
+              sizing continues in the full
+              builder.
             </p>
-
-            <div className="miniSystemPreviewMetrics">
-              <div>
-                <small>
-                  EST. MONTHLY USE
-                </small>
-
-                <strong>
-                  {preview.monthlyUnits}
-                  <em>
-                    kWh
-                  </em>
-                </strong>
-              </div>
-
-              <div>
-                <small>
-                  EST. DAILY USE
-                </small>
-
-                <strong>
-                  {preview.dailyUnits}
-                  <em>
-                    kWh
-                  </em>
-                </strong>
-              </div>
-
-              <div>
-                <small>
-                  STARTING PV RANGE
-                </small>
-
-                <strong>
-                  {preview.pvKw}
-                  <em>
-                    kW
-                  </em>
-                </strong>
-              </div>
-
-              <div>
-                <small>
-                  590W PANEL EQUIVALENT
-                </small>
-
-                <strong>
-                  {preview.panelCount}
-                  <em>
-                    panels
-                  </em>
-                </strong>
-              </div>
-            </div>
-
-            <div className="miniSystemPreviewBackup">
-              <small>
-                BACKUP DIRECTION
-              </small>
-
-              <strong>
-                {preview.backupClass}
-              </strong>
-            </div>
-
-            <div className="miniSystemPreviewFlow">
-              <div>
-                <span>
-                  Property
-                </span>
-
-                <b>
-                  →
-                </b>
-
-                <span>
-                  Load
-                </span>
-
-                <b>
-                  →
-                </b>
-
-                <span>
-                  Solar
-                </span>
-
-                {backupHours !== "0" && (
-                  <>
-                    <b>
-                      +
-                    </b>
-
-                    <span>
-                      Battery
-                    </span>
-                  </>
-                )}
-              </div>
-            </div>
 
             <Link
               href={builderHref}
-              className="miniSystemBuilderContinue"
+              className="miniBuilderContinue"
             >
-              Continue to Full System Builder
+              Continue to Build Your System
+
               <span>
                 →
               </span>
             </Link>
-
-            <div className="miniSystemBuilderDisclaimer">
-              <span />
-
-              This homepage preview uses simplified assumptions
-              only. Final system sizing depends on actual
-              appliances, running load, startup surge, backup
-              requirement, roof conditions, electricity use and
-              technical review.
-            </div>
-          </aside>
+          </div>
         </div>
       </div>
     </section>
