@@ -17,6 +17,8 @@ import EngineeringLabPreview from "@/components/home/EngineeringLabPreview";
 import "@/styles/home-engineering-lab.css";
 import WhyDeshSolar from "@/components/home/WhyDeshSolar";
 import "@/styles/home-why-desh-solar.css";
+import CustomerJourney from "@/components/home/CustomerJourney";
+import "@/styles/home-customer-journey.css";
 
 export default function HomePage() {
   return (
@@ -38,6 +40,8 @@ export default function HomePage() {
       <EngineeringLabPreview />
 
       <WhyDeshSolar />
+
+      <CustomerJourney />
     </>
   );
 }
