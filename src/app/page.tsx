@@ -11,6 +11,8 @@ import "@/styles/home-live-energy-story.css";
 import "@/styles/home-mini-system-builder.css";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import "@/styles/home-featured-projects.css";
+import TechnologyStack from "@/components/home/TechnologyStack";
+import "@/styles/home-technology-stack.css";
 
 export default function HomePage() {
   return (
@@ -26,6 +28,8 @@ export default function HomePage() {
       <MiniSystemBuilder />
 
       <FeaturedProjects />
+
+      <TechnologyStack />
     </>
   );
 }

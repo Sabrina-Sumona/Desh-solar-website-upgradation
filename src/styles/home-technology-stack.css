@@ -1,0 +1,461 @@
+/* =========================================================
+   TECHNOLOGY BEHIND THE SOLAR SYSTEM
+   ========================================================= */
+
+.technologyStack {
+  position: relative;
+  overflow: hidden;
+  padding: 100px 5vw 95px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #f4f8fa;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 193, 87, 0.04), transparent 30%),
+    radial-gradient(circle at 80% 60%, rgba(89, 189, 255, 0.04), transparent 32%),
+    linear-gradient(180deg, #07131a, #061018);
+}
+
+.technologyStackInner {
+  position: relative;
+  z-index: 2;
+  width: min(1500px, 100%);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   GLOW
+   ========================================================= */
+
+.technologyStackGlow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.technologyStackGlowOne {
+  top: 10%;
+  left: -240px;
+  background: #ffc157;
+}
+
+.technologyStackGlowTwo {
+  right: -230px;
+  bottom: -100px;
+  background: #59bdff;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.technologyStackHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  align-items: end;
+  gap: 60px;
+  margin-bottom: 38px;
+}
+
+.technologyStackEyebrow {
+  margin-bottom: 12px;
+  color: var(--green-2);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.technologyStackHeader h2 {
+  margin: 0;
+  font-size: clamp(44px, 5vw, 76px);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+}
+
+.technologyStackHeader h2 span {
+  color: var(--green-2);
+}
+
+.technologyStackHeaderCopy {
+  max-width: 440px;
+}
+
+.technologyStackHeaderCopy p {
+  margin: 0;
+  color: #8297a1;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   FLOW
+   ========================================================= */
+
+.technologyStackFlow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.technologyStackFlowItem {
+  position: relative;
+  min-width: 0;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.technologyCard {
+  height: 100%;
+  min-height: 320px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(10, 28, 37, 0.96), rgba(6, 20, 28, 0.98));
+  overflow: hidden;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.technologyCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(145, 239, 91, 0.24);
+  background: linear-gradient(145deg, rgba(12, 32, 40, 0.98), rgba(6, 21, 28, 0.99));
+}
+
+.technologyCardMedia {
+  position: relative;
+  height: 170px;
+  margin: -18px -18px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.technologyCardImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.technologyCardMediaOverlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4, 13, 18, 0.05) 0%, rgba(4, 13, 18, 0.28) 55%, rgba(4, 13, 18, 0.78) 100%);
+}
+
+.technologyNumber {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(145, 239, 91, 0.14);
+  border-radius: 50%;
+  color: var(--green-2);
+  font-size: 7px;
+  font-weight: 900;
+  z-index: 2;
+  background: rgba(5, 16, 23, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.technologyIcon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 47px;
+  height: 47px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(145, 239, 91, 0.12);
+  border-radius: 50%;
+  color: var(--green-2);
+  background: rgba(5, 16, 23, 0.72);
+  backdrop-filter: blur(8px);
+  font-size: 20px;
+  z-index: 2;
+}
+
+.technologyCardBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.technologyCardBody small {
+  display: block;
+  margin-bottom: 8px;
+  color: #617883;
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.technologyCardBody h3 {
+  margin: 0;
+  color: #edf4f6;
+  font-size: clamp(22px, 2vw, 30px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.technologyCardBody p {
+  margin: 12px 0 0;
+  color: #718791;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   CONNECTOR
+   ========================================================= */
+
+.technologyConnector {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  right: -15px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.technologyConnector span {
+  position: absolute;
+  width: 20px;
+  height: 1px;
+  background: rgba(145, 239, 91, 0.2);
+}
+
+.technologyConnector b {
+  position: relative;
+  color: var(--green-2);
+  background: #07131a;
+  padding: 2px;
+  font-size: 9px;
+}
+
+/* =========================================================
+   SYSTEM PATH
+   ========================================================= */
+
+.technologySystemPath {
+  margin-top: 12px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.technologySystemPath > small {
+  display: block;
+  margin-bottom: 9px;
+  color: #5f7681;
+  font-size: 5px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.technologySystemPath > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.technologySystemPath span {
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  border-radius: 999px;
+  color: #a9bbc2;
+  font-size: 7px;
+}
+
+.technologySystemPath b {
+  color: var(--green-2);
+  font-size: 9px;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.technologyStackFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin-top: 12px;
+  padding: 16px 18px;
+  border: 1px solid rgba(145, 239, 91, 0.09);
+  border-radius: 15px;
+  background: linear-gradient(90deg, rgba(145, 239, 91, 0.025), rgba(255, 255, 255, 0.01));
+}
+
+.technologyStackFooter small {
+  display: block;
+  margin-bottom: 4px;
+  color: #617883;
+  font-size: 5px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+}
+
+.technologyStackFooter strong {
+  color: #d8e4e8;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.technologyStackActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.technologyPrimaryAction,
+.technologySecondaryAction {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 7px;
+  font-weight: 900;
+  white-space: nowrap;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.technologyPrimaryAction {
+  border: 1px solid rgba(145, 239, 91, 0.34);
+  color: #edffe4;
+  background: rgba(145, 239, 91, 0.055);
+}
+
+.technologySecondaryAction {
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  color: #a9bbc2;
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.technologyPrimaryAction:hover,
+.technologySecondaryAction:hover {
+  transform: translateY(-2px);
+}
+
+.technologyPrimaryAction:hover {
+  border-color: rgba(145, 239, 91, 0.65);
+  background: rgba(145, 239, 91, 0.1);
+}
+
+.technologySecondaryAction:hover {
+  border-color: rgba(145, 239, 91, 0.24);
+}
+
+.technologyPrimaryAction span,
+.technologySecondaryAction span {
+  color: var(--green-2);
+  font-size: 13px;
+}
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .technologyStackFlow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .technologyConnector {
+    display: none;
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .technologyStackHeader {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .technologyStackFooter {
+    display: block;
+  }
+
+  .technologyStackActions {
+    margin-top: 14px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+  .technologyStack {
+    padding: 75px 5vw 65px;
+  }
+
+  .technologyStackHeader h2 {
+    font-size: clamp(42px, 13vw, 60px);
+  }
+
+  .technologyStackFlow {
+    grid-template-columns: 1fr;
+  }
+
+  .technologyCard {
+    min-height: 280px;
+  }
+
+  .technologyCardMedia {
+    height: 180px;
+  }
+
+  .technologyStackActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .technologyPrimaryAction,
+  .technologySecondaryAction {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .technologyCard,
+  .technologyPrimaryAction,
+  .technologySecondaryAction {
+    transition: none;
+  }
+}
