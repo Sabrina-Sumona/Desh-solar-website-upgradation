@@ -1,0 +1,493 @@
+/* =========================================================
+   WHY DESH SOLAR
+   ========================================================= */
+
+.whyDeshSolar {
+  position: relative;
+  overflow: hidden;
+
+  padding:
+    95px 5vw 90px;
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.06);
+
+  color: #f4f8fa;
+
+  background:
+    radial-gradient(
+      circle at 20% 40%,
+      rgba(145, 239, 91, 0.045),
+      transparent 30%
+    ),
+    linear-gradient(
+      180deg,
+      #07131a,
+      #061018
+    );
+}
+
+.whyDeshSolarInner {
+  position: relative;
+  z-index: 2;
+
+  width: min(1500px, 100%);
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   GLOW
+   ========================================================= */
+
+.whyDeshSolarGlow {
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  filter: blur(140px);
+
+  opacity: 0.05;
+
+  pointer-events: none;
+}
+
+.whyDeshSolarGlowOne {
+  top: 5%;
+  left: -240px;
+
+  background: #91ef5b;
+}
+
+.whyDeshSolarGlowTwo {
+  right: -230px;
+  bottom: -180px;
+
+  background: #59bdff;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.whyDeshSolarHeader {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(280px, 0.7fr);
+
+  align-items: end;
+
+  gap: 60px;
+
+  margin-bottom: 34px;
+}
+
+.whyDeshSolarEyebrow {
+  margin-bottom: 12px;
+
+  color:
+    var(--green-2);
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+
+  text-transform: uppercase;
+}
+
+.whyDeshSolarHeader h2 {
+  margin: 0;
+
+  font-size:
+    clamp(
+      44px,
+      5vw,
+      74px
+    );
+
+  line-height: 0.95;
+
+  letter-spacing: -0.05em;
+}
+
+.whyDeshSolarHeader h2 span {
+  color:
+    var(--green-2);
+}
+
+.whyDeshSolarHeaderCopy {
+  max-width: 420px;
+}
+
+.whyDeshSolarHeaderCopy p {
+  margin: 0;
+
+  color: #8297a1;
+
+  font-size: 12px;
+
+  line-height: 1.65;
+}
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.whyDeshSolarGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      4,
+      minmax(0, 1fr)
+    );
+
+  gap: 10px;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.whyDeshSolarCard {
+  min-height: 215px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  padding: 18px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.07);
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(10, 28, 37, 0.96),
+      rgba(6, 20, 28, 0.98)
+    );
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.whyDeshSolarCard:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(145, 239, 91, 0.25);
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(12, 31, 40, 0.98),
+      rgba(6, 21, 28, 0.99)
+    );
+}
+
+.whyDeshSolarIcon {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.14);
+
+  border-radius: 50%;
+
+  color:
+    var(--green-2);
+
+  background:
+    rgba(145, 239, 91, 0.025);
+
+  font-size: 18px;
+}
+
+.whyDeshSolarCard h3 {
+  margin:
+    auto 0 0;
+
+  padding-top: 34px;
+
+  color: #edf4f6;
+
+  font-size:
+    clamp(
+      20px,
+      1.8vw,
+      27px
+    );
+
+  line-height: 1;
+
+  letter-spacing: -0.035em;
+}
+
+.whyDeshSolarCard p {
+  margin:
+    11px 0 0;
+
+  color: #70858f;
+
+  font-size: 9px;
+
+  line-height: 1.55;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.whyDeshSolarFooter {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-top: 10px;
+
+  padding:
+    16px 18px;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.09);
+
+  border-radius: 15px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(145, 239, 91, 0.025),
+      rgba(255, 255, 255, 0.01)
+    );
+}
+
+.whyDeshSolarFooter small {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #617883;
+
+  font-size: 5px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+}
+
+.whyDeshSolarFooter strong {
+  color: #d8e4e8;
+
+  font-size: 10px;
+
+  font-weight: 750;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.whyDeshSolarActions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.whyDeshSolarPrimary,
+.whyDeshSolarSecondary {
+  min-height: 40px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding:
+    0 14px;
+
+  border-radius: 999px;
+
+  font-size: 7px;
+
+  font-weight: 900;
+
+  white-space: nowrap;
+
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.whyDeshSolarPrimary {
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.34);
+
+  color: #efffe8;
+
+  background:
+    rgba(145, 239, 91, 0.055);
+}
+
+.whyDeshSolarSecondary {
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
+
+  color: #a9bbc2;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+}
+
+.whyDeshSolarPrimary:hover,
+.whyDeshSolarSecondary:hover {
+  transform:
+    translateY(-2px);
+}
+
+.whyDeshSolarPrimary:hover {
+  border-color:
+    rgba(145, 239, 91, 0.65);
+
+  background:
+    rgba(145, 239, 91, 0.1);
+}
+
+.whyDeshSolarSecondary:hover {
+  border-color:
+    rgba(145, 239, 91, 0.24);
+}
+
+.whyDeshSolarPrimary span,
+.whyDeshSolarSecondary span {
+  color:
+    var(--green-2);
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   LAPTOP
+   ========================================================= */
+
+@media (
+  max-width: 1050px
+) {
+  .whyDeshSolarGrid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (
+  max-width: 900px
+) {
+  .whyDeshSolarHeader {
+    grid-template-columns:
+      1fr;
+
+    gap: 18px;
+  }
+
+  .whyDeshSolarFooter {
+    display: block;
+  }
+
+  .whyDeshSolarActions {
+    margin-top: 14px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+  max-width: 720px
+) {
+  .whyDeshSolar {
+    padding:
+      75px 5vw 65px;
+  }
+
+  .whyDeshSolarHeader h2 {
+    font-size:
+      clamp(
+        42px,
+        13vw,
+        60px
+      );
+  }
+
+  .whyDeshSolarGrid {
+    grid-template-columns:
+      1fr;
+  }
+
+  .whyDeshSolarCard {
+    min-height: 180px;
+  }
+
+  .whyDeshSolarActions {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .whyDeshSolarPrimary,
+  .whyDeshSolarSecondary {
+    width: 100%;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (
+  prefers-reduced-motion:
+  reduce
+) {
+  .whyDeshSolarCard,
+  .whyDeshSolarPrimary,
+  .whyDeshSolarSecondary {
+    transition: none;
+  }
+}
