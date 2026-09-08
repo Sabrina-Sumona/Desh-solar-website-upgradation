@@ -5,17 +5,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const NAV_ITEMS = [
+const PRODUCT_LINKS = [
   {
-    label: "Products",
-    href: "/products",
+    label: "Solar Panels",
+    href: "/products?category=solar-panel",
+    icon: "☀",
   },
+  {
+    label: "Inverters",
+    href: "/products?category=inverter",
+    icon: "↯",
+  },
+  {
+    label: "Batteries",
+    href: "/products?category=battery",
+    icon: "▣",
+  },
+  {
+    label: "Complete Systems",
+    href: "/products?category=complete-system",
+    icon: "◎",
+  },
+];
+
+const MAIN_NAV_LINKS = [
   {
     label: "Projects",
     href: "/projects",
   },
   {
-    label: "Tools and Technology",
+    label: "Tools & Technology",
     href: "/tools-and-technology",
   },
   {
@@ -26,9 +45,20 @@ const NAV_ITEMS = [
     label: "Contact Us",
     href: "/contact",
   },
+];
+
+const FEATURE_LINKS = [
+  {
+    label: "Engineering Lab",
+    href: "/engineering-lab",
+    icon: "⌁",
+    className: "navFeatureEngineering",
+  },
   {
     label: "Customer Support",
     href: "/customer-support",
+    icon: "◉",
+    className: "navFeatureSupport",
   },
 ];
 
@@ -38,71 +68,12 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] =
     useState(false);
 
-  /*
-   * Temporary cart count.
-   *
-   * Later this will come from the global
-   * Zustand cart store.
-   */
-  const cartCount = 0;
-
-  const closeMobileMenu = () => {
-    setMobileOpen(false);
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileOpen((current) => !current);
-  };
-
-  const isActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-
-    return (
-      pathname === href ||
-      pathname.startsWith(`${href}/`)
-    );
-  };
-
-  /*
-   * Close mobile navigation when switching
-   * back to desktop size.
-   *
-   * setState happens inside the resize event
-   * callback, not synchronously inside the
-   * effect body.
-   */
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 1050) {
-        setMobileOpen(false);
-      }
-    };
-
-    window.addEventListener(
-      "resize",
-      handleResize
-    );
-
-    return () => {
-      window.removeEventListener(
-        "resize",
-        handleResize
-      );
-    };
-  }, []);
-
-  /*
-   * Prevent the document behind the mobile
-   * navigation from scrolling.
-   */
   useEffect(() => {
     if (!mobileOpen) {
       return;
     }
 
-    const previousOverflow =
+    const originalOverflow =
       document.body.style.overflow;
 
     document.body.style.overflow =
@@ -110,45 +81,33 @@ export default function Header() {
 
     return () => {
       document.body.style.overflow =
-        previousOverflow;
+        originalOverflow;
     };
   }, [mobileOpen]);
 
-  /*
-   * Allow Escape to close the mobile menu.
-   */
-  useEffect(() => {
-    if (!mobileOpen) {
-      return;
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+  };
+
+  const isActive = (
+    href: string
+  ) => {
+    if (href === "/") {
+      return pathname === "/";
     }
 
-    const handleKeyDown = (
-      event: KeyboardEvent
-    ) => {
-      if (event.key === "Escape") {
-        setMobileOpen(false);
-      }
-    };
-
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
-    };
-  }, [mobileOpen]);
+    return pathname.startsWith(href);
+  };
 
   return (
-    <>
-      <header className="nav">
-        {/* ================================================
-            BRAND
-            ================================================ */}
+    <header className="siteHeader">
+      <nav
+        className="nav"
+        aria-label="Primary navigation"
+      >
+        {/* ===============================================
+            LOGO
+            =============================================== */}
 
         <Link
           href="/"
@@ -159,82 +118,184 @@ export default function Header() {
           <Image
             src="/assets/desh-solar-logo.png"
             alt="Desh Solar"
-            width={320}
-            height={92}
+            width={220}
+            height={54}
             priority
             className="brandLogoImage"
           />
         </Link>
 
-        {/* ================================================
+        {/* ===============================================
             DESKTOP NAVIGATION
-            ================================================ */}
+            =============================================== */}
 
-        <nav
-          className="navLinks"
-          aria-label="Primary navigation"
-        >
-          {NAV_ITEMS.map((item) => (
+        <div className="navLinks">
+          {/* PRODUCTS MEGA MENU */}
+
+          <div className="navMegaWrap">
             <Link
-              key={item.href}
-              href={item.href}
+              href="/products"
               className={`navItem ${
-                isActive(item.href)
-                  ? "active"
+                isActive("/products")
+                  ? "navItemActive"
                   : ""
               }`}
             >
-              {item.label}
+              Products
             </Link>
-          ))}
 
-          <Link
-            href="/build-your-system"
-            className={`navCta ${
-              isActive(
-                "/build-your-system"
-              )
-                ? "active"
-                : ""
-            }`}
+            <div className="navMegaPanel">
+              <div className="megaGrid">
+                <div className="megaGroup">
+                  <div className="megaLabel">
+                    Solar Products
+                  </div>
+
+                  <div className="megaLinks">
+                    {PRODUCT_LINKS.map(
+                      (item) => (
+                        <Link
+                          href={item.href}
+                          key={item.label}
+                        >
+                          <i>
+                            {item.icon}
+                          </i>
+
+                          <span>
+                            {item.label}
+                          </span>
+                        </Link>
+                      )
+                    )}
+                  </div>
+                </div>
+
+                <div className="megaFeature">
+                  <small>
+                    Complete Solar Planning
+                  </small>
+
+                  <h4>
+                    Build a system around
+                    your energy needs.
+                  </h4>
+
+                  <p>
+                    Start with your property,
+                    energy goal and backup
+                    requirement.
+                  </p>
+
+                  <Link href="/build-your-system">
+                    Build Your System →
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* NORMAL NAV */}
+
+          {MAIN_NAV_LINKS.map(
+            (item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`navItem ${
+                  isActive(item.href)
+                    ? "navItemActive"
+                    : ""
+                }`}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
+
+          {/* =============================================
+              UPGRADED FEATURE BLOCK
+              ============================================= */}
+
+          <div
+            className="navFeatureBlock"
+            aria-label="Desh Solar upgraded features"
           >
-            Build Your System
-          </Link>
+            <span className="navFeatureGlow" />
+
+            {FEATURE_LINKS.map(
+              (item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  className={`navFeatureItem ${
+                    item.className
+                  } ${
+                    isActive(item.href)
+                      ? "navFeatureActive"
+                      : ""
+                  }`}
+                >
+                  <span className="navFeatureIcon">
+                    {item.icon}
+                  </span>
+
+                  <span>
+                    {item.label}
+                  </span>
+                </Link>
+              )
+            )}
+
+            <Link
+              href="/build-your-system"
+              className={`navFeatureBuild ${
+                isActive(
+                  "/build-your-system"
+                )
+                  ? "navFeatureActive"
+                  : ""
+              }`}
+            >
+              Build Your System
+
+              <span>
+                →
+              </span>
+            </Link>
+          </div>
+
+          {/* CART */}
 
           <Link
             href="/cart"
             className={`navCart ${
               isActive("/cart")
-                ? "active"
+                ? "navCartActive"
                 : ""
             }`}
-            aria-label={`Cart with ${cartCount} items`}
+            aria-label="Shopping cart"
           >
-            <span
-              className="navCartIcon"
-              aria-hidden="true"
-            >
-              🛒
+            <span className="navCartIcon">
+              ◇
             </span>
 
-            <span className="navCartText">
-              Cart
-            </span>
-
-            <span className="navCartCount">
-              {cartCount}
+            <span className="cartCount">
+              0
             </span>
           </Link>
-        </nav>
+        </div>
 
-        {/* ================================================
-            MOBILE TOGGLE
-            ================================================ */}
+        {/* ===============================================
+            MOBILE BUTTON
+            =============================================== */}
 
         <button
           type="button"
           className={`navToggle ${
-            mobileOpen ? "active" : ""
+            mobileOpen
+              ? "active"
+              : ""
           }`}
           aria-label={
             mobileOpen
@@ -243,62 +304,106 @@ export default function Header() {
           }
           aria-expanded={mobileOpen}
           aria-controls="mobileMenu"
-          onClick={toggleMobileMenu}
+          onClick={() =>
+            setMobileOpen(
+              (open) => !open
+            )
+          }
         >
           <span />
           <span />
           <span />
         </button>
-      </header>
+      </nav>
 
-      {/* ================================================
-          MOBILE NAVIGATION
-          ================================================ */}
+      {/* =================================================
+          MOBILE MENU
+          ================================================= */}
 
-      <nav
+      <div
         id="mobileMenu"
         className={`mobileMenu ${
-          mobileOpen ? "open" : ""
+          mobileOpen
+            ? "open"
+            : ""
         }`}
-        aria-label="Mobile navigation"
       >
-        {NAV_ITEMS.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={
-              isActive(item.href)
-                ? "active"
-                : undefined
-            }
-            onClick={closeMobileMenu}
-          >
-            {item.label}
-          </Link>
-        ))}
-
         <Link
-          href="/build-your-system"
-          className="mobileCta"
+          href="/products"
           onClick={closeMobileMenu}
         >
-          Build Your System
+          Products
+          <span>→</span>
         </Link>
+
+        {MAIN_NAV_LINKS.map(
+          (item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={closeMobileMenu}
+            >
+              {item.label}
+              <span>→</span>
+            </Link>
+          )
+        )}
+
+        {/* MOBILE FEATURE GROUP */}
+
+        <div className="mobileFeatureGroup">
+          <div className="mobileFeatureLabel">
+            Upgraded Solar Tools
+          </div>
+
+          <Link
+            href="/engineering-lab"
+            className="mobileFeatureLink"
+            onClick={closeMobileMenu}
+          >
+            <span>
+              <i>⌁</i>
+              Engineering Lab
+            </span>
+
+            <b>→</b>
+          </Link>
+
+          <Link
+            href="/customer-support"
+            className="mobileFeatureLink"
+            onClick={closeMobileMenu}
+          >
+            <span>
+              <i>◉</i>
+              Customer Support
+            </span>
+
+            <b>→</b>
+          </Link>
+
+          <Link
+            href="/build-your-system"
+            className="mobileFeatureBuild"
+            onClick={closeMobileMenu}
+          >
+            <span>
+              Build Your System
+            </span>
+
+            <b>→</b>
+          </Link>
+        </div>
 
         <Link
           href="/cart"
-          className="mobileCart"
           onClick={closeMobileMenu}
+          className="mobileCart"
         >
-          <span>
-            Cart
-          </span>
-
-          <span className="mobileCartCount">
-            {cartCount}
-          </span>
+          Cart
+          <span>◇</span>
         </Link>
-      </nav>
-    </>
+      </div>
+    </header>
   );
 }

@@ -21,14 +21,16 @@
   align-items: center;
   justify-content: space-between;
 
-  padding: 0 5vw;
+  gap: 24px;
+
+  padding: 0 4vw;
 
   background:
     linear-gradient(
       to bottom,
-      rgba(3, 7, 10, 0.94),
-      rgba(3, 7, 10, 0.34),
-      transparent
+      rgba(3, 7, 10, 0.96),
+      rgba(3, 7, 10, 0.54),
+      rgba(3, 7, 10, 0.08)
     );
 
   backdrop-filter: blur(10px);
@@ -43,13 +45,15 @@
   display: flex;
   align-items: center;
 
+  flex: 0 0 auto;
+
   width: fit-content;
 }
 
 .brandLogoImage {
   display: block;
 
-  width: 220px;
+  width: 210px;
   height: auto;
 
   object-fit: contain;
@@ -74,17 +78,25 @@
   display: flex;
   align-items: center;
 
-  gap: 20px;
+  justify-content: flex-end;
+
+  flex: 1 1 auto;
+
+  gap: 16px;
+
+  min-width: 0;
 
   color: #d9e3e8;
 
-  font-size: 13px;
+  font-size: 12px;
 
   white-space: nowrap;
 }
 
 .navItem {
   position: relative;
+
+  flex: 0 0 auto;
 
   transition:
     color 0.25s ease;
@@ -113,15 +125,28 @@
   transform-origin: left;
 
   transition:
-    transform 0.25s ease;
+    transform 0.25s ease,
+    opacity 0.25s ease;
 }
 
 .navItem:hover::after {
   transform: scaleX(1);
 }
 
+/* Active navigation */
+
+.navItemActive {
+  color: #ffffff;
+}
+
+.navItemActive::after {
+  opacity: 0.65;
+
+  transform: scaleX(1);
+}
+
 /* =========================================================
-   BUILD YOUR SYSTEM
+   LEGACY BUILD YOUR SYSTEM BUTTON
    ========================================================= */
 
 .navCta {
@@ -132,8 +157,7 @@
     1px solid
     rgba(145, 239, 91, 0.45);
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
   transition:
     background 0.25s ease,
@@ -154,27 +178,28 @@
 
 .navCart {
   display: inline-flex;
-
   align-items: center;
+
+  flex: 0 0 auto;
 
   gap: 7px;
 
   padding:
-    9px 11px;
+    8px 10px;
 
   border:
     1px solid
     rgba(255, 255, 255, 0.1);
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
   background:
     rgba(255, 255, 255, 0.025);
 
   transition:
     background 0.2s ease,
-    border-color 0.2s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .navCart:hover {
@@ -183,6 +208,14 @@
 
   border-color:
     rgba(145, 239, 91, 0.25);
+}
+
+.navCartActive {
+  border-color:
+    rgba(145, 239, 91, 0.32);
+
+  background:
+    rgba(145, 239, 91, 0.045);
 }
 
 .navCartIcon {
@@ -200,11 +233,9 @@
   padding:
     0 5px;
 
-  border-radius:
-    99px;
+  border-radius: 99px;
 
-  color:
-    #071007;
+  color: #071007;
 
   background:
     var(--green-2);
@@ -223,6 +254,8 @@
 
   display: flex;
   align-items: center;
+
+  flex: 0 0 auto;
 }
 
 .navMegaPanel {
@@ -254,8 +287,7 @@
     1px solid
     rgba(255, 255, 255, 0.1);
 
-  border-radius:
-    22px;
+  border-radius: 22px;
 
   background:
     rgba(4, 13, 18, 0.97);
@@ -264,11 +296,8 @@
     0 30px 80px
     rgba(0, 0, 0, 0.48);
 
-  backdrop-filter:
-    blur(20px);
-
-  -webkit-backdrop-filter:
-    blur(20px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
   transition:
     opacity 0.22s ease,
@@ -309,8 +338,7 @@
     1px solid
     rgba(255, 255, 255, 0.065);
 
-  border-radius:
-    17px;
+  border-radius: 17px;
 
   background:
     rgba(255, 255, 255, 0.022);
@@ -329,8 +357,7 @@
   letter-spacing:
     0.15em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
 
 .megaLinks {
@@ -350,11 +377,9 @@
 
   padding: 10px;
 
-  border-radius:
-    12px;
+  border-radius: 12px;
 
-  color:
-    #dce6eb;
+  color: #dce6eb;
 
   font-size: 12px;
 
@@ -395,16 +420,14 @@
   letter-spacing:
     0.12em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
 }
 
 .megaFeature h4 {
   margin:
     10px 0 8px;
 
-  color:
-    #f4f8fa;
+  color: #f4f8fa;
 
   font-size: 19px;
 
@@ -415,8 +438,7 @@
   margin:
     0 0 14px;
 
-  color:
-    #91a5af;
+  color: #91a5af;
 
   font-size: 12px;
 
@@ -433,6 +455,222 @@
 }
 
 /* =========================================================
+   UPGRADED FEATURE BLOCK
+   ========================================================= */
+
+.navFeatureBlock {
+  position: relative;
+  isolation: isolate;
+
+  display: flex;
+  align-items: center;
+
+  flex: 0 0 auto;
+
+  gap: 3px;
+
+  padding: 4px;
+
+  margin-left: 2px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.22);
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.06),
+      rgba(89, 189, 255, 0.035)
+    );
+
+  box-shadow:
+    inset 0 0 24px
+    rgba(145, 239, 91, 0.025),
+    0 0 24px
+    rgba(145, 239, 91, 0.035);
+}
+
+.navFeatureGlow {
+  position: absolute;
+
+  z-index: -1;
+
+  top: 50%;
+  left: 68%;
+
+  width: 150px;
+  height: 60px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(145, 239, 91, 0.1);
+
+  filter: blur(25px);
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   FEATURE LINK
+   ========================================================= */
+
+.navFeatureItem {
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding:
+    0 9px;
+
+  border-radius: 999px;
+
+  color:
+    #b8c8cf;
+
+  font-size:
+    10px;
+
+  font-weight:
+    750;
+
+  white-space:
+    nowrap;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navFeatureItem:hover {
+  color:
+    #f3ffe9;
+
+  background:
+    rgba(145, 239, 91, 0.065);
+}
+
+.navFeatureIcon {
+  color:
+    var(--green-2);
+
+  font-size: 12px;
+}
+
+/* Engineering Lab */
+
+.navFeatureEngineering
+.navFeatureIcon {
+  color:
+    var(--green-2);
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.55);
+}
+
+/* Customer Support */
+
+.navFeatureSupport
+.navFeatureIcon {
+  color:
+    var(--blue);
+
+  text-shadow:
+    0 0 10px
+    rgba(89, 189, 255, 0.45);
+}
+
+/* =========================================================
+   BUILD YOUR SYSTEM INSIDE FEATURE BLOCK
+   ========================================================= */
+
+.navFeatureBuild {
+  min-height: 34px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding:
+    0 11px;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.34);
+
+  border-radius:
+    999px;
+
+  color:
+    #f2ffe9;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.12),
+      rgba(145, 239, 91, 0.045)
+    );
+
+  font-size: 10px;
+
+  font-weight: 850;
+
+  white-space: nowrap;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navFeatureBuild:hover {
+  border-color:
+    rgba(145, 239, 91, 0.65);
+
+  background:
+    rgba(145, 239, 91, 0.14);
+
+  box-shadow:
+    0 0 18px
+    rgba(145, 239, 91, 0.08);
+}
+
+.navFeatureBuild > span {
+  color:
+    var(--green-2);
+
+  font-size: 13px;
+}
+
+/* Active upgraded feature */
+
+.navFeatureActive {
+  color:
+    #f2ffe9;
+
+  background:
+    rgba(145, 239, 91, 0.09);
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(145, 239, 91, 0.08);
+}
+
+/* =========================================================
    MOBILE MENU BUTTON
    ========================================================= */
 
@@ -441,6 +679,8 @@
   height: 42px;
 
   display: none;
+
+  flex: 0 0 auto;
 
   align-items: center;
   justify-content: center;
@@ -455,8 +695,7 @@
     1px solid
     rgba(255, 255, 255, 0.14);
 
-  border-radius:
-    10px;
+  border-radius: 10px;
 
   color:
     #eaf1f4;
@@ -471,8 +710,7 @@
   width: 18px;
   height: 2px;
 
-  border-radius:
-    99px;
+  border-radius: 99px;
 
   background:
     currentColor;
@@ -554,7 +792,6 @@ span:nth-child(3) {
 
 .mobileMenu > a {
   display: flex;
-
   align-items: center;
 
   justify-content:
@@ -570,7 +807,8 @@ span:nth-child(3) {
   color:
     #dbe5e9;
 
-  font-size: 14px;
+  font-size:
+    14px;
 }
 
 .mobileMenu > a:hover {
@@ -600,6 +838,164 @@ span:nth-child(3) {
 
   background:
     rgba(145, 239, 91, 0.035);
+}
+
+/* =========================================================
+   MOBILE UPGRADED FEATURE GROUP
+   ========================================================= */
+
+.mobileFeatureGroup {
+  position: relative;
+
+  margin:
+    14px 0 10px;
+
+  padding: 11px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.2);
+
+  border-radius:
+    17px;
+
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(145, 239, 91, 0.09),
+      transparent 45%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(145, 239, 91, 0.04),
+      rgba(89, 189, 255, 0.02)
+    );
+
+  box-shadow:
+    inset 0 0 25px
+    rgba(145, 239, 91, 0.015);
+}
+
+.mobileFeatureLabel {
+  margin:
+    1px 4px 8px;
+
+  color:
+    var(--green-2);
+
+  font-size:
+    8px;
+
+  font-weight:
+    900;
+
+  letter-spacing:
+    0.16em;
+
+  text-transform:
+    uppercase;
+}
+
+.mobileFeatureLink,
+.mobileFeatureBuild {
+  min-height: 44px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  gap: 15px;
+
+  padding:
+    0 12px;
+
+  border-radius:
+    12px;
+
+  color:
+    #dbe7eb;
+
+  font-size:
+    13px;
+}
+
+.mobileFeatureLink + .mobileFeatureLink {
+  margin-top: 4px;
+}
+
+.mobileFeatureLink:hover {
+  background:
+    rgba(255, 255, 255, 0.025);
+}
+
+.mobileFeatureLink > span {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 9px;
+}
+
+.mobileFeatureLink i {
+  width: 25px;
+  height: 25px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.14);
+
+  border-radius: 50%;
+
+  color:
+    var(--green-2);
+
+  font-style:
+    normal;
+}
+
+.mobileFeatureLink b {
+  color:
+    var(--green-2);
+
+  font-size:
+    13px;
+}
+
+.mobileFeatureBuild {
+  margin-top: 6px;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.32);
+
+  color:
+    #f0ffe9;
+
+  background:
+    rgba(145, 239, 91, 0.08);
+
+  font-weight:
+    850;
+}
+
+.mobileFeatureBuild b {
+  color:
+    var(--green-2);
+
+  font-size:
+    14px;
+}
+
+.mobileCart {
+  margin-top:
+    7px;
 }
 
 /* =========================================================
@@ -664,8 +1060,6 @@ span:nth-child(3) {
   object-fit: contain;
 }
 
-/* Compact Desh Solar footer description */
-
 .footerBrand p {
   max-width: 520px;
 
@@ -674,9 +1068,11 @@ span:nth-child(3) {
   color:
     #82959f;
 
-  font-size: 12px;
+  font-size:
+    12px;
 
-  line-height: 1.65;
+  line-height:
+    1.65;
 }
 
 /* =========================================================
@@ -690,9 +1086,11 @@ span:nth-child(3) {
   color:
     #eef4f6;
 
-  font-size: 13px;
+  font-size:
+    13px;
 
-  font-weight: 800;
+  font-weight:
+    800;
 }
 
 /* =========================================================
@@ -713,9 +1111,11 @@ span:nth-child(3) {
   color:
     #82959f;
 
-  font-size: 13px;
+  font-size:
+    13px;
 
-  line-height: 1.8;
+  line-height:
+    1.8;
 
   transition:
     color 0.2s ease;
@@ -737,7 +1137,6 @@ span:nth-child(3) {
 
 .socialLinks {
   display: flex;
-
   align-items: center;
 
   flex-direction: row;
@@ -753,7 +1152,8 @@ span:nth-child(3) {
   width: 38px;
   height: 38px;
 
-  display: inline-flex;
+  display:
+    inline-flex;
 
   align-items: center;
   justify-content: center;
@@ -797,7 +1197,8 @@ span:nth-child(3) {
 }
 
 .socialFacebook:hover {
-  color: #ffffff;
+  color:
+    #ffffff;
 
   border-color:
     #1877f2;
@@ -825,7 +1226,8 @@ span:nth-child(3) {
 }
 
 .socialLinkedin:hover {
-  color: #ffffff;
+  color:
+    #ffffff;
 
   border-color:
     #0a66c2;
@@ -853,7 +1255,8 @@ span:nth-child(3) {
 }
 
 .socialYoutube:hover {
-  color: #ffffff;
+  color:
+    #ffffff;
 
   border-color:
     #ff0033;
@@ -887,16 +1290,19 @@ span:nth-child(3) {
   color:
     #82959f;
 
-  font-size: 13px;
+  font-size:
+    13px;
 
-  line-height: 1.6;
+  line-height:
+    1.6;
 }
 
 .footerContact strong {
   color:
     #c9d6dc;
 
-  font-weight: 700;
+  font-weight:
+    700;
 }
 
 /* =========================================================
@@ -956,9 +1362,11 @@ span:nth-child(3) {
   color:
     #61737c;
 
-  font-size: 12px;
+  font-size:
+    12px;
 
-  line-height: 1.5;
+  line-height:
+    1.5;
 }
 
 /* =========================================================
@@ -987,16 +1395,19 @@ span:nth-child(3) {
 }
 
 .shellPreviewInner {
-  max-width: 760px;
+  max-width:
+    760px;
 }
 
 .shellPreview small {
   color:
     var(--green-2);
 
-  font-size: 11px;
+  font-size:
+    11px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
   letter-spacing:
     0.18em;
@@ -1016,7 +1427,8 @@ span:nth-child(3) {
       96px
     );
 
-  line-height: 0.95;
+  line-height:
+    0.95;
 
   letter-spacing:
     -0.055em;
@@ -1028,7 +1440,8 @@ span:nth-child(3) {
 }
 
 .shellPreview p {
-  max-width: 620px;
+  max-width:
+    620px;
 
   margin:
     0 auto;
@@ -1036,28 +1449,34 @@ span:nth-child(3) {
   color:
     var(--muted);
 
-  font-size: 17px;
+  font-size:
+    17px;
 
-  line-height: 1.7;
+  line-height:
+    1.7;
 }
 
 /* =========================================================
-   TABLET / SMALL LAPTOP
+   HEADER BREAKPOINT
    ========================================================= */
 
-@media (max-width: 1050px) {
-  /* Header */
-
+@media (max-width: 1280px) {
   .navLinks {
-    display: none;
+    display:
+      none;
   }
 
   .navToggle {
-    display: flex;
+    display:
+      flex;
   }
+}
 
-  /* Footer */
+/* =========================================================
+   FOOTER TABLET / SMALL LAPTOP
+   ========================================================= */
 
+@media (max-width: 1050px) {
   .footer {
     grid-template-columns:
       minmax(0, 1fr)
@@ -1076,15 +1495,18 @@ span:nth-child(3) {
   }
 
   .footerBrand p {
-    max-width: 520px;
+    max-width:
+      520px;
   }
 
   .footerQuickLinks {
-    grid-column: 1;
+    grid-column:
+      1;
   }
 
   .footerContact {
-    grid-column: 2;
+    grid-column:
+      2;
   }
 
   .copyright {
@@ -1093,7 +1515,8 @@ span:nth-child(3) {
   }
 
   .footerMap {
-    height: 140px;
+    height:
+      140px;
   }
 }
 
@@ -1102,9 +1525,7 @@ span:nth-child(3) {
    ========================================================= */
 
 @media (max-width: 720px) {
-  /* =======================================================
-     HEADER
-     ======================================================= */
+  /* Header */
 
   .nav {
     height: 68px;
@@ -1117,20 +1538,25 @@ span:nth-child(3) {
       rgba(255, 255, 255, 0.06);
 
     background:
-      rgba(3, 8, 12, 0.92);
+      rgba(3, 8, 12, 0.94);
   }
 
   .brandLogoImage {
-    width: 165px;
+    width:
+      165px;
   }
 
   .navToggle {
-    width: 40px;
-    height: 40px;
+    width:
+      40px;
+
+    height:
+      40px;
   }
 
   .mobileMenu {
-    top: 68px;
+    top:
+      68px;
 
     max-height:
       calc(
@@ -1141,15 +1567,21 @@ span:nth-child(3) {
       15px 5vw 20px;
   }
 
-  /* =======================================================
-     FOOTER
-     ======================================================= */
+  /* Mobile feature area */
+
+  .mobileFeatureGroup {
+    margin-top:
+      15px;
+  }
+
+  /* Footer */
 
   .footer {
     grid-template-columns:
       1fr;
 
-    gap: 22px;
+    gap:
+      22px;
 
     padding:
       28px 6vw 10px;
@@ -1165,34 +1597,43 @@ span:nth-child(3) {
 
   .footerBrand
   .brandLogoImage {
-    width: 220px;
+    width:
+      220px;
   }
 
   .footerBrand p {
-    max-width: 440px;
+    max-width:
+      440px;
 
-    font-size: 12px;
+    font-size:
+      12px;
 
-    line-height: 1.6;
+    line-height:
+      1.6;
   }
 
   .footer h4 {
-    margin-bottom: 10px;
+    margin-bottom:
+      10px;
   }
 
   .footerQuickLinks > a,
   .footerContact p {
-    font-size: 12px;
+    font-size:
+      12px;
   }
 
   .socialLinks {
-    flex-wrap: wrap;
+    flex-wrap:
+      wrap;
   }
 
   .footerMap {
-    height: 160px;
+    height:
+      160px;
 
-    margin-top: 8px;
+    margin-top:
+      8px;
 
     border-radius:
       13px;
@@ -1202,15 +1643,18 @@ span:nth-child(3) {
     padding:
       14px 0 4px;
 
-    font-size: 10px;
+    font-size:
+      10px;
 
-    line-height: 1.6;
+    line-height:
+      1.6;
   }
 
   /* Preview */
 
   .shellPreview {
-    padding-top: 110px;
+    padding-top:
+      110px;
   }
 }
 
@@ -1220,25 +1664,32 @@ span:nth-child(3) {
 
 @media (max-width: 420px) {
   .brandLogoImage {
-    width: 150px;
+    width:
+      150px;
   }
 
   .footer {
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-left:
+      5vw;
+
+    padding-right:
+      5vw;
   }
 
   .footerBrand
   .brandLogoImage {
-    width: 205px;
+    width:
+      205px;
   }
 
   .footerBrand p {
-    max-width: 100%;
+    max-width:
+      100%;
   }
 
   .footerMap {
-    height: 150px;
+    height:
+      150px;
   }
 }
 
@@ -1258,7 +1709,12 @@ span:nth-child(3) {
   .navToggle span,
   .navMegaPanel,
   .megaLinks a,
+  .navFeatureItem,
+  .navFeatureBuild,
+  .mobileFeatureLink,
+  .mobileFeatureBuild,
   .socialLinks a {
-    transition: none;
+    transition:
+      none;
   }
 }
