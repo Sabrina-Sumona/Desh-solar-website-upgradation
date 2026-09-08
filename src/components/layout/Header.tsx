@@ -5,219 +5,300 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+const NAV_ITEMS = [
+  {
+    label: "Products",
+    href: "/products",
+  },
+  {
+    label: "Projects",
+    href: "/projects",
+  },
+  {
+    label: "Tools and Technology",
+    href: "/tools-and-technology",
+  },
+  {
+    label: "About Us",
+    href: "/about",
+  },
+  {
+    label: "Contact Us",
+    href: "/contact",
+  },
+  {
+    label: "Customer Support",
+    href: "/customer-support",
+  },
+];
+
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  // Temporary until we build the global Zustand cart.
-  const cartCount = 0;
-
   const pathname = usePathname();
 
-  useEffect(() => {
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
+
+  /*
+   * Temporary cart count.
+   *
+   * Later this will come from the global
+   * Zustand cart store.
+   */
+  const cartCount = 0;
+
+  const closeMobileMenu = () => {
     setMobileOpen(false);
-  }, [pathname]);
+  };
 
+  const toggleMobileMenu = () => {
+    setMobileOpen((current) => !current);
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/";
+    }
+
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`)
+    );
+  };
+
+  /*
+   * Close mobile navigation when switching
+   * back to desktop size.
+   *
+   * setState happens inside the resize event
+   * callback, not synchronously inside the
+   * effect body.
+   */
   useEffect(() => {
-    if (!mobileOpen) return;
-
     const handleResize = () => {
       if (window.innerWidth > 1050) {
         setMobileOpen(false);
       }
     };
 
-    window.addEventListener("resize", handleResize);
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+    };
+  }, []);
+
+  /*
+   * Prevent the document behind the mobile
+   * navigation from scrolling.
+   */
+  useEffect(() => {
+    if (!mobileOpen) {
+      return;
+    }
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow =
+      "hidden";
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+    };
+  }, [mobileOpen]);
+
+  /*
+   * Allow Escape to close the mobile menu.
+   */
+  useEffect(() => {
+    if (!mobileOpen) {
+      return;
+    }
+
+    const handleKeyDown = (
+      event: KeyboardEvent
+    ) => {
+      if (event.key === "Escape") {
+        setMobileOpen(false);
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
     };
   }, [mobileOpen]);
 
   return (
     <>
-      <header className="siteHeader">
-        <nav className="nav">
+      <header className="nav">
+        {/* ================================================
+            BRAND
+            ================================================ */}
+
+        <Link
+          href="/"
+          className="brand"
+          aria-label="Desh Solar Home"
+          onClick={closeMobileMenu}
+        >
+          <Image
+            src="/assets/desh-solar-logo.png"
+            alt="Desh Solar"
+            width={320}
+            height={92}
+            priority
+            className="brandLogoImage"
+          />
+        </Link>
+
+        {/* ================================================
+            DESKTOP NAVIGATION
+            ================================================ */}
+
+        <nav
+          className="navLinks"
+          aria-label="Primary navigation"
+        >
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`navItem ${
+                isActive(item.href)
+                  ? "active"
+                  : ""
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+
           <Link
-            href="/"
-            className="brand"
-            aria-label="Desh Solar Home"
+            href="/build-your-system"
+            className={`navCta ${
+              isActive(
+                "/build-your-system"
+              )
+                ? "active"
+                : ""
+            }`}
           >
-            <Image
-              src="/assets/desh-solar-logo.png"
-              alt="Desh Solar"
-              width={1195}
-              height={236}
-              priority
-              className="brandLogoImage"
-            />
+            Build Your System
           </Link>
 
-          <div className="navLinks">
-            <div className="navMegaWrap">
-              <Link href="/products" className="navItem">
-                Products
-              </Link>
-
-              <div className="navMegaPanel">
-                <div className="megaGrid">
-                  <div className="megaGroup">
-                    <div className="megaLabel">
-                      Product ecosystem
-                    </div>
-
-                    <div className="megaLinks">
-                      <Link href="/products?category=panel">
-                        <i>☀</i>
-                        <span>Solar Panels</span>
-                      </Link>
-
-                      <Link href="/products?category=inverter">
-                        <i>↯</i>
-                        <span>Hybrid Inverters</span>
-                      </Link>
-
-                      <Link href="/products?category=battery">
-                        <i>▣</i>
-                        <span>Lithium Batteries</span>
-                      </Link>
-
-                      <Link href="/products">
-                        <i>⌂</i>
-                        <span>IPS / Backup</span>
-                      </Link>
-
-                      <Link href="/products">
-                        <i>⌁</i>
-                        <span>Controllers &amp; BOS</span>
-                      </Link>
-
-                      <Link href="/products#catalog">
-                        <i>◇</i>
-                        <span>All Products</span>
-                      </Link>
-                    </div>
-                  </div>
-
-                  <div className="megaFeature">
-                    <small>Don&apos;t start with hardware</small>
-
-                    <h4>
-                      Build the system around your actual load.
-                    </h4>
-
-                    <p>
-                      Select appliances, backup time and energy
-                      goals before matching equipment.
-                    </p>
-
-                    <Link href="/build-your-system">
-                      Open System Builder →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Link href="/projects" className="navItem">
-              Projects
-            </Link>
-
-            <Link
-              href="/tools-and-technology"
-              className="navItem"
-            >
-              Tools and Technology
-            </Link>
-
-            <Link href="/about" className="navItem">
-              About Us
-            </Link>
-
-            <Link href="/contact" className="navItem">
-              Contact Us
-            </Link>
-
-            <Link
-              href="/customer-support"
-              className="navItem"
-            >
-              Customer Support
-            </Link>
-
-            <Link
-              href="/build-your-system"
-              className="navCta"
-            >
-              Build Your System
-            </Link>
-
-            <Link href="/cart" className="navCart">
-              <span className="navCartIcon">🛒</span>
-              <span>Cart</span>
-
-              <span className="cartCount">
-                {cartCount}
-              </span>
-            </Link>
-          </div>
-
-          <button
-            type="button"
-            className={`navToggle ${
-              mobileOpen ? "active" : ""
+          <Link
+            href="/cart"
+            className={`navCart ${
+              isActive("/cart")
+                ? "active"
+                : ""
             }`}
-            aria-label={
-              mobileOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
-            }
-            aria-expanded={mobileOpen}
-            aria-controls="mobileMenu"
-            onClick={() => setMobileOpen((current) => !current)}
+            aria-label={`Cart with ${cartCount} items`}
           >
-            <span />
-            <span />
-            <span />
-          </button>
+            <span
+              className="navCartIcon"
+              aria-hidden="true"
+            >
+              🛒
+            </span>
+
+            <span className="navCartText">
+              Cart
+            </span>
+
+            <span className="navCartCount">
+              {cartCount}
+            </span>
+          </Link>
         </nav>
+
+        {/* ================================================
+            MOBILE TOGGLE
+            ================================================ */}
+
+        <button
+          type="button"
+          className={`navToggle ${
+            mobileOpen ? "active" : ""
+          }`}
+          aria-label={
+            mobileOpen
+              ? "Close navigation menu"
+              : "Open navigation menu"
+          }
+          aria-expanded={mobileOpen}
+          aria-controls="mobileMenu"
+          onClick={toggleMobileMenu}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </header>
 
-      <div
+      {/* ================================================
+          MOBILE NAVIGATION
+          ================================================ */}
+
+      <nav
         id="mobileMenu"
         className={`mobileMenu ${
           mobileOpen ? "open" : ""
         }`}
+        aria-label="Mobile navigation"
       >
-        <Link href="/products">Products</Link>
-
-        <Link href="/projects">Projects</Link>
-
-        <Link href="/tools-and-technology">
-          Tools and Technology
-        </Link>
-
-        <Link href="/about">About Us</Link>
-
-        <Link href="/contact">Contact Us</Link>
-
-        <Link href="/customer-support">
-          Customer Support
-        </Link>
-
-        <Link href="/cart" className="mobileCartLink">
-          Cart
-          <span className="cartCount">
-            {cartCount}
-          </span>
-        </Link>
+        {NAV_ITEMS.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={
+              isActive(item.href)
+                ? "active"
+                : undefined
+            }
+            onClick={closeMobileMenu}
+          >
+            {item.label}
+          </Link>
+        ))}
 
         <Link
           href="/build-your-system"
           className="mobileCta"
+          onClick={closeMobileMenu}
         >
           Build Your System
         </Link>
-      </div>
+
+        <Link
+          href="/cart"
+          className="mobileCart"
+          onClick={closeMobileMenu}
+        >
+          <span>
+            Cart
+          </span>
+
+          <span className="mobileCartCount">
+            {cartCount}
+          </span>
+        </Link>
+      </nav>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 type Region = {
@@ -8,23 +9,28 @@ type Region = {
 const REGIONS: Region[] = [
   {
     name: "Panchbibi",
-    className: "missionMarkerPanchbibi",
+    className:
+      "missionMarkerPanchbibi",
   },
   {
     name: "Joypurhat",
-    className: "missionMarkerJoypurhat",
+    className:
+      "missionMarkerJoypurhat",
   },
   {
     name: "Sylhet",
-    className: "missionMarkerSylhet",
+    className:
+      "missionMarkerSylhet",
   },
   {
     name: "Dhaka",
-    className: "missionMarkerDhaka",
+    className:
+      "missionMarkerDhaka",
   },
   {
     name: "Chattogram",
-    className: "missionMarkerChattogram",
+    className:
+      "missionMarkerChattogram",
   },
 ];
 
@@ -34,15 +40,18 @@ export default function BangladeshMission() {
       className="bangladeshMission"
       id="powering-bangladesh"
     >
-      {/* BACKGROUND ATMOSPHERE */}
+      {/* ================================================
+          BACKGROUND ATMOSPHERE
+          ================================================ */}
 
       <div className="bangladeshMissionAmbient bangladeshMissionAmbientOne" />
+
       <div className="bangladeshMissionAmbient bangladeshMissionAmbientTwo" />
 
       <div className="bangladeshMissionInner">
-        {/* =================================================
-            LEFT
-            ================================================= */}
+        {/* ================================================
+            LEFT CONTENT
+            ================================================ */}
 
         <div className="bangladeshMissionContent">
           <div className="bangladeshMissionEyebrow">
@@ -83,41 +92,62 @@ export default function BangladeshMission() {
           </Link>
         </div>
 
-        {/* =================================================
+        {/* ================================================
             RIGHT — MAP
-            ================================================= */}
+            ================================================ */}
 
         <div className="bangladeshMissionVisual">
           <div className="bangladeshMissionMapHalo" />
 
           <div className="bangladeshMissionMapStage">
-            {/* GLOW COPY */}
+            {/* ============================================
+                GLOW COPY
 
-            <img
+                Decorative duplicate used only for
+                atmospheric map glow.
+                ============================================ */}
+
+            <Image
               src="/assets/maps/bangladesh.svg"
               alt=""
               aria-hidden="true"
+              fill
+              unoptimized
               className="bangladeshMissionMapGlow"
+              sizes="(max-width: 720px) 88vw, (max-width: 950px) 78vw, (max-width: 1200px) 480px, 570px"
             />
 
-            {/* MAIN MAP */}
+            {/* ============================================
+                MAIN BANGLADESH MAP
+                ============================================ */}
 
-            <img
+            <Image
               src="/assets/maps/bangladesh.svg"
               alt="Bangladesh project regions map"
+              fill
+              unoptimized
               className="bangladeshMissionMapImage"
+              sizes="(max-width: 720px) 88vw, (max-width: 950px) 78vw, (max-width: 1200px) 480px, 570px"
             />
 
-            {/* REGION MARKERS */}
+            {/* ============================================
+                PROJECT REGION MARKERS
+                ============================================ */}
 
             {REGIONS.map((region) => (
               <div
                 key={region.name}
                 className={`bangladeshMissionMarker ${region.className}`}
               >
-                <span className="bangladeshMissionMarkerAura" />
+                <span
+                  className="bangladeshMissionMarkerAura"
+                  aria-hidden="true"
+                />
 
-                <span className="bangladeshMissionMarkerDot" />
+                <span
+                  className="bangladeshMissionMarkerDot"
+                  aria-hidden="true"
+                />
 
                 <span className="bangladeshMissionMarkerLabel">
                   {region.name}
@@ -126,7 +156,9 @@ export default function BangladeshMission() {
             ))}
           </div>
 
-          {/* MAP FOOTER */}
+          {/* ================================================
+              PROJECT REGION FOOTER
+              ================================================ */}
 
           <div className="bangladeshMissionRegionFooter">
             <span className="bangladeshMissionRegionLabel">
@@ -135,13 +167,21 @@ export default function BangladeshMission() {
 
             <span className="bangladeshMissionRegionNames">
               Panchbibi
+
               <i>•</i>
+
               Joypurhat
+
               <i>•</i>
+
               Sylhet
+
               <i>•</i>
+
               Dhaka
+
               <i>•</i>
+
               Chattogram
             </span>
           </div>
