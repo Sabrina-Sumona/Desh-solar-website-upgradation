@@ -46,7 +46,9 @@ export default function FeaturedProjects() {
       id="featured-projects"
     >
       <div className="featuredProjectsInner">
-        {/* HEADER */}
+        {/* =================================================
+            HEADER
+            ================================================= */}
 
         <div className="featuredProjectsHeader">
           <div>
@@ -70,12 +72,17 @@ export default function FeaturedProjects() {
             </p>
 
             <Link href="/projects">
-              View All Projects →
+              View All Projects
+              <span aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
 
-        {/* PROJECTS */}
+        {/* =================================================
+            PROJECT CARDS
+            ================================================= */}
 
         <div className="featuredProjectsGrid">
           {FEATURED_PROJECTS.map(
@@ -87,6 +94,7 @@ export default function FeaturedProjects() {
                 <Link
                   href={project.href}
                   className="featuredProjectImage"
+                  aria-label={`View ${project.title}`}
                 >
                   <Image
                     src={project.image}
@@ -123,9 +131,14 @@ export default function FeaturedProjects() {
                     href={project.href}
                     className="featuredProjectLink"
                   >
-                    View Project
+                    <span className="featuredProjectLinkText">
+                      View Project
+                    </span>
 
-                    <span>
+                    <span
+                      className="featuredProjectLinkArrow"
+                      aria-hidden="true"
+                    >
                       →
                     </span>
                   </Link>
@@ -135,14 +148,18 @@ export default function FeaturedProjects() {
           )}
         </div>
 
-        {/* TEMPORARY DATA NOTE */}
+        {/* =================================================
+            TEMPORARY DATA NOTE
+            ================================================= */}
 
         <div className="featuredProjectsDataNote">
           <span />
 
-          Project details will be updated
-          with verified Desh Solar project
-          information.
+          <p>
+            Project details will be updated
+            with verified Desh Solar project
+            information.
+          </p>
         </div>
       </div>
     </section>

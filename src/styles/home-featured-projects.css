@@ -6,7 +6,8 @@
   position: relative;
 
   padding:
-    100px 5vw 95px;
+    100px 5vw
+    95px;
 
   overflow: hidden;
 
@@ -26,7 +27,10 @@
 
 .featuredProjectsInner {
   width:
-    min(1500px, 100%);
+    min(
+      1500px,
+      100%
+    );
 
   margin: 0 auto;
 }
@@ -38,7 +42,8 @@
 .featuredProjectsHeader {
   display: flex;
 
-  align-items: flex-end;
+  align-items:
+    flex-end;
 
   justify-content:
     space-between;
@@ -48,25 +53,41 @@
   margin-bottom: 34px;
 }
 
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
 .featuredProjectsEyebrow {
   margin-bottom: 12px;
 
   color:
     var(--green-2);
 
-  font-size: 9px;
+  font-size: 11px;
 
   font-weight: 900;
 
+  line-height: 1.2;
+
   letter-spacing:
-    0.18em;
+    0.16em;
 
   text-transform:
     uppercase;
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.14);
 }
+
+/* =========================================================
+   MAIN HEADING
+   ========================================================= */
 
 .featuredProjectsHeader h2 {
   margin: 0;
+
+  color: #f4f8fa;
 
   font-size:
     clamp(
@@ -74,6 +95,8 @@
       5vw,
       74px
     );
+
+  font-weight: 900;
 
   line-height: 0.95;
 
@@ -84,30 +107,77 @@
 .featuredProjectsHeader h2 span {
   color:
     var(--green-2);
+
+  text-shadow:
+    0 0 22px
+    rgba(145, 239, 91, 0.05);
 }
 
+/* =========================================================
+   HEADER RIGHT
+   ========================================================= */
+
 .featuredProjectsHeaderRight {
-  max-width: 380px;
+  max-width: 400px;
 }
 
 .featuredProjectsHeaderRight p {
   margin:
-    0 0 12px;
+    0 0
+    14px;
 
-  color: #8297a1;
+  color: #a7bac3;
 
-  font-size: 12px;
+  font-size: 15px;
 
-  line-height: 1.6;
+  font-weight: 500;
+
+  line-height: 1.65;
 }
 
 .featuredProjectsHeaderRight a {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
   color:
     var(--green-2);
 
-  font-size: 8px;
+  font-size: 10px;
 
   font-weight: 900;
+
+  line-height: 1.2;
+
+  letter-spacing:
+    0.02em;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.featuredProjectsHeaderRight a span {
+  font-size: 13px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.featuredProjectsHeaderRight a:hover {
+  color: #d7ffad;
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.14);
+}
+
+.featuredProjectsHeaderRight a:hover span {
+  transform:
+    translateX(3px);
 }
 
 /* =========================================================
@@ -135,16 +205,21 @@
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    rgba(255, 255, 255, 0.08);
 
   border-radius: 20px;
 
   background:
     #081820;
 
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.018);
+
   transition:
     transform 0.25s ease,
-    border-color 0.25s ease;
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .featuredProjectCard:hover {
@@ -152,7 +227,13 @@
     translateY(-4px);
 
   border-color:
-    rgba(145, 239, 91, 0.25);
+    rgba(145, 239, 91, 0.28);
+
+  box-shadow:
+    0 16px 38px
+    rgba(0, 0, 0, 0.18),
+    0 0 20px
+    rgba(145, 239, 91, 0.025);
 }
 
 /* =========================================================
@@ -167,20 +248,31 @@
   height: 290px;
 
   overflow: hidden;
+
+  background:
+    #07131a;
 }
 
 .featuredProjectImage img {
   object-fit: cover;
 
   transition:
-    transform 0.5s ease;
+    transform 0.5s ease,
+    filter 0.5s ease;
 }
 
 .featuredProjectCard:hover
 .featuredProjectImage img {
   transform:
     scale(1.04);
+
+  filter:
+    brightness(1.04);
 }
+
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
 
 .featuredProjectOverlay {
   position: absolute;
@@ -190,11 +282,18 @@
   background:
     linear-gradient(
       to top,
-      rgba(4, 15, 21, 0.72),
-      rgba(4, 15, 21, 0.06)
-      65%
+      rgba(4, 15, 21, 0.9) 0%,
+      rgba(4, 15, 21, 0.44) 24%,
+      rgba(4, 15, 21, 0.08) 62%,
+      rgba(4, 15, 21, 0.03) 100%
     );
+
+  pointer-events: none;
 }
+
+/* =========================================================
+   PROJECT NUMBER
+   ========================================================= */
 
 .featuredProjectNumber {
   position: absolute;
@@ -202,16 +301,15 @@
   top: 16px;
   left: 16px;
 
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
 
   display: grid;
-
   place-items: center;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.16);
+    rgba(145, 239, 91, 0.24);
 
   border-radius: 50%;
 
@@ -219,12 +317,28 @@
     var(--green-2);
 
   background:
-    rgba(5, 18, 25, 0.55);
+    rgba(5, 18, 25, 0.78);
 
-  font-size: 7px;
+  backdrop-filter:
+    blur(7px);
+
+  -webkit-backdrop-filter:
+    blur(7px);
+
+  box-shadow:
+    0 5px 15px
+    rgba(0, 0, 0, 0.16);
+
+  font-size: 9px;
 
   font-weight: 900;
+
+  line-height: 1;
 }
+
+/* =========================================================
+   CATEGORY ON IMAGE
+   ========================================================= */
 
 .featuredProjectCategory {
   position: absolute;
@@ -232,17 +346,37 @@
   left: 16px;
   bottom: 15px;
 
-  color: #fff;
+  padding:
+    5px 7px;
 
-  font-size: 8px;
+  border-radius: 6px;
+
+  color: #ffffff;
+
+  background:
+    rgba(3, 13, 18, 0.48);
+
+  backdrop-filter:
+    blur(5px);
+
+  -webkit-backdrop-filter:
+    blur(5px);
+
+  font-size: 10px;
 
   font-weight: 900;
+
+  line-height: 1;
 
   letter-spacing:
     0.1em;
 
   text-transform:
     uppercase;
+
+  text-shadow:
+    0 2px 8px
+    rgba(0, 0, 0, 0.55);
 }
 
 /* =========================================================
@@ -250,32 +384,55 @@
    ========================================================= */
 
 .featuredProjectContent {
-  padding: 18px;
+  padding:
+    19px 18px
+    17px;
 }
+
+/* =========================================================
+   PROJECT TITLE
+   ========================================================= */
 
 .featuredProjectContent h3 {
   margin: 0;
 
-  color: #f0f6f8;
+  color:
+    #f3f7f9;
 
-  font-size: 24px;
+  font-size: 25px;
 
-  line-height: 1;
+  font-weight: 850;
+
+  line-height: 1.05;
 
   letter-spacing:
     -0.035em;
 }
 
+/* =========================================================
+   PROJECT DESCRIPTION
+   ========================================================= */
+
 .featuredProjectContent p {
+  min-height: 39px;
+
   margin:
-    11px 0 16px;
+    11px 0
+    16px;
 
-  color: #748993;
+  color:
+    #9db0b9;
 
-  font-size: 9px;
+  font-size: 12px;
 
-  line-height: 1.55;
+  font-weight: 500;
+
+  line-height: 1.6;
 }
+
+/* =========================================================
+   VIEW PROJECT LINK
+   ========================================================= */
 
 .featuredProjectLink {
   display: flex;
@@ -291,20 +448,50 @@
 
   border-top:
     1px solid
-    rgba(255, 255, 255, 0.055);
+    rgba(255, 255, 255, 0.07);
 
-  color: #dce7eb;
+  color:
+    #e3ecef;
 
-  font-size: 8px;
-
-  font-weight: 850;
+  transition:
+    color 0.2s ease;
 }
 
-.featuredProjectLink span {
+.featuredProjectLinkText {
+  font-size: 10px;
+
+  font-weight: 850;
+
+  line-height: 1.2;
+}
+
+.featuredProjectLinkArrow {
   color:
     var(--green-2);
 
-  font-size: 15px;
+  font-size: 17px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  transition:
+    transform 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.featuredProjectLink:hover {
+  color: #ffffff;
+}
+
+.featuredProjectLink:hover
+.featuredProjectLinkArrow {
+  transform:
+    translateX(4px);
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.22);
 }
 
 /* =========================================================
@@ -314,32 +501,48 @@
 .featuredProjectsDataNote {
   display: flex;
 
-  align-items: center;
+  align-items: flex-start;
 
-  gap: 8px;
+  gap: 10px;
 
-  margin-top: 14px;
+  margin-top: 16px;
 
-  color: #58707a;
+  color:
+    #8298a2;
 
-  font-size: 6px;
+  font-size: 9px;
+
+  font-weight: 500;
+
+  line-height: 1.5;
 }
 
 .featuredProjectsDataNote span {
-  width: 18px;
+  width: 20px;
   height: 1px;
+
+  flex:
+    0 0 auto;
+
+  margin-top: 6px;
 
   background:
     var(--green-2);
+
+  box-shadow:
+    0 0 8px
+    rgba(145, 239, 91, 0.16);
+}
+
+.featuredProjectsDataNote p {
+  margin: 0;
 }
 
 /* =========================================================
    TABLET
    ========================================================= */
 
-@media (
-  max-width: 1000px
-) {
+@media (max-width: 1000px) {
   .featuredProjectsGrid {
     grid-template-columns:
       repeat(
@@ -347,26 +550,41 @@
         minmax(0, 1fr)
       );
   }
+
+  .featuredProjectsHeaderRight p {
+    font-size: 14px;
+  }
 }
 
 /* =========================================================
    MOBILE
    ========================================================= */
 
-@media (
-  max-width: 720px
-) {
+@media (max-width: 720px) {
   .featuredProjects {
     padding:
-      75px 5vw 65px;
+      75px 5vw
+      65px;
   }
 
   .featuredProjectsHeader {
     display: block;
+
+    margin-bottom: 28px;
   }
 
   .featuredProjectsHeaderRight {
-    margin-top: 18px;
+    max-width: 100%;
+
+    margin-top: 20px;
+  }
+
+  .featuredProjectsHeaderRight p {
+    font-size: 14px;
+  }
+
+  .featuredProjectsHeaderRight a {
+    font-size: 11px;
   }
 
   .featuredProjectsHeader h2 {
@@ -386,18 +604,64 @@
   .featuredProjectImage {
     height: 260px;
   }
+
+  .featuredProjectContent h3 {
+    font-size: 24px;
+  }
+
+  .featuredProjectContent p {
+    min-height: 0;
+
+    font-size: 12px;
+  }
+
+  .featuredProjectCategory {
+    font-size: 9px;
+  }
+
+  .featuredProjectsDataNote {
+    font-size: 9px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .featuredProjectImage {
+    height: 235px;
+  }
+
+  .featuredProjectContent {
+    padding:
+      17px 16px
+      16px;
+  }
+
+  .featuredProjectContent h3 {
+    font-size: 22px;
+  }
+
+  .featuredProjectContent p {
+    font-size: 11px;
+  }
+
+  .featuredProjectLinkText {
+    font-size: 10px;
+  }
 }
 
 /* =========================================================
    REDUCED MOTION
    ========================================================= */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
+@media (prefers-reduced-motion: reduce) {
   .featuredProjectCard,
-  .featuredProjectImage img {
+  .featuredProjectImage img,
+  .featuredProjectLinkArrow,
+  .featuredProjectsHeaderRight a,
+  .featuredProjectsHeaderRight a span {
     transition: none;
   }
 }
