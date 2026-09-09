@@ -624,121 +624,151 @@ export default function LiveEnergyStory() {
                 className="liveGround"
               />
 
+              {/* ------------------------------------------
+                  HOUSE
+                  ------------------------------------------ */}
+
               <g className="liveHouse">
+                {/* Wider architectural shell for a less compact layout */}
+
                 <path
-                  d="M210 285 L440 145 L680 285 Z"
+                  d="M185 285 L450 125 L715 285 Z"
                   fill="url(#roofGradient)"
                   className="liveRoof"
                 />
 
                 <rect
-                  x="245"
+                  x="225"
                   y="280"
-                  width="400"
-                  height="205"
+                  width="470"
+                  height="220"
                   rx="6"
                   fill="url(#houseWall)"
                   className="liveHouseWall"
                 />
 
+                {/* Door */}
+
                 <rect
-                  x="420"
-                  y="382"
-                  width="72"
-                  height="103"
+                  x="430"
+                  y="374"
+                  width="80"
+                  height="120"
                   rx="4"
                   className="liveDoor"
                 />
 
                 <circle
-                  cx="478"
-                  cy="437"
+                  cx="495"
+                  cy="438"
                   r="3"
                   className="liveDoorHandle"
                 />
 
-                <g className="liveWindow">
-                  <rect
-                    x="290"
-                    y="340"
-                    width="78"
-                    height="68"
-                    rx="3"
-                  />
-                  <line
-                    x1="329"
-                    y1="340"
-                    x2="329"
-                    y2="408"
-                  />
-                  <line
-                    x1="290"
-                    y1="374"
-                    x2="368"
-                    y2="374"
-                  />
-                </g>
+                {/* Left window */}
 
                 <g className="liveWindow">
                   <rect
-                    x="530"
-                    y="340"
-                    width="78"
-                    height="68"
+                    x="285"
+                    y="326"
+                    width="90"
+                    height="76"
                     rx="3"
                   />
+
                   <line
-                    x1="569"
-                    y1="340"
-                    x2="569"
-                    y2="408"
+                    x1="330"
+                    y1="326"
+                    x2="330"
+                    y2="402"
                   />
+
                   <line
-                    x1="530"
-                    y1="374"
-                    x2="608"
-                    y2="374"
+                    x1="285"
+                    y1="364"
+                    x2="375"
+                    y2="364"
                   />
                 </g>
+
+                {/* Right window */}
+
+                <g className="liveWindow">
+                  <rect
+                    x="545"
+                    y="326"
+                    width="90"
+                    height="76"
+                    rx="3"
+                  />
+
+                  <line
+                    x1="590"
+                    y1="326"
+                    x2="590"
+                    y2="402"
+                  />
+
+                  <line
+                    x1="545"
+                    y1="364"
+                    x2="635"
+                    y2="364"
+                  />
+                </g>
+
+                {/* Solar panels — spaced cleanly across the roof */}
 
                 <g className="livePanels">
                   <polygon
-                    points="330,240 425,182 468,206 372,264"
+                    points="326,223 421,166 465,191 369,249"
                     fill="url(#panelGradient)"
                   />
+
                   <polygon
-                    points="381,268 478,210 522,236 423,294"
+                    points="387,258 484,200 529,226 431,285"
                     fill="url(#panelGradient)"
                   />
+
                   <line
-                    x1="358"
-                    y1="223"
-                    x2="401"
-                    y2="247"
+                    x1="357"
+                    y1="204"
+                    x2="400"
+                    y2="229"
                   />
+
                   <line
-                    x1="386"
-                    y1="206"
-                    x2="429"
-                    y2="231"
+                    x1="388"
+                    y1="185"
+                    x2="432"
+                    y2="210"
                   />
+
                   <line
-                    x1="410"
-                    y1="251"
-                    x2="454"
-                    y2="276"
+                    x1="418"
+                    y1="239"
+                    x2="462"
+                    y2="265"
                   />
+
                   <line
-                    x1="438"
-                    y1="234"
-                    x2="481"
-                    y2="259"
+                    x1="449"
+                    y1="220"
+                    x2="493"
+                    y2="246"
                   />
                 </g>
               </g>
 
+              {/* ------------------------------------------
+                  SOLAR PANEL -> INVERTER
+
+                  Routed through the open strip beside the
+                  left window so the architecture remains clear.
+                  ------------------------------------------ */}
+
               <path
-                d="M448 265 C460 305 490 305 505 340"
+                d="M432 250 C405 279 329 282 262 302 L262 443 C272 450 281 452 292 452"
                 className={`liveFlowLine liveFlowSolar ${
                   hasFlow("solar")
                     ? "active"
@@ -746,58 +776,107 @@ export default function LiveEnergyStory() {
                 }`}
               />
 
+              {/* ------------------------------------------
+                  INVERTER — below the left window
+                  ------------------------------------------ */}
+
               <g
                 className="liveDevice liveInverter"
-                transform="translate(490 320)"
+                transform="translate(292 414)"
               >
                 <rect
-                  width="82"
-                  height="88"
-                  rx="12"
+                  width="92"
+                  height="86"
+                  rx="13"
                 />
+
                 <circle
-                  cx="41"
-                  cy="31"
-                  r="14"
+                  cx="46"
+                  cy="29"
+                  r="15"
                 />
+
                 <text
-                  x="41"
-                  y="36"
+                  x="46"
+                  y="34"
                   textAnchor="middle"
                   className="liveDeviceSymbol"
                 >
                   ↯
                 </text>
+
                 <text
-                  x="41"
-                  y="69"
+                  x="46"
+                  y="67"
                   textAnchor="middle"
                 >
                   INVERTER
                 </text>
               </g>
 
+              {/* ------------------------------------------
+                  LOAD — clear central zone above the door
+                  ------------------------------------------ */}
+
+              <g
+                className="liveLoadNode liveLoadNodeMain"
+                transform="translate(470 316)"
+              >
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="29"
+                />
+
+                <text
+                  x="0"
+                  y="5"
+                  textAnchor="middle"
+                  className="liveLoadIcon"
+                >
+                  ⌂
+                </text>
+              </g>
+
+              {/* ------------------------------------------
+                  INVERTER -> LOAD
+
+                  The line uses the vertical clear channel
+                  between the left window and the door.
+                  ------------------------------------------ */}
+
+              <path
+                d="M384 442 L410 442 L410 352 C410 328 428 316 441 316"
+                className="liveFlowLine liveFlowLoad active"
+              />
+
+              {/* ------------------------------------------
+                  BATTERY — below/right of the right window
+                  ------------------------------------------ */}
+
               <g
                 className="liveDevice liveBattery"
-                transform="translate(700 330)"
+                transform="translate(615 408) scale(0.88)"
               >
                 <rect
                   width="88"
-                  height="112"
+                  height="104"
                   rx="13"
                 />
+
                 <rect
                   x="22"
-                  y="30"
+                  y="27"
                   width="44"
                   height="44"
                   rx="5"
                   className="liveBatteryOutline"
                 />
+
                 <rect
                   x="27"
                   y={
-                    70 -
+                    67 -
                     simulation.batterySoc *
                       0.36
                   }
@@ -809,17 +888,25 @@ export default function LiveEnergyStory() {
                   rx="2"
                   className="liveBatteryFill"
                 />
+
                 <text
                   x="44"
-                  y="94"
+                  y="90"
                   textAnchor="middle"
                 >
                   {simulation.batterySoc}%
                 </text>
               </g>
 
+              {/* ------------------------------------------
+                  INVERTER <-> BATTERY
+
+                  Routed below the door so neither the door
+                  nor the windows are crossed.
+                  ------------------------------------------ */}
+
               <path
-                d="M572 365 C620 365 648 365 700 375"
+                d="M384 468 C398 496 410 518 440 520 L590 520 C610 520 620 500 628 492"
                 className={`liveFlowLine liveFlowBattery ${
                   hasFlow(
                     "battery-charge"
@@ -838,82 +925,76 @@ export default function LiveEnergyStory() {
                 }`}
               />
 
-              <g
-                className="liveLoadNode"
-                transform="translate(315 445)"
-              >
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="27"
-                />
-                <text
-                  x="0"
-                  y="5"
-                  textAnchor="middle"
-                  className="liveLoadIcon"
-                >
-                  ⌂
-                </text>
-              </g>
-
-              <path
-                d="M510 408 C470 440 405 455 342 448"
-                className="liveFlowLine liveFlowLoad active"
-              />
+              {/* ------------------------------------------
+                  GRID
+                  ------------------------------------------ */}
 
               <g
                 className="liveGridTower"
-                transform="translate(85 300)"
+                transform="translate(75 290)"
               >
-                <path d="M45 0 L15 155" />
-                <path d="M45 0 L75 155" />
+                <path d="M45 0 L15 165" />
+                <path d="M45 0 L75 165" />
+
                 <line
                   x1="25"
-                  y1="48"
+                  y1="50"
                   x2="65"
-                  y2="48"
+                  y2="50"
                 />
+
                 <line
                   x1="20"
-                  y1="83"
+                  y1="87"
                   x2="70"
-                  y2="83"
+                  y2="87"
                 />
+
                 <line
                   x1="15"
-                  y1="118"
+                  y1="124"
                   x2="75"
-                  y2="118"
+                  y2="124"
                 />
+
                 <line
                   x1="28"
-                  y1="48"
+                  y1="50"
                   x2="64"
-                  y2="83"
+                  y2="87"
                 />
+
                 <line
                   x1="62"
-                  y1="48"
+                  y1="50"
                   x2="26"
-                  y2="83"
+                  y2="87"
                 />
+
                 <line
                   x1="23"
-                  y1="83"
+                  y1="87"
                   x2="70"
-                  y2="118"
+                  y2="124"
                 />
+
                 <line
                   x1="67"
-                  y1="83"
+                  y1="87"
                   x2="20"
-                  y2="118"
+                  y2="124"
                 />
               </g>
 
+              {/* ------------------------------------------
+                  INVERTER <-> GRID
+
+                  The line stays outside the house and keeps
+                  the lower-left side visually open.
+                  ------------------------------------------ */}
+
               <path
-                d="M150 405 C250 405 370 380 490 370"
+                d="M292 458 C252 472 210 467 157 435"
                 className={`liveFlowLine liveFlowGrid ${
                   hasFlow(
                     "grid-import"
@@ -925,7 +1006,7 @@ export default function LiveEnergyStory() {
                     : ""
                 } ${
                   hasFlow(
-                    "grid-export"
+                    "grid-import"
                   )
                     ? "reverse"
                     : ""
@@ -933,32 +1014,32 @@ export default function LiveEnergyStory() {
               />
 
               <text
-                x="435"
-                y="130"
+                x="444"
+                y="108"
                 className="liveSvgLabel"
               >
                 SOLAR ARRAY
               </text>
 
               <text
-                x="105"
-                y="480"
+                x="94"
+                y="485"
                 className="liveSvgLabel"
               >
                 GRID
               </text>
 
               <text
-                x="302"
-                y="495"
+                x="450"
+                y="359"
                 className="liveSvgLabel"
               >
                 LOADS
               </text>
 
               <text
-                x="720"
-                y="468"
+                x="635"
+                y="512"
                 className="liveSvgLabel"
               >
                 BATTERY
