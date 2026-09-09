@@ -68,10 +68,6 @@ const FEATURE_LINKS = [
   },
 ];
 
-/* =========================================================
-   CART ICON
-   ========================================================= */
-
 function CartIcon() {
   return (
     <svg
@@ -137,7 +133,7 @@ export default function Header() {
         aria-label="Primary navigation"
       >
         {/* =================================================
-            LOGO
+            BRAND
             ================================================= */}
 
         <Link
@@ -166,16 +162,27 @@ export default function Header() {
           <div className="navMegaWrap">
             <Link
               href="/products"
-              className={`navItem ${
+              aria-current={
+                isActive("/products")
+                  ? "page"
+                  : undefined
+              }
+              className={`navItem navInteractiveItem ${
                 isActive("/products")
                   ? "navItemActive"
                   : ""
               }`}
             >
-              Products
+              <span className="navItemGlow" />
+
+              <span className="navItemText">
+                Products
+              </span>
             </Link>
 
             <div className="navMegaPanel">
+              <div className="megaAmbientGlow" />
+
               <div className="megaGrid">
                 <div className="megaGroup">
                   <div className="megaLabel">
@@ -196,6 +203,8 @@ export default function Header() {
                           <span>
                             {item.label}
                           </span>
+
+                          <b>→</b>
                         </Link>
                       )
                     )}
@@ -219,29 +228,45 @@ export default function Header() {
                   </p>
 
                   <Link href="/build-your-system">
-                    Build Your System →
+                    Build Your System
+
+                    <span>→</span>
                   </Link>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* STANDARD MENU */}
+          {/* STANDARD NAVIGATION */}
 
           {MAIN_NAV_LINKS.map(
-            (item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`navItem ${
-                  isActive(item.href)
-                    ? "navItemActive"
-                    : ""
-                }`}
-              >
-                {item.label}
-              </Link>
-            )
+            (item) => {
+              const active =
+                isActive(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    active
+                      ? "page"
+                      : undefined
+                  }
+                  className={`navItem navInteractiveItem ${
+                    active
+                      ? "navItemActive"
+                      : ""
+                  }`}
+                >
+                  <span className="navItemGlow" />
+
+                  <span className="navItemText">
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            }
           )}
 
           {/* =================================================
@@ -253,35 +278,50 @@ export default function Header() {
             aria-label="Desh Solar upgraded features"
           >
             <span
-              className="navFeatureGlow"
+              className="navFeatureAmbient"
+              aria-hidden="true"
+            />
+
+            <span
+              className="navFeatureSweep"
               aria-hidden="true"
             />
 
             {FEATURE_LINKS.map(
-              (item) => (
-                <Link
-                  href={item.href}
-                  key={item.href}
-                  className={`navFeatureItem ${
-                    item.className
-                  } ${
-                    isActive(item.href)
-                      ? "navFeatureActive"
-                      : ""
-                  }`}
-                >
-                  <span
-                    className="navFeatureIcon"
-                    aria-hidden="true"
-                  >
-                    {item.icon}
-                  </span>
+              (item) => {
+                const active =
+                  isActive(item.href);
 
-                  <span>
-                    {item.label}
-                  </span>
-                </Link>
-              )
+                return (
+                  <Link
+                    href={item.href}
+                    key={item.href}
+                    aria-current={
+                      active
+                        ? "page"
+                        : undefined
+                    }
+                    className={`navFeatureItem ${
+                      item.className
+                    } ${
+                      active
+                        ? "navFeatureActive"
+                        : ""
+                    }`}
+                  >
+                    <span
+                      className="navFeatureIcon"
+                      aria-hidden="true"
+                    >
+                      {item.icon}
+                    </span>
+
+                    <span className="navFeatureText">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              }
             )}
           </div>
 
@@ -291,6 +331,11 @@ export default function Header() {
 
           <Link
             href="/cart"
+            aria-current={
+              isActive("/cart")
+                ? "page"
+                : undefined
+            }
             className={`navCart ${
               isActive("/cart")
                 ? "navCartActive"
@@ -298,6 +343,11 @@ export default function Header() {
             }`}
             aria-label="Shopping cart"
           >
+            <span
+              className="navCartGlow"
+              aria-hidden="true"
+            />
+
             <span className="navCartIcon">
               <CartIcon />
             </span>
@@ -316,7 +366,7 @@ export default function Header() {
         </div>
 
         {/* =================================================
-            MOBILE TOGGLE
+            MOBILE MENU TOGGLE
             ================================================= */}
 
         <button
@@ -357,81 +407,92 @@ export default function Header() {
             : ""
         }`}
       >
-        <Link
-          href="/products"
-          onClick={closeMobileMenu}
-        >
-          Products
+        <div className="mobileMenuInner">
+          {/* NORMAL MENU */}
 
-          <span>→</span>
-        </Link>
-
-        {MAIN_NAV_LINKS.map(
-          (item) => (
+          <div className="mobilePrimaryLinks">
             <Link
-              key={item.href}
-              href={item.href}
+              href="/products"
               onClick={closeMobileMenu}
             >
-              {item.label}
+              <span>
+                Products
+              </span>
 
-              <span>→</span>
+              <b>→</b>
             </Link>
-          )
-        )}
 
-        {/* =================================================
-            MOBILE UPGRADED FEATURES
-            ================================================= */}
+            {MAIN_NAV_LINKS.map(
+              (item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                >
+                  <span>
+                    {item.label}
+                  </span>
 
-        <div className="mobileFeatureGroup">
-          <div className="mobileFeatureLabel">
-            Upgraded Solar Features
+                  <b>→</b>
+                </Link>
+              )
+            )}
           </div>
 
-          {FEATURE_LINKS.map(
-            (item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="mobileFeatureLink"
-                onClick={closeMobileMenu}
-              >
-                <span>
-                  <i>
-                    {item.icon}
-                  </i>
+          {/* UPGRADED FEATURES */}
 
-                  {item.label}
-                </span>
+          <div className="mobileFeatureGroup">
+            <span
+              className="mobileFeatureAmbient"
+              aria-hidden="true"
+            />
 
-                <b>→</b>
-              </Link>
-            )
-          )}
-        </div>
+            <div className="mobileFeatureLabel">
+              Upgraded Solar Features
+            </div>
 
-        {/* =================================================
-            MOBILE CART
-            ================================================= */}
+            {FEATURE_LINKS.map(
+              (item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="mobileFeatureLink"
+                  onClick={closeMobileMenu}
+                >
+                  <span>
+                    <i>
+                      {item.icon}
+                    </i>
 
-        <Link
-          href="/cart"
-          onClick={closeMobileMenu}
-          className="mobileCart"
-        >
-          <span className="mobileCartLabel">
-            <span className="mobileCartIcon">
-              <CartIcon />
+                    {item.label}
+                  </span>
+
+                  <b>→</b>
+                </Link>
+              )
+            )}
+          </div>
+
+          {/* CART */}
+
+          <Link
+            href="/cart"
+            onClick={closeMobileMenu}
+            className="mobileCart"
+          >
+            <span className="mobileCartLabel">
+              <span className="mobileCartIcon">
+                <CartIcon />
+              </span>
+
+              Cart
             </span>
 
-            Cart
-          </span>
-
-          <span className="mobileCartCount">
-            0
-          </span>
-        </Link>
+            <span className="mobileCartCount">
+              0
+            </span>
+          </Link>
+        </div>
       </div>
     </header>
   );
