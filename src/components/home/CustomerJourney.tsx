@@ -52,7 +52,9 @@ export default function CustomerJourney() {
       id="customer-journey"
     >
       <div className="customerJourneyInner">
-        {/* HEADER */}
+        {/* ================================================
+            HEADER
+            ================================================ */}
 
         <div className="customerJourneyHeader">
           <div>
@@ -63,6 +65,7 @@ export default function CustomerJourney() {
             <h2>
               From first idea to
               <br />
+
               <span>
                 long-term support.
               </span>
@@ -76,39 +79,53 @@ export default function CustomerJourney() {
           </p>
         </div>
 
-        {/* JOURNEY */}
+        {/* ================================================
+            JOURNEY
+            ================================================ */}
 
         <div className="customerJourneyTrack">
-          {JOURNEY_STEPS.map((step, index) => (
-            <div
-              className="customerJourneyItem"
-              key={step.id}
-            >
-              <article className="customerJourneyCard">
-                <span className="customerJourneyNumber">
-                  {step.id}
-                </span>
+          {JOURNEY_STEPS.map(
+            (step, index) => (
+              <div
+                className="customerJourneyItem"
+                key={step.id}
+              >
+                <article className="customerJourneyCard">
+                  <span className="customerJourneyNumber">
+                    {step.id}
+                  </span>
 
-                <h3>
-                  {step.title}
-                </h3>
+                  <h3>
+                    {step.title}
+                  </h3>
 
-                <p>
-                  {step.description}
-                </p>
-              </article>
+                  <p>
+                    {step.description}
+                  </p>
+                </article>
 
-              {index < JOURNEY_STEPS.length - 1 && (
-                <div className="customerJourneyConnector">
-                  <span />
-                  <b>→</b>
-                </div>
-              )}
-            </div>
-          ))}
+                {index <
+                  JOURNEY_STEPS.length -
+                    1 && (
+                  <div
+                    className="customerJourneyConnector"
+                    aria-hidden="true"
+                  >
+                    <span />
+
+                    <b>
+                      →
+                    </b>
+                  </div>
+                )}
+              </div>
+            )
+          )}
         </div>
 
-        {/* FOOTER */}
+        {/* ================================================
+            FOOTER
+            ================================================ */}
 
         <div className="customerJourneyFooter">
           <div>
@@ -117,7 +134,8 @@ export default function CustomerJourney() {
             </small>
 
             <strong>
-              Explore first, or begin planning your system now.
+              Explore first, or begin planning
+              your system now.
             </strong>
           </div>
 
@@ -127,7 +145,10 @@ export default function CustomerJourney() {
               className="customerJourneySecondary"
             >
               Explore Products
-              <span>↗</span>
+
+              <span aria-hidden="true">
+                ↗
+              </span>
             </Link>
 
             <Link
@@ -135,7 +156,10 @@ export default function CustomerJourney() {
               className="customerJourneyPrimary"
             >
               Build Your System
-              <span>→</span>
+
+              <span aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>

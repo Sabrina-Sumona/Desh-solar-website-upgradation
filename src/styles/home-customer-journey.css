@@ -8,12 +8,20 @@
   overflow: hidden;
 
   padding:
-    95px 5vw 90px;
+    95px 5vw
+    90px;
 
   border-bottom:
-    1px solid rgba(255, 255, 255, 0.06);
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
 
-  color: #f4f8fa;
+  color:
+    #f4f8fa;
 
   background:
     linear-gradient(
@@ -24,9 +32,14 @@
 }
 
 .customerJourneyInner {
-  width: min(1500px, 100%);
+  width:
+    min(
+      1500px,
+      100%
+    );
 
-  margin: 0 auto;
+  margin:
+    0 auto;
 }
 
 /* =========================================================
@@ -40,28 +53,53 @@
     minmax(0, 1.3fr)
     minmax(280px, 0.7fr);
 
-  align-items: end;
+  align-items:
+    end;
 
-  gap: 60px;
+  gap:
+    60px;
 
-  margin-bottom: 34px;
+  margin-bottom:
+    34px;
 }
 
 .customerJourneyEyebrow {
-  margin-bottom: 12px;
+  margin-bottom:
+    12px;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
-  font-size: 9px;
-  font-weight: 900;
+  font-size:
+    11px;
 
-  letter-spacing: 0.18em;
+  font-weight:
+    900;
 
-  text-transform: uppercase;
+  line-height:
+    1.2;
+
+  letter-spacing:
+    0.16em;
+
+  text-transform:
+    uppercase;
+
+  text-shadow:
+    0 0 10px
+    rgba(
+      145,
+      239,
+      91,
+      0.15
+    );
 }
 
 .customerJourneyHeader h2 {
   margin: 0;
+
+  color:
+    #f3f7f9;
 
   font-size:
     clamp(
@@ -70,25 +108,47 @@
       74px
     );
 
-  line-height: 0.95;
+  font-weight:
+    900;
 
-  letter-spacing: -0.05em;
+  line-height:
+    0.95;
+
+  letter-spacing:
+    -0.05em;
 }
 
 .customerJourneyHeader h2 span {
-  color: var(--green-2);
+  color:
+    var(--green-2);
+
+  text-shadow:
+    0 0 22px
+    rgba(
+      145,
+      239,
+      91,
+      0.05
+    );
 }
 
 .customerJourneyHeader > p {
-  max-width: 420px;
+  max-width:
+    440px;
 
   margin: 0;
 
-  color: #8297a1;
+  color:
+    #a7bac3;
 
-  font-size: 12px;
+  font-size:
+    15px;
 
-  line-height: 1.65;
+  font-weight:
+    500;
+
+  line-height:
+    1.7;
 }
 
 /* =========================================================
@@ -104,13 +164,16 @@
       minmax(0, 1fr)
     );
 
-  gap: 10px;
+  gap:
+    10px;
 }
 
 .customerJourneyItem {
-  position: relative;
+  position:
+    relative;
 
-  min-width: 0;
+  min-width:
+    0;
 }
 
 /* =========================================================
@@ -118,30 +181,60 @@
    ========================================================= */
 
 .customerJourneyCard {
-  min-height: 175px;
+  min-height:
+    175px;
 
   display: flex;
 
-  flex-direction: column;
+  flex-direction:
+    column;
 
-  padding: 16px;
+  padding:
+    17px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
 
-  border-radius: 16px;
+  border-radius:
+    16px;
 
   background:
     linear-gradient(
       145deg,
-      rgba(10, 28, 37, 0.96),
-      rgba(6, 20, 28, 0.98)
+      rgba(
+        10,
+        28,
+        37,
+        0.96
+      ),
+      rgba(
+        6,
+        20,
+        28,
+        0.98
+      )
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(
+      255,
+      255,
+      255,
+      0.018
     );
 
   transition:
     transform 0.22s ease,
-    border-color 0.22s ease;
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
 .customerJourneyCard:hover {
@@ -149,59 +242,157 @@
     translateY(-3px);
 
   border-color:
-    rgba(145, 239, 91, 0.22);
+    rgba(
+      145,
+      239,
+      91,
+      0.27
+    );
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(
+        12,
+        31,
+        40,
+        0.98
+      ),
+      rgba(
+        6,
+        21,
+        28,
+        0.99
+      )
+    );
+
+  box-shadow:
+    0 14px 30px
+    rgba(
+      0,
+      0,
+      0,
+      0.16
+    ),
+    0 0 16px
+    rgba(
+      145,
+      239,
+      91,
+      0.025
+    );
 }
 
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
 .customerJourneyNumber {
-  width: 28px;
-  height: 28px;
+  width:
+    30px;
 
-  display: grid;
+  height:
+    30px;
 
-  place-items: center;
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  flex:
+    0 0 auto;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.15);
+    rgba(
+      145,
+      239,
+      91,
+      0.22
+    );
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   color:
     var(--green-2);
 
-  font-size: 7px;
+  background:
+    rgba(
+      145,
+      239,
+      91,
+      0.035
+    );
 
-  font-weight: 900;
+  box-shadow:
+    inset 0 0 12px
+    rgba(
+      145,
+      239,
+      91,
+      0.02
+    );
+
+  font-size:
+    9px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1;
 }
+
+/* =========================================================
+   CARD TITLE
+   ========================================================= */
 
 .customerJourneyCard h3 {
   margin:
-    auto 0 0;
+    auto 0
+    0;
 
-  padding-top: 28px;
+  padding-top:
+    28px;
 
   color:
-    #edf4f6;
+    #f1f6f8;
 
   font-size:
     22px;
 
-  line-height: 1;
+  font-weight:
+    850;
+
+  line-height:
+    1;
 
   letter-spacing:
     -0.035em;
 }
 
+/* =========================================================
+   CARD DESCRIPTION
+   ========================================================= */
+
 .customerJourneyCard p {
   margin:
-    9px 0 0;
+    10px 0
+    0;
 
   color:
-    #70858f;
+    #9eb1ba;
 
-  font-size: 8px;
+  font-size:
+    11px;
 
-  line-height: 1.5;
+  font-weight:
+    500;
+
+  line-height:
+    1.55;
 }
 
 /* =========================================================
@@ -209,41 +400,71 @@
    ========================================================= */
 
 .customerJourneyConnector {
-  position: absolute;
+  position:
+    absolute;
 
-  z-index: 3;
+  z-index:
+    3;
 
-  top: 50%;
-  right: -14px;
+  top:
+    50%;
 
-  width: 18px;
+  right:
+    -14px;
 
-  display: flex;
+  width:
+    18px;
 
-  align-items: center;
+  display:
+    flex;
 
-  justify-content: center;
+  align-items:
+    center;
+
+  justify-content:
+    center;
 
   transform:
     translateY(-50%);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 }
 
 .customerJourneyConnector span {
-  position: absolute;
+  position:
+    absolute;
 
-  width: 18px;
-  height: 1px;
+  width:
+    18px;
+
+  height:
+    1px;
 
   background:
-    rgba(145, 239, 91, 0.18);
+    rgba(
+      145,
+      239,
+      91,
+      0.26
+    );
+
+  box-shadow:
+    0 0 7px
+    rgba(
+      145,
+      239,
+      91,
+      0.08
+    );
 }
 
 .customerJourneyConnector b {
-  position: relative;
+  position:
+    relative;
 
-  padding: 2px;
+  padding:
+    2px;
 
   color:
     var(--green-2);
@@ -251,7 +472,20 @@
   background:
     #07131a;
 
-  font-size: 9px;
+  font-size:
+    11px;
+
+  font-weight:
+    900;
+
+  text-shadow:
+    0 0 8px
+    rgba(
+      145,
+      239,
+      91,
+      0.12
+    );
 }
 
 /* =========================================================
@@ -259,56 +493,92 @@
    ========================================================= */
 
 .customerJourneyFooter {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
-  gap: 30px;
+  gap:
+    30px;
 
-  margin-top: 12px;
+  margin-top:
+    12px;
 
   padding:
-    16px 18px;
+    17px 18px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.09);
+    rgba(
+      145,
+      239,
+      91,
+      0.13
+    );
 
-  border-radius: 15px;
+  border-radius:
+    15px;
 
   background:
     linear-gradient(
       90deg,
-      rgba(145, 239, 91, 0.025),
-      rgba(255, 255, 255, 0.01)
+      rgba(
+        145,
+        239,
+        91,
+        0.035
+      ),
+      rgba(
+        255,
+        255,
+        255,
+        0.012
+      )
     );
 }
 
 .customerJourneyFooter small {
-  display: block;
+  display:
+    block;
 
-  margin-bottom: 4px;
+  margin-bottom:
+    6px;
 
   color:
-    #617883;
+    #8ea4ae;
 
-  font-size: 5px;
+  font-size:
+    8px;
 
-  font-weight: 900;
+  font-weight:
+    900;
+
+  line-height:
+    1.2;
 
   letter-spacing:
     0.12em;
+
+  text-transform:
+    uppercase;
 }
 
 .customerJourneyFooter strong {
   color:
-    #d8e4e8;
+    #e2ebee;
 
-  font-size: 10px;
+  font-size:
+    12px;
 
-  font-weight: 750;
+  font-weight:
+    750;
+
+  line-height:
+    1.45;
 }
 
 /* =========================================================
@@ -316,64 +586,123 @@
    ========================================================= */
 
 .customerJourneyActions {
-  display: flex;
+  display:
+    flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: 8px;
+  gap:
+    8px;
 }
 
 .customerJourneyPrimary,
 .customerJourneySecondary {
-  min-height: 40px;
+  min-height:
+    42px;
 
-  display: inline-flex;
+  display:
+    inline-flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
-  gap: 20px;
+  gap:
+    20px;
 
   padding:
-    0 14px;
+    0 15px;
 
-  border-radius: 999px;
+  border-radius:
+    999px;
 
-  font-size: 7px;
+  font-size:
+    9px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  white-space: nowrap;
+  line-height:
+    1.2;
+
+  white-space:
+    nowrap;
 
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
+
+/* =========================================================
+   PRIMARY ACTION
+   ========================================================= */
 
 .customerJourneyPrimary {
   border:
     1px solid
-    rgba(145, 239, 91, 0.34);
+    rgba(
+      145,
+      239,
+      91,
+      0.42
+    );
 
-  color: #efffe8;
+  color:
+    #f2ffec;
 
   background:
-    rgba(145, 239, 91, 0.055);
+    rgba(
+      145,
+      239,
+      91,
+      0.065
+    );
+
+  box-shadow:
+    inset 0 0 14px
+    rgba(
+      145,
+      239,
+      91,
+      0.025
+    );
 }
+
+/* =========================================================
+   SECONDARY ACTION
+   ========================================================= */
 
 .customerJourneySecondary {
   border:
     1px solid
-    rgba(255, 255, 255, 0.075);
+    rgba(
+      255,
+      255,
+      255,
+      0.095
+    );
 
   color:
-    #a9bbc2;
+    #c8d6dc;
 
   background:
-    rgba(255, 255, 255, 0.018);
+    rgba(
+      255,
+      255,
+      255,
+      0.022
+    );
 }
+
+/* =========================================================
+   ACTION HOVERS
+   ========================================================= */
 
 .customerJourneyPrimary:hover,
 .customerJourneySecondary:hover {
@@ -383,15 +712,50 @@
 
 .customerJourneyPrimary:hover {
   border-color:
-    rgba(145, 239, 91, 0.65);
+    rgba(
+      145,
+      239,
+      91,
+      0.72
+    );
 
   background:
-    rgba(145, 239, 91, 0.1);
+    rgba(
+      145,
+      239,
+      91,
+      0.11
+    );
+
+  box-shadow:
+    0 0 18px
+    rgba(
+      145,
+      239,
+      91,
+      0.05
+    );
 }
 
 .customerJourneySecondary:hover {
   border-color:
-    rgba(145, 239, 91, 0.24);
+    rgba(
+      145,
+      239,
+      91,
+      0.28
+    );
+
+  color:
+    #f0f6f8;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.035
+    );
 }
 
 .customerJourneyPrimary span,
@@ -399,7 +763,17 @@
   color:
     var(--green-2);
 
-  font-size: 13px;
+  font-size:
+    14px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.customerJourneyPrimary:hover span,
+.customerJourneySecondary:hover span {
+  transform:
+    translateX(3px);
 }
 
 /* =========================================================
@@ -407,18 +781,28 @@
    ========================================================= */
 
 @media (
-  max-width: 1150px
+  max-width:
+    1150px
 ) {
   .customerJourneyTrack {
     grid-template-columns:
       repeat(
         3,
-        minmax(0, 1fr)
+        minmax(
+          0,
+          1fr
+        )
       );
   }
 
   .customerJourneyConnector {
-    display: none;
+    display:
+      none;
+  }
+
+  .customerJourneyCard p {
+    font-size:
+      12px;
   }
 }
 
@@ -427,21 +811,30 @@
    ========================================================= */
 
 @media (
-  max-width: 900px
+  max-width:
+    900px
 ) {
   .customerJourneyHeader {
     grid-template-columns:
       1fr;
 
-    gap: 18px;
+    gap:
+      18px;
+  }
+
+  .customerJourneyHeader > p {
+    max-width:
+      650px;
   }
 
   .customerJourneyFooter {
-    display: block;
+    display:
+      block;
   }
 
   .customerJourneyActions {
-    margin-top: 14px;
+    margin-top:
+      15px;
   }
 }
 
@@ -450,11 +843,13 @@
    ========================================================= */
 
 @media (
-  max-width: 720px
+  max-width:
+    720px
 ) {
   .customerJourney {
     padding:
-      75px 5vw 65px;
+      75px 5vw
+      65px;
   }
 
   .customerJourneyHeader h2 {
@@ -466,24 +861,70 @@
       );
   }
 
+  .customerJourneyHeader > p {
+    font-size:
+      14px;
+  }
+
   .customerJourneyTrack {
     grid-template-columns:
       1fr;
   }
 
   .customerJourneyCard {
-    min-height: 150px;
+    min-height:
+      150px;
+  }
+
+  .customerJourneyCard p {
+    font-size:
+      12px;
   }
 
   .customerJourneyActions {
-    flex-direction: column;
+    flex-direction:
+      column;
 
-    align-items: stretch;
+    align-items:
+      stretch;
   }
 
   .customerJourneyPrimary,
   .customerJourneySecondary {
-    width: 100%;
+    width:
+      100%;
+
+    font-size:
+      10px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (
+  max-width:
+    420px
+) {
+  .customerJourneyCard {
+    padding:
+      16px;
+  }
+
+  .customerJourneyCard h3 {
+    font-size:
+      21px;
+  }
+
+  .customerJourneyCard p {
+    font-size:
+      11px;
+  }
+
+  .customerJourneyFooter strong {
+    font-size:
+      11px;
   }
 }
 
@@ -493,11 +934,14 @@
 
 @media (
   prefers-reduced-motion:
-  reduce
+    reduce
 ) {
   .customerJourneyCard,
   .customerJourneyPrimary,
-  .customerJourneySecondary {
-    transition: none;
+  .customerJourneySecondary,
+  .customerJourneyPrimary span,
+  .customerJourneySecondary span {
+    transition:
+      none;
   }
 }
