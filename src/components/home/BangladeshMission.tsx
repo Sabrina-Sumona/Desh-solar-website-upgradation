@@ -1,36 +1,92 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type Region = {
-  name: string;
+type ProjectSpot = {
+  id: string;
   className: string;
 };
 
-const REGIONS: Region[] = [
+/*
+ * Project-region visualization.
+ *
+ * These points are intentionally presented as
+ * unlabeled project-region highlights.
+ *
+ * The distribution follows the approved visual
+ * reference rather than displaying city labels.
+ */
+const PROJECT_SPOTS: ProjectSpot[] = [
   {
-    name: "Panchbibi",
-    className:
-      "missionMarkerPanchbibi",
+    id: "spot-01",
+    className: "missionSpot01",
   },
   {
-    name: "Joypurhat",
-    className:
-      "missionMarkerJoypurhat",
+    id: "spot-02",
+    className: "missionSpot02",
   },
   {
-    name: "Sylhet",
-    className:
-      "missionMarkerSylhet",
+    id: "spot-03",
+    className: "missionSpot03",
   },
   {
-    name: "Dhaka",
-    className:
-      "missionMarkerDhaka",
+    id: "spot-04",
+    className: "missionSpot04",
   },
   {
-    name: "Chattogram",
-    className:
-      "missionMarkerChattogram",
+    id: "spot-05",
+    className: "missionSpot05",
+  },
+  {
+    id: "spot-06",
+    className: "missionSpot06",
+  },
+  {
+    id: "spot-07",
+    className: "missionSpot07",
+  },
+  {
+    id: "spot-08",
+    className: "missionSpot08",
+  },
+  {
+    id: "spot-09",
+    className: "missionSpot09",
+  },
+  {
+    id: "spot-10",
+    className: "missionSpot10",
+  },
+  {
+    id: "spot-11",
+    className: "missionSpot11",
+  },
+  {
+    id: "spot-12",
+    className: "missionSpot12",
+  },
+  {
+    id: "spot-13",
+    className: "missionSpot13",
+  },
+  {
+    id: "spot-14",
+    className: "missionSpot14",
+  },
+  {
+    id: "spot-15",
+    className: "missionSpot15",
+  },
+  {
+    id: "spot-16",
+    className: "missionSpot16",
+  },
+  {
+    id: "spot-17",
+    className: "missionSpot17",
+  },
+  {
+    id: "spot-18",
+    className: "missionSpot18",
   },
 ];
 
@@ -73,11 +129,9 @@ export default function BangladeshMission() {
           </h2>
 
           <p className="bangladeshMissionDescription">
-            Our clean-energy footprint reaches
-            multiple parts of Bangladesh. The
-            highlighted project regions include
-            Panchbibi, Joypurhat, Sylhet, Dhaka
-            and Chattogram.
+            Our clean-energy footprint reaches all
+            over Bangladesh. The highlighted spots
+            are our project regions.
           </p>
 
           <Link
@@ -86,7 +140,7 @@ export default function BangladeshMission() {
           >
             Explore Project Regions
 
-            <span>
+            <span aria-hidden="true">
               →
             </span>
           </Link>
@@ -100,12 +154,7 @@ export default function BangladeshMission() {
           <div className="bangladeshMissionMapHalo" />
 
           <div className="bangladeshMissionMapStage">
-            {/* ============================================
-                GLOW COPY
-
-                Decorative duplicate used only for
-                atmospheric map glow.
-                ============================================ */}
+            {/* Decorative glow copy */}
 
             <Image
               src="/assets/maps/bangladesh.svg"
@@ -117,72 +166,56 @@ export default function BangladeshMission() {
               sizes="(max-width: 720px) 88vw, (max-width: 950px) 78vw, (max-width: 1200px) 480px, 570px"
             />
 
-            {/* ============================================
-                MAIN BANGLADESH MAP
-                ============================================ */}
+            {/* Main map */}
 
             <Image
               src="/assets/maps/bangladesh.svg"
-              alt="Bangladesh project regions map"
+              alt="Bangladesh map with highlighted Desh Solar project regions"
               fill
               unoptimized
               className="bangladeshMissionMapImage"
               sizes="(max-width: 720px) 88vw, (max-width: 950px) 78vw, (max-width: 1200px) 480px, 570px"
             />
 
-            {/* ============================================
-                PROJECT REGION MARKERS
-                ============================================ */}
+            {/* Project-region dots */}
 
-            {REGIONS.map((region) => (
-              <div
-                key={region.name}
-                className={`bangladeshMissionMarker ${region.className}`}
-              >
-                <span
-                  className="bangladeshMissionMarkerAura"
+            {PROJECT_SPOTS.map(
+              (spot, index) => (
+                <div
+                  key={spot.id}
+                  className={`bangladeshMissionMarker ${spot.className}`}
+                  style={
+                    {
+                      "--mission-delay": `${(
+                        index * 0.17
+                      ).toFixed(2)}s`,
+                    } as React.CSSProperties
+                  }
                   aria-hidden="true"
-                />
+                >
+                  <span className="bangladeshMissionMarkerPulse" />
 
-                <span
-                  className="bangladeshMissionMarkerDot"
-                  aria-hidden="true"
-                />
+                  <span className="bangladeshMissionMarkerAura" />
 
-                <span className="bangladeshMissionMarkerLabel">
-                  {region.name}
-                </span>
-              </div>
-            ))}
+                  <span className="bangladeshMissionMarkerDot" />
+                </div>
+              )
+            )}
           </div>
 
           {/* ================================================
-              PROJECT REGION FOOTER
+              MAP FOOTER
               ================================================ */}
 
           <div className="bangladeshMissionRegionFooter">
+            <span className="bangladeshMissionRegionLine" />
+
             <span className="bangladeshMissionRegionLabel">
               Project Regions
             </span>
 
-            <span className="bangladeshMissionRegionNames">
-              Panchbibi
-
-              <i>•</i>
-
-              Joypurhat
-
-              <i>•</i>
-
-              Sylhet
-
-              <i>•</i>
-
-              Dhaka
-
-              <i>•</i>
-
-              Chattogram
+            <span className="bangladeshMissionRegionText">
+              Highlighted across Bangladesh
             </span>
           </div>
         </div>

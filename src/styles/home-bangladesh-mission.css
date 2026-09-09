@@ -7,28 +7,52 @@
   position: relative;
   isolation: isolate;
 
-  min-height: min(900px, 92vh);
+  min-height:
+    min(
+      900px,
+      92vh
+    );
 
   display: flex;
   align-items: center;
 
   overflow: hidden;
 
-  padding: 90px 5vw 80px;
+  padding:
+    90px 5vw
+    80px;
 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
 
-  color: #f5f8f9;
+  color:
+    #f5f8f9;
 
   background:
     radial-gradient(
       circle at 72% 46%,
-      rgba(91, 171, 73, 0.075),
+      rgba(
+        91,
+        171,
+        73,
+        0.075
+      ),
       transparent 25%
     ),
     radial-gradient(
       circle at 50% 100%,
-      rgba(28, 77, 63, 0.08),
+      rgba(
+        28,
+        77,
+        63,
+        0.08
+      ),
       transparent 35%
     ),
     linear-gradient(
@@ -48,9 +72,11 @@
 
   border-radius: 50%;
 
-  filter: blur(160px);
+  filter:
+    blur(160px);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 
   z-index: -1;
 }
@@ -62,7 +88,13 @@
   right: 10%;
   top: 15%;
 
-  background: rgba(145, 239, 91, 0.045);
+  background:
+    rgba(
+      145,
+      239,
+      91,
+      0.045
+    );
 }
 
 .bangladeshMissionAmbientTwo {
@@ -72,7 +104,13 @@
   left: -240px;
   bottom: -220px;
 
-  background: rgba(89, 189, 255, 0.035);
+  background:
+    rgba(
+      89,
+      189,
+      255,
+      0.035
+    );
 }
 
 /* =========================================================
@@ -80,19 +118,36 @@
    ========================================================= */
 
 .bangladeshMissionInner {
-  width: min(1640px, 100%);
+  width:
+    min(
+      1640px,
+      100%
+    );
 
-  margin: 0 auto;
+  margin:
+    0 auto;
 
   display: grid;
 
   grid-template-columns:
-    minmax(0, 0.96fr)
-    minmax(520px, 1.04fr);
+    minmax(
+      0,
+      0.96fr
+    )
+    minmax(
+      520px,
+      1.04fr
+    );
 
-  align-items: center;
+  align-items:
+    center;
 
-  gap: clamp(50px, 6vw, 120px);
+  gap:
+    clamp(
+      50px,
+      6vw,
+      120px
+    );
 }
 
 /* =========================================================
@@ -104,21 +159,44 @@
 
   z-index: 5;
 
-  max-width: 800px;
+  max-width:
+    800px;
 }
 
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
 .bangladeshMissionEyebrow {
-  margin-bottom: 14px;
+  margin-bottom:
+    15px;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
-  font-size: 9px;
+  font-size:
+    11px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  letter-spacing: 0.13em;
+  line-height:
+    1.2;
 
-  text-transform: uppercase;
+  letter-spacing:
+    0.14em;
+
+  text-transform:
+    uppercase;
+
+  text-shadow:
+    0 0 12px
+    rgba(
+      145,
+      239,
+      91,
+      0.16
+    );
 }
 
 /* =========================================================
@@ -130,35 +208,54 @@
 
   display: flex;
 
-  flex-direction: column;
+  flex-direction:
+    column;
 
-  align-items: flex-start;
+  align-items:
+    flex-start;
 
-  font-size: clamp(72px, 7vw, 126px);
+  font-size:
+    clamp(
+      72px,
+      7vw,
+      126px
+    );
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  line-height: 0.78;
+  line-height:
+    0.78;
 
-  letter-spacing: -0.075em;
+  letter-spacing:
+    -0.075em;
 
-  text-transform: uppercase;
+  text-transform:
+    uppercase;
 }
 
 .bangladeshMissionTitle > span {
-  display: block;
+  display:
+    block;
 }
 
 .bangladeshMissionTitleWhite {
-  color: #f2f6f7;
+  color:
+    #f3f7f8;
 }
 
 .bangladeshMissionTitleGreen {
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
   text-shadow:
-    0 0 40px
-    rgba(145, 239, 91, 0.08);
+    0 0 42px
+    rgba(
+      145,
+      239,
+      91,
+      0.09
+    );
 }
 
 /* =========================================================
@@ -166,15 +263,23 @@
    ========================================================= */
 
 .bangladeshMissionDescription {
-  max-width: 750px;
+  max-width:
+    710px;
 
-  margin: 30px 0 0;
+  margin:
+    30px 0 0;
 
-  color: #7ea0b0;
+  color:
+    #a5bac3;
 
-  font-size: 11px;
+  font-size:
+    15px;
 
-  line-height: 1.65;
+  font-weight:
+    500;
+
+  line-height:
+    1.7;
 }
 
 /* =========================================================
@@ -182,35 +287,70 @@
    ========================================================= */
 
 .bangladeshMissionAction {
-  width: fit-content;
+  width:
+    fit-content;
 
-  min-height: 44px;
+  min-height:
+    46px;
 
-  display: inline-flex;
+  display:
+    inline-flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: space-between;
+  justify-content:
+    space-between;
 
-  gap: 28px;
+  gap:
+    28px;
 
-  margin-top: 18px;
+  margin-top:
+    20px;
 
-  padding: 0 18px;
+  padding:
+    0 19px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.42);
+    rgba(
+      145,
+      239,
+      91,
+      0.46
+    );
 
-  border-radius: 999px;
+  border-radius:
+    999px;
 
-  color: #f0ffe9;
+  color:
+    #f3ffed;
 
-  background: rgba(145, 239, 91, 0.055);
+  background:
+    rgba(
+      145,
+      239,
+      91,
+      0.065
+    );
 
-  font-size: 7px;
+  box-shadow:
+    inset 0 0 18px
+    rgba(
+      145,
+      239,
+      91,
+      0.025
+    );
 
-  font-weight: 900;
+  font-size:
+    10px;
+
+  font-weight:
+    900;
+
+  line-height:
+    1.2;
 
   transition:
     transform 0.2s ease,
@@ -220,21 +360,49 @@
 }
 
 .bangladeshMissionAction:hover {
-  transform: translateY(-2px);
+  transform:
+    translateY(-2px);
 
-  border-color: rgba(145, 239, 91, 0.75);
+  border-color:
+    rgba(
+      145,
+      239,
+      91,
+      0.78
+    );
 
-  background: rgba(145, 239, 91, 0.095);
+  background:
+    rgba(
+      145,
+      239,
+      91,
+      0.11
+    );
 
   box-shadow:
-    0 0 30px
-    rgba(145, 239, 91, 0.06);
+    0 0 28px
+    rgba(
+      145,
+      239,
+      91,
+      0.07
+    );
 }
 
 .bangladeshMissionAction span {
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
-  font-size: 14px;
+  font-size:
+    16px;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.bangladeshMissionAction:hover span {
+  transform:
+    translateX(3px);
 }
 
 /* =========================================================
@@ -244,15 +412,19 @@
 .bangladeshMissionVisual {
   position: relative;
 
-  min-width: 0;
+  min-width:
+    0;
 
   display: flex;
 
-  flex-direction: column;
+  flex-direction:
+    column;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: center;
+  justify-content:
+    center;
 }
 
 /* =========================================================
@@ -267,25 +439,46 @@
   top: 44%;
   left: 50%;
 
-  width: 68%;
+  width: 72%;
 
-  aspect-ratio: 1;
+  aspect-ratio:
+    1;
 
-  transform: translate(-50%, -50%);
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(145, 239, 91, 0.09) 0%,
-      rgba(145, 239, 91, 0.035) 28%,
-      transparent 67%
+      rgba(
+        145,
+        239,
+        91,
+        0.11
+      )
+      0%,
+      rgba(
+        145,
+        239,
+        91,
+        0.045
+      )
+      28%,
+      transparent
+      67%
     );
 
-  filter: blur(32px);
+  filter:
+    blur(32px);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 }
 
 /* =========================================================
@@ -293,15 +486,23 @@
    ========================================================= */
 
 .bangladeshMissionMapStage {
-  position: relative;
+  position:
+    relative;
 
-  z-index: 2;
+  z-index:
+    2;
 
-  width: min(535px, 82%);
+  width:
+    min(
+      555px,
+      84%
+    );
 
-  aspect-ratio: 0.72;
+  aspect-ratio:
+    0.72;
 
-  margin: 0 auto;
+  margin:
+    0 auto;
 }
 
 /* =========================================================
@@ -313,12 +514,17 @@
 
   inset: 0;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  object-fit: contain;
+  height:
+    100%;
 
-  opacity: 0.28;
+  object-fit:
+    contain;
+
+  opacity:
+    0.34;
 
   filter:
     brightness(0)
@@ -327,12 +533,14 @@
     sepia(30%)
     saturate(1300%)
     hue-rotate(42deg)
-    brightness(108%)
+    brightness(112%)
     blur(10px);
 
-  transform: scale(1.018);
+  transform:
+    scale(1.022);
 
-  pointer-events: none;
+  pointer-events:
+    none;
 }
 
 /* =========================================================
@@ -344,34 +552,50 @@
 
   inset: 0;
 
-  width: 100%;
-  height: 100%;
+  width:
+    100%;
 
-  object-fit: contain;
+  height:
+    100%;
 
-  opacity: 0.9;
+  object-fit:
+    contain;
+
+  opacity:
+    0.96;
 
   filter:
-    brightness(0.46)
+    brightness(0.51)
     sepia(0.32)
-    saturate(2.1)
+    saturate(2.25)
     hue-rotate(53deg)
-    brightness(1.08)
-    contrast(1.05)
+    brightness(1.1)
+    contrast(1.08)
     drop-shadow(
       0 0 2px
-      rgba(145, 239, 91, 0.65)
+      rgba(
+        145,
+        239,
+        91,
+        0.72
+      )
     )
     drop-shadow(
-      0 0 11px
-      rgba(145, 239, 91, 0.1)
+      0 0 13px
+      rgba(
+        145,
+        239,
+        91,
+        0.14
+      )
     );
 
-  pointer-events: none;
+  pointer-events:
+    none;
 }
 
 /* =========================================================
-   MARKERS
+   PROJECT SPOTS
    ========================================================= */
 
 .bangladeshMissionMarker {
@@ -379,10 +603,70 @@
 
   z-index: 10;
 
-  width: 13px;
-  height: 13px;
+  width:
+    14px;
 
-  transform: translate(-50%, -50%);
+  height:
+    14px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  pointer-events:
+    none;
+}
+
+/* =========================================================
+   OUTER PULSE
+   ========================================================= */
+
+.bangladeshMissionMarkerPulse {
+  position:
+    absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width:
+    34px;
+
+  height:
+    34px;
+
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  border:
+    1px solid
+    rgba(
+      202,
+      255,
+      112,
+      0.3
+    );
+
+  border-radius:
+    50%;
+
+  opacity:
+    0;
+
+  animation:
+    bangladeshMarkerPulse
+    2.8s ease-out
+    infinite;
+
+  animation-delay:
+    var(
+      --mission-delay,
+      0s
+    );
 }
 
 /* =========================================================
@@ -390,33 +674,61 @@
    ========================================================= */
 
 .bangladeshMissionMarkerAura {
-  position: absolute;
+  position:
+    absolute;
 
   top: 50%;
   left: 50%;
 
-  width: 30px;
-  height: 30px;
+  width:
+    32px;
 
-  transform: translate(-50%, -50%);
+  height:
+    32px;
 
-  border-radius: 50%;
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
+
+  border-radius:
+    50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(199, 255, 113, 0.46) 0%,
-      rgba(145, 239, 91, 0.18) 26%,
-      transparent 65%
+      rgba(
+        220,
+        255,
+        144,
+        0.62
+      )
+      0%,
+      rgba(
+        145,
+        239,
+        91,
+        0.26
+      )
+      28%,
+      transparent
+      68%
     );
 
-  filter: blur(3px);
+  filter:
+    blur(3px);
 
   animation:
     bangladeshMarkerGlow
-    2.8s ease-in-out infinite;
+    2.8s ease-in-out
+    infinite;
 
-  pointer-events: none;
+  animation-delay:
+    var(
+      --mission-delay,
+      0s
+    );
 }
 
 /* =========================================================
@@ -424,183 +736,216 @@
    ========================================================= */
 
 .bangladeshMissionMarkerDot {
-  position: absolute;
+  position:
+    absolute;
 
   top: 50%;
   left: 50%;
 
-  width: 8px;
-  height: 8px;
+  width:
+    9px;
 
-  transform: translate(-50%, -50%);
+  height:
+    9px;
 
-  border-radius: 50%;
+  transform:
+    translate(
+      -50%,
+      -50%
+    );
 
-  background: #caff70;
-
-  box-shadow:
-    0 0 6px #caff70,
-    0 0 14px rgba(202, 255, 112, 0.7),
-    0 0 22px rgba(145, 239, 91, 0.28);
-
-  pointer-events: none;
-}
-
-/* =========================================================
-   MARKER LABEL
-   ========================================================= */
-
-.bangladeshMissionMarkerLabel {
-  position: absolute;
-
-  top: 50%;
-  left: 16px;
-
-  transform: translateY(-50%);
-
-  min-height: 20px;
-
-  display: inline-flex;
-
-  align-items: center;
-
-  padding: 0 8px;
-
-  border:
-    1px solid
-    rgba(145, 239, 91, 0.14);
-
-  border-radius: 999px;
-
-  color: #dbe6df;
+  border-radius:
+    50%;
 
   background:
-    rgba(4, 15, 17, 0.84);
+    #caff70;
 
   box-shadow:
-    0 5px 20px
-    rgba(0, 0, 0, 0.22);
-
-  backdrop-filter: blur(7px);
-
-  -webkit-backdrop-filter: blur(7px);
-
-  font-size: 6px;
-
-  font-weight: 800;
-
-  white-space: nowrap;
-
-  pointer-events: none;
+    0 0 6px
+      #caff70,
+    0 0 15px
+      rgba(
+        202,
+        255,
+        112,
+        0.78
+      ),
+    0 0 27px
+      rgba(
+        145,
+        239,
+        91,
+        0.34
+      );
 }
 
 /* =========================================================
-   PROJECT REGION LOCATIONS
+   PROJECT SPOT LOCATIONS
 
-   These positions are matched to the approved prototype
-   composition, not the previous map placement.
+   These coordinates visually follow the supplied
+   reference map distribution.
 
-   Panchbibi + Joypurhat = north-west / north-central
-   Sylhet                  = north-east
-   Dhaka                   = central
-   Chattogram              = south-east
+   No location labels are intentionally displayed.
    ========================================================= */
 
-/* PANCHBIBI */
+/* Existing highlighted project footprint */
 
-.missionMarkerPanchbibi {
+.missionSpot01 {
   top: 31.1%;
   left: 33.6%;
 }
 
-.missionMarkerPanchbibi
-.bangladeshMissionMarkerLabel {
-  top: 50%;
-  left: 16px;
-
-  transform: translateY(-50%);
-}
-
-/* JOYPURHAT */
-
-.missionMarkerJoypurhat {
+.missionSpot02 {
   top: 35.5%;
   left: 33.7%;
 }
 
-.missionMarkerJoypurhat
-.bangladeshMissionMarkerLabel {
-  top: 50%;
-  left: 16px;
-
-  transform: translateY(-50%);
-}
-
-/* SYLHET */
-
-.missionMarkerSylhet {
+.missionSpot03 {
   top: 34.3%;
   left: 69.4%;
 }
 
-.missionMarkerSylhet
-.bangladeshMissionMarkerLabel {
-  top: 50%;
-  left: 16px;
-
-  transform: translateY(-50%);
-}
-
-/* DHAKA */
-
-.missionMarkerDhaka {
+.missionSpot04 {
   top: 46.9%;
   left: 47.7%;
 }
 
-.missionMarkerDhaka
-.bangladeshMissionMarkerLabel {
-  top: 50%;
-  left: 16px;
-
-  transform: translateY(-50%);
-}
-
-/* CHATTOGRAM */
-
-.missionMarkerChattogram {
+.missionSpot05 {
   top: 63.1%;
   left: 69.8%;
 }
 
-.missionMarkerChattogram
-.bangladeshMissionMarkerLabel {
-  top: 50%;
-  left: 16px;
+/* Additional regions from approved reference */
 
-  transform: translateY(-50%);
+.missionSpot06 {
+  top: 25%;
+  left: 30.8%;
+}
+
+.missionSpot07 {
+  top: 26.2%;
+  left: 37.5%;
+}
+
+.missionSpot08 {
+  top: 27.8%;
+  left: 27.1%;
+}
+
+.missionSpot09 {
+  top: 33.2%;
+  left: 43.9%;
+}
+
+.missionSpot10 {
+  top: 37.7%;
+  left: 54.8%;
+}
+
+.missionSpot11 {
+  top: 41.7%;
+  left: 70%;
+}
+
+.missionSpot12 {
+  top: 44%;
+  left: 30.3%;
+}
+
+.missionSpot13 {
+  top: 44%;
+  left: 49.6%;
+}
+
+.missionSpot14 {
+  top: 54.4%;
+  left: 42.4%;
+}
+
+.missionSpot15 {
+  top: 55.2%;
+  left: 60.8%;
+}
+
+.missionSpot16 {
+  top: 57.6%;
+  left: 64.8%;
+}
+
+.missionSpot17 {
+  top: 63.2%;
+  left: 56%;
+}
+
+.missionSpot18 {
+  top: 78.3%;
+  left: 76.8%;
 }
 
 /* =========================================================
-   MARKER ANIMATION
+   MARKER ANIMATIONS
    ========================================================= */
 
 @keyframes bangladeshMarkerGlow {
   0%,
   100% {
-    opacity: 0.62;
+    opacity:
+      0.68;
 
     transform:
-      translate(-50%, -50%)
-      scale(0.92);
+      translate(
+        -50%,
+        -50%
+      )
+      scale(0.9);
   }
 
   50% {
-    opacity: 1;
+    opacity:
+      1;
 
     transform:
-      translate(-50%, -50%)
-      scale(1.12);
+      translate(
+        -50%,
+        -50%
+      )
+      scale(1.16);
+  }
+}
+
+@keyframes bangladeshMarkerPulse {
+  0% {
+    opacity:
+      0;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      )
+      scale(0.45);
+  }
+
+  18% {
+    opacity:
+      0.5;
+  }
+
+  75% {
+    opacity:
+      0;
+  }
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      )
+      scale(1.35);
   }
 }
 
@@ -609,87 +954,138 @@
    ========================================================= */
 
 .bangladeshMissionRegionFooter {
-  position: relative;
+  position:
+    relative;
 
-  z-index: 5;
+  z-index:
+    5;
 
   display: flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  justify-content: center;
+  justify-content:
+    center;
 
-  flex-wrap: wrap;
+  flex-wrap:
+    wrap;
 
-  gap: 10px;
+  gap:
+    9px;
 
-  margin-top: -8px;
+  margin-top:
+    -4px;
+}
+
+.bangladeshMissionRegionLine {
+  width:
+    25px;
+
+  height:
+    1px;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--green-2);
+
+  box-shadow:
+    0 0 9px
+    rgba(
+      145,
+      239,
+      91,
+      0.2
+    );
 }
 
 .bangladeshMissionRegionLabel {
-  min-height: 24px;
+  min-height:
+    26px;
 
-  display: inline-flex;
+  display:
+    inline-flex;
 
-  align-items: center;
+  align-items:
+    center;
 
-  padding: 0 10px;
+  padding:
+    0 11px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.19);
+    rgba(
+      145,
+      239,
+      91,
+      0.24
+    );
 
-  border-radius: 999px;
+  border-radius:
+    999px;
 
-  color: var(--green-2);
+  color:
+    var(--green-2);
 
   background:
-    rgba(145, 239, 91, 0.035);
+    rgba(
+      145,
+      239,
+      91,
+      0.045
+    );
 
-  font-size: 5px;
+  font-size:
+    8px;
 
-  font-weight: 900;
+  font-weight:
+    900;
 
-  letter-spacing: 0.08em;
+  line-height:
+    1;
 
-  text-transform: uppercase;
+  letter-spacing:
+    0.09em;
+
+  text-transform:
+    uppercase;
 }
 
-.bangladeshMissionRegionNames {
-  display: inline-flex;
+.bangladeshMissionRegionText {
+  color:
+    #94a9b2;
 
-  align-items: center;
+  font-size:
+    9px;
 
-  flex-wrap: wrap;
+  font-weight:
+    700;
 
-  gap: 5px;
-
-  color: #82979e;
-
-  font-size: 6px;
-
-  font-weight: 700;
-}
-
-.bangladeshMissionRegionNames i {
-  color: var(--green-2);
-
-  font-style: normal;
-
-  opacity: 0.55;
+  line-height:
+    1.3;
 }
 
 /* =========================================================
    LARGE DESKTOP
    ========================================================= */
 
-@media (min-width: 1700px) {
+@media (
+  min-width:
+    1700px
+) {
   .bangladeshMissionInner {
-    width: min(1700px, 94%);
+    width:
+      min(
+        1700px,
+        94%
+      );
   }
 
   .bangladeshMissionMapStage {
-    width: 570px;
+    width:
+      585px;
   }
 }
 
@@ -697,27 +1093,48 @@
    LAPTOP
    ========================================================= */
 
-@media (max-width: 1200px) {
+@media (
+  max-width:
+    1200px
+) {
   .bangladeshMission {
-    min-height: auto;
+    min-height:
+      auto;
 
-    padding: 100px 5vw;
+    padding:
+      100px 5vw;
   }
 
   .bangladeshMissionInner {
     grid-template-columns:
-      minmax(0, 0.92fr)
-      minmax(430px, 1.08fr);
+      minmax(
+        0,
+        0.92fr
+      )
+      minmax(
+        430px,
+        1.08fr
+      );
 
-    gap: 40px;
+    gap:
+      40px;
   }
 
   .bangladeshMissionTitle {
-    font-size: clamp(62px, 7vw, 92px);
+    font-size:
+      clamp(
+        62px,
+        7vw,
+        92px
+      );
   }
 
   .bangladeshMissionMapStage {
-    width: min(480px, 90%);
+    width:
+      min(
+        490px,
+        90%
+      );
   }
 }
 
@@ -725,39 +1142,60 @@
    TABLET
    ========================================================= */
 
-@media (max-width: 950px) {
+@media (
+  max-width:
+    950px
+) {
   .bangladeshMission {
-    padding: 90px 6vw 75px;
+    padding:
+      90px 6vw
+      75px;
   }
 
   .bangladeshMissionInner {
-    grid-template-columns: 1fr;
+    grid-template-columns:
+      1fr;
 
-    gap: 45px;
+    gap:
+      45px;
   }
 
   .bangladeshMissionContent {
-    max-width: 760px;
+    max-width:
+      760px;
   }
 
   .bangladeshMissionTitle {
-    font-size: clamp(65px, 12vw, 105px);
+    font-size:
+      clamp(
+        65px,
+        12vw,
+        105px
+      );
   }
 
   .bangladeshMissionDescription {
-    max-width: 680px;
+    max-width:
+      680px;
   }
 
   .bangladeshMissionVisual {
-    width: 100%;
+    width:
+      100%;
 
-    max-width: 680px;
+    max-width:
+      680px;
 
-    margin: 0 auto;
+    margin:
+      0 auto;
   }
 
   .bangladeshMissionMapStage {
-    width: min(480px, 78vw);
+    width:
+      min(
+        490px,
+        78vw
+      );
   }
 }
 
@@ -765,45 +1203,104 @@
    MOBILE
    ========================================================= */
 
-@media (max-width: 720px) {
+@media (
+  max-width:
+    720px
+) {
   .bangladeshMission {
-    padding: 75px 5vw 65px;
+    padding:
+      75px 5vw
+      65px;
   }
 
   .bangladeshMissionInner {
-    gap: 40px;
+    gap:
+      40px;
   }
 
   .bangladeshMissionEyebrow {
-    font-size: 8px;
+    font-size:
+      10px;
   }
 
   .bangladeshMissionTitle {
-    font-size: clamp(48px, 14.8vw, 82px);
+    font-size:
+      clamp(
+        48px,
+        14.8vw,
+        82px
+      );
 
-    line-height: 0.82;
+    line-height:
+      0.82;
   }
 
   .bangladeshMissionDescription {
-    margin-top: 24px;
+    margin-top:
+      24px;
 
-    font-size: 10px;
+    font-size:
+      14px;
+  }
+
+  .bangladeshMissionAction {
+    font-size:
+      10px;
   }
 
   .bangladeshMissionMapStage {
-    width: min(390px, 88vw);
+    width:
+      min(
+        400px,
+        88vw
+      );
+  }
+
+  .bangladeshMissionMarker {
+    width:
+      12px;
+
+    height:
+      12px;
+  }
+
+  .bangladeshMissionMarkerDot {
+    width:
+      8px;
+
+    height:
+      8px;
+  }
+
+  .bangladeshMissionMarkerAura {
+    width:
+      27px;
+
+    height:
+      27px;
+  }
+
+  .bangladeshMissionMarkerPulse {
+    width:
+      30px;
+
+    height:
+      30px;
   }
 
   .bangladeshMissionRegionFooter {
-    margin-top: 0;
+    margin-top:
+      4px;
   }
 
-  .bangladeshMissionMarkerLabel {
-    min-height: 18px;
+  .bangladeshMissionRegionLabel {
+    font-size:
+      8px;
+  }
 
-    padding: 0 6px;
-
-    font-size: 5px;
+  .bangladeshMissionRegionText {
+    font-size:
+      9px;
   }
 }
 
@@ -811,31 +1308,43 @@
    SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 460px) {
+@media (
+  max-width:
+    460px
+) {
   .bangladeshMissionTitle {
-    font-size: clamp(42px, 14.5vw, 64px);
+    font-size:
+      clamp(
+        42px,
+        14.5vw,
+        64px
+      );
+  }
+
+  .bangladeshMissionDescription {
+    font-size:
+      13px;
   }
 
   .bangladeshMissionAction {
-    width: 100%;
+    width:
+      100%;
 
-    justify-content: space-between;
+    justify-content:
+      space-between;
   }
 
   .bangladeshMissionRegionFooter {
-    display: block;
-
-    text-align: center;
+    justify-content:
+      flex-start;
   }
 
-  .bangladeshMissionRegionNames {
-    justify-content: center;
+  .bangladeshMissionRegionText {
+    width:
+      100%;
 
-    margin-top: 8px;
-  }
-
-  .bangladeshMissionMarkerLabel {
-    left: 13px;
+    padding-left:
+      34px;
   }
 }
 
@@ -843,12 +1352,19 @@
    REDUCED MOTION
    ========================================================= */
 
-@media (prefers-reduced-motion: reduce) {
-  .bangladeshMissionMarkerAura {
-    animation: none;
+@media (
+  prefers-reduced-motion:
+    reduce
+) {
+  .bangladeshMissionMarkerAura,
+  .bangladeshMissionMarkerPulse {
+    animation:
+      none;
   }
 
-  .bangladeshMissionAction {
-    transition: none;
+  .bangladeshMissionAction,
+  .bangladeshMissionAction span {
+    transition:
+      none;
   }
 }
