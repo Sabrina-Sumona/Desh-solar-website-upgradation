@@ -370,6 +370,9 @@
 
   z-index: 2460;
 
+  /* Override .navLinks { white-space: nowrap; } inside the dropdown. */
+  white-space: normal;
+
   top:
     calc(100% + 13px);
 
@@ -481,7 +484,11 @@
 
 .megaGroup,
 .megaFeature {
+  min-width: 0;
+
   padding: 16px;
+
+  white-space: normal;
 
   border:
     1px solid
@@ -655,6 +662,10 @@
 
   line-height:
     1.2;
+
+  white-space: normal;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .megaFeature p {
@@ -669,6 +680,9 @@
 
   line-height:
     1.55;
+
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .megaFeature > a {
