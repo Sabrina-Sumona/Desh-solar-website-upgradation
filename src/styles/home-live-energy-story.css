@@ -4,141 +4,75 @@
 
 .liveEnergyStory {
   position: relative;
-
   overflow: hidden;
-
-  padding:
-    110px 5vw 105px;
-
-  border-bottom:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.06
-    );
-
+  padding: 110px 5vw 105px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   color: #f4f8fa;
-
-  background:
-    linear-gradient(
-      180deg,
-      #071119,
-      #061018
-    );
-
-  transition:
-    background
-    0.5s ease;
+  background: linear-gradient(180deg, #071119, #061018);
+  transition: background 0.5s ease;
 }
 
 .liveEnergyStory--day {
   background:
     radial-gradient(
       circle at 30% 15%,
-      rgba(
-        255,
-        193,
-        87,
-        0.07
-      ),
-      transparent
-      34%
+      rgba(255, 193, 87, 0.07),
+      transparent 34%
     ),
-    linear-gradient(
-      180deg,
-      #08171e,
-      #061018
-    );
+    linear-gradient(180deg, #08171e, #061018);
 }
 
 .liveEnergyStory--twilight {
   background:
     radial-gradient(
       circle at 25% 15%,
-      rgba(
-        255,
-        142,
-        88,
-        0.07
-      ),
-      transparent
-      36%
+      rgba(255, 142, 88, 0.07),
+      transparent 36%
     ),
-    linear-gradient(
-      180deg,
-      #0b151d,
-      #071019
-    );
+    linear-gradient(180deg, #0b151d, #071019);
 }
 
 .liveEnergyStory--night {
   background:
     radial-gradient(
       circle at 70% 12%,
-      rgba(
-        89,
-        189,
-        255,
-        0.07
-      ),
-      transparent
-      30%
+      rgba(89, 189, 255, 0.07),
+      transparent 30%
     ),
-    linear-gradient(
-      180deg,
-      #050d15,
-      #050a10
-    );
+    linear-gradient(180deg, #050d15, #050a10);
 }
 
 .liveEnergyInner {
   position: relative;
   z-index: 2;
-
-  width:
-    min(
-      1500px,
-      100%
-    );
-
-  margin:
-    0 auto;
+  width: min(1500px, 100%);
+  margin: 0 auto;
 }
 
-/* Background glow */
+/* =========================================================
+   BACKGROUND GLOW
+   ========================================================= */
 
 .liveEnergyGlow {
   position: absolute;
-
   width: 520px;
   height: 520px;
-
   border-radius: 50%;
-
-  filter:
-    blur(125px);
-
+  filter: blur(125px);
   opacity: 0.09;
-
   pointer-events: none;
 }
 
 .liveEnergyGlowOne {
   top: 20%;
   left: -200px;
-
-  background:
-    #ffc157;
+  background: #ffc157;
 }
 
 .liveEnergyGlowTwo {
   right: -220px;
   bottom: 5%;
-
-  background:
-    #59bdff;
+  background: #59bdff;
 }
 
 /* =========================================================
@@ -147,91 +81,47 @@
 
 .liveEnergyHeader {
   display: grid;
-
-  grid-template-columns:
-    minmax(
-      0,
-      1.3fr
-    )
-    minmax(
-      300px,
-      0.7fr
-    );
-
-  align-items:
-    end;
-
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+  align-items: end;
   gap: 65px;
-
-  margin-bottom:
-    55px;
+  margin-bottom: 55px;
 }
 
 .liveEnergyEyebrow {
-  margin-bottom:
-    14px;
-
-  color:
-    var(--green-2);
-
-  font-size:
-    10px;
-
+  margin-bottom: 14px;
+  color: var(--green-2);
+  font-size: 11px;
   font-weight: 900;
-
-  letter-spacing:
-    0.18em;
-
-  text-transform:
-    uppercase;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(145, 239, 91, 0.12);
 }
 
 .liveEnergyHeader h2 {
   margin: 0;
-
-  font-size:
-    clamp(
-      48px,
-      6vw,
-      92px
-    );
-
+  font-size: clamp(48px, 6vw, 92px);
   line-height: 0.94;
-
-  letter-spacing:
-    -0.055em;
+  letter-spacing: -0.055em;
 }
 
 .liveEnergyHeader h2 span {
-  color:
-    var(--green-2);
+  color: var(--green-2);
 }
 
 .liveEnergyHeaderCopy p {
-  margin:
-    0 0 12px;
-
-  color:
-    #91a5af;
-
-  font-size:
-    15px;
-
+  margin: 0 0 13px;
+  color: #a5b8c1;
+  font-size: 15px;
   line-height: 1.7;
 }
 
 .liveEnergyHeaderCopy small {
-  color:
-    #617782;
-
-  font-size:
-    8px;
-
-  letter-spacing:
-    0.06em;
-
-  text-transform:
-    uppercase;
+  color: #7f96a0;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.55;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
 }
 
 /* =========================================================
@@ -240,21 +130,9 @@
 
 .liveEnergyExperience {
   display: grid;
-
-  grid-template-columns:
-    minmax(
-      0,
-      1.35fr
-    )
-    minmax(
-      390px,
-      0.65fr
-    );
-
+  grid-template-columns: minmax(0, 1.35fr) minmax(390px, 0.65fr);
   gap: 20px;
-
-  align-items:
-    stretch;
+  align-items: stretch;
 }
 
 /* =========================================================
@@ -263,230 +141,90 @@
 
 .liveEnergyVisual {
   position: relative;
-
-  min-height: 650px;
-
+  min-height: 700px;
   overflow: hidden;
-
   padding: 24px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.075
-    );
-
-  border-radius:
-    28px;
-
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 28px;
   background:
     linear-gradient(
       160deg,
-      rgba(
-        15,
-        35,
-        45,
-        0.96
-      ),
-      rgba(
-        5,
-        18,
-        25,
-        0.98
-      )
+      rgba(15, 35, 45, 0.96),
+      rgba(5, 18, 25, 0.98)
     );
 }
 
-.liveEnergyStory--day
-.liveEnergyVisual {
+.liveEnergyStory--day .liveEnergyVisual {
   background:
     linear-gradient(
       180deg,
-      rgba(
-        24,
-        48,
-        59,
-        0.98
-      ),
-      rgba(
-        7,
-        23,
-        31,
-        0.98
-      )
+      rgba(24, 48, 59, 0.98),
+      rgba(7, 23, 31, 0.98)
     );
 }
 
-.liveEnergyStory--twilight
-.liveEnergyVisual {
+.liveEnergyStory--twilight .liveEnergyVisual {
   background:
     linear-gradient(
       180deg,
-      rgba(
-        38,
-        41,
-        51,
-        0.98
-      ),
-      rgba(
-        8,
-        21,
-        29,
-        0.98
-      )
+      rgba(38, 41, 51, 0.98),
+      rgba(8, 21, 29, 0.98)
     );
 }
 
-.liveEnergyStory--night
-.liveEnergyVisual {
+.liveEnergyStory--night .liveEnergyVisual {
   background:
     linear-gradient(
       180deg,
-      rgba(
-        7,
-        20,
-        31,
-        0.98
-      ),
-      rgba(
-        4,
-        13,
-        20,
-        0.99
-      )
+      rgba(7, 20, 31, 0.98),
+      rgba(4, 13, 20, 0.99)
     );
 }
 
 .liveEnergyVisualTop {
   position: relative;
   z-index: 5;
-
   display: flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
-
+  align-items: flex-start;
+  justify-content: space-between;
   gap: 20px;
 }
 
-.liveEnergyVisualTop small {
-  display: block;
-
-  color:
-    #657d88;
-
-  font-size:
-    7px;
-
-  font-weight: 900;
-
-  letter-spacing:
-    0.12em;
-}
-
-.liveEnergyVisualTop strong {
-  display: block;
-
-  margin-top:
-    4px;
-
-  color:
-    #eef5f7;
-
-  font-size:
-    20px;
+.liveEnergyVisualTop--phaseOnly {
+  justify-content: flex-end;
 }
 
 .liveEnergyPhaseBadge {
-  display:
-    inline-flex;
-
-  align-items:
-    center;
-
+  display: inline-flex;
+  align-items: center;
   gap: 7px;
-
-  padding:
-    8px 11px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.08
-    );
-
-  border-radius:
-    999px;
-
-  color:
-    #a1b1b9;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.025
-    );
-
-  font-size:
-    8px;
-
-  font-weight:
-    800;
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: #b8c7cd;
+  background: rgba(255, 255, 255, 0.035);
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .liveEnergyPhaseBadge span {
   width: 7px;
   height: 7px;
-
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
 
-.liveEnergyPhaseBadge--day
-span {
-  background:
-    #ffd376;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      255,
-      211,
-      118,
-      0.8
-    );
+.liveEnergyPhaseBadge--day span {
+  background: #ffd376;
+  box-shadow: 0 0 10px rgba(255, 211, 118, 0.8);
 }
 
-.liveEnergyPhaseBadge--twilight
-span {
-  background:
-    #ff9c6a;
+.liveEnergyPhaseBadge--twilight span {
+  background: #ff9c6a;
 }
 
-.liveEnergyPhaseBadge--night
-span {
-  background:
-    #72ccff;
-
-  box-shadow:
-    0 0 10px
-    rgba(
-      114,
-      204,
-      255,
-      0.65
-    );
+.liveEnergyPhaseBadge--night span {
+  background: #72ccff;
+  box-shadow: 0 0 10px rgba(114, 204, 255, 0.65);
 }
 
 /* =========================================================
@@ -495,1016 +233,330 @@ span {
 
 .liveEnergySvg {
   position: absolute;
-
-  inset:
-    50px 10px 35px;
-
-  width:
-    calc(
-      100% - 20px
-    );
-
-  height:
-    calc(
-      100% - 85px
-    );
+  inset: 56px 12px 170px;
+  width: calc(100% - 24px);
+  height: calc(100% - 226px);
 }
 
-/* Celestial */
+/* =========================================================
+   CELESTIAL / HOUSE / SVG ELEMENTS
+   ========================================================= */
 
 .liveSunCore {
-  fill:
-    #ffd376;
+  fill: #ffd376;
 }
 
 .liveSunHalo {
-  fill:
-    rgba(
-      255,
-      211,
-      118,
-      0.08
-    );
-
-  stroke:
-    rgba(
-      255,
-      211,
-      118,
-      0.12
-    );
-
+  fill: rgba(255, 211, 118, 0.08);
+  stroke: rgba(255, 211, 118, 0.12);
   stroke-width: 1;
 }
 
 .liveMoon {
-  fill:
-    #dbeeff;
+  fill: #dbeeff;
 }
 
 .liveMoonCut {
-  fill:
-    #07131d;
+  fill: #07131d;
 }
 
 .liveStars {
-  fill:
-    rgba(
-      220,
-      238,
-      255,
-      0.8
-    );
-
-  transition:
-    opacity
-    0.45s ease;
+  fill: rgba(220, 238, 255, 0.8);
+  transition: opacity 0.45s ease;
 }
 
 .liveGround {
   fill: none;
-
-  stroke:
-    rgba(
-      145,
-      239,
-      91,
-      0.13
-    );
-
+  stroke: rgba(145, 239, 91, 0.13);
   stroke-width: 2;
 }
 
-/* House */
-
 .liveRoof {
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.09
-    );
-
-  stroke-width:
-    2;
+  stroke: rgba(255, 255, 255, 0.09);
+  stroke-width: 2;
 }
 
 .liveHouseWall {
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.08
-    );
-
-  stroke-width:
-    2;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 2;
 }
 
 .liveDoor {
-  fill:
-    #102630;
-
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.08
-    );
+  fill: #102630;
+  stroke: rgba(255, 255, 255, 0.08);
 }
 
 .liveDoorHandle {
-  fill:
-    var(--green-2);
+  fill: var(--green-2);
 }
 
 .liveWindow rect {
-  fill:
-    rgba(
-      255,
-      211,
-      118,
-      0.13
-    );
-
-  stroke:
-    rgba(
-      255,
-      211,
-      118,
-      0.28
-    );
-
-  transition:
-    fill
-    0.4s ease;
+  fill: rgba(255, 211, 118, 0.13);
+  stroke: rgba(255, 211, 118, 0.28);
+  transition: fill 0.4s ease;
 }
 
-.liveEnergyStory--night
-.liveWindow rect {
-  fill:
-    rgba(
-      255,
-      211,
-      118,
-      0.32
-    );
-
-  filter:
-    drop-shadow(
-      0 0 6px
-      rgba(
-        255,
-        211,
-        118,
-        0.16
-      )
-    );
+.liveEnergyStory--night .liveWindow rect {
+  fill: rgba(255, 211, 118, 0.32);
+  filter: drop-shadow(0 0 6px rgba(255, 211, 118, 0.16));
 }
 
 .liveWindow line {
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.12
-    );
+  stroke: rgba(255, 255, 255, 0.12);
 }
 
-/* Panels */
-
 .livePanels polygon {
-  stroke:
-    rgba(
-      114,
-      204,
-      255,
-      0.38
-    );
-
-  stroke-width:
-    2;
+  stroke: rgba(114, 204, 255, 0.48);
+  stroke-width: 2;
 }
 
 .livePanels line {
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.18
-    );
-
-  stroke-width:
-    1;
+  stroke: rgba(255, 255, 255, 0.22);
+  stroke-width: 1;
 }
 
-/* Devices */
-
 .liveDevice rect {
-  fill:
-    #091922;
-
-  stroke:
-    rgba(
-      255,
-      255,
-      255,
-      0.12
-    );
-
-  stroke-width:
-    1.5;
+  fill: #091922;
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 1.5;
 }
 
 .liveDevice circle {
-  fill:
-    #07141c;
-
-  stroke:
-    rgba(
-      114,
-      204,
-      255,
-      0.28
-    );
+  fill: #07141c;
+  stroke: rgba(114, 204, 255, 0.32);
 }
 
 .liveDevice text {
-  fill:
-    #8ba0aa;
-
-  font-size:
-    8px;
-
-  font-weight:
-    800;
-
-  letter-spacing:
-    0.08em;
+  fill: #a1b4bd;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
 }
 
 .liveDeviceSymbol {
-  fill:
-    #72ccff !important;
-
-  font-size:
-    18px !important;
+  fill: #72ccff !important;
+  font-size: 18px !important;
 }
 
-/* Battery */
-
 .liveBatteryOutline {
-  fill:
-    transparent !important;
-
-  stroke:
-    rgba(
-      145,
-      239,
-      91,
-      0.35
-    ) !important;
+  fill: transparent !important;
+  stroke: rgba(145, 239, 91, 0.42) !important;
 }
 
 .liveBatteryFill {
-  fill:
-    var(--green-2)
-    !important;
-
-  opacity: 0.8;
-
-  transition:
-    y 0.4s ease,
-    height
-    0.4s ease;
+  fill: var(--green-2) !important;
+  opacity: 0.82;
+  transition: y 0.4s ease, height 0.4s ease;
 }
 
 .liveBattery text {
-  fill:
-    #dce7eb;
+  fill: #e7eff2;
+  font-size: 9px;
 }
 
-/* Loads */
-
 .liveLoadNode circle {
-  fill:
-    #081820;
-
-  stroke:
-    rgba(
-      145,
-      239,
-      91,
-      0.2
-    );
+  fill: #081820;
+  stroke: rgba(145, 239, 91, 0.25);
 }
 
 .liveLoadIcon {
-  fill:
-    var(--green-2);
-
-  font-size:
-    18px;
+  fill: var(--green-2);
+  font-size: 18px;
 }
-
-/* Grid */
 
 .liveGridTower path,
 .liveGridTower line {
   fill: none;
-
-  stroke:
-    rgba(
-      150,
-      177,
-      190,
-      0.42
-    );
-
-  stroke-width:
-    2;
+  stroke: rgba(150, 177, 190, 0.52);
+  stroke-width: 2;
 }
 
 /* =========================================================
-   ENERGY FLOW LINES
+   FLOW LINES
    ========================================================= */
 
 .liveFlowLine {
   fill: none;
-
-  stroke:
-    rgba(
-      120,
-      145,
-      157,
-      0.16
-    );
-
-  stroke-width:
-    2;
-
-  stroke-linecap:
-    round;
-
-  stroke-dasharray:
-    8 10;
-
-  transition:
-    stroke
-      0.3s ease,
-    opacity
-      0.3s ease;
-
-  opacity: 0.38;
+  stroke: rgba(120, 145, 157, 0.2);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 8 10;
+  transition: stroke 0.3s ease, opacity 0.3s ease;
+  opacity: 0.45;
 }
 
 .liveFlowLine.active {
   opacity: 1;
-
-  animation:
-    liveFlowForward
-    1.15s linear
-    infinite;
+  animation: liveFlowForward 1.15s linear infinite;
 }
 
 .liveFlowLine.reverse {
-  animation:
-    liveFlowReverse
-    1.15s linear
-    infinite;
+  animation: liveFlowReverse 1.15s linear infinite;
 }
 
 .liveFlowSolar.active {
-  stroke:
-    #ffd376;
-
-  filter:
-    drop-shadow(
-      0 0 5px
-      rgba(
-        255,
-        211,
-        118,
-        0.5
-      )
-    );
+  stroke: #ffd376;
+  filter: drop-shadow(0 0 5px rgba(255, 211, 118, 0.5));
 }
 
 .liveFlowLoad.active {
-  stroke:
-    #72ccff;
-
-  filter:
-    drop-shadow(
-      0 0 4px
-      rgba(
-        114,
-        204,
-        255,
-        0.4
-      )
-    );
+  stroke: #72ccff;
+  filter: drop-shadow(0 0 4px rgba(114, 204, 255, 0.4));
 }
 
 .liveFlowBattery.active {
-  stroke:
-    var(--green-2);
-
-  filter:
-    drop-shadow(
-      0 0 4px
-      rgba(
-        200,
-        255,
-        125,
-        0.4
-      )
-    );
+  stroke: var(--green-2);
+  filter: drop-shadow(0 0 4px rgba(200, 255, 125, 0.4));
 }
 
 .liveFlowGrid.active {
-  stroke:
-    #83bfe3;
-
-  filter:
-    drop-shadow(
-      0 0 4px
-      rgba(
-        131,
-        191,
-        227,
-        0.35
-      )
-    );
+  stroke: #83bfe3;
+  filter: drop-shadow(0 0 4px rgba(131, 191, 227, 0.35));
 }
 
 @keyframes liveFlowForward {
   from {
-    stroke-dashoffset:
-      36;
+    stroke-dashoffset: 36;
   }
 
   to {
-    stroke-dashoffset:
-      0;
+    stroke-dashoffset: 0;
   }
 }
 
 @keyframes liveFlowReverse {
   from {
-    stroke-dashoffset:
-      0;
+    stroke-dashoffset: 0;
   }
 
   to {
-    stroke-dashoffset:
-      36;
+    stroke-dashoffset: 36;
   }
 }
 
 .liveSvgLabel {
-  fill:
-    #5f7782;
-
-  font-size:
-    8px;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    0.12em;
+  fill: #879ca6;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
 }
 
-/* Legend */
+/* =========================================================
+   LEGEND
+   ========================================================= */
 
 .liveEnergyVisualLegend {
   position: absolute;
-
   z-index: 5;
-
   right: 22px;
-  bottom: 18px;
-
+  bottom: 150px;
   display: flex;
-
   gap: 16px;
 }
 
 .liveEnergyVisualLegend span {
   display: flex;
-
-  align-items:
-    center;
-
+  align-items: center;
   gap: 6px;
-
-  color:
-    #718791;
-
-  font-size:
-    7px;
-
-  font-weight:
-    800;
+  color: #99aeb7;
+  font-size: 9px;
+  font-weight: 800;
 }
 
 .liveEnergyVisualLegend i {
   width: 7px;
   height: 7px;
-
-  border-radius:
-    50%;
+  border-radius: 50%;
 }
 
 .legendSolar {
-  background:
-    #ffd376;
+  background: #ffd376;
 }
 
 .legendBattery {
-  background:
-    var(--green-2);
+  background: var(--green-2);
 }
 
 .legendGrid {
-  background:
-    #72ccff;
+  background: #72ccff;
 }
 
 /* =========================================================
-   RIGHT DASHBOARD
+   TIME CONTROL INSIDE VISUAL
    ========================================================= */
 
-.liveEnergyDashboard {
-  display: flex;
-
-  flex-direction:
-    column;
-
-  min-height:
-    650px;
-
-  padding:
-    28px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.075
-    );
-
-  border-radius:
-    28px;
-
+.liveEnergyControl {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  z-index: 6;
+  padding: 18px 20px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 22px;
   background:
     linear-gradient(
       145deg,
-      rgba(
-        11,
-        28,
-        37,
-        0.98
-      ),
-      rgba(
-        6,
-        20,
-        28,
-        0.98
-      )
+      rgba(11, 28, 37, 0.95),
+      rgba(6, 20, 28, 0.96)
     );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.02),
+    0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
-.liveEnergyDashboardHeader {
+.liveEnergyControlTop {
   display: flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
-
-  gap: 20px;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 
 .liveEnergyDashboardHeader small,
 .liveEnergyControlTop small {
   display: block;
-
-  color:
-    var(--green-2);
-
-  font-size:
-    7px;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    0.13em;
-}
-
-.liveEnergyDashboardHeader h3 {
-  max-width:
-    490px;
-
-  margin:
-    12px 0 0;
-
-  font-size:
-    clamp(
-      27px,
-      2.2vw,
-      39px
-    );
-
-  line-height: 1;
-
-  letter-spacing:
-    -0.04em;
-}
-
-.liveEnergyTime {
-  min-width: 72px;
-
-  text-align:
-    right;
-}
-
-.liveEnergyTime span {
-  display: block;
-
-  color:
-    #ffd376;
-
-  font-size:
-    24px;
-}
-
-.liveEnergyTime strong {
-  display: block;
-
-  margin-top:
-    4px;
-
-  color:
-    #dce7eb;
-
-  font-size:
-    11px;
-}
-
-.liveEnergyDescription {
-  margin:
-    18px 0 22px;
-
-  color:
-    #8fa3ad;
-
-  font-size:
-    13px;
-
-  line-height: 1.65;
-}
-
-/* Metrics */
-
-.liveEnergyMetrics {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap: 9px;
-}
-
-.liveEnergyMetric {
-  min-height:
-    125px;
-
-  padding: 14px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.065
-    );
-
-  border-radius:
-    15px;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.018
-    );
-}
-
-.liveEnergyMetric > div {
-  display: flex;
-
-  align-items:
-    center;
-
-  gap: 7px;
-}
-
-.liveEnergyMetric > div span {
-  font-size:
-    16px;
-}
-
-.liveEnergyMetric small {
-  color:
-    #6c818b;
-
-  font-size:
-    7px;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    0.1em;
-}
-
-.liveEnergyMetric strong {
-  display: block;
-
-  margin-top:
-    15px;
-
-  color:
-    #edf4f6;
-
-  font-size:
-    24px;
-}
-
-.liveEnergyMetric strong em {
-  margin-left:
-    4px;
-
-  color:
-    #778c96;
-
-  font-size:
-    9px;
-
-  font-style:
-    normal;
-}
-
-.liveEnergyMetric p {
-  margin:
-    4px 0 0;
-
-  color:
-    #697e88;
-
-  font-size:
-    8px;
-
-  line-height: 1.35;
-}
-
-.liveEnergyMetricSolar
-> div span {
-  color:
-    #ffd376;
-}
-
-.liveEnergyMetricLoad
-> div span {
-  color:
-    #72ccff;
-}
-
-.liveEnergyMetricBattery
-> div span {
-  color:
-    var(--green-2);
-}
-
-.liveEnergyMetricGrid
-> div span {
-  color:
-    #8dbddd;
-}
-
-/* Current flow */
-
-.liveEnergyResult {
-  margin-top:
-    12px;
-
-  padding:
-    14px;
-
-  border:
-    1px solid
-    rgba(
-      145,
-      239,
-      91,
-      0.12
-    );
-
-  border-radius:
-    14px;
-
-  background:
-    rgba(
-      145,
-      239,
-      91,
-      0.025
-    );
-}
-
-.liveEnergyResult > small {
-  color:
-    #6b828d;
-
-  font-size:
-    6px;
-
-  font-weight:
-    900;
-
-  letter-spacing:
-    0.11em;
-}
-
-.liveEnergyResult > div {
-  display: flex;
-
-  align-items:
-    center;
-
-  flex-wrap: wrap;
-
-  gap: 7px;
-
-  margin-top:
-    9px;
-}
-
-.liveEnergyResult span {
-  padding:
-    5px 8px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.06
-    );
-
-  border-radius:
-    999px;
-
-  color:
-    #dce7eb;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.02
-    );
-
-  font-size:
-    8px;
-}
-
-.liveEnergyResult b {
-  color:
-    var(--green-2);
-
-  font-size:
-    10px;
-}
-
-/* =========================================================
-   TIME CONTROL
-   ========================================================= */
-
-.liveEnergyControl {
-  margin-top:
-    auto;
-
-  padding-top:
-    24px;
-}
-
-.liveEnergyControlTop {
-  display: flex;
-
-  align-items:
-    flex-end;
-
-  justify-content:
-    space-between;
-
-  gap: 15px;
-
-  margin-bottom:
-    13px;
+  color: var(--green-2);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  line-height: 1.4;
 }
 
 .liveEnergyControlTop strong {
   display: block;
-
-  margin-top:
-    4px;
-
-  color:
-    #f0f6f8;
-
-  font-size:
-    22px;
+  margin-top: 4px;
+  color: #f0f6f8;
+  font-size: 21px;
 }
 
 .liveEnergyControlTop button {
-  padding:
-    7px 10px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.08
-    );
-
-  border-radius:
-    999px;
-
-  color:
-    #81949e;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.02
-    );
-
-  font-size:
-    7px;
-
+  padding: 8px 11px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: #a5b6be;
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 9px;
+  font-weight: 700;
   cursor: pointer;
-
   transition:
     color 0.2s ease,
-    border-color
-      0.2s ease;
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 .liveEnergyControlTop button:hover {
-  color:
-    #e8f1f4;
-
-  border-color:
-    rgba(
-      145,
-      239,
-      91,
-      0.28
-    );
+  color: #eef5f7;
+  border-color: rgba(145, 239, 91, 0.3);
+  background: rgba(145, 239, 91, 0.04);
 }
 
 .liveEnergyControl input[type="range"] {
   width: 100%;
-
   height: 6px;
-
   appearance: none;
-
-  border-radius:
-    999px;
-
+  border-radius: 999px;
   outline: none;
-
   background:
     linear-gradient(
       90deg,
@@ -1519,228 +571,360 @@ span {
 .liveEnergyControl input[type="range"]::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
-
   appearance: none;
-
-  border:
-    3px solid
-    #071119;
-
-  border-radius:
-    50%;
-
-  background:
-    var(--green-2);
-
+  border: 3px solid #071119;
+  border-radius: 50%;
+  background: var(--green-2);
   box-shadow:
-    0 0 0 2px
-      rgba(
-        145,
-        239,
-        91,
-        0.22
-      ),
-    0 0 15px
-      rgba(
-        145,
-        239,
-        91,
-        0.28
-      );
-
-  cursor:
-    pointer;
+    0 0 0 2px rgba(145, 239, 91, 0.22),
+    0 0 15px rgba(145, 239, 91, 0.28);
+  cursor: pointer;
 }
 
 .liveEnergyControl input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
-
-  border:
-    3px solid
-    #071119;
-
-  border-radius:
-    50%;
-
-  background:
-    var(--green-2);
-
-  cursor:
-    pointer;
+  border: 3px solid #071119;
+  border-radius: 50%;
+  background: var(--green-2);
+  cursor: pointer;
 }
 
 .liveEnergyTicks {
   display: flex;
-
-  justify-content:
-    space-between;
-
-  margin-top:
-    8px;
-
-  color:
-    #59717c;
-
-  font-size:
-    6px;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 9px;
+  color: #91a6af;
+  font-size: 9px;
+  font-weight: 700;
 }
 
-/* Disclaimer */
+.liveEnergyTicks span {
+  white-space: nowrap;
+}
 
 .liveEnergyDisclaimer {
   display: flex;
-
-  align-items:
-    flex-start;
-
-  gap: 8px;
-
-  margin-top:
-    13px;
-
-  color:
-    #526a75;
-
-  font-size:
-    7px;
-
-  line-height: 1.5;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 14px;
+  color: #95aab4;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.65;
 }
 
 .liveEnergyDisclaimer span {
-  flex:
-    0 0 auto;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 2px;
+  margin-top: 7px;
+  background: var(--green-2);
+  box-shadow: 0 0 8px rgba(145, 239, 91, 0.18);
+}
 
-  width: 16px;
-  height: 1px;
+/* =========================================================
+   RIGHT DASHBOARD
+   ========================================================= */
 
-  margin-top:
-    5px;
-
+.liveEnergyDashboard {
+  display: flex;
+  flex-direction: column;
+  min-height: 700px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 28px;
   background:
-    var(--green-2);
+    linear-gradient(
+      145deg,
+      rgba(11, 28, 37, 0.98),
+      rgba(6, 20, 28, 0.98)
+    );
+}
+
+.liveEnergyDashboardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.liveEnergyDashboardHeader h3 {
+  max-width: 490px;
+  margin: 10px 0 0;
+  font-size: clamp(26px, 2vw, 37px);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.liveEnergyTime {
+  min-width: 82px;
+  text-align: right;
+}
+
+.liveEnergyTime span {
+  display: block;
+  color: #ffd376;
+  font-size: 24px;
+}
+
+.liveEnergyTime strong {
+  display: block;
+  margin-top: 5px;
+  color: #e6eef1;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.liveEnergyDescription {
+  margin: 16px 0 18px;
+  color: #a8bbc4;
+  font-size: 13px;
+  line-height: 1.68;
+}
+
+/* =========================================================
+   METRIC CARDS
+   ========================================================= */
+
+.liveEnergyMetrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.liveEnergyMetric {
+  min-height: 108px;
+  padding: 12px 13px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.liveEnergyMetric > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.liveEnergyMetric > div span {
+  font-size: 15px;
+}
+
+.liveEnergyMetric small {
+  color: #91a5ae;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.liveEnergyMetric strong {
+  display: block;
+  margin-top: 10px;
+  color: #edf4f6;
+  font-size: 18px;
+  line-height: 1.05;
+}
+
+.liveEnergyMetric strong em {
+  margin-left: 4px;
+  color: #9aadb6;
+  font-size: 10px;
+  font-style: normal;
+}
+
+.liveEnergyMetric p {
+  margin: 4px 0 0;
+  color: #8fa3ad;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.liveEnergyMetricSolar > div span {
+  color: #ffd376;
+}
+
+.liveEnergyMetricLoad > div span {
+  color: #72ccff;
+}
+
+.liveEnergyMetricBattery > div span {
+  color: var(--green-2);
+}
+
+.liveEnergyMetricGrid > div span {
+  color: #8dbddd;
+}
+
+/* =========================================================
+   CURRENT FLOW BOX
+   ========================================================= */
+
+.liveEnergyResult {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(145, 239, 91, 0.14);
+  border-radius: 14px;
+  background: rgba(145, 239, 91, 0.03);
+}
+
+.liveEnergyResult > small {
+  color: #90a5ae;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+}
+
+.liveEnergyResult > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.liveEnergyResult span {
+  padding: 5px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 999px;
+  color: #e3ecef;
+  background: rgba(255, 255, 255, 0.025);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.liveEnergyResult b {
+  color: var(--green-2);
+  font-size: 11px;
 }
 
 /* =========================================================
    RESPONSIVE
    ========================================================= */
 
-@media (
-  max-width: 1180px
-) {
+@media (max-width: 1180px) {
   .liveEnergyExperience {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .liveEnergyVisual,
   .liveEnergyDashboard {
-    min-height:
-      600px;
+    min-height: 680px;
+  }
+
+  .liveEnergyDashboard {
+    min-height: auto;
   }
 }
 
-@media (
-  max-width: 900px
-) {
+@media (max-width: 900px) {
   .liveEnergyHeader {
-    grid-template-columns:
-      1fr;
-
+    grid-template-columns: 1fr;
     gap: 20px;
   }
 
   .liveEnergyVisual {
-    min-height:
-      560px;
+    min-height: 650px;
   }
 
   .liveEnergyDashboard {
-    min-height:
-      auto;
+    min-height: auto;
   }
 }
 
-@media (
-  max-width: 720px
-) {
+@media (max-width: 720px) {
   .liveEnergyStory {
-    padding:
-      80px 5vw 70px;
+    padding: 80px 5vw 70px;
   }
 
   .liveEnergyHeader {
-    margin-bottom:
-      34px;
+    margin-bottom: 34px;
   }
 
   .liveEnergyHeader h2 {
-    font-size:
-      clamp(
-        42px,
-        13vw,
-        62px
-      );
+    font-size: clamp(42px, 13vw, 62px);
+  }
+
+  .liveEnergyHeaderCopy p {
+    font-size: 14px;
   }
 
   .liveEnergyVisual,
   .liveEnergyDashboard {
-    border-radius:
-      20px;
+    border-radius: 20px;
   }
 
   .liveEnergyVisual {
-    min-height:
-      480px;
-
+    min-height: 620px;
     padding: 18px;
   }
 
   .liveEnergySvg {
-    inset:
-      55px -70px 25px;
-
-    width:
-      calc(
-        100% + 140px
-      );
-
-    height:
-      calc(
-        100% - 80px
-      );
+    inset: 50px -50px 190px;
+    width: calc(100% + 100px);
+    height: calc(100% - 240px);
   }
 
   .liveEnergyVisualLegend {
     right: 16px;
-    bottom: 12px;
-
+    bottom: 145px;
     gap: 9px;
   }
 
   .liveEnergyDashboard {
-    padding:
-      21px;
+    padding: 20px;
   }
 
   .liveEnergyDashboardHeader h3 {
-    font-size:
-      30px;
+    font-size: 30px;
   }
 
   .liveEnergyMetrics {
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .liveEnergyControl {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    padding: 16px;
+  }
+
+  .liveEnergyTicks {
+    font-size: 8px;
+  }
+
+  .liveEnergyDisclaimer {
+    font-size: 9px;
   }
 }
 
-@media (
-  max-width: 460px
-) {
+@media (max-width: 520px) {
+  .liveEnergyTicks {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    font-size: 7px;
+    text-align: center;
+  }
+
+  .liveEnergyControlTop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .liveEnergyControlTop button {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 460px) {
   .liveEnergyMetrics {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
   }
 
   .liveEnergyDashboardHeader {
@@ -1748,11 +932,18 @@ span {
   }
 
   .liveEnergyTime {
-    margin-top:
-      14px;
+    margin-top: 14px;
+    text-align: left;
+  }
 
-    text-align:
-      left;
+  .liveEnergyTicks {
+    grid-template-columns: 1fr;
+    gap: 5px;
+    text-align: left;
+  }
+
+  .liveEnergyVisualLegend {
+    gap: 8px;
   }
 }
 
@@ -1760,10 +951,7 @@ span {
    REDUCED MOTION
    ========================================================= */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
+@media (prefers-reduced-motion: reduce) {
   .liveFlowLine.active {
     animation: none;
   }
