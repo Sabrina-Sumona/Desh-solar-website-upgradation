@@ -15,16 +15,20 @@ export default function FinalHomeCTA() {
         </div>
 
         <h2>
-          <span>PLAN YOUR</span>
+          <span>
+            PLAN YOUR
+          </span>
+
           <span className="finalHomeCTAGreen">
             SOLAR SYSTEM.
           </span>
         </h2>
 
         <p>
-          Start with a few simple choices, explore your
-          requirements and continue toward a complete
-          solar energy solution.
+          Start with a few simple choices,
+          explore your requirements and
+          continue toward a complete solar
+          energy solution.
         </p>
 
         <div className="finalHomeCTAActions">
@@ -34,7 +38,9 @@ export default function FinalHomeCTA() {
           >
             Build Your System
 
-            <span>→</span>
+            <span aria-hidden="true">
+              →
+            </span>
           </Link>
 
           <Link
@@ -43,15 +49,19 @@ export default function FinalHomeCTA() {
           >
             Talk to Desh Solar
 
-            <span>↗</span>
+            <span aria-hidden="true">
+              ↗
+            </span>
           </Link>
         </div>
       </div>
 
       <div className="finalHomeCTABottomLine">
-        <span>DESH SOLAR</span>
+        <span>
+          DESH SOLAR
+        </span>
 
-        <i />
+        <i aria-hidden="true" />
 
         <span>
           Complete Solar Energy Solutions
