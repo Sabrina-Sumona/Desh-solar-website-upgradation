@@ -1,196 +1,175 @@
 /* =========================================================
-   INTERACTIVE ENERGY JOURNEY
+   ENERGY JOURNEY
    ========================================================= */
 
-.energyJourney {
+.systemTechSection {
   position: relative;
-
-  overflow: hidden;
 
   padding:
-    110px 5vw 100px;
+    80px 0
+    42px;
 
-  border-top:
-    1px solid rgba(255, 255, 255, 0.055);
-
-  border-bottom:
-    1px solid rgba(255, 255, 255, 0.055);
-
-  color: #f5f8fa;
-
-  background:
-    radial-gradient(
-      circle at 50% 20%,
-      rgba(66, 160, 255, 0.06),
-      transparent 35%
-    ),
-    linear-gradient(
-      180deg,
-      #06131a,
-      #071119
-    );
-}
-
-.energyJourneyInner {
-  position: relative;
-  z-index: 2;
-
-  width: min(
-    1500px,
-    100%
-  );
-
-  margin: 0 auto;
-}
-
-/* =========================================================
-   BACKGROUND GLOW
-   ========================================================= */
-
-.energyJourneyGlow {
-  position: absolute;
-
-  width: 420px;
-  height: 420px;
-
-  border-radius: 50%;
-
-  filter:
-    blur(100px);
-
-  opacity: 0.14;
-
-  pointer-events: none;
-}
-
-.energyJourneyGlowOne {
-  top: 20%;
-  left: -180px;
-
-  background:
-    #ffc157;
-}
-
-.energyJourneyGlowTwo {
-  right: -180px;
-  bottom: 5%;
-
-  background:
-    #59bdff;
+  overflow: hidden;
 }
 
 /* =========================================================
    HEADER
    ========================================================= */
 
-.energyJourneyHeader {
+.systemTechHeader {
+  width:
+    min(
+      1320px,
+      92vw
+    );
+
   display: grid;
 
   grid-template-columns:
-    minmax(
-      0,
-      1.35fr
-    )
-    minmax(
-      280px,
-      0.65fr
-    );
+    minmax(0, 1.3fr)
+    minmax(280px, 0.7fr);
+
+  gap: 42px;
 
   align-items: end;
 
-  gap: 60px;
-
-  margin-bottom: 62px;
+  margin:
+    0 auto
+    30px;
 }
 
-.energyJourneyEyebrow {
-  margin-bottom: 14px;
+.systemTechKicker {
+  margin-bottom:
+    14px;
 
   color:
     var(--green-2);
 
-  font-size: 10px;
-  font-weight: 900;
+  font-size:
+    12px;
+
+  font-weight:
+    900;
 
   letter-spacing:
-    0.18em;
+    0.14em;
 
   text-transform:
     uppercase;
+
+  text-shadow:
+    0 0 12px
+    rgba(
+      145,
+      239,
+      91,
+      0.16
+    );
 }
 
-.energyJourneyHeader h2 {
+.systemTechTitle {
   margin: 0;
+
+  color:
+    #eef4f6;
 
   font-size:
     clamp(
-      48px,
-      6vw,
-      92px
+      42px,
+      5.2vw,
+      82px
     );
 
-  line-height: 0.94;
+  font-weight:
+    900;
+
+  line-height:
+    0.98;
 
   letter-spacing:
-    -0.055em;
+    -0.05em;
 }
 
-.energyJourneyHeader h2 span {
+.systemTechTitle span {
   color:
     var(--green-2);
+
+  text-shadow:
+    0 0 24px
+    rgba(
+      145,
+      239,
+      91,
+      0.06
+    );
 }
 
-.energyJourneyHeader > p {
-  margin: 0;
+.systemTechHeaderRight {
+  max-width:
+    430px;
 
-  color: #91a5af;
+  color:
+    #a5bac3;
 
-  font-size: 15px;
+  font-size:
+    15px;
 
-  line-height: 1.7;
+  font-weight:
+    500;
+
+  line-height:
+    1.72;
 }
 
 /* =========================================================
-   SYSTEM SHELL
+   MAIN LAYOUT
    ========================================================= */
 
-.energySystemShell {
-  display: grid;
-
-  grid-template-columns:
-    minmax(
-      0,
-      1.45fr
-    )
-    minmax(
-      320px,
-      0.55fr
+.systemTechLayout {
+  width:
+    min(
+      1320px,
+      92vw
     );
 
-  gap: 20px;
-}
-
-.energySystemDiagram {
-  position: relative;
-
-  /*
-   * Enough space for
-   * Inverter ↕ Battery.
-   */
-  min-height: 590px;
-
   display: grid;
 
+  /*
+   * More room is deliberately kept
+   * for the energy diagram.
+   */
   grid-template-columns:
-    1fr 90px
-    1fr 90px
-    1fr 90px
-    1fr;
+    minmax(0, 1fr)
+    minmax(300px, 0.34fr);
 
+  gap: 18px;
+
+  align-items: stretch;
+
+  margin:
+    0 auto;
+}
+
+/* =========================================================
+   LEFT VISUALIZER
+   ========================================================= */
+
+.systemTechVisualizer {
+  position: relative;
+
+  min-width: 0;
+
+  min-height:
+    520px;
+
+  display: flex;
   align-items: center;
 
   padding:
-    65px 32px 210px;
+    64px 24px
+    44px;
+
+  overflow: hidden;
 
   border:
     1px solid
@@ -198,59 +177,104 @@
       255,
       255,
       255,
-      0.075
+      0.08
     );
 
   border-radius:
     28px;
 
   background:
-    linear-gradient(
-      145deg,
+    radial-gradient(
+      circle at 50% 5%,
       rgba(
-        10,
-        27,
-        36,
-        0.96
+        39,
+        120,
+        170,
+        0.09
+      ),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(
+        7,
+        23,
+        31,
+        0.94
       ),
       rgba(
         5,
-        18,
-        25,
-        0.96
+        17,
+        24,
+        0.97
       )
     );
 
   box-shadow:
-    inset
-    0 1px
+    inset 0 1px 0
     rgba(
       255,
       255,
       255,
       0.025
+    ),
+    0 24px 50px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
     );
 }
 
 /* =========================================================
-   ENERGY NODE
+   RESPONSIVE ENERGY GRID
+
+   Sun → Panel → Inverter → Loads
+                       ↕
+                    Battery
    ========================================================= */
 
-.energyNode {
+.systemTechFlowGrid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(125px, 1fr)
+    minmax(46px, 0.38fr)
+    minmax(125px, 1fr)
+    minmax(46px, 0.38fr)
+    minmax(125px, 1fr)
+    minmax(46px, 0.38fr)
+    minmax(125px, 1fr);
+
+  gap: 0;
+
+  align-items: start;
+}
+
+/* =========================================================
+   NODE
+   ========================================================= */
+
+.systemNode {
   position: relative;
 
+  width: 100%;
   min-width: 0;
-  min-height: 190px;
+
+  height: 188px;
 
   display: flex;
-
   flex-direction: column;
-
   align-items: center;
-
   justify-content: center;
 
-  padding: 20px;
+  gap: 7px;
+
+  padding:
+    18px 10px;
 
   border:
     1px solid
@@ -265,14 +289,32 @@
     22px;
 
   color:
-    #dbe6eb;
+    #d7e2e7;
 
   background:
+    linear-gradient(
+      180deg,
+      rgba(
+        255,
+        255,
+        255,
+        0.022
+      ),
+      rgba(
+        255,
+        255,
+        255,
+        0.009
+      )
+    );
+
+  box-shadow:
+    inset 0 1px 0
     rgba(
       255,
       255,
       255,
-      0.025
+      0.015
     );
 
   cursor: pointer;
@@ -280,42 +322,446 @@
   transition:
     transform 0.25s ease,
     border-color 0.25s ease,
-    background 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
-.energyNode:hover {
+.systemNode:hover {
   transform:
-    translateY(-4px);
+    translateY(-3px);
 
   border-color:
     rgba(
       145,
       239,
       91,
-      0.25
+      0.26
+    );
+
+  box-shadow:
+    0 12px 28px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    ),
+    0 0 22px
+    rgba(
+      145,
+      239,
+      91,
+      0.045
+    );
+}
+
+.systemNode.active {
+  border-color:
+    rgba(
+      145,
+      239,
+      91,
+      0.64
     );
 
   background:
+    radial-gradient(
+      circle at 50% 18%,
+      rgba(
+        145,
+        239,
+        91,
+        0.085
+      ),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(
+        145,
+        239,
+        91,
+        0.055
+      ),
+      rgba(
+        255,
+        255,
+        255,
+        0.014
+      )
+    );
+
+  box-shadow:
+    0 0 0 1px
+    rgba(
+      145,
+      239,
+      91,
+      0.11
+    ),
+    0 0 30px
+    rgba(
+      145,
+      239,
+      91,
+      0.075
+    );
+}
+
+/* =========================================================
+   NODE CONTENT
+   ========================================================= */
+
+.systemNodeStep {
+  position: absolute;
+
+  top: 13px;
+  left: 13px;
+
+  color:
+    #93aab4;
+
+  font-size:
+    10px;
+
+  font-weight:
+    850;
+
+  line-height: 1;
+
+  letter-spacing:
+    0.06em;
+}
+
+.systemNodeIcon {
+  width: 58px;
+  height: 58px;
+
+  display: grid;
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  margin-bottom:
+    3px;
+
+  border-radius:
+    50%;
+
+  color:
+    var(--green-2);
+
+  background:
+    rgba(
+      2,
+      12,
+      18,
+      0.9
+    );
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(
+      255,
+      255,
+      255,
+      0.055
+    ),
+    0 0 25px
     rgba(
       145,
       239,
       91,
       0.035
     );
+
+  font-size:
+    27px;
+
+  line-height: 1;
 }
 
-.energyNode.active {
-  transform:
-    translateY(-5px);
+.systemNodeIconSun {
+  color:
+    #ffd468;
+}
 
-  border-color:
-    rgba(
-      145,
-      239,
-      91,
-      0.55
+.systemNodeIconPanel,
+.systemNodeIconBattery,
+.systemNodeIconLoads {
+  color:
+    var(--green-2);
+}
+
+.systemNodeIconInverter {
+  color:
+    #b9ff5d;
+}
+
+.systemNodeTitle {
+  color:
+    #edf4f7;
+
+  font-size:
+    15px;
+
+  font-weight:
+    850;
+
+  line-height:
+    1.2;
+
+  text-align:
+    center;
+}
+
+.systemNodeText {
+  max-width:
+    120px;
+
+  color:
+    #8ba0aa;
+
+  font-size:
+    10px;
+
+  font-weight:
+    500;
+
+  line-height:
+    1.45;
+
+  text-align:
+    center;
+}
+
+/* =========================================================
+   NORMAL NODE GRID POSITIONS
+   ========================================================= */
+
+.nodeSun {
+  grid-column: 1;
+}
+
+.nodePanel {
+  grid-column: 3;
+}
+
+.systemTechInverterColumn {
+  grid-column: 5;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.nodeInverter {
+  flex:
+    0 0 auto;
+}
+
+.nodeLoads {
+  grid-column: 7;
+}
+
+/* =========================================================
+   HORIZONTAL FLOW CONNECTORS
+   ========================================================= */
+
+.flowLine {
+  position: relative;
+
+  align-self: start;
+
+  height: 188px;
+
+  display: flex;
+  align-items: center;
+
+  overflow: visible;
+}
+
+/* Place connectors into grid */
+
+.lineSunPanel {
+  grid-column: 2;
+}
+
+.linePanelInverter {
+  grid-column: 4;
+}
+
+.lineInverterLoads {
+  grid-column: 6;
+}
+
+/* Track */
+
+.flowTrack {
+  position: absolute;
+
+  left: 5px;
+  right: 5px;
+
+  top: 94px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(
+        145,
+        239,
+        91,
+        0.08
+      ),
+      rgba(
+        150,
+        191,
+        211,
+        0.32
+      ),
+      rgba(
+        145,
+        239,
+        91,
+        0.08
+      )
     );
+}
+
+/* Moving dot */
+
+.flowDot {
+  position: absolute;
+
+  top: 89px;
+
+  left: 5px;
+
+  width: 10px;
+  height: 10px;
+
+  border-radius:
+    50%;
+
+  color:
+    var(--green-2);
+
+  background:
+    currentColor;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(
+      255,
+      255,
+      255,
+      0.025
+    ),
+    0 0 9px
+    currentColor,
+    0 0 19px
+    currentColor;
+
+  animation:
+    flowHorizontal
+    2.9s linear
+    infinite;
+}
+
+/* =========================================================
+   FLOW LABELS
+   ========================================================= */
+
+.flowLabel {
+  position: absolute;
+
+  top: 105px;
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  white-space:
+    nowrap;
+
+  font-size:
+    8px;
+
+  font-weight:
+    900;
+
+  line-height: 1;
+
+  letter-spacing:
+    0.1em;
+}
+
+.labelLight,
+.dotLight {
+  color:
+    #ffd468;
+}
+
+.labelDc,
+.dotDc {
+  color:
+    #ffd468;
+}
+
+.labelAc,
+.dotAc {
+  color:
+    #74caff;
+}
+
+/* Slightly offset cycles */
+
+.dotDc {
+  animation-delay:
+    -0.55s;
+}
+
+.dotAc {
+  animation-delay:
+    -1.1s;
+}
+
+/* =========================================================
+   INVERTER ↕ BATTERY
+   ========================================================= */
+
+.flowLineVertical {
+  position: relative;
+
+  width: 100%;
+  height: 86px;
+
+  flex:
+    0 0 86px;
+
+  overflow: visible;
+}
+
+/* Main vertical energy track */
+
+.flowTrackVertical {
+  position: absolute;
+
+  left: 50%;
+
+  top: 5px;
+  bottom: 5px;
+
+  width: 1px;
+
+  transform:
+    translateX(-50%);
 
   background:
     linear-gradient(
@@ -324,453 +770,203 @@
         145,
         239,
         91,
-        0.085
+        0.15
       ),
       rgba(
         145,
         239,
         91,
-        0.025
+        0.5
+      ),
+      rgba(
+        145,
+        239,
+        91,
+        0.15
       )
     );
 
   box-shadow:
-    0 20px 45px
-      rgba(
-        0,
-        0,
-        0,
-        0.24
-      ),
-    0 0 30px
-      rgba(
-        145,
-        239,
-        91,
-        0.06
-      );
-}
-
-.energyNodeStep {
-  position: absolute;
-
-  top: 13px;
-  left: 14px;
-
-  color:
-    #68808b;
-
-  font-size: 8px;
-
-  font-weight: 900;
-
-  letter-spacing:
-    0.1em;
-}
-
-.energyNodeIcon {
-  width: 62px;
-  height: 62px;
-
-  display: grid;
-
-  place-items: center;
-
-  margin-bottom: 15px;
-
-  border:
-    1px solid
+    0 0 10px
     rgba(
-      255,
-      255,
-      255,
-      0.09
+      145,
+      239,
+      91,
+      0.08
     );
-
-  border-radius: 50%;
-
-  color:
-    var(--green-2);
-
-  background:
-    #08161e;
-
-  font-size: 29px;
-
-  box-shadow:
-    0 0 24px
-      rgba(
-        145,
-        239,
-        91,
-        0.07
-      );
-}
-
-.energyNodeSun
-.energyNodeIcon {
-  color:
-    #ffd376;
-
-  box-shadow:
-    0 0 30px
-      rgba(
-        255,
-        193,
-        87,
-        0.11
-      );
-}
-
-.energyNodeInverter
-.energyNodeIcon {
-  color:
-    #80d2ff;
-
-  box-shadow:
-    0 0 30px
-      rgba(
-        89,
-        189,
-        255,
-        0.1
-      );
-}
-
-.energyPanelIcon {
-  transform:
-    rotate(-4deg);
-}
-
-.energyNode strong {
-  font-size: 14px;
-
-  font-weight: 850;
-}
-
-.energyNode small {
-  margin-top: 5px;
-
-  color:
-    #728791;
-
-  font-size: 9px;
 }
 
 /* =========================================================
-   HORIZONTAL CONNECTIONS
+   ALTERNATING BATTERY DOTS
+
+   First half:
+   Inverter → Battery
+
+   Second half:
+   Battery → Inverter
+
+   They never travel together.
    ========================================================= */
 
-.energyConnector {
-  position: relative;
-
-  height: 44px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-}
-
-.energyConnectorLine {
-  position: absolute;
-
-  top: 50%;
-
-  left: 5px;
-  right: 5px;
-
-  height: 1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(
-        255,
-        193,
-        87,
-        0.15
-      ),
-      rgba(
-        255,
-        193,
-        87,
-        0.7
-      ),
-      rgba(
-        255,
-        193,
-        87,
-        0.15
-      )
-    );
-}
-
-.energyConnectorAC
-.energyConnectorLine {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(
-        89,
-        189,
-        255,
-        0.14
-      ),
-      rgba(
-        89,
-        189,
-        255,
-        0.7
-      ),
-      rgba(
-        89,
-        189,
-        255,
-        0.14
-      )
-    );
-}
-
-.energyPulse {
+.flowDotVertical {
   position: absolute;
 
   z-index: 2;
 
-  top:
-    calc(
-      50% - 3px
-    );
+  left: 50%;
 
-  left: 5px;
+  width: 10px;
+  height: 10px;
 
-  width: 7px;
-  height: 7px;
+  margin-left:
+    -5px;
 
-  border-radius: 50%;
-
-  background:
-    #ffd479;
-
-  box-shadow:
-    0 0 12px
-      rgba(
-        255,
-        212,
-        121,
-        0.8
-      );
-
-  animation:
-    energyFlowHorizontal
-    2.2s linear
-    infinite;
-}
-
-.energyConnectorAC
-.energyPulse {
-  background:
-    #72ccff;
-
-  box-shadow:
-    0 0 12px
-      rgba(
-        114,
-        204,
-        255,
-        0.85
-      );
-}
-
-@keyframes energyFlowHorizontal {
-  from {
-    left: 5px;
-  }
-
-  to {
-    left:
-      calc(
-        100% - 12px
-      );
-  }
-}
-
-.energyConnector b {
-  position: relative;
-
-  z-index: 3;
-
-  margin-top: 26px;
+  border-radius:
+    50%;
 
   color:
-    #637b86;
-
-  font-size: 7px;
-
-  letter-spacing:
-    0.13em;
-}
-
-/* =========================================================
-   INVERTER ↕ BATTERY BRANCH
-   ========================================================= */
-
-.energyBatteryBranch {
-  position: absolute;
-
-  top: 300px;
-
-  /*
-   * Directly under
-   * Inverter.
-   */
-  left: 63%;
-
-  width: 190px;
-
-  display: flex;
-
-  flex-direction: column;
-
-  align-items: center;
-
-  transform:
-    translateX(-50%);
-}
-
-.batteryVerticalLine {
-  position: relative;
-
-  width: 1px;
-  height: 78px;
-
-  overflow: hidden;
-
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(
-        89,
-        189,
-        255,
-        0.15
-      ),
-      rgba(
-        145,
-        239,
-        91,
-        0.7
-      ),
-      rgba(
-        89,
-        189,
-        255,
-        0.15
-      )
-    );
-}
-
-.batteryPulse {
-  position: absolute;
-
-  left: -3px;
-
-  width: 7px;
-  height: 7px;
-
-  border-radius: 50%;
-
-  background:
     var(--green-2);
 
+  background:
+    currentColor;
+
   box-shadow:
-    0 0 13px
-      rgba(
-        200,
-        255,
-        125,
-        0.85
-      );
+    0 0 0 4px
+    rgba(
+      145,
+      239,
+      91,
+      0.055
+    ),
+    0 0 10px
+    rgba(
+      145,
+      239,
+      91,
+      0.85
+    ),
+    0 0 22px
+    rgba(
+      145,
+      239,
+      91,
+      0.58
+    );
+
+  opacity: 0;
+
+  pointer-events:
+    none;
 }
 
-.batteryPulseDown {
-  top: 0;
+/* Inverter → Battery */
+
+.flowDotDown {
+  top: 5px;
 
   animation:
     batteryFlowDown
-    2.1s linear
+    4.4s linear
     infinite;
 }
 
-.batteryPulseUp {
-  bottom: 0;
+/* Battery → Inverter */
+
+.flowDotUp {
+  bottom: 5px;
 
   animation:
     batteryFlowUp
-    2.1s linear
+    4.4s linear
     infinite;
 }
 
-@keyframes batteryFlowDown {
-  from {
-    top: 0;
-  }
+/* Label lives beside the flow,
+   not over the Battery card */
 
-  to {
-    top:
-      calc(
-        100% - 7px
-      );
-  }
-}
+.flowLabelVertical {
+  position: absolute;
 
-@keyframes batteryFlowUp {
-  from {
-    bottom: 0;
-  }
+  z-index: 3;
 
-  to {
-    bottom:
-      calc(
-        100% - 7px
-      );
-  }
-}
+  left:
+    calc(
+      50% + 12px
+    );
 
-.batteryFlowLabel {
-  margin:
-    7px 0;
+  top: 50%;
+
+  transform:
+    translateY(-50%);
+
+  white-space:
+    nowrap;
 
   color:
-    #708793;
+    #8097a1;
 
-  font-size: 6px;
+  font-size:
+    7px;
 
-  font-weight: 800;
+  font-weight:
+    850;
+
+  line-height: 1;
 
   letter-spacing:
-    0.11em;
-}
-
-.energyBatteryNode {
-  width: 180px;
-
-  min-height: 135px;
+    0.08em;
 }
 
 /* =========================================================
-   INFORMATION PANEL
+   BATTERY
    ========================================================= */
 
-.energyInfoPanel {
-  min-height: 500px;
+.nodeBattery {
+  width:
+    min(
+      100%,
+      150px
+    );
+
+  height: 150px;
+
+  min-height:
+    150px;
+
+  align-self:
+    center;
+
+  margin:
+    0 auto;
+}
+
+.nodeBattery
+.systemNodeIcon {
+  width: 52px;
+  height: 52px;
+
+  font-size:
+    25px;
+}
+
+/* =========================================================
+   RIGHT DETAILS PANEL
+   ========================================================= */
+
+.systemTechDetails {
+  min-width: 0;
+
+  min-height:
+    520px;
 
   display: flex;
-
   flex-direction: column;
+  justify-content: space-between;
 
-  padding: 28px;
+  gap: 34px;
+
+  padding:
+    24px 22px;
 
   border:
     1px solid
@@ -778,83 +974,123 @@
       255,
       255,
       255,
-      0.075
+      0.095
     );
 
   border-radius:
     28px;
 
   background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(
+        145,
+        239,
+        91,
+        0.085
+      ),
+      transparent 30%
+    ),
     linear-gradient(
-      145deg,
-      #0a1a23,
-      #07141b
+      180deg,
+      rgba(
+        7,
+        23,
+        31,
+        0.98
+      ),
+      rgba(
+        5,
+        17,
+        24,
+        0.99
+      )
     );
 
-  animation:
-    energyInfoEnter
-    0.32s ease;
+  box-shadow:
+    inset 0 1px 0
+    rgba(
+      255,
+      255,
+      255,
+      0.03
+    ),
+    0 24px 50px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
 }
 
-@keyframes energyInfoEnter {
-  from {
-    opacity: 0.4;
+/* =========================================================
+   DETAILS TOP
+   ========================================================= */
 
-    transform:
-      translateY(7px);
-  }
-
-  to {
-    opacity: 1;
-
-    transform: none;
-  }
-}
-
-.energyInfoTop {
+.systemTechDetailsTop {
   display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
 
-  align-items:
-    flex-start;
-
-  justify-content:
-    space-between;
-
-  gap: 20px;
+  gap: 18px;
 }
 
-.energyInfoStep {
-  display: block;
-
+.detailsStep {
   color:
     var(--green-2);
 
-  font-size: 8px;
+  font-size:
+    11px;
 
-  font-weight: 900;
+  font-weight:
+    950;
+
+  line-height:
+    1.2;
 
   letter-spacing:
-    0.15em;
+    0.12em;
+
+  text-transform:
+    uppercase;
+
+  text-shadow:
+    0 0 10px
+    rgba(
+      145,
+      239,
+      91,
+      0.2
+    );
 }
 
-.energyInfoCategory {
-  display: block;
-
-  margin-top: 7px;
+.detailsSub {
+  margin-top:
+    7px;
 
   color:
-    #788d97;
+    #a8bcc5;
 
-  font-size: 10px;
+  font-size:
+    12px;
+
+  font-weight:
+    550;
+
+  line-height:
+    1.4;
 }
 
-.energyInfoIcon {
-  width: 52px;
-  height: 52px;
+.detailsIcon {
+  width: 46px;
+  height: 46px;
 
   display: grid;
-
   place-items: center;
+
+  flex:
+    0 0 auto;
 
   border:
     1px solid
@@ -862,70 +1098,131 @@
       145,
       239,
       91,
-      0.16
+      0.28
     );
 
-  border-radius: 50%;
+  border-radius:
+    50%;
 
   color:
     var(--green-2);
 
   background:
     rgba(
+      10,
+      27,
+      22,
+      0.6
+    );
+
+  box-shadow:
+    inset 0 0 15px
+    rgba(
       145,
       239,
       91,
-      0.04
+      0.025
+    ),
+    0 0 15px
+    rgba(
+      145,
+      239,
+      91,
+      0.055
     );
 
-  font-size: 22px;
+  font-size:
+    23px;
 }
 
-.energyInfoPanel h3 {
-  max-width: 500px;
+/* =========================================================
+   DETAILS HEADLINE
+   ========================================================= */
 
+.detailsHeadline {
   margin:
-    55px 0 15px;
+    30px 0
+    16px;
+
+  color:
+    #f7fafb;
 
   font-size:
     clamp(
-      28px,
-      2.5vw,
-      42px
+      25px,
+      2.35vw,
+      34px
     );
 
-  line-height: 1;
+  font-weight:
+    900;
+
+  line-height:
+    1.03;
 
   letter-spacing:
-    -0.04em;
+    -0.045em;
+
+  text-shadow:
+    0 4px 20px
+    rgba(
+      0,
+      0,
+      0,
+      0.15
+    );
 }
 
-.energyInfoPanel > p {
+/* =========================================================
+   DETAILS DESCRIPTION
+   ========================================================= */
+
+.detailsDescription {
   margin: 0;
 
   color:
-    #91a5af;
+    #b7c9d0;
 
-  font-size: 14px;
+  font-size:
+    14px;
 
-  line-height: 1.7;
+  font-weight:
+    500;
+
+  line-height:
+    1.68;
 }
 
-.energyInfoStats {
+/* =========================================================
+   DETAILS BOTTOM
+   ========================================================= */
+
+.systemTechDetailsBottom {
+  margin-top:
+    auto;
+}
+
+/* =========================================================
+   DETAILS META CARDS
+   ========================================================= */
+
+.detailsMetaGrid {
   display: grid;
 
   grid-template-columns:
-    1fr 1fr;
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
 
-  gap: 8px;
-
-  margin-top: auto;
-
-  padding-top: 35px;
+  gap: 10px;
 }
 
-.energyInfoStats > div {
-  padding: 14px;
+.detailsMetaCard {
+  min-width: 0;
+
+  padding:
+    13px 12px;
 
   border:
     1px solid
@@ -933,334 +1230,513 @@
       255,
       255,
       255,
-      0.065
+      0.095
     );
 
   border-radius:
     14px;
 
   background:
-    rgba(
-      255,
-      255,
-      255,
-      0.018
+    linear-gradient(
+      145deg,
+      rgba(
+        255,
+        255,
+        255,
+        0.035
+      ),
+      rgba(
+        255,
+        255,
+        255,
+        0.015
+      )
     );
 }
 
-.energyInfoStats small {
-  display: block;
-
+.detailsMetaLabel {
   color:
-    #607782;
+    #92acb7;
 
-  font-size: 7px;
+  font-size:
+    8px;
 
-  letter-spacing:
-    0.1em;
-}
+  font-weight:
+    900;
 
-.energyInfoStats strong {
-  display: block;
-
-  margin-top: 6px;
-
-  color:
-    #dce7eb;
-
-  font-size: 10px;
-}
-
-.energyInfoHint {
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  margin-top: 17px;
-
-  color:
-    #647b86;
-
-  font-size: 8px;
-}
-
-.energyInfoHint span {
-  width: 22px;
-  height: 1px;
-
-  background:
-    var(--green-2);
-}
-
-/* =========================================================
-   BOTTOM SUMMARY
-
-   Sun → Panel → Inverter → Loads
-                    ↕
-                 Battery
-   ========================================================= */
-
-.energyJourneySummary {
-  position: relative;
-
-  min-height: 112px;
-
-  display: flex;
-
-  justify-content: center;
-
-  margin-top: 20px;
-
-  padding:
-    18px 24px 20px;
-
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.06
-    );
-
-  border-radius: 18px;
-
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.018
-    );
-}
-
-.energySummaryMainFlow {
-  display: flex;
-
-  align-items:
-    flex-start;
-
-  justify-content:
-    center;
-
-  gap: 22px;
-}
-
-.energySummaryItem {
-  position: relative;
-
-  min-width: 92px;
-
-  text-align: center;
-}
-
-.energySummaryItem small,
-.energySummaryBattery small {
-  display: block;
-
-  color:
-    #637984;
-
-  font-size: 6px;
-
-  font-weight: 900;
+  line-height:
+    1.25;
 
   letter-spacing:
     0.12em;
+
+  text-transform:
+    uppercase;
 }
 
-.energySummaryItem strong,
-.energySummaryBattery strong {
-  display: block;
-
-  margin-top: 4px;
+.detailsMetaValue {
+  margin-top:
+    7px;
 
   color:
-    #dce6ea;
+    #f3f8fa;
 
-  font-size: 10px;
+  font-size:
+    13px;
+
+  font-weight:
+    850;
+
+  line-height:
+    1.3;
 }
 
-.energySummaryArrow {
-  margin-top: 14px;
+/* =========================================================
+   DETAILS HINT
+   ========================================================= */
 
-  color:
-    var(--green-2);
-
-  font-size: 17px;
-
-  line-height: 1;
-
-  opacity: 0.75;
-}
-
-/* Inverter becomes
-   branch origin */
-
-.energySummaryInverter {
-  position: relative;
-}
-
-.energySummaryBatteryBranch {
-  position: absolute;
-
-  top: 32px;
-  left: 50%;
-
+.detailsHint {
   display: flex;
+  align-items: flex-start;
 
-  flex-direction:
-    column;
+  gap: 9px;
 
-  align-items:
-    center;
-
-  transform:
-    translateX(-50%);
-}
-
-.energySummaryVerticalArrow {
-  margin-bottom: 3px;
+  margin-top:
+    16px;
 
   color:
-    var(--green-2);
+    #93aab4;
 
-  font-size: 17px;
+  font-size:
+    9px;
 
-  line-height: 1;
+  font-weight:
+    500;
 
-  opacity: 0.8;
+  line-height:
+    1.5;
 }
 
-.energySummaryBattery {
-  min-width: 80px;
+.detailsHintLine {
+  width: 24px;
+  height: 1px;
 
-  text-align: center;
+  flex:
+    0 0 auto;
+
+  margin-top:
+    6px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green-2),
+      rgba(
+        145,
+        239,
+        91,
+        0.15
+      )
+    );
+
+  box-shadow:
+    0 0 10px
+    rgba(
+      145,
+      239,
+      91,
+      0.2
+    );
 }
 
 /* =========================================================
-   LAPTOP / SMALL DESKTOP
+   HORIZONTAL FLOW ANIMATION
    ========================================================= */
 
-@media (
-  max-width: 1180px
-) {
-  .energySystemShell {
-    grid-template-columns:
-      1fr;
+@keyframes flowHorizontal {
+  0% {
+    left: 5px;
+
+    opacity: 0;
   }
 
-  .energyInfoPanel {
-    min-height: 350px;
+  8% {
+    opacity: 1;
   }
 
-  .energySystemDiagram {
-    min-height: 590px;
-
-    padding-bottom:
-      210px;
+  88% {
+    opacity: 1;
   }
 
-  .energyBatteryBranch {
-    left: 63%;
+  100% {
+    left:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 0;
   }
 }
 
 /* =========================================================
-   TABLET
+   BATTERY FLOW — DOWN
+
+   0 → 44%:
+   inverter to battery
+
+   Rest of cycle:
+   invisible while upward dot runs
    ========================================================= */
 
-@media (
-  max-width: 900px
-) {
-  .energyJourneyHeader {
-    grid-template-columns:
-      1fr;
+@keyframes batteryFlowDown {
+  0% {
+    top: 5px;
 
-    gap: 20px;
+    opacity: 0;
   }
 
-  .energySystemDiagram {
-    min-height: auto;
-
-    grid-template-columns:
-      1fr;
-
-    gap: 12px;
-
-    padding: 24px;
+  4% {
+    opacity: 1;
   }
 
-  .energyConnector {
-    width: 44px;
-    height: 54px;
+  39% {
+    top:
+      calc(
+        100% - 15px
+      );
 
-    margin:
-      0 auto;
-
-    transform:
-      rotate(90deg);
+    opacity: 1;
   }
 
-  .energyNode {
+  44% {
+    top:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 0;
+  }
+
+  100% {
+    top:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   BATTERY FLOW — UP
+
+   0 → 50%:
+   waits invisibly
+
+   52 → 92%:
+   battery to inverter
+   ========================================================= */
+
+@keyframes batteryFlowUp {
+  0%,
+  49% {
+    bottom: 5px;
+
+    opacity: 0;
+  }
+
+  53% {
+    bottom: 5px;
+
+    opacity: 1;
+  }
+
+  88% {
+    bottom:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 1;
+  }
+
+  93% {
+    bottom:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 0;
+  }
+
+  100% {
+    bottom:
+      calc(
+        100% - 15px
+      );
+
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1450px) {
+  .systemTechLayout,
+  .systemTechHeader {
     width:
       min(
-        420px,
+        1420px,
+        92vw
+      );
+  }
+
+  .systemTechVisualizer {
+    padding-left:
+      30px;
+
+    padding-right:
+      30px;
+  }
+
+  .systemNodeTitle {
+    font-size:
+      16px;
+  }
+
+  .systemNodeText {
+    font-size:
+      11px;
+  }
+}
+
+/* =========================================================
+   SMALLER DESKTOP
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .systemTechLayout {
+    grid-template-columns:
+      1fr;
+  }
+
+  .systemTechVisualizer {
+    min-height:
+      520px;
+  }
+
+  .systemTechDetails {
+    min-height:
+      auto;
+
+    display: grid;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(280px, 0.7fr);
+
+    gap: 30px;
+
+    align-items: start;
+  }
+
+  .systemTechDetailsBottom {
+    margin-top: 0;
+  }
+}
+
+/* =========================================================
+   COMPACT DESKTOP / TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .systemTechSection {
+    padding-top:
+      60px;
+  }
+
+  .systemTechHeader {
+    grid-template-columns:
+      1fr;
+
+    gap: 18px;
+  }
+
+  .systemTechHeaderRight {
+    max-width:
+      760px;
+  }
+
+  .systemTechVisualizer {
+    min-height:
+      auto;
+
+    padding:
+      34px 24px;
+  }
+
+  /*
+   * On tablet/mobile the system becomes
+   * a vertical journey.
+   */
+
+  .systemTechFlowGrid {
+    width:
+      min(
+        440px,
         100%
       );
 
-    min-height:
-      150px;
+    grid-template-columns:
+      1fr;
 
     margin:
       0 auto;
   }
 
-  .energyBatteryBranch {
-    position: relative;
+  .nodeSun,
+  .nodePanel,
+  .systemTechInverterColumn,
+  .nodeLoads,
+  .lineSunPanel,
+  .linePanelInverter,
+  .lineInverterLoads {
+    grid-column:
+      1;
+  }
 
-    top: auto;
-    left: auto;
-
+  .systemNode {
     width: 100%;
 
-    margin:
-      8px auto 0;
+    height: 140px;
 
-    transform: none;
+    min-height:
+      140px;
   }
 
-  .batteryVerticalLine {
-    height: 45px;
+  .systemTechInverterColumn {
+    width: 100%;
   }
 
-  .energyBatteryNode {
-    width:
-      min(
-        420px,
-        100%
+  .nodeInverter {
+    width: 100%;
+  }
+
+  /*
+   * Horizontal connector components
+   * become vertical connectors.
+   */
+
+  .flowLine {
+    width: 100%;
+    height: 56px;
+
+    display: block;
+  }
+
+  .flowTrack {
+    top: 0;
+    bottom: 0;
+
+    left: 50%;
+    right: auto;
+
+    width: 1px;
+    height: auto;
+
+    background:
+      linear-gradient(
+        180deg,
+        rgba(
+          145,
+          239,
+          91,
+          0.08
+        ),
+        rgba(
+          150,
+          191,
+          211,
+          0.32
+        ),
+        rgba(
+          145,
+          239,
+          91,
+          0.08
+        )
       );
   }
 
-  /* Summary stays
-     diagram-like */
+  .flowDot {
+    top: 0;
+    left: 50%;
 
-  .energyJourneySummary {
-    min-height:
-      108px;
+    margin-left:
+      -5px;
 
-    overflow-x: auto;
-
-    justify-content:
-      flex-start;
+    animation:
+      mobileFlowDown
+      2.9s linear
+      infinite;
   }
 
-  .energySummaryMainFlow {
-    min-width: 430px;
+  .dotDc {
+    animation-delay:
+      -0.55s;
+  }
 
-    margin: 0 auto;
+  .dotAc {
+    animation-delay:
+      -1.1s;
+  }
+
+  .flowLabel {
+    top: 50%;
+    left:
+      calc(
+        50% + 18px
+      );
+
+    transform:
+      translateY(-50%);
+  }
+
+  .flowLineVertical {
+    height: 72px;
+
+    flex-basis:
+      72px;
+  }
+
+  .nodeBattery {
+    width:
+      min(
+        80%,
+        260px
+      );
+
+    height: 135px;
+
+    min-height:
+      135px;
+  }
+
+  .systemTechDetails {
+    display: flex;
+
+    min-height:
+      auto;
+  }
+
+  .detailsMetaGrid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(0, 1fr)
+      );
   }
 }
 
@@ -1268,63 +1744,183 @@
    MOBILE
    ========================================================= */
 
-@media (
-  max-width: 720px
-) {
-  .energyJourney {
+@media (max-width: 640px) {
+  .systemTechSection {
     padding:
-      80px 5vw 70px;
+      52px 0
+      32px;
   }
 
-  .energyJourneyHeader {
-    margin-bottom:
-      35px;
-  }
-
-  .energyJourneyHeader h2 {
-    font-size:
-      clamp(
-        42px,
-        13vw,
-        62px
+  .systemTechHeader,
+  .systemTechLayout {
+    width:
+      min(
+        90vw,
+        100%
       );
   }
 
-  .energySystemDiagram,
-  .energyInfoPanel {
-    border-radius:
-      20px;
+  .systemTechTitle {
+    font-size:
+      clamp(
+        35px,
+        10.2vw,
+        56px
+      );
   }
 
-  .energyInfoPanel {
+  .systemTechHeaderRight {
+    font-size:
+      13px;
+
+    line-height:
+      1.65;
+  }
+
+  .systemTechVisualizer {
     padding:
+      26px 16px;
+
+    border-radius:
       22px;
   }
 
-  .energyInfoPanel h3 {
-    margin-top:
-      35px;
+  .systemNode {
+    height:
+      132px;
+
+    min-height:
+      132px;
+
+    border-radius:
+      18px;
   }
 
-  .energyInfoStats {
+  .systemNodeIcon {
+    width: 48px;
+    height: 48px;
+
+    font-size:
+      23px;
+  }
+
+  .systemNodeTitle {
+    font-size:
+      14px;
+  }
+
+  .systemNodeText {
+    font-size:
+      10px;
+  }
+
+  .nodeBattery {
+    width:
+      min(
+        82%,
+        240px
+      );
+
+    height:
+      128px;
+
+    min-height:
+      128px;
+  }
+
+  .systemTechDetails {
+    padding:
+      22px 18px;
+
+    border-radius:
+      22px;
+  }
+
+  .detailsHeadline {
+    margin-top:
+      24px;
+
+    font-size:
+      27px;
+  }
+
+  .detailsDescription {
+    font-size:
+      13px;
+  }
+
+  .detailsMetaValue {
+    font-size:
+      12px;
+  }
+
+  .detailsHint {
+    font-size:
+      9px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .detailsMetaGrid {
     grid-template-columns:
       1fr;
   }
 
-  .energyJourneySummary {
-    padding:
-      16px 18px 20px;
-
-    border-radius:
-      16px;
+  .systemTechKicker {
+    font-size:
+      10px;
   }
 
-  .energySummaryMainFlow {
-    gap: 14px;
+  .systemTechTitle {
+    font-size:
+      clamp(
+        34px,
+        11vw,
+        48px
+      );
   }
 
-  .energySummaryItem {
-    min-width: 78px;
+  .flowLabelVertical {
+    font-size:
+      6px;
+
+    left:
+      calc(
+        50% + 10px
+      );
+  }
+}
+
+/* =========================================================
+   MOBILE FLOW ANIMATION
+   ========================================================= */
+
+@keyframes mobileFlowDown {
+  0% {
+    top: 0;
+
+    opacity: 0;
+  }
+
+  8% {
+    opacity: 1;
+  }
+
+  88% {
+    opacity: 1;
+  }
+
+  100% {
+    top:
+      calc(
+        100% - 10px
+      );
+
+    opacity: 0;
   }
 }
 
@@ -1332,17 +1928,19 @@
    REDUCED MOTION
    ========================================================= */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
-  .energyPulse,
-  .batteryPulse {
-    animation: none;
+@media (prefers-reduced-motion: reduce) {
+  .systemNode,
+  .flowDot,
+  .flowDotVertical {
+    transition: none;
   }
 
-  .energyNode,
-  .energyInfoPanel {
-    transition: none;
+  .flowDot,
+  .flowDotVertical {
+    animation:
+      none !important;
+
+    opacity:
+      0.75;
   }
 }

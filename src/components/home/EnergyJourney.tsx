@@ -1,544 +1,477 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-type EnergyNodeId =
+type StepKey =
   | "sun"
   | "panel"
   | "inverter"
   | "battery"
   | "loads";
 
-type EnergyNode = {
-  id: EnergyNodeId;
+type StepItem = {
+  key: StepKey;
   step: string;
-  icon: string;
-  shortLabel: string;
+  short: string;
   title: string;
+  headline: string;
   description: string;
-  energy: string;
-  role: string;
+  energyState: string;
+  systemRole: string;
+  icon: string;
 };
 
-const ENERGY_NODES: EnergyNode[] = [
+const STEPS: StepItem[] = [
   {
-    id: "sun",
-    step: "01",
-    icon: "☀",
-    shortLabel: "Sun",
-    title:
+    key: "sun",
+    step: "STEP 01",
+    short: "Sun",
+    title: "Sun",
+    headline:
       "Solar energy begins with sunlight.",
     description:
       "Sunlight reaches the solar array and provides the renewable energy source that starts the entire system.",
-    energy:
-      "Solar Irradiance",
-    role:
-      "Primary Energy Source",
+    energyState: "Solar Irradiance",
+    systemRole: "Primary Energy Source",
+    icon: "☀",
   },
-
   {
-    id: "panel",
-    step: "02",
-    icon: "▦",
-    shortLabel: "Solar Panel",
-    title:
-      "Solar panels convert sunlight into DC electricity.",
+    key: "panel",
+    step: "STEP 02",
+    short: "Solar Panel",
+    title: "Solar Panel",
+    headline:
+      "The solar panel captures energy.",
     description:
-      "Photovoltaic modules capture sunlight and convert it into direct-current electrical energy that can be managed by the solar system.",
-    energy:
-      "DC Electricity",
-    role:
-      "Energy Generation",
+      "Solar panels collect sunlight and convert it into DC electrical energy that can move into the rest of the system.",
+    energyState: "DC Generation",
+    systemRole: "Energy Capture",
+    icon: "▦",
   },
-
   {
-    id: "inverter",
-    step: "03",
-    icon: "↯",
-    shortLabel: "Inverter",
-    title:
+    key: "inverter",
+    step: "STEP 03",
+    short: "Inverter",
+    title: "Inverter",
+    headline:
       "The inverter manages and converts the energy.",
     description:
       "The inverter converts solar DC power into usable AC electricity while coordinating energy between solar generation, battery storage and electrical loads.",
-    energy:
-      "DC → AC",
-    role:
-      "Energy Management",
+    energyState: "DC → AC",
+    systemRole: "Energy Management",
+    icon: "↯",
   },
-
   {
-    id: "battery",
-    step: "04",
+    key: "battery",
+    step: "STEP 04",
+    short: "Battery",
+    title: "Battery",
+    headline:
+      "The battery stores energy for later use.",
+    description:
+      "Battery storage keeps available power for backup or later consumption when solar production is low or when additional support is needed.",
+    energyState: "Stored Energy",
+    systemRole: "Backup / Storage",
     icon: "▣",
-    shortLabel: "Battery",
-    title:
-      "Battery storage keeps energy available for later.",
-    description:
-      "When the system produces surplus energy, the battery can store it. When additional power is required, stored energy flows back through the inverter before being supplied to connected loads.",
-    energy:
-      "Charge ↔ Discharge",
-    role:
-      "Energy Storage",
   },
-
   {
-    id: "loads",
-    step: "05",
-    icon: "⌂",
-    shortLabel: "Loads",
-    title:
-      "Usable electricity reaches everyday electrical loads.",
+    key: "loads",
+    step: "STEP 05",
+    short: "Loads",
+    title: "Loads",
+    headline:
+      "The loads use the electricity.",
     description:
-      "The inverter supplies usable AC electricity to lighting, fans, appliances, electronics, office equipment and other connected electrical loads.",
-    energy:
-      "AC Electricity",
-    role:
-      "Energy Consumption",
+      "Lights, fans, appliances and other devices receive usable electricity from the system for everyday operation.",
+    energyState: "AC Consumption",
+    systemRole: "End Use",
+    icon: "⌂",
   },
 ];
 
 export default function EnergyJourney() {
-  const [activeNode, setActiveNode] =
-    useState<EnergyNodeId>("sun");
+  const [activeKey, setActiveKey] =
+    useState<StepKey>("sun");
 
-  const selectedNode =
-    ENERGY_NODES.find(
-      (node) =>
-        node.id === activeNode
-    ) ?? ENERGY_NODES[0];
+  const activeStep = useMemo(
+    () =>
+      STEPS.find(
+        (item) =>
+          item.key === activeKey
+      ) ?? STEPS[0],
+    [activeKey]
+  );
 
   return (
-    <section
-      className="energyJourney"
-      id="energy-journey"
-    >
-      <div className="energyJourneyGlow energyJourneyGlowOne" />
-      <div className="energyJourneyGlow energyJourneyGlowTwo" />
+    <section className="systemTechSection">
+      {/* =====================================================
+          SECTION HEADER
+          ===================================================== */}
 
-      <div className="energyJourneyInner">
-        {/* ================================================
-            SECTION HEADER
-            ================================================ */}
-
-        <div className="energyJourneyHeader">
-          <div>
-            <div className="energyJourneyEyebrow">
-              Interactive Solar Energy Journey
-            </div>
-
-            <h2>
-              See how energy moves
-              <br />
-              through the{" "}
-              <span>
-                system.
-              </span>
-            </h2>
+      <div className="systemTechHeader">
+        <div className="systemTechHeaderLeft">
+          <div className="systemTechKicker">
+            INTERACTIVE SOLAR ENERGY JOURNEY
           </div>
 
-          <p>
-            Select any stage to understand
-            its role in a complete solar
-            energy system—from sunlight
-            and generation to storage and
-            everyday electricity use.
-          </p>
+          <h2 className="systemTechTitle">
+            See how energy moves
+            <br />
+            through the{" "}
+            <span>system.</span>
+          </h2>
         </div>
 
-        {/* ================================================
-            MAIN SYSTEM + INFORMATION
-            ================================================ */}
+        <div className="systemTechHeaderRight">
+          Select any stage to understand
+          its role in a complete solar
+          energy system—from sunlight and
+          generation to storage and
+          everyday electricity use.
+        </div>
+      </div>
 
-        <div className="energySystemShell">
-          {/* ==============================================
-              MAIN SYSTEM DIAGRAM
-              ============================================== */}
+      {/* =====================================================
+          MAIN LAYOUT
+          ===================================================== */}
 
-          <div className="energySystemDiagram">
-            {/* SUN */}
+      <div className="systemTechLayout">
+        {/* ===================================================
+            LEFT — ENERGY FLOW
+            =================================================== */}
+
+        <div className="systemTechVisualizer">
+          <div className="systemTechFlowGrid">
+            {/* ===============================================
+                SUN
+                =============================================== */}
 
             <button
               type="button"
-              className={`energyNode energyNodeSun ${
-                activeNode === "sun"
+              aria-pressed={
+                activeKey === "sun"
+              }
+              className={`systemNode nodeSun ${
+                activeKey === "sun"
                   ? "active"
                   : ""
               }`}
               onClick={() =>
-                setActiveNode("sun")
-              }
-              aria-pressed={
-                activeNode === "sun"
+                setActiveKey("sun")
               }
             >
-              <span className="energyNodeStep">
+              <span className="systemNodeStep">
                 01
               </span>
 
-              <span className="energyNodeIcon">
+              <span className="systemNodeIcon systemNodeIconSun">
                 ☀
               </span>
 
-              <strong>
+              <span className="systemNodeTitle">
                 Sun
-              </strong>
+              </span>
 
-              <small>
+              <span className="systemNodeText">
                 Renewable source
-              </small>
+              </span>
             </button>
 
-            {/* SUN → PANEL */}
+            {/* ===============================================
+                SUN → PANEL
+                =============================================== */}
 
-            <div className="energyConnector">
-              <span className="energyConnectorLine" />
+            <div className="flowLine lineSunPanel">
+              <span className="flowTrack" />
 
-              <span className="energyPulse" />
+              <span className="flowDot dotLight" />
 
-              <b>
+              <span className="flowLabel labelLight">
                 LIGHT
-              </b>
+              </span>
             </div>
 
-            {/* PANEL */}
+            {/* ===============================================
+                SOLAR PANEL
+                =============================================== */}
 
             <button
               type="button"
-              className={`energyNode ${
-                activeNode === "panel"
+              aria-pressed={
+                activeKey === "panel"
+              }
+              className={`systemNode nodePanel ${
+                activeKey === "panel"
                   ? "active"
                   : ""
               }`}
               onClick={() =>
-                setActiveNode(
-                  "panel"
-                )
-              }
-              aria-pressed={
-                activeNode === "panel"
+                setActiveKey("panel")
               }
             >
-              <span className="energyNodeStep">
+              <span className="systemNodeStep">
                 02
               </span>
 
-              <span className="energyNodeIcon energyPanelIcon">
+              <span className="systemNodeIcon systemNodeIconPanel">
                 ▦
               </span>
 
-              <strong>
+              <span className="systemNodeTitle">
                 Solar Panel
-              </strong>
+              </span>
 
-              <small>
+              <span className="systemNodeText">
                 DC generation
-              </small>
+              </span>
             </button>
 
-            {/* PANEL → INVERTER */}
+            {/* ===============================================
+                PANEL → INVERTER
+                =============================================== */}
 
-            <div className="energyConnector">
-              <span className="energyConnectorLine" />
+            <div className="flowLine linePanelInverter">
+              <span className="flowTrack" />
 
-              <span className="energyPulse" />
+              <span className="flowDot dotDc" />
 
-              <b>
+              <span className="flowLabel labelDc">
                 DC
-              </b>
+              </span>
             </div>
 
-            {/* INVERTER */}
+            {/* ===============================================
+                INVERTER + BATTERY COLUMN
+                =============================================== */}
 
-            <button
-              type="button"
-              className={`energyNode energyNodeInverter ${
-                activeNode ===
-                "inverter"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setActiveNode(
-                  "inverter"
-                )
-              }
-              aria-pressed={
-                activeNode ===
-                "inverter"
-              }
-            >
-              <span className="energyNodeStep">
-                03
-              </span>
-
-              <span className="energyNodeIcon">
-                ↯
-              </span>
-
-              <strong>
-                Inverter
-              </strong>
-
-              <small>
-                Convert + manage
-              </small>
-            </button>
-
-            {/* INVERTER → LOADS */}
-
-            <div className="energyConnector energyConnectorAC">
-              <span className="energyConnectorLine" />
-
-              <span className="energyPulse" />
-
-              <b>
-                AC
-              </b>
-            </div>
-
-            {/* LOADS */}
-
-            <button
-              type="button"
-              className={`energyNode ${
-                activeNode === "loads"
-                  ? "active"
-                  : ""
-              }`}
-              onClick={() =>
-                setActiveNode(
-                  "loads"
-                )
-              }
-              aria-pressed={
-                activeNode === "loads"
-              }
-            >
-              <span className="energyNodeStep">
-                05
-              </span>
-
-              <span className="energyNodeIcon">
-                ⌂
-              </span>
-
-              <strong>
-                Loads
-              </strong>
-
-              <small>
-                Everyday energy
-              </small>
-            </button>
-
-            {/* ============================================
-                INVERTER ↕ BATTERY
-                ============================================ */}
-
-            <div className="energyBatteryBranch">
-              <div className="batteryVerticalLine">
-                <span className="batteryPulse batteryPulseDown" />
-
-                <span className="batteryPulse batteryPulseUp" />
-              </div>
-
-              <div className="batteryFlowLabel">
-                CHARGE ↕ DISCHARGE
-              </div>
-
+            <div className="systemTechInverterColumn">
               <button
                 type="button"
-                className={`energyNode energyBatteryNode ${
-                  activeNode ===
-                  "battery"
+                aria-pressed={
+                  activeKey === "inverter"
+                }
+                className={`systemNode nodeInverter ${
+                  activeKey === "inverter"
                     ? "active"
                     : ""
                 }`}
                 onClick={() =>
-                  setActiveNode(
+                  setActiveKey(
+                    "inverter"
+                  )
+                }
+              >
+                <span className="systemNodeStep">
+                  03
+                </span>
+
+                <span className="systemNodeIcon systemNodeIconInverter">
+                  ↯
+                </span>
+
+                <span className="systemNodeTitle">
+                  Inverter
+                </span>
+
+                <span className="systemNodeText">
+                  Convert + manage
+                </span>
+              </button>
+
+              {/* =============================================
+                  INVERTER ↕ BATTERY
+
+                  Dot A:
+                  Inverter → Battery
+
+                  Dot B:
+                  Battery → Inverter
+
+                  CSS timing makes them alternate.
+                  ============================================= */}
+
+              <div className="flowLineVertical lineInverterBattery">
+                <span className="flowTrackVertical" />
+
+                <span
+                  className="flowDotVertical flowDotDown"
+                  aria-hidden="true"
+                />
+
+                <span
+                  className="flowDotVertical flowDotUp"
+                  aria-hidden="true"
+                />
+
+                <span className="flowLabelVertical">
+                  CHARGE &amp; DISCHARGE
+                </span>
+              </div>
+
+              {/* =============================================
+                  BATTERY
+                  ============================================= */}
+
+              <button
+                type="button"
+                aria-pressed={
+                  activeKey === "battery"
+                }
+                className={`systemNode nodeBattery ${
+                  activeKey === "battery"
+                    ? "active"
+                    : ""
+                }`}
+                onClick={() =>
+                  setActiveKey(
                     "battery"
                   )
                 }
-                aria-pressed={
-                  activeNode ===
-                  "battery"
-                }
               >
-                <span className="energyNodeStep">
+                <span className="systemNodeStep">
                   04
                 </span>
 
-                <span className="energyNodeIcon">
+                <span className="systemNodeIcon systemNodeIconBattery">
                   ▣
                 </span>
 
-                <strong>
+                <span className="systemNodeTitle">
                   Battery
-                </strong>
+                </span>
 
-                <small>
+                <span className="systemNodeText">
                   Energy storage
-                </small>
+                </span>
               </button>
             </div>
-          </div>
 
-          {/* ==============================================
-              DYNAMIC INFORMATION PANEL
-              ============================================== */}
+            {/* ===============================================
+                INVERTER → LOADS
+                =============================================== */}
 
-          <div
-            className="energyInfoPanel"
-            key={
-              selectedNode.id
-            }
-          >
-            <div className="energyInfoTop">
-              <div>
-                <span className="energyInfoStep">
-                  STEP{" "}
-                  {
-                    selectedNode.step
-                  }
-                </span>
+            <div className="flowLine lineInverterLoads">
+              <span className="flowTrack" />
 
-                <span className="energyInfoCategory">
-                  {
-                    selectedNode.shortLabel
-                  }
-                </span>
-              </div>
+              <span className="flowDot dotAc" />
 
-              <span className="energyInfoIcon">
-                {
-                  selectedNode.icon
-                }
+              <span className="flowLabel labelAc">
+                AC
               </span>
             </div>
 
-            <h3>
-              {
-                selectedNode.title
+            {/* ===============================================
+                LOADS
+                =============================================== */}
+
+            <button
+              type="button"
+              aria-pressed={
+                activeKey === "loads"
               }
-            </h3>
-
-            <p>
-              {
-                selectedNode.description
+              className={`systemNode nodeLoads ${
+                activeKey === "loads"
+                  ? "active"
+                  : ""
+              }`}
+              onClick={() =>
+                setActiveKey("loads")
               }
-            </p>
+            >
+              <span className="systemNodeStep">
+                05
+              </span>
 
-            <div className="energyInfoStats">
-              <div>
-                <small>
-                  ENERGY STATE
-                </small>
+              <span className="systemNodeIcon systemNodeIconLoads">
+                ⌂
+              </span>
 
-                <strong>
-                  {
-                    selectedNode.energy
-                  }
-                </strong>
-              </div>
+              <span className="systemNodeTitle">
+                Loads
+              </span>
 
-              <div>
-                <small>
-                  SYSTEM ROLE
-                </small>
-
-                <strong>
-                  {
-                    selectedNode.role
-                  }
-                </strong>
-              </div>
-            </div>
-
-            <div className="energyInfoHint">
-              <span />
-
-              Select another system
-              component to continue
-              exploring.
-            </div>
+              <span className="systemNodeText">
+                Everyday energy
+              </span>
+            </button>
           </div>
         </div>
 
-        {/* ================================================
-            MINI SYSTEM SUMMARY
+        {/* ===================================================
+            RIGHT — DETAILS
+            =================================================== */}
 
-            Same architecture as above:
+        <aside
+          className="systemTechDetails"
+          aria-live="polite"
+        >
+          <div>
+            <div className="systemTechDetailsTop">
+              <div>
+                <div className="detailsStep">
+                  {activeStep.step}
+                </div>
 
-            Sun → Panel → Inverter → Loads
-                            ↕
-                         Battery
-            ================================================ */}
+                <div className="detailsSub">
+                  {activeStep.short}
+                </div>
+              </div>
 
-        <div className="energyJourneySummary">
-          <div className="energySummaryMainFlow">
-            {/* GENERATION */}
-
-            <div className="energySummaryItem">
-              <small>
-                GENERATION
-              </small>
-
-              <strong>
-                Sun → Panel
-              </strong>
+              <div
+                className="detailsIcon"
+                aria-hidden="true"
+              >
+                {activeStep.icon}
+              </div>
             </div>
 
-            <span className="energySummaryArrow">
-              →
-            </span>
+            <h3 className="detailsHeadline">
+              {activeStep.headline}
+            </h3>
 
-            {/* MANAGEMENT / INVERTER */}
+            <p className="detailsDescription">
+              {activeStep.description}
+            </p>
+          </div>
 
-            <div className="energySummaryItem energySummaryInverter">
-              <small>
-                MANAGEMENT
-              </small>
+          <div className="systemTechDetailsBottom">
+            <div className="detailsMetaGrid">
+              <div className="detailsMetaCard">
+                <div className="detailsMetaLabel">
+                  ENERGY STATE
+                </div>
 
-              <strong>
-                Inverter
-              </strong>
+                <div className="detailsMetaValue">
+                  {
+                    activeStep.energyState
+                  }
+                </div>
+              </div>
 
-              {/* Battery branch */}
+              <div className="detailsMetaCard">
+                <div className="detailsMetaLabel">
+                  SYSTEM ROLE
+                </div>
 
-              <div className="energySummaryBatteryBranch">
-                <span className="energySummaryVerticalArrow">
-                  ↕
-                </span>
-
-                <div className="energySummaryBattery">
-                  <small>
-                    STORAGE
-                  </small>
-
-                  <strong>
-                    Battery
-                  </strong>
+                <div className="detailsMetaValue">
+                  {
+                    activeStep.systemRole
+                  }
                 </div>
               </div>
             </div>
 
-            <span className="energySummaryArrow">
-              →
-            </span>
+            <div className="detailsHint">
+              <span className="detailsHintLine" />
 
-            {/* LOADS */}
-
-            <div className="energySummaryItem">
-              <small>
-                CONSUMPTION
-              </small>
-
-              <strong>
-                Loads
-              </strong>
+              <span>
+                Select another system
+                component to continue
+                exploring.
+              </span>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </section>
   );
