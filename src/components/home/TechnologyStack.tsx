@@ -26,7 +26,8 @@ const TECHNOLOGY_ITEMS: TechnologyItem[] = [
   {
     title: "Inverter",
     icon: "↯",
-    role: "Conversion + Management",
+    role:
+      "Conversion + Management",
     description:
       "Converts solar DC power into usable AC electricity and manages system energy.",
     image:
@@ -69,7 +70,6 @@ export default function TechnologyStack() {
       id="technology-stack"
     >
       <div className="technologyStackGlow technologyStackGlowOne" />
-
       <div className="technologyStackGlow technologyStackGlowTwo" />
 
       <div className="technologyStackInner">
@@ -133,9 +133,10 @@ export default function TechnologyStack() {
 
                     <div className="technologyCardMediaOverlay" />
 
-                    {/* TECHNOLOGY ICON */}
-
-                    <span className="technologyIcon">
+                    <span
+                      className="technologyIcon"
+                      aria-hidden="true"
+                    >
                       {item.icon}
                     </span>
                   </div>
@@ -162,7 +163,10 @@ export default function TechnologyStack() {
                 {index <
                   TECHNOLOGY_ITEMS.length -
                     1 && (
-                  <div className="technologyConnector">
+                  <div
+                    className="technologyConnector"
+                    aria-hidden="true"
+                  >
                     <span />
 
                     <b>
@@ -255,7 +259,7 @@ export default function TechnologyStack() {
             >
               Explore Products
 
-              <span>
+              <span aria-hidden="true">
                 →
               </span>
             </Link>
@@ -266,7 +270,7 @@ export default function TechnologyStack() {
             >
               Engineering Tools
 
-              <span>
+              <span aria-hidden="true">
                 ↗
               </span>
             </Link>

@@ -8,7 +8,8 @@
   overflow: hidden;
 
   padding:
-    100px 5vw 95px;
+    100px 5vw
+    95px;
 
   border-bottom:
     1px solid
@@ -41,9 +42,13 @@
   z-index: 2;
 
   width:
-    min(1500px, 100%);
+    min(
+      1500px,
+      100%
+    );
 
-  margin: 0 auto;
+  margin:
+    0 auto;
 }
 
 /* =========================================================
@@ -106,18 +111,28 @@
   color:
     var(--green-2);
 
-  font-size: 9px;
+  font-size: 11px;
+
   font-weight: 900;
 
+  line-height: 1.2;
+
   letter-spacing:
-    0.18em;
+    0.16em;
 
   text-transform:
     uppercase;
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.15);
 }
 
 .technologyStackHeader h2 {
   margin: 0;
+
+  color:
+    #f3f7f9;
 
   font-size:
     clamp(
@@ -125,6 +140,8 @@
       5vw,
       76px
     );
+
+  font-weight: 900;
 
   line-height: 0.95;
 
@@ -135,21 +152,27 @@
 .technologyStackHeader h2 span {
   color:
     var(--green-2);
+
+  text-shadow:
+    0 0 22px
+    rgba(145, 239, 91, 0.05);
 }
 
 .technologyStackHeaderCopy {
-  max-width: 440px;
+  max-width: 460px;
 }
 
 .technologyStackHeaderCopy p {
   margin: 0;
 
   color:
-    #8297a1;
+    #a7bac3;
 
-  font-size: 12px;
+  font-size: 15px;
 
-  line-height: 1.65;
+  font-weight: 500;
+
+  line-height: 1.7;
 }
 
 /* =========================================================
@@ -189,7 +212,7 @@
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    rgba(255, 255, 255, 0.08);
 
   border-radius: 18px;
 
@@ -200,10 +223,15 @@
       rgba(6, 20, 28, 0.98)
     );
 
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.018);
+
   transition:
     transform 0.25s ease,
     border-color 0.25s ease,
-    background 0.25s ease;
+    background 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .technologyCard:hover {
@@ -211,7 +239,7 @@
     translateY(-4px);
 
   border-color:
-    rgba(145, 239, 91, 0.24);
+    rgba(145, 239, 91, 0.26);
 
   background:
     linear-gradient(
@@ -219,6 +247,12 @@
       rgba(12, 32, 40, 0.98),
       rgba(6, 21, 28, 0.99)
     );
+
+  box-shadow:
+    0 16px 34px
+    rgba(0, 0, 0, 0.17),
+    0 0 18px
+    rgba(145, 239, 91, 0.025);
 }
 
 /* =========================================================
@@ -231,13 +265,14 @@
   height: 170px;
 
   margin:
-    -18px -18px 18px;
+    -18px -18px
+    18px;
 
   overflow: hidden;
 
   border-bottom:
     1px solid
-    rgba(255, 255, 255, 0.06);
+    rgba(255, 255, 255, 0.07);
 
   background:
     rgba(255, 255, 255, 0.02);
@@ -248,21 +283,27 @@
 
   object-position: center;
 
+  filter:
+    brightness(1.03)
+    contrast(1.02);
+
   transition:
-    transform 0.45s ease;
+    transform 0.45s ease,
+    filter 0.45s ease;
 }
 
 .technologyCard:hover
 .technologyCardImage {
   transform:
     scale(1.035);
+
+  filter:
+    brightness(1.07)
+    contrast(1.03);
 }
 
 /* =========================================================
    IMAGE OVERLAY
-
-   Lighter at top so the text
-   already inside the image remains visible.
    ========================================================= */
 
 .technologyCardMediaOverlay {
@@ -273,13 +314,13 @@
   background:
     linear-gradient(
       180deg,
-      rgba(4, 13, 18, 0.01)
+      rgba(4, 13, 18, 0.005)
         0%,
-      rgba(4, 13, 18, 0.03)
-        45%,
-      rgba(4, 13, 18, 0.18)
-        72%,
-      rgba(4, 13, 18, 0.55)
+      rgba(4, 13, 18, 0.02)
+        42%,
+      rgba(4, 13, 18, 0.13)
+        70%,
+      rgba(4, 13, 18, 0.47)
         100%
     );
 
@@ -288,9 +329,6 @@
 
 /* =========================================================
    TECHNOLOGY ICON
-
-   Number badges removed.
-   Only one icon remains.
    ========================================================= */
 
 .technologyIcon {
@@ -310,7 +348,7 @@
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.16);
+    rgba(145, 239, 91, 0.22);
 
   border-radius: 50%;
 
@@ -318,7 +356,7 @@
     var(--green-2);
 
   background:
-    rgba(5, 16, 23, 0.76);
+    rgba(5, 16, 23, 0.82);
 
   backdrop-filter:
     blur(8px);
@@ -330,7 +368,9 @@
 
   box-shadow:
     0 8px 22px
-    rgba(0, 0, 0, 0.15);
+    rgba(0, 0, 0, 0.15),
+    0 0 14px
+    rgba(145, 239, 91, 0.04);
 }
 
 /* =========================================================
@@ -349,14 +389,16 @@
   margin-bottom: 8px;
 
   color:
-    #617883;
+    #92a8b2;
 
-  font-size: 6px;
+  font-size: 9px;
 
   font-weight: 900;
 
+  line-height: 1.3;
+
   letter-spacing:
-    0.1em;
+    0.11em;
 
   text-transform:
     uppercase;
@@ -366,7 +408,7 @@
   margin: 0;
 
   color:
-    #edf4f6;
+    #f2f7f9;
 
   font-size:
     clamp(
@@ -374,6 +416,8 @@
       2vw,
       30px
     );
+
+  font-weight: 850;
 
   line-height: 1;
 
@@ -386,11 +430,13 @@
     12px 0 0;
 
   color:
-    #718791;
+    #9eb2bb;
 
-  font-size: 9px;
+  font-size: 12px;
 
-  line-height: 1.55;
+  font-weight: 500;
+
+  line-height: 1.6;
 }
 
 /* =========================================================
@@ -426,7 +472,11 @@
   height: 1px;
 
   background:
-    rgba(145, 239, 91, 0.2);
+    rgba(145, 239, 91, 0.28);
+
+  box-shadow:
+    0 0 7px
+    rgba(145, 239, 91, 0.08);
 }
 
 .technologyConnector b {
@@ -440,7 +490,9 @@
   background:
     #07131a;
 
-  font-size: 9px;
+  font-size: 11px;
+
+  font-weight: 900;
 }
 
 /* =========================================================
@@ -451,32 +503,37 @@
   margin-top: 12px;
 
   padding:
-    14px 16px;
+    15px 16px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.055);
+    rgba(255, 255, 255, 0.07);
 
   border-radius: 14px;
 
   background:
-    rgba(255, 255, 255, 0.012);
+    rgba(255, 255, 255, 0.014);
 }
 
 .technologySystemPath > small {
   display: block;
 
-  margin-bottom: 9px;
+  margin-bottom: 10px;
 
   color:
-    #5f7681;
+    #8ca2ac;
 
-  font-size: 5px;
+  font-size: 8px;
 
   font-weight: 900;
 
+  line-height: 1.3;
+
   letter-spacing:
     0.12em;
+
+  text-transform:
+    uppercase;
 }
 
 .technologySystemPath > div {
@@ -491,25 +548,38 @@
 
 .technologySystemPath span {
   padding:
-    5px 8px;
+    6px 9px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.055);
+    rgba(255, 255, 255, 0.075);
 
   border-radius: 999px;
 
   color:
-    #a9bbc2;
+    #d0dde2;
 
-  font-size: 7px;
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  line-height: 1.2;
 }
 
 .technologySystemPath b {
   color:
     var(--green-2);
 
-  font-size: 9px;
+  font-size: 11px;
+
+  font-weight: 900;
+
+  text-shadow:
+    0 0 8px
+    rgba(145, 239, 91, 0.12);
 }
 
 /* =========================================================
@@ -529,45 +599,52 @@
   margin-top: 12px;
 
   padding:
-    16px 18px;
+    17px 18px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.09);
+    rgba(145, 239, 91, 0.12);
 
   border-radius: 15px;
 
   background:
     linear-gradient(
       90deg,
-      rgba(145, 239, 91, 0.025),
-      rgba(255, 255, 255, 0.01)
+      rgba(145, 239, 91, 0.032),
+      rgba(255, 255, 255, 0.012)
     );
 }
 
 .technologyStackFooter small {
   display: block;
 
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 
   color:
-    #617883;
+    #8ea4ae;
 
-  font-size: 5px;
+  font-size: 8px;
 
   font-weight: 900;
 
+  line-height: 1.3;
+
   letter-spacing:
     0.12em;
+
+  text-transform:
+    uppercase;
 }
 
 .technologyStackFooter strong {
   color:
-    #d8e4e8;
+    #e5edf0;
 
-  font-size: 10px;
+  font-size: 12px;
 
   font-weight: 750;
+
+  line-height: 1.45;
 }
 
 /* =========================================================
@@ -584,7 +661,7 @@
 
 .technologyPrimaryAction,
 .technologySecondaryAction {
-  min-height: 40px;
+  min-height: 42px;
 
   display:
     inline-flex;
@@ -597,11 +674,11 @@
   gap: 20px;
 
   padding:
-    0 14px;
+    0 15px;
 
   border-radius: 999px;
 
-  font-size: 7px;
+  font-size: 9px;
 
   font-weight: 900;
 
@@ -610,31 +687,37 @@
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease;
 }
 
 .technologyPrimaryAction {
   border:
     1px solid
-    rgba(145, 239, 91, 0.34);
+    rgba(145, 239, 91, 0.42);
 
   color:
-    #edffe4;
+    #f3ffeD;
 
   background:
-    rgba(145, 239, 91, 0.055);
+    rgba(145, 239, 91, 0.065);
+
+  box-shadow:
+    inset 0 0 14px
+    rgba(145, 239, 91, 0.025);
 }
 
 .technologySecondaryAction {
   border:
     1px solid
-    rgba(255, 255, 255, 0.075);
+    rgba(255, 255, 255, 0.095);
 
   color:
-    #a9bbc2;
+    #cad8dd;
 
   background:
-    rgba(255, 255, 255, 0.018);
+    rgba(255, 255, 255, 0.022);
 }
 
 .technologyPrimaryAction:hover,
@@ -645,15 +728,22 @@
 
 .technologyPrimaryAction:hover {
   border-color:
-    rgba(145, 239, 91, 0.65);
+    rgba(145, 239, 91, 0.7);
 
   background:
-    rgba(145, 239, 91, 0.1);
+    rgba(145, 239, 91, 0.11);
+
+  box-shadow:
+    0 0 18px
+    rgba(145, 239, 91, 0.05);
 }
 
 .technologySecondaryAction:hover {
   border-color:
-    rgba(145, 239, 91, 0.24);
+    rgba(145, 239, 91, 0.28);
+
+  color:
+    #f0f6f8;
 }
 
 .technologyPrimaryAction span,
@@ -661,16 +751,14 @@
   color:
     var(--green-2);
 
-  font-size: 13px;
+  font-size: 14px;
 }
 
 /* =========================================================
    LAPTOP
    ========================================================= */
 
-@media (
-  max-width: 1100px
-) {
+@media (max-width: 1100px) {
   .technologyStackFlow {
     grid-template-columns:
       repeat(
@@ -688,9 +776,7 @@
    TABLET
    ========================================================= */
 
-@media (
-  max-width: 900px
-) {
+@media (max-width: 900px) {
   .technologyStackHeader {
     grid-template-columns:
       1fr;
@@ -698,12 +784,16 @@
     gap: 18px;
   }
 
+  .technologyStackHeaderCopy {
+    max-width: 650px;
+  }
+
   .technologyStackFooter {
     display: block;
   }
 
   .technologyStackActions {
-    margin-top: 14px;
+    margin-top: 15px;
   }
 }
 
@@ -711,12 +801,11 @@
    MOBILE
    ========================================================= */
 
-@media (
-  max-width: 720px
-) {
+@media (max-width: 720px) {
   .technologyStack {
     padding:
-      75px 5vw 65px;
+      75px 5vw
+      65px;
   }
 
   .technologyStackHeader h2 {
@@ -726,6 +815,10 @@
         13vw,
         60px
       );
+  }
+
+  .technologyStackHeaderCopy p {
+    font-size: 14px;
   }
 
   .technologyStackFlow {
@@ -741,6 +834,26 @@
     height: 180px;
   }
 
+  .technologyCardBody small {
+    font-size: 9px;
+  }
+
+  .technologyCardBody p {
+    font-size: 12px;
+  }
+
+  .technologySystemPath > small {
+    font-size: 8px;
+  }
+
+  .technologySystemPath span {
+    font-size: 9px;
+  }
+
+  .technologyStackFooter strong {
+    font-size: 12px;
+  }
+
   .technologyStackActions {
     flex-direction: column;
 
@@ -750,6 +863,34 @@
   .technologyPrimaryAction,
   .technologySecondaryAction {
     width: 100%;
+
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .technologyCardBody h3 {
+    font-size: 23px;
+  }
+
+  .technologyCardBody p {
+    font-size: 11px;
+  }
+
+  .technologySystemPath {
+    padding:
+      14px 13px;
+  }
+
+  .technologySystemPath span {
+    padding:
+      6px 8px;
+
+    font-size: 8px;
   }
 }
 
@@ -757,10 +898,7 @@
    REDUCED MOTION
    ========================================================= */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
+@media (prefers-reduced-motion: reduce) {
   .technologyCard,
   .technologyCardImage,
   .technologyPrimaryAction,
