@@ -60,7 +60,38 @@ const FEATURE_LINKS = [
     icon: "◉",
     className: "navFeatureSupport",
   },
+  {
+    label: "Build Your System",
+    href: "/build-your-system",
+    icon: "✦",
+    className: "navFeatureBuilder",
+  },
 ];
+
+/* =========================================================
+   CART ICON
+   ========================================================= */
+
+function CartIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="9" cy="20" r="1.25" />
+      <circle cx="18" cy="20" r="1.25" />
+
+      <path d="M3 4h2.2l2.1 10.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.4L21 8H6.1" />
+    </svg>
+  );
+}
 
 export default function Header() {
   const pathname = usePathname();
@@ -105,9 +136,9 @@ export default function Header() {
         className="nav"
         aria-label="Primary navigation"
       >
-        {/* ===============================================
+        {/* =================================================
             LOGO
-            =============================================== */}
+            ================================================= */}
 
         <Link
           href="/"
@@ -125,12 +156,12 @@ export default function Header() {
           />
         </Link>
 
-        {/* ===============================================
+        {/* =================================================
             DESKTOP NAVIGATION
-            =============================================== */}
+            ================================================= */}
 
         <div className="navLinks">
-          {/* PRODUCTS MEGA MENU */}
+          {/* PRODUCTS */}
 
           <div className="navMegaWrap">
             <Link
@@ -195,7 +226,7 @@ export default function Header() {
             </div>
           </div>
 
-          {/* NORMAL NAV */}
+          {/* STANDARD MENU */}
 
           {MAIN_NAV_LINKS.map(
             (item) => (
@@ -213,15 +244,18 @@ export default function Header() {
             )
           )}
 
-          {/* =============================================
-              UPGRADED FEATURE BLOCK
-              ============================================= */}
+          {/* =================================================
+              UPGRADED FEATURES
+              ================================================= */}
 
           <div
             className="navFeatureBlock"
             aria-label="Desh Solar upgraded features"
           >
-            <span className="navFeatureGlow" />
+            <span
+              className="navFeatureGlow"
+              aria-hidden="true"
+            />
 
             {FEATURE_LINKS.map(
               (item) => (
@@ -236,7 +270,10 @@ export default function Header() {
                       : ""
                   }`}
                 >
-                  <span className="navFeatureIcon">
+                  <span
+                    className="navFeatureIcon"
+                    aria-hidden="true"
+                  >
                     {item.icon}
                   </span>
 
@@ -246,26 +283,11 @@ export default function Header() {
                 </Link>
               )
             )}
-
-            <Link
-              href="/build-your-system"
-              className={`navFeatureBuild ${
-                isActive(
-                  "/build-your-system"
-                )
-                  ? "navFeatureActive"
-                  : ""
-              }`}
-            >
-              Build Your System
-
-              <span>
-                →
-              </span>
-            </Link>
           </div>
 
-          {/* CART */}
+          {/* =================================================
+              CART
+              ================================================= */}
 
           <Link
             href="/cart"
@@ -277,18 +299,25 @@ export default function Header() {
             aria-label="Shopping cart"
           >
             <span className="navCartIcon">
-              ◇
+              <CartIcon />
             </span>
 
-            <span className="cartCount">
+            <span className="navCartLabel">
+              Cart
+            </span>
+
+            <span
+              className="cartCount"
+              aria-label="0 items in cart"
+            >
               0
             </span>
           </Link>
         </div>
 
-        {/* ===============================================
-            MOBILE BUTTON
-            =============================================== */}
+        {/* =================================================
+            MOBILE TOGGLE
+            ================================================= */}
 
         <button
           type="button"
@@ -316,9 +345,9 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* =================================================
+      {/* ===================================================
           MOBILE MENU
-          ================================================= */}
+          =================================================== */}
 
       <div
         id="mobileMenu"
@@ -333,6 +362,7 @@ export default function Header() {
           onClick={closeMobileMenu}
         >
           Products
+
           <span>→</span>
         </Link>
 
@@ -344,64 +374,63 @@ export default function Header() {
               onClick={closeMobileMenu}
             >
               {item.label}
+
               <span>→</span>
             </Link>
           )
         )}
 
-        {/* MOBILE FEATURE GROUP */}
+        {/* =================================================
+            MOBILE UPGRADED FEATURES
+            ================================================= */}
 
         <div className="mobileFeatureGroup">
           <div className="mobileFeatureLabel">
-            Upgraded Solar Tools
+            Upgraded Solar Features
           </div>
 
-          <Link
-            href="/engineering-lab"
-            className="mobileFeatureLink"
-            onClick={closeMobileMenu}
-          >
-            <span>
-              <i>⌁</i>
-              Engineering Lab
-            </span>
+          {FEATURE_LINKS.map(
+            (item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="mobileFeatureLink"
+                onClick={closeMobileMenu}
+              >
+                <span>
+                  <i>
+                    {item.icon}
+                  </i>
 
-            <b>→</b>
-          </Link>
+                  {item.label}
+                </span>
 
-          <Link
-            href="/customer-support"
-            className="mobileFeatureLink"
-            onClick={closeMobileMenu}
-          >
-            <span>
-              <i>◉</i>
-              Customer Support
-            </span>
-
-            <b>→</b>
-          </Link>
-
-          <Link
-            href="/build-your-system"
-            className="mobileFeatureBuild"
-            onClick={closeMobileMenu}
-          >
-            <span>
-              Build Your System
-            </span>
-
-            <b>→</b>
-          </Link>
+                <b>→</b>
+              </Link>
+            )
+          )}
         </div>
+
+        {/* =================================================
+            MOBILE CART
+            ================================================= */}
 
         <Link
           href="/cart"
           onClick={closeMobileMenu}
           className="mobileCart"
         >
-          Cart
-          <span>◇</span>
+          <span className="mobileCartLabel">
+            <span className="mobileCartIcon">
+              <CartIcon />
+            </span>
+
+            Cart
+          </span>
+
+          <span className="mobileCartCount">
+            0
+          </span>
         </Link>
       </div>
     </header>
