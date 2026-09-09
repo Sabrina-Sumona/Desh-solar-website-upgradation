@@ -537,6 +537,29 @@ export default function LiveEnergyStory() {
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
+
+                <mask
+                  id="liveMoonMask"
+                  maskUnits="userSpaceOnUse"
+                  x="680"
+                  y="45"
+                  width="90"
+                  height="90"
+                >
+                  <rect
+                    x="680"
+                    y="45"
+                    width="90"
+                    height="90"
+                    fill="white"
+                  />
+                  <circle
+                    cx="730"
+                    cy="76"
+                    r="22"
+                    fill="black"
+                  />
+                </mask>
               </defs>
 
               <g className="liveCelestial">
@@ -565,12 +588,7 @@ export default function LiveEnergyStory() {
                       r="24"
                       className="liveMoon"
                       filter="url(#softGlow)"
-                    />
-                    <circle
-                      cx="730"
-                      cy="76"
-                      r="22"
-                      className="liveMoonCut"
+                      mask="url(#liveMoonMask)"
                     />
                   </>
                 )}

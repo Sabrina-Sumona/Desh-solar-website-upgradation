@@ -257,11 +257,23 @@
 
 .liveMoon {
   fill: #dbeeff;
+  opacity: 0.96;
 }
 
-.liveMoonCut {
-  fill: #07131d;
+
+/* The crescent uses a transparency mask, so the actual
+   visual background shows through the cut-out in every phase. */
+.liveEnergyStory--twilight .liveMoon {
+  fill: #f4e6da;
+  opacity: 0.88;
 }
+
+
+.liveEnergyStory--night .liveMoon {
+  fill: #dbeeff;
+  opacity: 0.98;
+}
+
 
 .liveStars {
   fill: rgba(220, 238, 255, 0.8);
