@@ -641,6 +641,11 @@
 .liveEnergyDashboard {
   display: flex;
   flex-direction: column;
+
+  /* Vertically center the whole Energy Status content group.
+     Internal text and cards remain left-aligned. */
+  justify-content: center;
+
   min-height: 700px;
   padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.075);
@@ -828,6 +833,7 @@
 
   .liveEnergyDashboard {
     min-height: auto;
+    justify-content: flex-start;
   }
 }
 
