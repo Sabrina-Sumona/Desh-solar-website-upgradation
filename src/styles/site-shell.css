@@ -2777,18 +2777,80 @@ span:nth-child(3) {
 }
 
 .footerBrand p {
-  max-width: 520px;
+  max-width: 410px;
 
   margin: 0;
 
   color:
-    #82959f;
+    #a8bac2;
 
   font-size:
-    12px;
+    13px;
+
+  font-weight:
+    500;
 
   line-height:
-    1.65;
+    1.52;
+
+  letter-spacing:
+    0.002em;
+}
+
+/* Service-first brand statement */
+
+.footerServicePromise {
+  max-width: 410px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top:
+    11px;
+
+  padding-top:
+    10px;
+
+  border-top:
+    1px solid
+    rgba(145, 239, 91, 0.1);
+}
+
+.footerServicePromise > span {
+  width: 20px;
+  height: 2px;
+
+  flex:
+    0 0 auto;
+
+  margin-top:
+    7px;
+
+  border-radius:
+    999px;
+
+  background:
+    var(--green-2);
+
+  box-shadow:
+    0 0 9px
+    rgba(145, 239, 91, 0.16);
+}
+
+.footerServicePromise strong {
+  color:
+    #d9e5e9;
+
+  font-size:
+    11px;
+
+  font-weight:
+    750;
+
+  line-height:
+    1.5;
 }
 
 .footer h4 {
@@ -2991,6 +3053,66 @@ span:nth-child(3) {
     700;
 }
 
+/* Head-office phone */
+
+.footerPhone {
+  width:
+    fit-content;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  gap:
+    8px;
+
+  margin:
+    2px 0 2px;
+
+  color:
+    #b9c9d0;
+
+  font-size:
+    12px;
+
+  font-weight:
+    750;
+
+  line-height:
+    1.4;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footerPhone svg {
+  width:
+    14px;
+
+  height:
+    14px;
+
+  flex:
+    0 0 auto;
+
+  fill:
+    currentColor;
+
+  color:
+    var(--green-2);
+}
+
+.footerPhone:hover {
+  color:
+    #f0f6f8;
+
+  transform:
+    translateX(2px);
+}
+
 .footerMap {
   width: 100%;
   height: 122px;
@@ -3180,9 +3302,10 @@ span:nth-child(3) {
       1 / -1;
   }
 
-  .footerBrand p {
+  .footerBrand p,
+  .footerServicePromise {
     max-width:
-      520px;
+      410px;
   }
 
   .footerQuickLinks {
@@ -3279,13 +3402,31 @@ span:nth-child(3) {
 
   .footerBrand p {
     max-width:
-      440px;
+      420px;
 
     font-size:
-      12px;
+      12.5px;
 
     line-height:
-      1.6;
+      1.55;
+  }
+
+  .footerServicePromise {
+    max-width:
+      420px;
+
+    margin-top:
+      10px;
+  }
+
+  .footerServicePromise strong {
+    font-size:
+      11px;
+  }
+
+  .footerPhone {
+    font-size:
+      12px;
   }
 
   .footer h4 {
@@ -3380,7 +3521,8 @@ span:nth-child(3) {
       205px;
   }
 
-  .footerBrand p {
+  .footerBrand p,
+  .footerServicePromise {
     max-width:
       100%;
   }
@@ -3428,7 +3570,8 @@ span:nth-child(3) {
   .mobileCart::after,
   .mobileCartGlow,
   .mobileCartCount,
-  .socialLinks a {
+  .socialLinks a,
+  .footerPhone {
     transition:
       none;
   }
