@@ -657,7 +657,7 @@ export default function LiveEnergyStory() {
 
                 <rect
                   x="225"
-                  y="280"
+                  y="285"
                   width="470"
                   height="220"
                   rx="6"
