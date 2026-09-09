@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import {
+  useMemo,
+  useState,
+} from "react";
 
 export default function EngineeringLabPreview() {
-  const [systemSize, setSystemSize] = useState(5);
+  const [systemSize, setSystemSize] =
+    useState(5);
 
   const estimate = useMemo(() => {
     const peakSunHours = 4.5;
@@ -20,10 +24,14 @@ export default function EngineeringLabPreview() {
 
     return {
       daily:
-        Math.round(daily * 10) / 10,
+        Math.round(
+          daily * 10
+        ) / 10,
 
       monthly:
-        Math.round(monthly),
+        Math.round(
+          monthly
+        ),
     };
   }, [systemSize]);
 
@@ -35,7 +43,9 @@ export default function EngineeringLabPreview() {
       <div className="engineeringLabGlow" />
 
       <div className="engineeringLabInner">
-        {/* HEADER */}
+        {/* ================================================
+            HEADER
+            ================================================ */}
 
         <div className="engineeringLabHeader">
           <div>
@@ -62,15 +72,23 @@ export default function EngineeringLabPreview() {
             </p>
 
             <Link href="/tools-and-technology">
-              Open Engineering Lab →
+              Open Engineering Lab
+
+              <span aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
 
-        {/* MAIN */}
+        {/* ================================================
+            MAIN CARD
+            ================================================ */}
 
         <div className="engineeringLabCard">
-          {/* CONTROL */}
+          {/* ==============================================
+              CONTROL
+              ============================================== */}
 
           <div className="engineeringLabControl">
             <div className="engineeringLabControlTop">
@@ -88,7 +106,10 @@ export default function EngineeringLabPreview() {
                 </strong>
               </div>
 
-              <div className="engineeringLabSun">
+              <div
+                className="engineeringLabSun"
+                aria-hidden="true"
+              >
                 ☀
               </div>
             </div>
@@ -117,7 +138,9 @@ export default function EngineeringLabPreview() {
             </div>
           </div>
 
-          {/* RESULTS */}
+          {/* ==============================================
+              RESULTS
+              ============================================== */}
 
           <div className="engineeringLabResults">
             <div>
@@ -149,7 +172,9 @@ export default function EngineeringLabPreview() {
             </div>
           </div>
 
-          {/* FORMULA */}
+          {/* ==============================================
+              FORMULA
+              ============================================== */}
 
           <div className="engineeringLabFlow">
             <span>
@@ -175,21 +200,23 @@ export default function EngineeringLabPreview() {
             </span>
           </div>
 
-          {/* FOOTER */}
+          {/* ==============================================
+              FOOTER
+              ============================================== */}
 
           <div className="engineeringLabFooter">
             <p>
-              Simplified planning estimate only.
-              Actual generation varies with
-              location, shading, orientation,
-              weather, equipment and system
-              design.
+              Simplified planning estimate
+              only. Actual generation varies
+              with location, shading,
+              orientation, weather,
+              equipment and system design.
             </p>
 
             <Link href="/tools-and-technology">
               Explore Engineering Tools
 
-              <span>
+              <span aria-hidden="true">
                 →
               </span>
             </Link>
