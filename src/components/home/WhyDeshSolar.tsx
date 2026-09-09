@@ -43,7 +43,9 @@ export default function WhyDeshSolar() {
       <div className="whyDeshSolarGlow whyDeshSolarGlowTwo" />
 
       <div className="whyDeshSolarInner">
-        {/* HEADER */}
+        {/* ================================================
+            HEADER
+            ================================================ */}
 
         <div className="whyDeshSolarHeader">
           <div>
@@ -68,10 +70,20 @@ export default function WhyDeshSolar() {
               system planning are considered
               together.
             </p>
+
+            <div className="whyDeshSolarTrustLine">
+              <span aria-hidden="true" />
+
+              <strong>
+                For us, reliable service comes before business.
+              </strong>
+            </div>
           </div>
         </div>
 
-        {/* REASONS */}
+        {/* ================================================
+            REASONS
+            ================================================ */}
 
         <div className="whyDeshSolarGrid">
           {REASONS.map((reason) => (
@@ -79,7 +91,10 @@ export default function WhyDeshSolar() {
               className="whyDeshSolarCard"
               key={reason.title}
             >
-              <span className="whyDeshSolarIcon">
+              <span
+                className="whyDeshSolarIcon"
+                aria-hidden="true"
+              >
                 {reason.icon}
               </span>
 
@@ -94,7 +109,9 @@ export default function WhyDeshSolar() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* ================================================
+            CTA
+            ================================================ */}
 
         <div className="whyDeshSolarFooter">
           <div>
@@ -103,8 +120,8 @@ export default function WhyDeshSolar() {
             </small>
 
             <strong>
-              Explore Desh Solar or start planning
-              your system.
+              Explore Desh Solar or start
+              planning your system.
             </strong>
           </div>
 
@@ -114,7 +131,10 @@ export default function WhyDeshSolar() {
               className="whyDeshSolarSecondary"
             >
               About Desh Solar
-              <span>↗</span>
+
+              <span aria-hidden="true">
+                ↗
+              </span>
             </Link>
 
             <Link
@@ -122,7 +142,10 @@ export default function WhyDeshSolar() {
               className="whyDeshSolarPrimary"
             >
               Build Your System
-              <span>→</span>
+
+              <span aria-hidden="true">
+                →
+              </span>
             </Link>
           </div>
         </div>
