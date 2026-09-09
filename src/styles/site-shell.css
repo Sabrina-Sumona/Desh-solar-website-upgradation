@@ -818,7 +818,14 @@
   }
 }
 
+/* =========================================================
+   SPECIAL FEATURE BUTTON
+   ========================================================= */
+
 .navFeatureItem {
+  --feature-accent: var(--green-2);
+  --feature-glow: rgba(145, 239, 91, 0.55);
+
   position: relative;
 
   min-height: 34px;
@@ -863,6 +870,8 @@
     transform 0.22s ease;
 }
 
+/* Divider */
+
 .navFeatureItem +
 .navFeatureItem::before {
   content: "";
@@ -877,6 +886,51 @@
 
   background:
     rgba(255, 255, 255, 0.065);
+}
+
+/* =========================================================
+   SPECIAL FEATURE UNDERLINE GLOW
+   ========================================================= */
+
+.navFeatureItem::after {
+  content: "";
+
+  position: absolute;
+
+  z-index: 5;
+
+  left: 24%;
+  right: 24%;
+
+  bottom: 3px;
+
+  height: 1px;
+
+  opacity: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--feature-accent),
+      transparent
+    );
+
+  box-shadow:
+    0 0 6px
+    var(--feature-glow),
+    0 0 12px
+    var(--feature-glow);
+
+  transform:
+    scaleX(0.35);
+
+  transform-origin:
+    center;
+
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
 }
 
 .navFeatureItem:hover {
@@ -899,6 +953,13 @@
     translateY(-1px);
 }
 
+.navFeatureItem:hover::after {
+  opacity: 1;
+
+  transform:
+    scaleX(1);
+}
+
 .navFeatureIcon {
   font-size:
     11px;
@@ -914,7 +975,18 @@
     scale(1.14);
 }
 
-/* Engineering Lab */
+/* =========================================================
+   ENGINEERING LAB
+   GREEN ENERGY GLOW
+   ========================================================= */
+
+.navFeatureEngineering {
+  --feature-accent:
+    var(--green-2);
+
+  --feature-glow:
+    rgba(145, 239, 91, 0.58);
+}
 
 .navFeatureEngineering
 .navFeatureIcon {
@@ -934,7 +1006,18 @@
     rgba(145, 239, 91, 0.04);
 }
 
-/* Customer Support */
+/* =========================================================
+   CUSTOMER SUPPORT
+   BLUE GLOW
+   ========================================================= */
+
+.navFeatureSupport {
+  --feature-accent:
+    var(--blue);
+
+  --feature-glow:
+    rgba(89, 189, 255, 0.58);
+}
 
 .navFeatureSupport
 .navFeatureIcon {
@@ -954,7 +1037,18 @@
     rgba(89, 189, 255, 0.035);
 }
 
-/* Build Your System */
+/* =========================================================
+   BUILD YOUR SYSTEM
+   GOLD GLOW
+   ========================================================= */
+
+.navFeatureBuilder {
+  --feature-accent:
+    var(--gold);
+
+  --feature-glow:
+    rgba(255, 193, 87, 0.58);
+}
 
 .navFeatureBuilder
 .navFeatureIcon {
@@ -974,7 +1068,9 @@
     rgba(255, 193, 87, 0.035);
 }
 
-/* Active upgraded feature */
+/* =========================================================
+   ACTIVE SPECIAL FEATURE
+   ========================================================= */
 
 .navFeatureActive {
   color:
@@ -985,6 +1081,13 @@
 
   background:
     rgba(145, 239, 91, 0.065);
+}
+
+.navFeatureActive::after {
+  opacity: 1;
+
+  transform:
+    scaleX(1);
 }
 
 /* =========================================================
@@ -2426,6 +2529,7 @@ span:nth-child(3) {
   .megaLinks b,
   .megaFeature > a,
   .navFeatureItem,
+  .navFeatureItem::after,
   .navFeatureIcon,
   .navCart,
   .navCartGlow,
