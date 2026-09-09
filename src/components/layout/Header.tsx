@@ -53,18 +53,21 @@ const FEATURE_LINKS = [
     href: "/engineering-lab",
     icon: "⌁",
     className: "navFeatureEngineering",
+    mobileClassName: "mobileFeatureEngineering",
   },
   {
     label: "Customer Support",
     href: "/customer-support",
     icon: "◉",
     className: "navFeatureSupport",
+    mobileClassName: "mobileFeatureSupport",
   },
   {
     label: "Build Your System",
     href: "/build-your-system",
     icon: "✦",
     className: "navFeatureBuilder",
+    mobileClassName: "mobileFeatureBuilder",
   },
 ];
 
@@ -83,7 +86,6 @@ function CartIcon() {
     >
       <circle cx="9" cy="20" r="1.25" />
       <circle cx="18" cy="20" r="1.25" />
-
       <path d="M3 4h2.2l2.1 10.1a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 1.9-1.4L21 8H6.1" />
     </svg>
   );
@@ -92,23 +94,19 @@ function CartIcon() {
 export default function Header() {
   const pathname = usePathname();
 
-  const [mobileOpen, setMobileOpen] =
-    useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     if (!mobileOpen) {
       return;
     }
 
-    const originalOverflow =
-      document.body.style.overflow;
+    const originalOverflow = document.body.style.overflow;
 
-    document.body.style.overflow =
-      "hidden";
+    document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow =
-        originalOverflow;
+      document.body.style.overflow = originalOverflow;
     };
   }, [mobileOpen]);
 
@@ -116,9 +114,7 @@ export default function Header() {
     setMobileOpen(false);
   };
 
-  const isActive = (
-    href: string
-  ) => {
+  const isActive = (href: string) => {
     if (href === "/") {
       return pathname === "/";
     }
@@ -190,24 +186,22 @@ export default function Header() {
                   </div>
 
                   <div className="megaLinks">
-                    {PRODUCT_LINKS.map(
-                      (item) => (
-                        <Link
-                          href={item.href}
-                          key={item.label}
-                        >
-                          <i>
-                            {item.icon}
-                          </i>
+                    {PRODUCT_LINKS.map((item) => (
+                      <Link
+                        href={item.href}
+                        key={item.label}
+                      >
+                        <i>
+                          {item.icon}
+                        </i>
 
-                          <span>
-                            {item.label}
-                          </span>
+                        <span>
+                          {item.label}
+                        </span>
 
-                          <b>→</b>
-                        </Link>
-                      )
-                    )}
+                        <b>→</b>
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
@@ -239,35 +233,32 @@ export default function Header() {
 
           {/* STANDARD NAVIGATION */}
 
-          {MAIN_NAV_LINKS.map(
-            (item) => {
-              const active =
-                isActive(item.href);
+          {MAIN_NAV_LINKS.map((item) => {
+            const active = isActive(item.href);
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={
-                    active
-                      ? "page"
-                      : undefined
-                  }
-                  className={`navItem navInteractiveItem ${
-                    active
-                      ? "navItemActive"
-                      : ""
-                  }`}
-                >
-                  <span className="navItemGlow" />
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={
+                  active
+                    ? "page"
+                    : undefined
+                }
+                className={`navItem navInteractiveItem ${
+                  active
+                    ? "navItemActive"
+                    : ""
+                }`}
+              >
+                <span className="navItemGlow" />
 
-                  <span className="navItemText">
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            }
-          )}
+                <span className="navItemText">
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
 
           {/* =================================================
               UPGRADED FEATURES
@@ -287,42 +278,39 @@ export default function Header() {
               aria-hidden="true"
             />
 
-            {FEATURE_LINKS.map(
-              (item) => {
-                const active =
-                  isActive(item.href);
+            {FEATURE_LINKS.map((item) => {
+              const active = isActive(item.href);
 
-                return (
-                  <Link
-                    href={item.href}
-                    key={item.href}
-                    aria-current={
-                      active
-                        ? "page"
-                        : undefined
-                    }
-                    className={`navFeatureItem ${
-                      item.className
-                    } ${
-                      active
-                        ? "navFeatureActive"
-                        : ""
-                    }`}
+              return (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  aria-current={
+                    active
+                      ? "page"
+                      : undefined
+                  }
+                  className={`navFeatureItem ${
+                    item.className
+                  } ${
+                    active
+                      ? "navFeatureActive"
+                      : ""
+                  }`}
+                >
+                  <span
+                    className="navFeatureIcon"
+                    aria-hidden="true"
                   >
-                    <span
-                      className="navFeatureIcon"
-                      aria-hidden="true"
-                    >
-                      {item.icon}
-                    </span>
+                    {item.icon}
+                  </span>
 
-                    <span className="navFeatureText">
-                      {item.label}
-                    </span>
-                  </Link>
-                );
-              }
-            )}
+                  <span className="navFeatureText">
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* =================================================
@@ -407,39 +395,79 @@ export default function Header() {
             : ""
         }`}
       >
+        <span
+          className="mobileMenuAmbient mobileMenuAmbientOne"
+          aria-hidden="true"
+        />
+
+        <span
+          className="mobileMenuAmbient mobileMenuAmbientTwo"
+          aria-hidden="true"
+        />
+
         <div className="mobileMenuInner">
-          {/* NORMAL MENU */}
+          {/* ===============================================
+              STANDARD MOBILE MENU
+              =============================================== */}
 
           <div className="mobilePrimaryLinks">
             <Link
               href="/products"
               onClick={closeMobileMenu}
+              aria-current={
+                isActive("/products")
+                  ? "page"
+                  : undefined
+              }
+              className={`mobilePrimaryLink ${
+                isActive("/products")
+                  ? "mobilePrimaryActive"
+                  : ""
+              }`}
             >
-              <span>
+              <span className="mobilePrimaryGlow" />
+
+              <span className="mobilePrimaryText">
                 Products
               </span>
 
               <b>→</b>
             </Link>
 
-            {MAIN_NAV_LINKS.map(
-              (item) => (
+            {MAIN_NAV_LINKS.map((item) => {
+              const active = isActive(item.href);
+
+              return (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={closeMobileMenu}
+                  aria-current={
+                    active
+                      ? "page"
+                      : undefined
+                  }
+                  className={`mobilePrimaryLink ${
+                    active
+                      ? "mobilePrimaryActive"
+                      : ""
+                  }`}
                 >
-                  <span>
+                  <span className="mobilePrimaryGlow" />
+
+                  <span className="mobilePrimaryText">
                     {item.label}
                   </span>
 
                   <b>→</b>
                 </Link>
-              )
-            )}
+              );
+            })}
           </div>
 
-          {/* UPGRADED FEATURES */}
+          {/* ===============================================
+              UPGRADED FEATURES
+              =============================================== */}
 
           <div className="mobileFeatureGroup">
             <span
@@ -447,39 +475,74 @@ export default function Header() {
               aria-hidden="true"
             />
 
+            <span
+              className="mobileFeatureSweep"
+              aria-hidden="true"
+            />
+
             <div className="mobileFeatureLabel">
               Upgraded Solar Features
             </div>
 
-            {FEATURE_LINKS.map(
-              (item) => (
+            {FEATURE_LINKS.map((item) => {
+              const active = isActive(item.href);
+
+              return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="mobileFeatureLink"
+                  className={`mobileFeatureLink ${
+                    item.mobileClassName
+                  } ${
+                    active
+                      ? "mobileFeatureActive"
+                      : ""
+                  }`}
+                  aria-current={
+                    active
+                      ? "page"
+                      : undefined
+                  }
                   onClick={closeMobileMenu}
                 >
+                  <span className="mobileFeatureLinkGlow" />
+
                   <span>
                     <i>
                       {item.icon}
                     </i>
 
-                    {item.label}
+                    <span className="mobileFeatureText">
+                      {item.label}
+                    </span>
                   </span>
 
                   <b>→</b>
                 </Link>
-              )
-            )}
+              );
+            })}
           </div>
 
-          {/* CART */}
+          {/* ===============================================
+              MOBILE CART
+              =============================================== */}
 
           <Link
             href="/cart"
             onClick={closeMobileMenu}
-            className="mobileCart"
+            aria-current={
+              isActive("/cart")
+                ? "page"
+                : undefined
+            }
+            className={`mobileCart ${
+              isActive("/cart")
+                ? "mobileCartActive"
+                : ""
+            }`}
           >
+            <span className="mobileCartGlow" />
+
             <span className="mobileCartLabel">
               <span className="mobileCartIcon">
                 <CartIcon />
