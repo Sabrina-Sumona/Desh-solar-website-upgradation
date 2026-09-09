@@ -2,22 +2,26 @@ import Link from "next/link";
 
 export default function HomeGateway() {
   return (
-    <main className="homeGatewayPage">
-      {/* ==================================================
-          SECONDARY CINEMATIC GATEWAY HERO
-          ================================================== */}
+    <section
+      className="homeGateway"
+      aria-labelledby="home-gateway-title"
+    >
+      {/* =====================================================
+          BACKGROUND
+          ===================================================== */}
 
-      <section
-        className="homeHero"
-        id="home-hero"
+      <div
+        className="homeGatewayBackground"
+        aria-hidden="true"
       >
         <video
+          className="homeGatewayVideo"
           autoPlay
-          className="homeHeroVideo"
-          loop
           muted
+          loop
           playsInline
-          poster="/assets/projects-real/residential.webp"
+          preload="metadata"
+          tabIndex={-1}
         >
           <source
             src="/assets/desh-solar-energy-flow.mp4"
@@ -25,194 +29,213 @@ export default function HomeGateway() {
           />
         </video>
 
-        <div className="homeHeroShade" />
+        <div className="homeGatewayVideoShade" />
+        <div className="homeGatewayAmbientGlow homeGatewayAmbientGlowLeft" />
+        <div className="homeGatewayAmbientGlow homeGatewayAmbientGlowRight" />
+        <div className="homeGatewayNoise" />
+      </div>
 
-        <div className="homeHeroContent">
-          <div className="homeHeroEyebrow">
-            DESH SOLAR • COMPLETE SOLAR ENERGY SOLUTIONS
+      {/* =====================================================
+          CONTENT
+          ===================================================== */}
+
+      <div className="homeGatewayInner">
+        <div className="homeGatewayContent">
+          {/* -------------------------------------------------
+              TOP LABEL
+              ------------------------------------------------- */}
+
+          <div className="homeGatewayEyebrow">
+            DESH SOLAR
+            <span aria-hidden="true">•</span>
+            COMPLETE SOLAR ENERGY SOLUTIONS
           </div>
 
-          <h1>
-            Energy designed around{" "}
-            <span>
-              the way you live and work.
+          {/* -------------------------------------------------
+              MAIN TITLE
+              ------------------------------------------------- */}
+
+          <h1
+            id="home-gateway-title"
+            className="homeGatewayTitle"
+          >
+            <span className="homeGatewayTitleWhite">
+              Energy designed
+            </span>
+
+            <br />
+
+            <span className="homeGatewayTitleWhite">
+              around{" "}
+            </span>
+
+            <span className="homeGatewayTitleGreen">
+              the way
+            </span>
+
+            <br />
+
+            <span className="homeGatewayTitleGreen">
+              you live and work.
             </span>
           </h1>
 
-          <p>
-            Explore solar products,
-            understand the technology,
-            plan a system and move from
-            energy requirement to
+          {/* -------------------------------------------------
+              DESCRIPTION
+              ------------------------------------------------- */}
+
+          <p className="homeGatewayDescription">
+            Explore solar products, understand the technology,
+            plan a system and move from energy requirement to
             complete solar solution.
           </p>
 
-          <div className="homeHeroActions">
+          {/* -------------------------------------------------
+              PRIMARY ACTIONS
+              ------------------------------------------------- */}
+
+          <div
+            className="homeGatewayActions"
+            aria-label="Solar planning actions"
+          >
             <Link
               href="/build-your-system"
-              className="homePrimaryBtn"
+              className="homeGatewayButton homeGatewayButtonPrimary"
             >
-              Build Your System →
+              <span>Build Your System</span>
+
+              <span
+                className="homeGatewayButtonArrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </Link>
 
             <Link
               href="/products"
-              className="homeSecondaryBtn"
+              className="homeGatewayButton"
             >
-              Explore Products →
+              <span>Explore Products</span>
+
+              <span
+                className="homeGatewayButtonArrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </Link>
 
             <Link
               href="/projects"
-              className="homeSecondaryBtn"
+              className="homeGatewayButton"
             >
-              View Projects →
+              <span>View Projects</span>
+
+              <span
+                className="homeGatewayButtonArrow"
+                aria-hidden="true"
+              >
+                →
+              </span>
             </Link>
           </div>
 
-          <div className="homeHeroMeta">
-            <div>
-              <small>PRODUCTS</small>
+          {/* =================================================
+              SOLAR CAPABILITY STRIP
+              ================================================= */}
 
-              <b>
-                Panels • Inverters •
-                Batteries • Systems
-              </b>
-            </div>
+          <div
+            className="homeGatewayCapabilityGrid"
+            aria-label="Desh Solar capabilities"
+          >
+            {/* PRODUCTS */}
 
-            <div>
-              <small>ENGINEERING</small>
+            <Link
+              href="/products"
+              className="homeGatewayCapability"
+            >
+              <div className="homeGatewayCapabilityLabel">
+                PRODUCTS
+              </div>
 
-              <b>
-                Load • Backup • PV •
+              <div className="homeGatewayCapabilityValue">
+                Panels
+                <span aria-hidden="true"> • </span>
+                Inverters
+                <span aria-hidden="true"> • </span>
+                Batteries
+                <span aria-hidden="true"> • </span>
+                Systems
+              </div>
+            </Link>
+
+            {/* ENGINEERING */}
+
+            <Link
+              href="/engineering-lab"
+              className="homeGatewayCapability"
+            >
+              <div className="homeGatewayCapabilityLabel">
+                ENGINEERING
+              </div>
+
+              <div className="homeGatewayCapabilityValue">
+                Load
+                <span aria-hidden="true"> • </span>
+                Backup
+                <span aria-hidden="true"> • </span>
+                PV
+                <span aria-hidden="true"> • </span>
                 Compatibility
-              </b>
-            </div>
+              </div>
+            </Link>
 
-            <div>
-              <small>SUPPORT</small>
+            {/* SUPPORT */}
 
-              <b>
-                Products • Systems •
-                Warranty • Installation
-              </b>
-            </div>
+            <Link
+              href="/customer-support"
+              className="homeGatewayCapability"
+            >
+              <div className="homeGatewayCapabilityLabel">
+                SUPPORT
+              </div>
+
+              <div className="homeGatewayCapabilityValue">
+                Products
+                <span aria-hidden="true"> • </span>
+                Systems
+                <span aria-hidden="true"> • </span>
+                Warranty
+                <span aria-hidden="true"> • </span>
+                Installation
+              </div>
+            </Link>
           </div>
         </div>
 
-        <div className="homeScrollHint">
-          <span />
+        {/* ===================================================
+            ENERGY JOURNEY INDICATOR
+            =================================================== */}
 
-          <b>
+        <div className="homeGatewayJourney">
+          <span
+            className="homeGatewayJourneyLine"
+            aria-hidden="true"
+          />
+
+          <span className="homeGatewayJourneyText">
             EXPLORE THE ENERGY JOURNEY
-          </b>
+          </span>
+
+          <span
+            className="homeGatewayJourneyArrow"
+            aria-hidden="true"
+          >
+            ↓
+          </span>
         </div>
-      </section>
-
-      {/* ==================================================
-          WHAT ARE YOU LOOKING FOR?
-          ================================================== */}
-
-      <section
-        className="homeRouteSection"
-        id="home-routes"
-      >
-        <div className="homeSectionIntro compact">
-          <div>
-            <div className="homeEyebrow">
-              What Are You Looking For?
-            </div>
-
-            <h2>
-              Start from your goal.
-            </h2>
-          </div>
-        </div>
-
-        <div className="homeRouteGrid">
-          <Link href="/products">
-            <span>01</span>
-
-            <b>
-              Buy Solar Products
-            </b>
-
-            <small>
-              Browse panels, inverters,
-              batteries and systems.
-            </small>
-          </Link>
-
-          <Link href="/build-your-system">
-            <span>02</span>
-
-            <b>
-              Build a Solar System
-            </b>
-
-            <small>
-              Start from property,
-              appliances, backup and roof.
-            </small>
-          </Link>
-
-          <Link href="/projects">
-            <span>03</span>
-
-            <b>
-              Explore Projects
-            </b>
-
-            <small>
-              See realistic residential,
-              commercial and industrial
-              applications.
-            </small>
-          </Link>
-
-          <Link href="/tools-and-technology">
-            <span>04</span>
-
-            <b>
-              Engineering Tools
-            </b>
-
-            <small>
-              Generation, battery,
-              inverter, roof and
-              compatibility tools.
-            </small>
-          </Link>
-
-          <Link href="/customer-support">
-            <span>05</span>
-
-            <b>
-              Technical Support
-            </b>
-
-            <small>
-              Structured product, system,
-              warranty and installation
-              assistance.
-            </small>
-          </Link>
-
-          <Link href="/contact">
-            <span>06</span>
-
-            <b>
-              Talk to Desh Solar
-            </b>
-
-            <small>
-              Project consultation,
-              product inquiry or showroom
-              visit.
-            </small>
-          </Link>
-        </div>
-      </section>
-    </main>
+      </div>
+    </section>
   );
 }

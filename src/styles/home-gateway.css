@@ -2,38 +2,45 @@
    HOME GATEWAY
    ========================================================= */
 
-.homeGatewayPage {
-  padding-top: 0;
+.homeGateway {
+  position: relative;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: stretch;
 
   overflow: hidden;
 
-  color: #f4f7f8;
+  color: #f4f8fa;
 
-  background: #041016;
+  background: #03090d;
 }
 
 /* =========================================================
-   SECONDARY CINEMATIC HERO
+   BACKGROUND
    ========================================================= */
 
-.homeHero {
-  position: relative;
+.homeGatewayBackground {
+  position: absolute;
 
-  min-height:
-    calc(100vh - 76px);
+  inset: 0;
 
-  display: flex;
-  align-items: center;
+  z-index: 0;
 
   overflow: hidden;
 
-  border-bottom:
-    1px solid
-    rgba(255, 255, 255, 0.06);
+  pointer-events: none;
 }
 
-.homeHeroVideo {
+/* =========================================================
+   BACKGROUND VIDEO
+   ========================================================= */
+
+.homeGatewayVideo {
   position: absolute;
+
+  z-index: 0;
 
   inset: 0;
 
@@ -41,176 +48,416 @@
   height: 100%;
 
   object-fit: cover;
+  object-position: center;
 
-  opacity: 0.48;
+  /*
+   * Increased from the previous very dark value.
+   * Video should now clearly remain visible behind the hero.
+   */
+  opacity: 0.52;
 
   filter:
     saturate(0.9)
-    contrast(1.05);
+    contrast(1.08)
+    brightness(0.72);
+
+  transform: scale(1.025);
 }
 
-.homeHeroShade {
+/* =========================================================
+   VIDEO SHADE
+   ========================================================= */
+
+.homeGatewayVideoShade {
   position: absolute;
+
+  z-index: 1;
 
   inset: 0;
 
+  /*
+   * Important:
+   * Keep the left side darker for headline readability,
+   * but allow the middle/right side of the video to remain
+   * clearly visible.
+   */
   background:
     linear-gradient(
       90deg,
-      rgba(2, 10, 15, 0.97)
-        0%,
-      rgba(2, 10, 15, 0.84)
-        47%,
-      rgba(2, 10, 15, 0.26)
-        76%,
-      rgba(2, 10, 15, 0.35)
+      rgba(2, 8, 11, 0.84) 0%,
+      rgba(2, 8, 11, 0.7) 32%,
+      rgba(2, 8, 11, 0.46) 62%,
+      rgba(2, 8, 11, 0.34) 82%,
+      rgba(2, 8, 11, 0.48) 100%
     ),
     linear-gradient(
       180deg,
-      rgba(2, 10, 15, 0.18),
-      rgba(2, 10, 15, 0.76)
+      rgba(2, 8, 11, 0.34) 0%,
+      rgba(2, 8, 11, 0.08) 40%,
+      rgba(2, 8, 11, 0.25) 70%,
+      rgba(2, 8, 11, 0.64) 100%
     );
 }
 
-.homeHeroContent {
-  position: relative;
+/* =========================================================
+   AMBIENT LIGHT
+   ========================================================= */
+
+.homeGatewayAmbientGlow {
+  position: absolute;
+
   z-index: 2;
 
-  width:
-    min(1050px, 88vw);
+  border-radius: 50%;
 
-  padding:
-    9vh 5vw;
+  filter: blur(90px);
+
+  pointer-events: none;
 }
 
-.homeHeroEyebrow,
-.homeEyebrow {
-  color: #b8f88b;
+.homeGatewayAmbientGlowLeft {
+  width: 430px;
+  height: 430px;
 
-  font-size: 8px;
-  font-weight: 900;
+  left: -180px;
+  top: 15%;
 
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  background:
+    rgba(145, 239, 91, 0.07);
+
+  opacity: 0.34;
 }
 
-.homeHeroContent h1 {
-  max-width: 1000px;
+.homeGatewayAmbientGlowRight {
+  width: 480px;
+  height: 480px;
 
-  margin:
-    10px 0 15px;
+  right: -180px;
+  top: 5%;
 
-  font-size:
-    clamp(
-      58px,
-      7vw,
-      112px
+  background:
+    rgba(89, 189, 255, 0.055);
+
+  opacity: 0.28;
+}
+
+/* =========================================================
+   SUBTLE TEXTURE
+   ========================================================= */
+
+.homeGatewayNoise {
+  position: absolute;
+
+  z-index: 3;
+
+  inset: 0;
+
+  opacity: 0.018;
+
+  background-image:
+    repeating-radial-gradient(
+      circle at 0 0,
+      rgba(255, 255, 255, 0.7) 0,
+      rgba(255, 255, 255, 0.7) 1px,
+      transparent 1px,
+      transparent 4px
     );
 
-  line-height: 0.88;
-  letter-spacing: -0.07em;
+  background-size: 7px 7px;
+
+  mix-blend-mode: soft-light;
+
+  pointer-events: none;
 }
 
-.homeHeroContent h1 span {
-  color: #b8f88b;
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.homeGatewayInner {
+  position: relative;
+
+  z-index: 5;
+
+  width: min(1420px, 96vw);
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 auto;
+
+  padding:
+    112px 0
+    42px;
 }
 
-.homeHeroContent > p {
-  max-width: 800px;
+.homeGatewayContent {
+  width: 100%;
+  max-width: 1260px;
+}
+
+/* =========================================================
+   EYEBROW
+   ========================================================= */
+
+.homeGatewayEyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 17px;
+
+  color: var(--green-2);
+
+  font-size: 12px;
+  font-weight: 900;
+
+  line-height: 1.25;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 8px rgba(145, 239, 91, 0.24),
+    0 0 18px rgba(145, 239, 91, 0.1);
+}
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.homeGatewayTitle {
+  max-width: 1240px;
 
   margin: 0;
 
-  color: #c7d4da;
+  color: #f4f7f8;
 
-  font-size: 16px;
-  line-height: 1.6;
+  font-size:
+    clamp(
+      76px,
+      8.25vw,
+      134px
+    );
+
+  font-weight: 900;
+
+  line-height: 0.91;
+
+  letter-spacing: -0.067em;
+
+  text-shadow:
+    0 4px 30px
+    rgba(0, 0, 0, 0.22);
 }
 
-/* Hero buttons */
+.homeGatewayTitleWhite {
+  color: #f4f7f8;
+}
 
-.homeHeroActions {
+.homeGatewayTitleGreen {
+  color: var(--green-2);
+
+  text-shadow:
+    0 0 30px
+    rgba(145, 239, 91, 0.055);
+}
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.homeGatewayDescription {
+  max-width: 1080px;
+
+  margin:
+    18px 0 0;
+
+  color: #b8c6cc;
+
+  font-size: 15px;
+
+  font-weight: 470;
+
+  line-height: 1.55;
+
+  letter-spacing: -0.01em;
+
+  text-shadow:
+    0 2px 14px
+    rgba(0, 0, 0, 0.38);
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.homeGatewayActions {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
 
-  gap: 8px;
+  gap: 12px;
 
-  margin-top: 24px;
+  margin-top: 29px;
 }
 
-.homePrimaryBtn,
-.homeSecondaryBtn {
-  min-height: 44px;
+.homeGatewayButton {
+  position: relative;
+
+  min-height: 48px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
+  gap: 7px;
+
   padding:
-    0 16px;
+    0 19px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
 
   border-radius: 999px;
 
-  font-size: 9px;
-  font-weight: 900;
+  color: #e4ecef;
+
+  background:
+    rgba(4, 12, 17, 0.74);
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.03),
+    0 4px 18px
+    rgba(0, 0, 0, 0.12);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  font-size: 12px;
+  font-weight: 820;
 
   transition:
-    border-color 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s ease;
+    color 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
-.homePrimaryBtn {
-  border:
-    1px solid
-    rgba(145, 239, 91, 0.38);
+.homeGatewayButton::before {
+  content: "";
 
-  color: #e5ffd4;
+  position: absolute;
+
+  width: 100px;
+  height: 70px;
+
+  left: 50%;
+  bottom: -62px;
+
+  opacity: 0;
+
+  transform:
+    translateX(-50%);
+
+  border-radius: 50%;
 
   background:
-    rgba(145, 239, 91, 0.09);
+    rgba(145, 239, 91, 0.2);
+
+  filter: blur(25px);
+
+  transition:
+    opacity 0.22s ease;
 }
 
-.homeSecondaryBtn {
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.11);
+.homeGatewayButton > span {
+  position: relative;
 
-  color: #e8eef1;
+  z-index: 2;
+}
+
+.homeGatewayButton:hover {
+  color: #ffffff;
+
+  border-color:
+    rgba(145, 239, 91, 0.3);
 
   background:
-    rgba(5, 17, 23, 0.54);
+    rgba(145, 239, 91, 0.065);
 
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter:
-    blur(10px);
-}
+  box-shadow:
+    0 9px 28px
+    rgba(0, 0, 0, 0.2),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.045);
 
-.homePrimaryBtn:hover,
-.homeSecondaryBtn:hover {
   transform:
     translateY(-2px);
 }
 
-.homePrimaryBtn:hover {
-  border-color:
-    rgba(145, 239, 91, 0.7);
-
-  background:
-    rgba(145, 239, 91, 0.14);
+.homeGatewayButton:hover::before {
+  opacity: 1;
 }
 
-.homeSecondaryBtn:hover {
+.homeGatewayButtonPrimary {
   border-color:
-    rgba(255, 255, 255, 0.22);
+    rgba(145, 239, 91, 0.5);
+
+  color: #f6fff2;
 
   background:
-    rgba(11, 28, 36, 0.68);
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.15),
+      rgba(5, 15, 18, 0.76)
+    );
+
+  box-shadow:
+    inset 0 0 20px
+    rgba(145, 239, 91, 0.035);
 }
 
-/* Hero metadata */
+.homeGatewayButtonPrimary:hover {
+  border-color:
+    rgba(145, 239, 91, 0.75);
 
-.homeHeroMeta {
-  max-width: 900px;
+  box-shadow:
+    inset 0 0 22px
+    rgba(145, 239, 91, 0.05),
+    0 0 20px
+    rgba(145, 239, 91, 0.07);
+}
+
+.homeGatewayButtonArrow {
+  color: var(--green-2);
+
+  font-size: 14px;
+
+  transition:
+    transform 0.22s ease;
+}
+
+.homeGatewayButton:hover
+.homeGatewayButtonArrow {
+  transform:
+    translateX(3px);
+}
+
+/* =========================================================
+   CAPABILITY GRID
+   ========================================================= */
+
+.homeGatewayCapabilityGrid {
+  width: min(1260px, 100%);
 
   display: grid;
 
@@ -220,195 +467,413 @@
       minmax(0, 1fr)
     );
 
-  gap: 8px;
+  gap: 13px;
 
-  margin-top: 30px;
-}
-
-.homeHeroMeta div {
-  padding:
-    11px 12px;
-
-  border:
-    1px solid
-    rgba(255, 255, 255, 0.08);
-
-  border-radius: 12px;
-
-  background:
-    rgba(3, 14, 19, 0.48);
-
-  backdrop-filter:
-    blur(12px);
-
-  -webkit-backdrop-filter:
-    blur(12px);
-}
-
-.homeHeroMeta small {
-  display: block;
-
-  color: #78909b;
-
-  font-size: 6px;
-}
-
-.homeHeroMeta b {
-  display: block;
-
-  margin-top: 4px;
-
-  color: #d9e6ea;
-
-  font-size: 8px;
-}
-
-/* Bottom hint */
-
-.homeScrollHint {
-  position: absolute;
-  z-index: 3;
-
-  bottom: 24px;
-  left: 5vw;
-
-  display: flex;
-  align-items: center;
-
-  gap: 10px;
-
-  color: #708893;
-
-  font-size: 6px;
-
-  letter-spacing: 0.09em;
-}
-
-.homeScrollHint span {
-  width: 28px;
-  height: 1px;
-
-  background: #8ff160;
-
-  box-shadow:
-    0 0 12px
-    rgba(145, 239, 91, 0.4);
+  margin-top: 35px;
 }
 
 /* =========================================================
-   ROUTE SECTION
+   CAPABILITY CARD
    ========================================================= */
 
-.homeRouteSection {
-  padding:
-    6vh 4vw;
-}
+.homeGatewayCapability {
+  position: relative;
 
-.homeSectionIntro {
-  display: flex;
-  align-items: flex-end;
-  justify-content:
-    space-between;
-
-  gap: 22px;
-
-  margin-bottom: 18px;
-}
-
-.homeSectionIntro.compact {
-  margin-bottom: 12px;
-}
-
-.homeSectionIntro h2 {
-  margin:
-    5px 0 7px;
-
-  font-size:
-    clamp(
-      36px,
-      4.35vw,
-      64px
-    );
-
-  line-height: 0.98;
-  letter-spacing: -0.052em;
-}
-
-.homeRouteGrid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(
-      6,
-      minmax(0, 1fr)
-    );
-
-  gap: 7px;
-}
-
-.homeRouteGrid a {
-  min-height: 130px;
+  min-width: 0;
+  min-height: 68px;
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
 
-  padding: 15px;
+  gap: 5px;
+
+  padding:
+    12px 16px;
+
+  overflow: hidden;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.065);
+    rgba(255, 255, 255, 0.1);
 
-  border-radius: 17px;
+  border-radius: 15px;
 
-  background: #08171f;
+  color: inherit;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(3, 13, 18, 0.78),
+      rgba(4, 13, 18, 0.6)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.022),
+    0 5px 18px
+    rgba(0, 0, 0, 0.1);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
 
   transition:
-    border-color 0.25s ease,
-    transform 0.25s ease,
-    background 0.25s ease;
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
 }
 
-.homeRouteGrid a:hover {
-  border-color:
-    rgba(145, 239, 91, 0.28);
+.homeGatewayCapability::before {
+  content: "";
 
-  background: #0a1b24;
+  position: absolute;
 
+  left: 10%;
+  right: 10%;
+  bottom: -28px;
+
+  height: 40px;
+
+  opacity: 0;
+
+  border-radius: 50%;
+
+  background:
+    rgba(145, 239, 91, 0.14);
+
+  filter: blur(20px);
+
+  transition:
+    opacity 0.22s ease;
+}
+
+.homeGatewayCapability:hover {
   transform:
     translateY(-2px);
+
+  border-color:
+    rgba(145, 239, 91, 0.2);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.055),
+      rgba(3, 13, 18, 0.72)
+    );
+
+  box-shadow:
+    0 10px 24px
+    rgba(0, 0, 0, 0.18),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.03);
 }
 
-.homeRouteGrid span {
-  color: #8ff160;
-
-  font-size: 20px;
-  font-weight: 900;
+.homeGatewayCapability:hover::before {
+  opacity: 1;
 }
 
-.homeRouteGrid b {
-  margin-top: 14px;
+/* =========================================================
+   CAPABILITY LABEL
+   ========================================================= */
 
-  font-size: 11px;
+.homeGatewayCapabilityLabel {
+  position: relative;
+
+  z-index: 2;
+
+  color: #8b9ea7;
+
+  font-size: 10px;
+
+  font-weight: 850;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.055em;
+
+  text-transform: uppercase;
+
+  transition:
+    color 0.22s ease;
 }
 
-.homeRouteGrid small {
-  margin-top: 4px;
+.homeGatewayCapability:hover
+.homeGatewayCapabilityLabel {
+  color:
+    var(--green-2);
+}
 
-  color: #718791;
+/* =========================================================
+   CAPABILITY VALUE
+   ========================================================= */
 
-  font-size: 7px;
+.homeGatewayCapabilityValue {
+  position: relative;
+
+  z-index: 2;
+
+  color: #edf3f5;
+
+  font-size: 13px;
+
+  font-weight: 760;
+
   line-height: 1.4;
+
+  letter-spacing: -0.01em;
+}
+
+.homeGatewayCapabilityValue span {
+  color: #82959e;
+}
+
+/* =========================================================
+   ENERGY JOURNEY INDICATOR
+   ========================================================= */
+
+.homeGatewayJourney {
+  margin-top: auto;
+
+  display: inline-flex;
+  align-items: center;
+
+  width: fit-content;
+
+  gap: 12px;
+
+  padding-top: 45px;
+
+  color: #a9bac1;
+
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+
+.homeGatewayJourney:hover {
+  color: #ffffff;
+
+  transform:
+    translateX(3px);
+}
+
+.homeGatewayJourneyLine {
+  width: 42px;
+  height: 2px;
+
+  flex: 0 0 auto;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green-2) 0%,
+      rgba(145, 239, 91, 0.78) 52%,
+      rgba(145, 239, 91, 0.18) 100%
+    );
+
+  box-shadow:
+    0 0 8px
+    rgba(145, 239, 91, 0.45),
+    0 0 17px
+    rgba(145, 239, 91, 0.14);
+}
+
+.homeGatewayJourneyText {
+  color: #b4c4ca;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  line-height: 1.2;
+
+  letter-spacing: 0.085em;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    0 1px 12px
+    rgba(0, 0, 0, 0.4);
+
+  transition:
+    color 0.22s ease,
+    text-shadow 0.22s ease;
+}
+
+.homeGatewayJourney:hover
+.homeGatewayJourneyText {
+  color: #f2f9fa;
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.18);
+}
+
+.homeGatewayJourneyArrow {
+  color:
+    var(--green-2);
+
+  font-size:
+    12px;
+
+  opacity: 0.9;
+
+  animation:
+    homeGatewayJourneyFloat
+    1.8s ease-in-out
+    infinite;
+}
+
+@keyframes homeGatewayJourneyFloat {
+  0%,
+  100% {
+    transform:
+      translateY(-1px);
+  }
+
+  50% {
+    transform:
+      translateY(3px);
+  }
+}
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (min-width: 1500px) {
+  .homeGatewayInner {
+    width:
+      min(1480px, 96vw);
+
+    padding-top:
+      118px;
+  }
+
+  .homeGatewayContent {
+    max-width:
+      1320px;
+  }
+
+  .homeGatewayTitle {
+    max-width:
+      1300px;
+  }
+
+  .homeGatewayCapabilityGrid {
+    width:
+      min(1300px, 100%);
+  }
+}
+
+/* =========================================================
+   MEDIUM DESKTOP
+   ========================================================= */
+
+@media (max-width: 1280px) {
+  .homeGatewayInner {
+    width:
+      min(1180px, 92vw);
+  }
+
+  .homeGatewayTitle {
+    font-size:
+      clamp(
+        68px,
+        8vw,
+        104px
+      );
+  }
+
+  .homeGatewayDescription {
+    max-width:
+      900px;
+
+    font-size:
+      14px;
+  }
+
+  .homeGatewayCapabilityValue {
+    font-size:
+      12px;
+  }
 }
 
 /* =========================================================
    TABLET
    ========================================================= */
 
-@media (max-width: 1050px) {
-  .homeRouteGrid {
+@media (max-width: 950px) {
+  .homeGateway {
+    min-height:
+      auto;
+  }
+
+  .homeGatewayInner {
+    width:
+      min(860px, 90vw);
+
+    min-height:
+      auto;
+
+    padding:
+      108px 0
+      58px;
+  }
+
+  .homeGatewayTitle {
+    font-size:
+      clamp(
+        58px,
+        10.5vw,
+        86px
+      );
+  }
+
+  .homeGatewayEyebrow {
+    font-size:
+      11px;
+  }
+
+  .homeGatewayDescription {
+    max-width:
+      760px;
+
+    font-size:
+      13px;
+  }
+
+  .homeGatewayCapabilityGrid {
     grid-template-columns:
-      repeat(3, 1fr);
+      1fr;
+
+    gap: 10px;
+  }
+
+  .homeGatewayCapability {
+    min-height:
+      64px;
+  }
+
+  .homeGatewayCapabilityLabel {
+    font-size:
+      9px;
+  }
+
+  .homeGatewayCapabilityValue {
+    font-size:
+      13px;
+  }
+
+  .homeGatewayJourney {
+    margin-top:
+      70px;
+
+    padding-top:
+      0;
   }
 }
 
@@ -417,54 +882,263 @@
    ========================================================= */
 
 @media (max-width: 720px) {
-  .homeHero {
-    min-height: 720px;
-  }
-
-  .homeHeroContent {
-    width: auto;
+  .homeGatewayInner {
+    width: 90vw;
 
     padding:
-      9vh 5vw;
+      96px 0
+      46px;
   }
 
-  .homeHeroContent h1 {
-    font-size:
-      clamp(
-        48px,
-        13vw,
-        68px
+  /*
+   * Keep video visible on mobile too.
+   */
+  .homeGatewayVideo {
+    opacity: 0.34;
+
+    filter:
+      saturate(0.84)
+      contrast(1.06)
+      brightness(0.67);
+  }
+
+  .homeGatewayVideoShade {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(2, 8, 11, 0.82) 0%,
+        rgba(2, 8, 11, 0.68) 60%,
+        rgba(2, 8, 11, 0.58) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(2, 8, 11, 0.28),
+        rgba(2, 8, 11, 0.55)
       );
   }
 
-  .homeHeroContent > p {
-    font-size: 14px;
+  .homeGatewayEyebrow {
+    gap:
+      5px;
+
+    margin-bottom:
+      13px;
+
+    font-size:
+      10px;
+
+    line-height:
+      1.35;
+
+    letter-spacing:
+      0.065em;
   }
 
-  .homeHeroActions {
-    display: grid;
+  .homeGatewayTitle {
+    max-width:
+      100%;
 
-    grid-template-columns: 1fr;
+    font-size:
+      clamp(
+        48px,
+        14vw,
+        72px
+      );
+
+    line-height:
+      0.94;
+
+    letter-spacing:
+      -0.058em;
   }
 
-  .homeHeroMeta {
-    grid-template-columns: 1fr;
+  .homeGatewayDescription {
+    max-width:
+      94%;
+
+    margin-top:
+      16px;
+
+    font-size:
+      12px;
+
+    line-height:
+      1.58;
   }
 
-  .homeRouteSection {
+  .homeGatewayActions {
+    gap:
+      9px;
+
+    margin-top:
+      23px;
+  }
+
+  .homeGatewayButton {
+    min-height:
+      43px;
+
     padding:
-      4.8vh 4vw;
+      0 15px;
+
+    font-size:
+      11px;
   }
 
-  .homeSectionIntro {
-    display: block;
+  .homeGatewayCapabilityGrid {
+    margin-top:
+      28px;
   }
 
-  .homeRouteGrid {
-    grid-template-columns: 1fr;
+  .homeGatewayCapability {
+    min-height:
+      61px;
+
+    padding:
+      11px 13px;
   }
 
-  .homeRouteGrid a {
-    min-height: 118px;
+  .homeGatewayCapabilityLabel {
+    font-size:
+      9px;
+  }
+
+  .homeGatewayCapabilityValue {
+    font-size:
+      12px;
+
+    line-height:
+      1.42;
+  }
+
+  .homeGatewayJourney {
+    gap:
+      9px;
+
+    margin-top:
+      58px;
+  }
+
+  .homeGatewayJourneyLine {
+    width:
+      30px;
+  }
+
+  .homeGatewayJourneyText {
+    font-size:
+      9px;
+
+    letter-spacing:
+      0.07em;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 440px) {
+  .homeGatewayInner {
+    width:
+      88vw;
+
+    padding-top:
+      92px;
+  }
+
+  .homeGatewayEyebrow {
+    max-width:
+      290px;
+
+    flex-wrap:
+      wrap;
+  }
+
+  .homeGatewayTitle {
+    font-size:
+      clamp(
+        43px,
+        14vw,
+        61px
+      );
+  }
+
+  .homeGatewayActions {
+    display:
+      grid;
+
+    grid-template-columns:
+      1fr;
+  }
+
+  .homeGatewayButton {
+    width:
+      100%;
+  }
+
+  .homeGatewayDescription {
+    max-width:
+      100%;
+
+    font-size:
+      12px;
+  }
+
+  .homeGatewayCapabilityValue {
+    font-size:
+      11px;
+  }
+
+  .homeGatewayJourney {
+    align-items:
+      flex-start;
+
+    gap:
+      8px;
+
+    margin-top:
+      52px;
+  }
+
+  .homeGatewayJourneyLine {
+    width:
+      24px;
+
+    margin-top:
+      5px;
+  }
+
+  .homeGatewayJourneyText {
+    max-width:
+      190px;
+
+    font-size:
+      8px;
+
+    line-height:
+      1.4;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .homeGatewayButton,
+  .homeGatewayButton::before,
+  .homeGatewayButtonArrow,
+  .homeGatewayCapability,
+  .homeGatewayCapability::before,
+  .homeGatewayCapabilityLabel,
+  .homeGatewayJourney,
+  .homeGatewayJourneyText {
+    transition:
+      none;
+  }
+
+  .homeGatewayJourneyArrow {
+    animation:
+      none;
   }
 }
