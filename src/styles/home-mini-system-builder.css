@@ -4,11 +4,11 @@
 
 .miniSystemBuilder {
   position: relative;
-
   overflow: hidden;
 
   padding:
-    90px 5vw 85px;
+    90px 5vw
+    85px;
 
   border-bottom:
     1px solid
@@ -40,11 +40,9 @@
 
   border-radius: 50%;
 
-  background:
-    #91ef5b;
+  background: #91ef5b;
 
-  filter:
-    blur(140px);
+  filter: blur(140px);
 
   opacity: 0.05;
 
@@ -56,7 +54,10 @@
   z-index: 2;
 
   width:
-    min(1500px, 100%);
+    min(
+      1500px,
+      100%
+    );
 
   margin: 0 auto;
 }
@@ -68,7 +69,8 @@
 .miniSystemBuilderHeader {
   display: flex;
 
-  align-items: flex-end;
+  align-items:
+    flex-end;
 
   justify-content:
     space-between;
@@ -81,18 +83,18 @@
 .miniSystemBuilderEyebrow {
   margin-bottom: 12px;
 
-  color:
-    var(--green-2);
+  color: var(--green-2);
 
-  font-size: 9px;
-
+  font-size: 11px;
   font-weight: 900;
 
-  letter-spacing:
-    0.18em;
+  letter-spacing: 0.16em;
 
-  text-transform:
-    uppercase;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.14);
 }
 
 .miniSystemBuilderHeader h2 {
@@ -107,26 +109,24 @@
 
   line-height: 0.95;
 
-  letter-spacing:
-    -0.05em;
+  letter-spacing: -0.05em;
 }
 
 .miniSystemBuilderHeader h2 span {
-  color:
-    var(--green-2);
+  color: var(--green-2);
 }
 
 .miniSystemBuilderHeader > p {
-  max-width: 370px;
+  max-width: 390px;
 
   margin: 0;
 
-  color:
-    #8297a1;
+  color: #a9bbc3;
 
-  font-size: 12px;
+  font-size: 15px;
+  font-weight: 500;
 
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* =========================================================
@@ -148,11 +148,11 @@
 .miniBuilderStep {
   min-width: 0;
 
-  padding: 16px;
+  padding: 17px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.07);
+    rgba(255, 255, 255, 0.085);
 
   border-radius: 18px;
 
@@ -162,6 +162,10 @@
       rgba(10, 28, 37, 0.96),
       rgba(6, 20, 28, 0.98)
     );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.018);
 }
 
 /* =========================================================
@@ -173,61 +177,65 @@
 
   align-items: center;
 
-  gap: 9px;
+  gap: 10px;
 
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .miniBuilderStepHeader > span {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
 
   display: grid;
-
   place-items: center;
 
   flex: 0 0 auto;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.16);
+    rgba(145, 239, 91, 0.24);
 
   border-radius: 50%;
 
-  color:
-    var(--green-2);
+  color: var(--green-2);
 
   background:
+    rgba(145, 239, 91, 0.04);
+
+  box-shadow:
+    inset 0 0 12px
     rgba(145, 239, 91, 0.025);
 
-  font-size: 7px;
-
+  font-size: 9px;
   font-weight: 900;
 }
 
 .miniBuilderStepHeader small {
   display: block;
 
-  color:
-    #657b86;
+  color: #93aab4;
 
-  font-size: 5px;
-
+  font-size: 8px;
   font-weight: 900;
 
-  letter-spacing:
-    0.12em;
+  line-height: 1.2;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
 }
 
 .miniBuilderStepHeader strong {
   display: block;
 
-  margin-top: 2px;
+  margin-top: 3px;
 
-  color:
-    #dce7eb;
+  color: #eef5f7;
 
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: 800;
+
+  line-height: 1.25;
 }
 
 /* =========================================================
@@ -237,7 +245,7 @@
 .miniBuilderOptions {
   display: grid;
 
-  gap: 5px;
+  gap: 6px;
 }
 
 .miniBuilderPropertyOptions {
@@ -259,7 +267,8 @@
 
 .miniBuilderOption {
   min-width: 0;
-  min-height: 56px;
+
+  min-height: 58px;
 
   display: flex;
 
@@ -269,21 +278,20 @@
 
   justify-content: center;
 
-  gap: 5px;
+  gap: 6px;
 
-  padding: 6px;
+  padding: 7px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.06);
+    rgba(255, 255, 255, 0.08);
 
   border-radius: 10px;
 
-  color:
-    #92a5ae;
+  color: #b5c5cb;
 
   background:
-    rgba(255, 255, 255, 0.016);
+    rgba(255, 255, 255, 0.018);
 
   cursor: pointer;
 
@@ -291,7 +299,8 @@
     transform 0.2s ease,
     border-color 0.2s ease,
     background 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .miniBuilderOption:hover {
@@ -299,25 +308,36 @@
     translateY(-2px);
 
   border-color:
-    rgba(145, 239, 91, 0.2);
+    rgba(145, 239, 91, 0.28);
 
-  color:
-    #e6eff2;
+  color: #f3f8fa;
+
+  background:
+    rgba(145, 239, 91, 0.025);
+
+  box-shadow:
+    0 8px 20px
+    rgba(0, 0, 0, 0.12);
 }
 
 .miniBuilderOption.active {
   border-color:
-    rgba(145, 239, 91, 0.55);
+    rgba(145, 239, 91, 0.62);
 
-  color:
-    #efffe7;
+  color: #f3ffe9;
 
   background:
-    rgba(145, 239, 91, 0.055);
+    rgba(145, 239, 91, 0.07);
+
+  box-shadow:
+    inset 0 0 16px
+    rgba(145, 239, 91, 0.03),
+    0 0 16px
+    rgba(145, 239, 91, 0.035);
 }
 
 .miniBuilderOption:disabled {
-  opacity: 0.3;
+  opacity: 0.34;
 
   cursor: not-allowed;
 
@@ -325,22 +345,30 @@
 }
 
 .miniBuilderOption > span {
-  color:
-    var(--green-2);
+  color: var(--green-2);
 
-  font-size: 15px;
+  font-size: 17px;
+
+  line-height: 1;
 }
 
 .miniBuilderOption strong {
-  font-size: 6px;
+  color: #dfe9ed;
 
-  line-height: 1.2;
+  font-size: 9px;
+  font-weight: 800;
+
+  line-height: 1.3;
 
   text-align: center;
 }
 
+.miniBuilderOption.active strong {
+  color: #f5ffeF;
+}
+
 .miniBuilderTextOption {
-  min-height: 42px;
+  min-height: 46px;
 }
 
 /* =========================================================
@@ -360,19 +388,20 @@
 
   margin-top: 10px;
 
-  padding: 14px 16px;
+  padding:
+    15px 17px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.1);
+    rgba(145, 239, 91, 0.14);
 
   border-radius: 16px;
 
   background:
     linear-gradient(
       90deg,
-      rgba(145, 239, 91, 0.025),
-      rgba(255, 255, 255, 0.01)
+      rgba(145, 239, 91, 0.035),
+      rgba(255, 255, 255, 0.012)
     );
 }
 
@@ -383,17 +412,18 @@
 .miniBuilderSelection small {
   display: block;
 
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 
-  color:
-    #637a84;
+  color: #91a8b2;
 
-  font-size: 5px;
-
+  font-size: 8px;
   font-weight: 900;
 
-  letter-spacing:
-    0.12em;
+  line-height: 1.2;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
 }
 
 .miniBuilderSelection > div {
@@ -403,35 +433,39 @@
 
   flex-wrap: wrap;
 
-  gap: 6px;
+  gap: 7px;
 }
 
 .miniBuilderSelection span {
   padding:
-    5px 8px;
+    6px 9px;
 
   border:
     1px solid
-    rgba(255, 255, 255, 0.06);
+    rgba(255, 255, 255, 0.085);
 
   border-radius: 999px;
 
-  color:
-    #d2dfe4;
+  color: #e2ebee;
 
   background:
-    rgba(255, 255, 255, 0.016);
+    rgba(255, 255, 255, 0.025);
 
-  font-size: 7px;
-
+  font-size: 9px;
   font-weight: 800;
+
+  line-height: 1.2;
 }
 
 .miniBuilderSelection b {
-  color:
-    var(--green-2);
+  color: var(--green-2);
 
-  font-size: 9px;
+  font-size: 12px;
+  font-weight: 900;
+
+  text-shadow:
+    0 0 8px
+    rgba(145, 239, 91, 0.16);
 }
 
 /* =========================================================
@@ -447,45 +481,46 @@
 }
 
 .miniBuilderAction p {
-  max-width: 250px;
+  max-width: 280px;
 
   margin: 0;
 
-  color:
-    #607681;
+  color: #90a5ae;
 
-  font-size: 6px;
+  font-size: 9px;
+  font-weight: 500;
 
-  line-height: 1.45;
+  line-height: 1.55;
 }
 
 .miniBuilderContinue {
-  min-height: 42px;
+  min-height: 44px;
 
   display: inline-flex;
 
   align-items: center;
 
-  gap: 24px;
+  gap: 22px;
 
   padding:
-    0 15px;
+    0 17px;
 
   border:
     1px solid
-    rgba(145, 239, 91, 0.35);
+    rgba(145, 239, 91, 0.42);
 
-  border-radius:
-    999px;
+  border-radius: 999px;
 
-  color:
-    #efffe8;
+  color: #f3ffeD;
 
   background:
-    rgba(145, 239, 91, 0.055);
+    rgba(145, 239, 91, 0.065);
 
-  font-size: 7px;
+  box-shadow:
+    inset 0 0 16px
+    rgba(145, 239, 91, 0.025);
 
+  font-size: 10px;
   font-weight: 900;
 
   white-space: nowrap;
@@ -493,7 +528,8 @@
   transition:
     transform 0.2s ease,
     border-color 0.2s ease,
-    background 0.2s ease;
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .miniBuilderContinue:hover {
@@ -501,26 +537,27 @@
     translateY(-2px);
 
   border-color:
-    rgba(145, 239, 91, 0.65);
+    rgba(145, 239, 91, 0.72);
 
   background:
-    rgba(145, 239, 91, 0.1);
+    rgba(145, 239, 91, 0.11);
+
+  box-shadow:
+    0 0 20px
+    rgba(145, 239, 91, 0.06);
 }
 
 .miniBuilderContinue span {
-  color:
-    var(--green-2);
+  color: var(--green-2);
 
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* =========================================================
    LAPTOP
    ========================================================= */
 
-@media (
-  max-width: 1200px
-) {
+@media (max-width: 1200px) {
   .miniBuilderSteps {
     grid-template-columns:
       1fr;
@@ -539,9 +576,7 @@
    TABLET
    ========================================================= */
 
-@media (
-  max-width: 900px
-) {
+@media (max-width: 900px) {
   .miniSystemBuilderHeader {
     display: block;
   }
@@ -567,12 +602,11 @@
    MOBILE
    ========================================================= */
 
-@media (
-  max-width: 720px
-) {
+@media (max-width: 720px) {
   .miniSystemBuilder {
     padding:
-      75px 5vw 65px;
+      75px 5vw
+      65px;
   }
 
   .miniSystemBuilderHeader h2 {
@@ -582,6 +616,10 @@
         13vw,
         60px
       );
+  }
+
+  .miniSystemBuilderHeader > p {
+    font-size: 14px;
   }
 
   .miniBuilderPropertyOptions {
@@ -601,13 +639,36 @@
       );
   }
 
+  .miniBuilderStepHeader small {
+    font-size: 8px;
+  }
+
+  .miniBuilderStepHeader strong {
+    font-size: 13px;
+  }
+
+  .miniBuilderOption strong {
+    font-size: 10px;
+  }
+
+  .miniBuilderSelection small {
+    font-size: 8px;
+  }
+
+  .miniBuilderSelection span {
+    font-size: 9px;
+  }
+
   .miniBuilderAction {
     display: block;
   }
 
   .miniBuilderAction p {
-    margin-bottom:
-      11px;
+    max-width: 100%;
+
+    margin-bottom: 12px;
+
+    font-size: 10px;
   }
 
   .miniBuilderContinue {
@@ -615,6 +676,8 @@
 
     justify-content:
       space-between;
+
+    font-size: 10px;
   }
 }
 
@@ -622,9 +685,7 @@
    SMALL MOBILE
    ========================================================= */
 
-@media (
-  max-width: 420px
-) {
+@media (max-width: 420px) {
   .miniBuilderPropertyOptions,
   .miniBuilderGoalOptions,
   .miniBuilderBackupOptions {
@@ -637,10 +698,7 @@
    REDUCED MOTION
    ========================================================= */
 
-@media (
-  prefers-reduced-motion:
-  reduce
-) {
+@media (prefers-reduced-motion: reduce) {
   .miniBuilderOption,
   .miniBuilderContinue {
     transition: none;
