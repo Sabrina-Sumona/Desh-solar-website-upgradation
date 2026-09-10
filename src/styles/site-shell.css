@@ -2741,15 +2741,30 @@ span:nth-child(3) {
 
   display: grid;
 
+  /*
+   * Desktop footer uses the actual visible content widths:
+   * brand = 260px, quick links = intrinsic width,
+   * head office = up to 520px.
+   *
+   * `space-between` then distributes the remaining room equally,
+   * so the visible A and B gaps are equal rather than merely the
+   * underlying grid columns being equal.
+   */
   grid-template-columns:
-    minmax(360px, 1.25fr)
-    minmax(190px, 0.58fr)
-    minmax(440px, 1.15fr);
+    260px
+    max-content
+    minmax(440px, 520px);
 
   align-items: start;
 
-  gap:
-    26px 54px;
+  justify-content:
+    space-between;
+
+  column-gap:
+    0;
+
+  row-gap:
+    26px;
 
   padding:
     20px 6vw 10px;
@@ -2806,7 +2821,7 @@ span:nth-child(3) {
   margin: 0;
 
   color:
-    #a8bac2;
+    #b1c0c6;
 
   font-size:
     13px;
@@ -2866,10 +2881,10 @@ span:nth-child(3) {
 
 .footerServicePromise strong {
   color:
-    #d9e5e9;
+    #e0eaed;
 
   font-size:
-    11px;
+    11.5px;
 
   font-weight:
     750;
@@ -2893,40 +2908,97 @@ span:nth-child(3) {
 }
 
 .footerQuickLinks {
-  min-width:
-    0;
+  min-width: 0;
+
+  display: block;
+
+  /* Its column is intrinsic-width; footer space-between handles visual centering. */
+  justify-self: start;
 }
 
-.footerQuickLinks > a {
-  display: block;
+.footerQuickLinks h4 {
+  position: relative;
+
+  width: fit-content;
+
+  margin: 0 0 12px;
+
+  padding: 0 0 8px;
+
+  white-space: nowrap;
+
+  line-height: 1.25;
+}
+
+/* Glowing underline under the full "Quick Links" label */
+
+.footerQuickLinks h4::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--green-2),
+      rgba(145, 239, 91, 0.3)
+    );
+
+  box-shadow:
+    0 0 10px rgba(145, 239, 91, 0.46),
+    0 0 18px rgba(145, 239, 91, 0.18);
+}
+
+.footerQuickLinksList {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+}
+
+.footerQuickLinksList > a {
+  display:
+    block;
 
   width:
     fit-content;
-
-  margin-bottom:
-    2px;
 
   color:
     #82959f;
 
   font-size:
-    13px;
+    12px;
 
   line-height:
-    1.8;
+    1.65;
 
   transition:
-    color 0.2s ease;
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.footerQuickLinks > a:hover {
+.footerQuickLinksList > a:hover {
   color:
     #dce8ed;
-}
 
-.footerSocialHeading {
-  margin:
-    12px 0 8px !important;
+  transform:
+    translateX(2px);
 }
 
 .socialLinks {
@@ -3054,6 +3126,12 @@ span:nth-child(3) {
 .footerContact {
   min-width:
     0;
+
+  width:
+    100%;
+
+  justify-self:
+    end;
 }
 
 .footerContact p {
@@ -3078,6 +3156,46 @@ span:nth-child(3) {
     700;
 }
 
+/* Phone + social icons on one compact row */
+
+.footerContactMeta {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  flex-wrap:
+    wrap;
+
+  gap:
+    8px 11px;
+
+  margin-top:
+    2px;
+}
+
+.footerContactSocials {
+  gap:
+    6px;
+}
+
+.footerContactSocials a {
+  width:
+    30px;
+
+  height:
+    30px;
+}
+
+.footerContactSocials svg {
+  width:
+    14px;
+
+  height:
+    14px;
+}
+
 /* Head-office phone */
 
 .footerPhone {
@@ -3093,8 +3211,7 @@ span:nth-child(3) {
   gap:
     8px;
 
-  margin:
-    2px 0 2px;
+  margin: 0;
 
   color:
     #b9c9d0;
@@ -3140,7 +3257,7 @@ span:nth-child(3) {
 
 .footerMap {
   width: 100%;
-  height: 122px;
+  height: 102px;
 
   margin-top:
     7px;
@@ -3189,7 +3306,7 @@ span:nth-child(3) {
     rgba(255, 255, 255, 0.07);
 
   color:
-    #61737c;
+    #71858e;
 
   font-size:
     12px;
@@ -3310,6 +3427,11 @@ span:nth-child(3) {
    ========================================================= */
 
 @media (max-width: 1050px) {
+
+  .footerQuickLinks {
+    justify-self: start;
+  }
+
   .footer {
     grid-template-columns:
       minmax(0, 1fr)
@@ -3349,7 +3471,7 @@ span:nth-child(3) {
 
   .footerMap {
     height:
-      140px;
+      118px;
   }
 }
 
@@ -3456,7 +3578,7 @@ span:nth-child(3) {
 
   .footerServicePromise strong {
     font-size:
-      11px;
+      11.5px;
   }
 
   .footerPhone {
@@ -3469,10 +3591,25 @@ span:nth-child(3) {
       10px;
   }
 
-  .footerQuickLinks > a,
+  .footerQuickLinks h4 {
+    margin-bottom:
+      11px;
+  }
+
+  .footerQuickLinksList {
+    gap:
+      5px;
+  }
+
+  .footerQuickLinksList > a,
   .footerContact p {
     font-size:
       12px;
+  }
+
+  .footerContactMeta {
+    gap:
+      8px 10px;
   }
 
   .socialLinks {
@@ -3482,7 +3619,7 @@ span:nth-child(3) {
 
   .footerMap {
     height:
-      160px;
+      124px;
 
     margin-top:
       8px;
@@ -3561,9 +3698,35 @@ span:nth-child(3) {
       100%;
   }
 
+  .footerQuickLinksList {
+    gap:
+      5px;
+  }
+
+  .footerContactMeta {
+    align-items:
+      center;
+  }
+
   .footerMap {
     height:
-      150px;
+      116px;
+  }
+}
+
+
+@media (max-width: 460px) {
+  .footerQuickLinks h4 {
+    margin-bottom:
+      10px;
+
+    font-size:
+      12px;
+  }
+
+  .footerQuickLinksList > a {
+    font-size:
+      11.5px;
   }
 }
 
