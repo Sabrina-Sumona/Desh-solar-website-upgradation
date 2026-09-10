@@ -79,6 +79,16 @@ export default function Footer() {
           Dhaka-1205, Bangladesh
         </p>
 
+        <div className="footerMap">
+          <iframe
+            title="Desh Solar Head Office map"
+            src="https://www.google.com/maps?q=Navana%20Zohura%20Square%2C%20Ground%20Floor%2C%20Bangla%20Motor%2C%20Dhaka-1205%2C%20Bangladesh&output=embed"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </div>
+
         <div className="footerContactMeta">
           <a
             href="tel:01754477488"
@@ -145,16 +155,6 @@ export default function Footer() {
               </svg>
             </a>
           </div>
-        </div>
-
-        <div className="footerMap">
-          <iframe
-            title="Desh Solar Head Office map"
-            src="https://www.google.com/maps?q=Navana%20Zohura%20Square%2C%20Ground%20Floor%2C%20Bangla%20Motor%2C%20Dhaka-1205%2C%20Bangladesh&output=embed"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-          />
         </div>
       </div>
 
