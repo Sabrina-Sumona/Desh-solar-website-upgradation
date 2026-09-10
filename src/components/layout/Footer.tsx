@@ -9,33 +9,35 @@ export default function Footer() {
           ================================================ */}
 
       <div className="footerBrand">
-        <Link
-          href="/"
-          className="footerLogo"
-          aria-label="Desh Solar home"
-        >
-          <Image
-            src="/assets/desh-solar-logo.png"
-            alt="Desh Solar"
-            width={1195}
-            height={236}
-            className="brandLogoImage"
-            sizes="(max-width: 720px) 220px, 260px"
-          />
-        </Link>
+        <div className="footerBrandFrame">
+          <Link
+            href="/"
+            className="footerLogo"
+            aria-label="Desh Solar home"
+          >
+            <Image
+              src="/assets/desh-solar-logo.png"
+              alt="Desh Solar"
+              width={1195}
+              height={236}
+              className="brandLogoImage"
+              sizes="(max-width: 420px) 205px, (max-width: 720px) 220px, 260px"
+            />
+          </Link>
 
-        <p>
-          Reliable solar products and complete energy
-          solutions for homes, businesses, industries and
-          projects across Bangladesh.
-        </p>
+          <p>
+            Reliable solar products and complete energy
+            solutions for homes, businesses, industries and
+            projects across Bangladesh.
+          </p>
 
-        <div className="footerServicePromise">
-          <span aria-hidden="true" />
+          <div className="footerServicePromise">
+            <span aria-hidden="true" />
 
-          <strong>
-            For us, reliable service comes before business.
-          </strong>
+            <strong>
+              For us, reliable service comes before business.
+            </strong>
+          </div>
         </div>
       </div>
 
