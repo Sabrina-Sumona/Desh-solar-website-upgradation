@@ -1,0 +1,391 @@
+/* =========================================================
+   BRAND MARQUEE
+   Original brand logos — auto-moving strip before footer
+   ========================================================= */
+
+.brandMarquee {
+  position: relative;
+  overflow: hidden;
+
+  padding: 28px 0 30px;
+
+  border-top:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, 0.055);
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(145, 239, 91, 0.035),
+      transparent 30%
+    ),
+    #03070a;
+}
+
+/* =========================================================
+   SECTION LABEL
+   ========================================================= */
+
+.brandMarqueeTop {
+  width: min(1500px, 90vw);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  margin: 0 auto 20px;
+}
+
+.brandMarqueeLine {
+  width: 34px;
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(145, 239, 91, 0.65)
+    );
+}
+
+.brandMarqueeLine:last-child {
+  transform: scaleX(-1);
+}
+
+.brandMarqueeEyebrow {
+  color: #91a5af;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+/* =========================================================
+   MARQUEE VIEWPORT
+   ========================================================= */
+
+.brandMarqueeViewport {
+  position: relative;
+
+  width: 100%;
+  overflow: hidden;
+
+  -webkit-mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 6%,
+      #000 94%,
+      transparent 100%
+    );
+}
+
+.brandMarqueeTrack {
+  display: flex;
+
+  width: max-content;
+
+  will-change: transform;
+
+  animation:
+    brandMarqueeMove
+    34s linear
+    infinite;
+}
+
+.brandMarqueeViewport:hover
+.brandMarqueeTrack,
+.brandMarqueeViewport:focus-within
+.brandMarqueeTrack {
+  animation-play-state: paused;
+}
+
+.brandMarqueeGroup {
+  display: flex;
+  align-items: center;
+
+  flex: 0 0 auto;
+
+  gap: 12px;
+
+  padding-right: 12px;
+}
+
+/* =========================================================
+   TRANSPARENT LOGO AREA
+   No card/background/border around individual logos.
+   Every brand uses the same visual slot.
+   ========================================================= */
+
+.brandMarqueeLogo {
+  position: relative;
+
+  width: 190px;
+  height: 64px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 0;
+
+  background: transparent;
+
+  box-shadow: none;
+
+  overflow: visible;
+
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
+}
+
+.brandMarqueeLogo::after {
+  content: none;
+}
+
+.brandMarqueeLogo:hover {
+  transform: translateY(-2px);
+
+  opacity: 0.92;
+
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* =========================================================
+   LOGO IMAGE
+   Equal display box for every logo.
+
+   Different company logos naturally have different aspect
+   ratios, so forcing identical width AND height would distort
+   the original artwork. Instead, every logo occupies the same
+   160 × 46 px display area with object-fit: contain.
+   ========================================================= */
+
+.brandMarqueeLogoImage {
+  position: relative;
+  z-index: 2;
+
+  display: block;
+
+  width: 160px;
+  height: 46px;
+
+  max-width: 160px;
+  max-height: 46px;
+
+  object-fit: contain;
+  object-position: center;
+
+  filter: none;
+
+  transform: none;
+}
+
+/*
+ * Override the previous per-brand sizing classes.
+ * All logos now use exactly the same display box.
+ */
+
+.brandLogoHuawei,
+.brandLogoCrown,
+.brandLogoHithium,
+.brandLogoLvtopsun,
+.brandLogoWalton,
+.brandLogoJinko,
+.brandLogoLongi,
+.brandLogoSako,
+.brandLogoDjdc,
+.brandLogoGrowatt,
+.brandLogoGoodwe,
+.brandLogoHaier {
+  width: 160px;
+  height: 46px;
+
+  max-width: 160px;
+  max-height: 46px;
+}
+
+/* =========================================================
+   CONTINUOUS MOVEMENT
+   ========================================================= */
+
+@keyframes brandMarqueeMove {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .brandMarquee {
+    padding: 25px 0 27px;
+  }
+
+  .brandMarqueeLogo {
+    width: 170px;
+    height: 58px;
+
+    padding: 0;
+  }
+
+  .brandMarqueeLogoImage,
+  .brandLogoHuawei,
+  .brandLogoCrown,
+  .brandLogoHithium,
+  .brandLogoLvtopsun,
+  .brandLogoWalton,
+  .brandLogoJinko,
+  .brandLogoLongi,
+  .brandLogoSako,
+  .brandLogoDjdc,
+  .brandLogoGrowatt,
+  .brandLogoGoodwe,
+  .brandLogoHaier {
+    width: 145px;
+    height: 42px;
+
+    max-width: 145px;
+    max-height: 42px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+  .brandMarquee {
+    padding: 23px 0 25px;
+  }
+
+  .brandMarqueeTop {
+    width: 90vw;
+
+    margin-bottom: 17px;
+  }
+
+  .brandMarqueeLine {
+    width: 24px;
+  }
+
+  .brandMarqueeEyebrow {
+    font-size: 8px;
+
+    letter-spacing: 0.15em;
+  }
+
+  .brandMarqueeViewport {
+    -webkit-mask-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 3%,
+        #000 97%,
+        transparent 100%
+      );
+
+    mask-image:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        #000 3%,
+        #000 97%,
+        transparent 100%
+      );
+  }
+
+  .brandMarqueeTrack {
+    animation-duration: 27s;
+  }
+
+  .brandMarqueeGroup {
+    gap: 9px;
+
+    padding-right: 9px;
+  }
+
+  .brandMarqueeLogo {
+    width: 148px;
+    height: 54px;
+
+    padding: 0;
+
+    border-radius: 0;
+  }
+
+  .brandMarqueeLogoImage,
+  .brandLogoHuawei,
+  .brandLogoCrown,
+  .brandLogoHithium,
+  .brandLogoLvtopsun,
+  .brandLogoWalton,
+  .brandLogoJinko,
+  .brandLogoLongi,
+  .brandLogoSako,
+  .brandLogoDjdc,
+  .brandLogoGrowatt,
+  .brandLogoGoodwe,
+  .brandLogoHaier {
+    width: 126px;
+    height: 38px;
+
+    max-width: 126px;
+    max-height: 38px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .brandMarqueeTrack {
+    animation: none;
+  }
+
+  .brandMarqueeViewport {
+    overflow-x: auto;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+
+    scrollbar-width: thin;
+  }
+
+  .brandMarqueeLogo,
+  .brandMarqueeLogo::after {
+    transition: none;
+  }
+}
