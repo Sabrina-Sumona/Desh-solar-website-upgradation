@@ -64,8 +64,16 @@ export default function FloatingActions() {
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"
+          className="floatingPhoneIcon"
         >
-          <path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.19 2.2Z" />
+          <path d="M5.15 5.75c.38-1.14 1.44-1.9 2.64-1.9h8.42c1.2 0 2.26.76 2.64 1.9l.42 1.26a1.65 1.65 0 0 1-1.57 2.17h-2.03a1.65 1.65 0 0 1-1.59-1.2l-.18-.62H10.1l-.18.62a1.65 1.65 0 0 1-1.59 1.2H6.3a1.65 1.65 0 0 1-1.57-2.17l.42-1.26Z" />
+          <path d="M7.35 10.65h9.3c1.22 0 2.2.99 2.2 2.2v4.05c0 1.22-.98 2.2-2.2 2.2h-9.3a2.2 2.2 0 0 1-2.2-2.2v-4.05c0-1.21.98-2.2 2.2-2.2Z" />
+          <circle
+            cx="12"
+            cy="14.88"
+            r="2.05"
+            className="floatingPhoneDial"
+          />
         </svg>
 
         <span className="floatingActionTooltip">
@@ -94,8 +102,10 @@ export default function FloatingActions() {
         <svg
           viewBox="0 0 24 24"
           aria-hidden="true"
+          className="floatingTopIcon"
         >
-          <path d="M5.5 15.5 12 9l6.5 6.5" />
+          <path d="M12 18V6" />
+          <path d="m6.9 11.1 5.1-5.1 5.1 5.1" />
         </svg>
 
         <span className="floatingActionTooltip">
