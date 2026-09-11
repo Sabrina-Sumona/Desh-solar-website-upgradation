@@ -3789,3 +3789,374 @@ span:nth-child(3) {
       none;
   }
 }
+
+/* =========================================================
+   FLOATING ACTIONS
+   Phone: bottom-left
+   Back to top: bottom-right
+   ========================================================= */
+
+.floatingAction {
+  position: fixed;
+  z-index: 980;
+
+  bottom:
+    max(
+      22px,
+      calc(
+        env(safe-area-inset-bottom) +
+        14px
+      )
+    );
+
+  width: 52px;
+  height: 52px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  -webkit-tap-highlight-color:
+    transparent;
+
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.floatingAction svg {
+  position: relative;
+  z-index: 2;
+
+  width: 21px;
+  height: 21px;
+}
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+.floatingPhone {
+  left:
+    max(
+      22px,
+      calc(
+        env(safe-area-inset-left) +
+        14px
+      )
+    );
+
+  border:
+    1px solid rgba(145, 239, 91, 0.56);
+
+  color: #061008;
+
+  background:
+    linear-gradient(
+      145deg,
+      var(--green-2),
+      var(--green)
+    );
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.34),
+    0 0 24px rgba(145, 239, 91, 0.18);
+}
+
+.floatingPhone svg {
+  fill: currentColor;
+}
+
+.floatingPhone:hover {
+  transform:
+    translateY(-3px)
+    scale(1.035);
+
+  box-shadow:
+    0 14px 35px rgba(0, 0, 0, 0.38),
+    0 0 28px rgba(145, 239, 91, 0.29);
+}
+
+.floatingPhonePulse {
+  position: absolute;
+  inset: -1px;
+
+  border:
+    1px solid rgba(145, 239, 91, 0.5);
+
+  border-radius: inherit;
+
+  pointer-events: none;
+
+  animation:
+    floatingPhonePulse
+    2.4s ease-out
+    infinite;
+}
+
+/* =========================================================
+   BACK TO TOP
+   ========================================================= */
+
+.floatingBackToTop {
+  right:
+    max(
+      22px,
+      calc(
+        env(safe-area-inset-right) +
+        14px
+      )
+    );
+
+  border:
+    1px solid rgba(145, 239, 91, 0.3);
+
+  color: #dfffcf;
+
+  background:
+    rgba(5, 15, 21, 0.88);
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+  backdrop-filter:
+    blur(14px);
+
+  -webkit-backdrop-filter:
+    blur(14px);
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transform:
+    translateY(12px)
+    scale(0.92);
+}
+
+.floatingBackToTop.isVisible {
+  opacity: 1;
+
+  visibility: visible;
+
+  pointer-events: auto;
+
+  transform: none;
+}
+
+.floatingBackToTop svg {
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.floatingBackToTop:hover {
+  border-color:
+    rgba(145, 239, 91, 0.62);
+
+  color: #fff;
+
+  background:
+    rgba(15, 37, 29, 0.94);
+
+  transform:
+    translateY(-3px);
+
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.38),
+    0 0 24px rgba(145, 239, 91, 0.1);
+}
+
+/* =========================================================
+   DESKTOP TOOLTIP
+   ========================================================= */
+
+.floatingActionTooltip {
+  position: absolute;
+
+  top: 50%;
+
+  min-width: max-content;
+
+  padding:
+    7px 10px;
+
+  border:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 8px;
+
+  color: #dbe7eb;
+
+  background:
+    rgba(4, 12, 17, 0.95);
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.28);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  line-height: 1;
+
+  letter-spacing: 0.02em;
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.floatingPhone
+.floatingActionTooltip {
+  left: calc(100% + 10px);
+
+  transform:
+    translate(
+      -4px,
+      -50%
+    );
+}
+
+.floatingBackToTop
+.floatingActionTooltip {
+  right: calc(100% + 10px);
+
+  transform:
+    translate(
+      4px,
+      -50%
+    );
+}
+
+.floatingAction:hover
+.floatingActionTooltip {
+  opacity: 1;
+
+  visibility: visible;
+
+  transform:
+    translate(
+      0,
+      -50%
+    );
+}
+
+/* =========================================================
+   PHONE PULSE
+   ========================================================= */
+
+@keyframes floatingPhonePulse {
+  0% {
+    opacity: 0.6;
+
+    transform:
+      scale(1);
+  }
+
+  70% {
+    opacity: 0;
+
+    transform:
+      scale(1.48);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      scale(1.48);
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 720px) {
+  .floatingAction {
+    bottom:
+      max(
+        16px,
+        calc(
+          env(safe-area-inset-bottom) +
+          10px
+        )
+      );
+
+    width: 46px;
+    height: 46px;
+  }
+
+  .floatingPhone {
+    left:
+      max(
+        14px,
+        calc(
+          env(safe-area-inset-left) +
+          10px
+        )
+      );
+  }
+
+  .floatingBackToTop {
+    right:
+      max(
+        14px,
+        calc(
+          env(safe-area-inset-right) +
+          10px
+        )
+      );
+  }
+
+  .floatingAction svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  /*
+   * Tooltips are desktop-only.
+   * Mobile users get native accessible labels/title.
+   */
+  .floatingActionTooltip {
+    display: none;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .floatingAction,
+  .floatingActionTooltip {
+    transition: none;
+  }
+
+  .floatingPhonePulse {
+    animation: none;
+  }
+}
+

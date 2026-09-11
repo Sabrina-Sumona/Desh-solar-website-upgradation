@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import FloatingActions from "./FloatingActions";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <>
+      <footer className="footer">
       {/* ================================================
           BRAND
           ================================================ */}
@@ -162,10 +164,13 @@ export default function Footer() {
           COPYRIGHT
           ================================================ */}
 
-      <div className="copyright">
-        © 2026 Desh Solar. All rights reserved. Website by
-        GAMEViZ.
-      </div>
-    </footer>
+        <div className="copyright">
+          © 2026 Desh Solar. All rights reserved. Website by
+          GAMEViZ.
+        </div>
+      </footer>
+
+      <FloatingActions />
+    </>
   );
 }
