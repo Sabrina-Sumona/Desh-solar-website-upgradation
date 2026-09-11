@@ -887,20 +887,41 @@
   }
 
   .liveEnergyVisual {
-    min-height: 650px;
+    /*
+     * Mobile layout must grow with the time controller.
+     * The controller is no longer absolutely overlaid on the diagram.
+     */
+    min-height: 0;
     padding: 18px;
   }
 
   .liveEnergySvg {
-    inset: 50px -50px 190px;
-    width: calc(100% + 100px);
-    height: calc(100% - 240px);
+    /*
+     * Give the system diagram its own fixed mobile stage.
+     * It remains absolute, but the normal-flow content below reserves
+     * enough space before the legend and controls begin.
+     */
+    top: 50px;
+    right: -42px;
+    bottom: auto;
+    left: -42px;
+
+    width: calc(100% + 84px);
+    height: 390px;
   }
 
   .liveEnergyVisualLegend {
-    right: 16px;
-    bottom: 145px;
+    position: relative;
+
+    right: auto;
+    bottom: auto;
+
+    justify-content: flex-end;
+
     gap: 9px;
+
+    margin-top: 396px;
+    margin-bottom: 12px;
   }
 
   .liveEnergyDashboard {
@@ -916,9 +937,20 @@
   }
 
   .liveEnergyControl {
-    left: 14px;
-    right: 14px;
-    bottom: 14px;
+    /*
+     * Critical mobile fix:
+     * keep the slider/time panel in normal document flow so it can never
+     * cover the house, devices, flow lines or legend, even when its
+     * content becomes taller on narrow screens.
+     */
+    position: relative;
+
+    left: auto;
+    right: auto;
+    bottom: auto;
+
+    width: 100%;
+
     padding: 16px;
   }
 
@@ -971,7 +1003,13 @@
   }
 
   .liveEnergyVisualLegend {
-    gap: 8px;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    margin-top: 388px;
+
+    flex-wrap: wrap;
   }
 }
 
