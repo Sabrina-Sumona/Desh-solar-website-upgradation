@@ -3835,8 +3835,8 @@ span:nth-child(3) {
   position: relative;
   z-index: 2;
 
-  width: 21px;
-  height: 21px;
+  width: 22px;
+  height: 22px;
 }
 
 /* =========================================================
@@ -3854,20 +3854,20 @@ span:nth-child(3) {
     );
 
   border:
-    1px solid rgba(127, 214, 82, 0.48);
+    1px solid rgba(145, 239, 91, 0.42);
 
-  color: #f4d36d;
+  color: #ffd978;
 
   background:
     linear-gradient(
       145deg,
-      rgba(17, 45, 24, 0.98),
-      rgba(7, 25, 16, 0.99)
+      rgba(20, 50, 26, 0.96),
+      rgba(9, 26, 18, 0.98)
     );
 
   box-shadow:
-    0 10px 28px rgba(0, 0, 0, 0.36),
-    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+    0 12px 30px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
 }
 
 .floatingPhone:hover {
@@ -3875,28 +3875,31 @@ span:nth-child(3) {
     translateY(-3px);
 
   border-color:
-    rgba(145, 239, 91, 0.72);
+    rgba(145, 239, 91, 0.7);
 
   background:
     linear-gradient(
       145deg,
-      rgba(21, 55, 29, 0.99),
-      rgba(8, 29, 18, 0.99)
+      rgba(27, 66, 34, 0.98),
+      rgba(11, 31, 21, 0.99)
     );
 
   box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.4),
-    0 0 18px rgba(145, 239, 91, 0.07);
+    0 15px 36px rgba(0, 0, 0, 0.4),
+    0 0 22px rgba(145, 239, 91, 0.08);
 }
 
-.floatingPhoneIcon {
-  width: 19px !important;
-  height: 19px !important;
+.floatingPhoneImage {
+  display: block;
 
-  fill: currentColor;
+  width: 24px;
+  height: 24px;
 
-  transform:
-    translateY(0.5px);
+  object-fit: contain;
+
+  image-rendering: auto;
+
+  pointer-events: none;
 }
 
 .floatingPhonePulse {
@@ -4116,13 +4119,13 @@ span:nth-child(3) {
   }
 
   .floatingAction svg {
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
   }
 
-  .floatingPhoneIcon {
-    width: 18px !important;
-    height: 18px !important;
+  .floatingPhoneImage {
+    width: 23px;
+    height: 23px;
   }
 
   .floatingActionTooltip {
