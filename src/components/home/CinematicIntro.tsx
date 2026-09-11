@@ -47,7 +47,6 @@ export default function CinematicIntro() {
     let targetTime = 0;
     let currentTarget = 0;
     let metadataReady = false;
-    let metadataInitialized = false;
     let rafId = 0;
 
     const clamp = (
@@ -93,21 +92,29 @@ export default function CinematicIntro() {
       element: HTMLElement,
       progress: number,
       start: number,
-      end: number
+      end: number,
+      fade = 0.035
     ) => {
-      const fade = 0.035;
+      const safeFade =
+        Math.min(
+          fade,
+          Math.max(
+            0.001,
+            (end - start) / 2
+          )
+        );
 
       const fadeIn =
         smoothstep(
           start,
-          start + fade,
+          start + safeFade,
           progress
         );
 
       const fadeOut =
         1 -
         smoothstep(
-          end - fade,
+          end - safeFade,
           end,
           progress
         );
@@ -122,9 +129,90 @@ export default function CinematicIntro() {
         String(opacity);
 
       element.style.transform =
-        `translateY(${
-          (1 - opacity) * 24
-        }px)`;
+        `translateY(${(1 - opacity) * 24}px)`;
+    };
+
+    /*
+     * Desktop intentionally uses slightly overlapping scene windows
+     * for a cinematic crossfade.
+     *
+     * On mobile that overlap causes large text blocks to sit on top
+     * of each other while scrolling. These ranges are derived from
+     * the existing data-start/data-end values and separated by a
+     * tiny gap, so only one scene copy can be visible at a time.
+     */
+    const getMobileSceneRanges = () => {
+      const originalRanges =
+        sceneCopies.map(
+          (element) => ({
+            start:
+              Number(
+                element.dataset.start
+              ) || 0,
+            end:
+              Number(
+                element.dataset.end
+              ) || 1,
+          })
+        );
+
+      const transitionGap =
+        0.008;
+
+      return originalRanges.map(
+        (range, index) => {
+          let start =
+            range.start;
+          let end =
+            range.end;
+
+          if (index > 0) {
+            const previous =
+              originalRanges[
+                index - 1
+              ];
+
+            const boundary =
+              (
+                previous.end +
+                range.start
+              ) / 2;
+
+            start =
+              boundary +
+              transitionGap / 2;
+          }
+
+          if (
+            index <
+            originalRanges.length - 1
+          ) {
+            const next =
+              originalRanges[
+                index + 1
+              ];
+
+            const boundary =
+              (
+                range.end +
+                next.start
+              ) / 2;
+
+            end =
+              boundary -
+              transitionGap / 2;
+          }
+
+          return {
+            start,
+            end:
+              Math.max(
+                start + 0.03,
+                end
+              ),
+          };
+        }
+      );
     };
 
     const updateUI = () => {
@@ -138,14 +226,20 @@ export default function CinematicIntro() {
       if (maxScroll > 0) {
         pageProgress.style.width =
           `${
-            (window.scrollY /
-              maxScroll) *
-            100
+            (
+              window.scrollY /
+              maxScroll
+            ) * 100
           }%`;
       }
 
       const progress =
         storyProgress();
+
+      const isMobile =
+        window.matchMedia(
+          "(max-width: 720px)"
+        ).matches;
 
       scrubFill.style.width =
         `${progress * 100}%`;
@@ -158,15 +252,16 @@ export default function CinematicIntro() {
         );
 
       /*
-       * Opening hero disappears
-       * before the first main
-       * solar-generation stage.
+       * On mobile, finish the hero before the first numbered scene
+       * begins. Desktop keeps the existing timing.
        */
       const heroFade =
         1 -
         smoothstep(
           0.015,
-          0.09,
+          isMobile
+            ? 0.082
+            : 0.105,
           progress
         );
 
@@ -181,43 +276,82 @@ export default function CinematicIntro() {
       scrollCue.style.opacity =
         String(
           1 -
-          smoothstep(
-            0.025,
-            0.11,
-            progress
-          )
+            smoothstep(
+              0.03,
+              isMobile
+                ? 0.085
+                : 0.13,
+              progress
+            )
         );
 
-      /*
-       * Show / hide each story
-       * caption based on the
-       * updated video's timing.
-       */
-      sceneCopies.forEach(
-        (element) => {
-          const start =
-            Number(
-              element.dataset.start
-            ) || 0;
+      if (isMobile) {
+        /*
+         * Important:
+         * CSS opacity transitions add visual lag during fast touch
+         * scrolling. Disabling them here makes each copy follow the
+         * scroll position exactly and removes ghost/duplicate text.
+         */
+        heroCopy.style.transition =
+          "none";
 
-          const end =
-            Number(
-              element.dataset.end
-            ) || 1;
+        sceneCopies.forEach(
+          (element) => {
+            element.style.transition =
+              "none";
+          }
+        );
 
-          setCopy(
-            element,
-            progress,
-            start,
-            end
-          );
-        }
-      );
+        const mobileRanges =
+          getMobileSceneRanges();
 
-      /*
-       * Update right-side story
-       * timeline.
-       */
+        sceneCopies.forEach(
+          (element, index) => {
+            const range =
+              mobileRanges[index];
+
+            setCopy(
+              element,
+              progress,
+              range.start,
+              range.end,
+              0.014
+            );
+          }
+        );
+      } else {
+        /*
+         * Restore stylesheet transitions after resizing back to
+         * tablet/desktop and preserve the approved desktop behavior.
+         */
+        heroCopy.style.transition =
+          "";
+
+        sceneCopies.forEach(
+          (element) => {
+            element.style.transition =
+              "";
+
+            const start =
+              Number(
+                element.dataset.start
+              ) || 0;
+
+            const end =
+              Number(
+                element.dataset.end
+              ) || 1;
+
+            setCopy(
+              element,
+              progress,
+              start,
+              end
+            );
+          }
+        );
+      }
+
       timelineItems.forEach(
         (item, index) => {
           const threshold =
@@ -238,40 +372,32 @@ export default function CinematicIntro() {
           item.classList.toggle(
             "active",
             progress >=
-              threshold &&
+              threshold - 0.08 &&
               progress < next
           );
         }
       );
     };
 
-    /*
-     * Smoothly seek the video
-     * instead of jumping directly
-     * between frames.
-     */
     const renderVideo = () => {
       if (metadataReady) {
         currentTarget +=
           (
             targetTime -
             currentTarget
-          ) *
-          0.34;
+          ) * 0.34;
 
         if (
           Math.abs(
             video.currentTime -
-            currentTarget
+              currentTarget
           ) > 0.012
         ) {
           try {
             video.currentTime =
               currentTarget;
           } catch {
-            // Browser may briefly
-            // reject seeking while
-            // initializing.
+            // Browser may briefly reject seeking while initializing.
           }
         }
       }
@@ -283,12 +409,6 @@ export default function CinematicIntro() {
     };
 
     const metadataLoaded = () => {
-      if (metadataInitialized) {
-        return;
-      }
-
-      metadataInitialized = true;
-
       duration =
         video.duration || 10;
 
@@ -299,8 +419,7 @@ export default function CinematicIntro() {
       try {
         video.currentTime = 0.01;
       } catch {
-        // Ignore initial seek
-        // errors.
+        // Ignore initial seek errors.
       }
 
       window.setTimeout(
@@ -335,22 +454,16 @@ export default function CinematicIntro() {
       metadataLoaded();
     }
 
-    /*
-     * Loader fallback in case a
-     * browser delays the video
-     * readiness event.
-     */
     const loaderFallback =
-      window.setTimeout(() => {
-        loader.classList.add(
-          "done"
-        );
-      }, 3500);
+      window.setTimeout(
+        () => {
+          loader.classList.add(
+            "done"
+          );
+        },
+        3500
+      );
 
-    /*
-     * Used by the bridge section
-     * below the cinematic.
-     */
     const revealObserver =
       new IntersectionObserver(
         (entries) => {
@@ -430,14 +543,10 @@ export default function CinematicIntro() {
 
   return (
     <div ref={rootRef}>
-      {/* Page progress */}
-
       <div
         ref={pageProgressRef}
         className="pageProgress"
       />
-
-      {/* Video loader */}
 
       <div
         ref={loaderRef}
@@ -451,10 +560,6 @@ export default function CinematicIntro() {
           </div>
         </div>
       </div>
-
-      {/* ==================================================
-          CINEMATIC INTRO
-          ================================================== */}
 
       <section
         ref={cinematicRef}
@@ -477,8 +582,6 @@ export default function CinematicIntro() {
 
           <div className="noise" />
 
-          {/* INTRO */}
-
           <div
             ref={heroCopyRef}
             className="heroCopy"
@@ -492,9 +595,7 @@ export default function CinematicIntro() {
               FOLLOW
               <br />
               THE{" "}
-              <span>
-                ENERGY.
-              </span>
+              <span>ENERGY.</span>
             </h1>
 
             <p>
@@ -506,15 +607,10 @@ export default function CinematicIntro() {
             </p>
           </div>
 
-          {/* ==================================================
-              01 — SUN / SOLAR PANELS
-              Approx. 0.5s – 2.1s
-              ================================================== */}
-
           <div
             className="sceneCopy"
-            data-start=".05"
-            data-end=".21"
+            data-start=".09"
+            data-end=".27"
           >
             <div className="small">
               01 / Solar generation
@@ -531,21 +627,15 @@ export default function CinematicIntro() {
 
             <p>
               Sunlight reaches the
-              rooftop solar array and
-              becomes clean electrical
-              energy.
+              rooftop array and becomes
+              visible electrical energy.
             </p>
           </div>
 
-          {/* ==================================================
-              02 — ENERGY FLOW
-              Approx. 1.8s – 2.9s
-              ================================================== */}
-
           <div
             className="sceneCopy right"
-            data-start=".18"
-            data-end=".29"
+            data-start=".25"
+            data-end=".44"
           >
             <div className="small">
               02 / Follow the current
@@ -561,92 +651,50 @@ export default function CinematicIntro() {
             </h2>
 
             <p>
-              Follow the solar current
-              as energy leaves the
-              rooftop panels and moves
-              toward the system&apos;s
-              power electronics.
+              The camera follows the
+              glowing DC path from the
+              panels toward the power
+              electronics.
             </p>
           </div>
 
-          {/* ==================================================
-              03 — INVERTER
-              Approx. 2.2s – 3.5s
-              ================================================== */}
-
           <div
             className="sceneCopy"
-            data-start=".22"
-            data-end=".35"
+            data-start=".42"
+            data-end=".62"
           >
             <div className="small">
-              03 / Convert the current
+              03 / Convert &amp; store
             </div>
 
             <h2>
-              MEET THE
+              <span className="gold">
+                DC
+              </span>{" "}
+              BECOMES
               <br />
 
               <span className="blue">
-                INVERTER.
+                USABLE POWER.
               </span>
             </h2>
 
             <p>
-              The inverter converts
-              solar DC electricity into
-              usable AC power for the
-              building and intelligently
-              manages energy throughout
-              the system.
+              The inverter transforms
+              the current. The visual
+              language shifts from warm
+              solar gold to electric
+              blue.
             </p>
           </div>
-
-          {/* ==================================================
-              04 — BATTERY
-              Approx. 3.4s – 5.1s
-              ================================================== */}
 
           <div
             className="sceneCopy right"
-            data-start=".34"
-            data-end=".51"
+            data-start=".59"
+            data-end=".79"
           >
             <div className="small">
-              04 / Store the energy
-            </div>
-
-            <h2>
-              SAVE POWER
-              <br />
-
-              <span className="green">
-                FOR LATER.
-              </span>
-            </h2>
-
-            <p>
-              Surplus solar energy can
-              charge the battery so
-              stored power remains
-              available when sunlight
-              drops or backup energy is
-              needed.
-            </p>
-          </div>
-
-          {/* ==================================================
-              05 — HOME
-              Approx. 4.8s – 8.1s
-              ================================================== */}
-
-          <div
-            className="sceneCopy"
-            data-start=".48"
-            data-end=".80"
-          >
-            <div className="small">
-              05 / Into the home
+              04 / Into the home
             </div>
 
             <h2>
@@ -659,27 +707,21 @@ export default function CinematicIntro() {
             </h2>
 
             <p>
-              Electricity flows through
-              the home and powers the
-              everyday loads that keep
-              life moving—from lighting
-              and cooling to appliances
-              and electronics.
+              Electricity moves through
+              the building network and
+              branches toward lights,
+              fans, television and
+              household loads.
             </p>
           </div>
 
-          {/* ==================================================
-              06 — POWERED SYSTEM
-              Approx. 8.2s – 10.08s
-              ================================================== */}
-
           <div
-            className="sceneCopy right"
-            data-start=".81"
-            data-end=".995"
+            className="sceneCopy"
+            data-start=".77"
+            data-end=".98"
           >
             <div className="small">
-              06 / Complete system
+              05 / Complete system
             </div>
 
             <h2>
@@ -692,16 +734,13 @@ export default function CinematicIntro() {
             </h2>
 
             <p>
-              Solar generation,
-              intelligent conversion,
-              battery storage and
-              everyday electrical loads
-              work together as one
-              connected energy system.
+              The camera pulls back to
+              reveal a fully powered
+              home—the complete solar
+              story in one connected
+              view.
             </p>
           </div>
-
-          {/* SCROLL INDICATOR */}
 
           <div
             ref={scrollCueRef}
@@ -713,14 +752,10 @@ export default function CinematicIntro() {
             animation
           </div>
 
-          {/* ==================================================
-              RIGHT-SIDE TIMELINE
-              ================================================== */}
-
           <div className="timeline">
             <div
               className="tItem active"
-              data-p=".03"
+              data-p=".08"
             >
               <span>Sun</span>
               <i className="tDot" />
@@ -728,7 +763,7 @@ export default function CinematicIntro() {
 
             <div
               className="tItem"
-              data-p=".10"
+              data-p=".24"
             >
               <span>Panels</span>
               <i className="tDot" />
@@ -736,7 +771,7 @@ export default function CinematicIntro() {
 
             <div
               className="tItem"
-              data-p=".22"
+              data-p=".43"
             >
               <span>Inverter</span>
               <i className="tDot" />
@@ -744,7 +779,7 @@ export default function CinematicIntro() {
 
             <div
               className="tItem"
-              data-p=".34"
+              data-p=".60"
             >
               <span>Battery</span>
               <i className="tDot" />
@@ -752,7 +787,7 @@ export default function CinematicIntro() {
 
             <div
               className="tItem"
-              data-p=".48"
+              data-p=".77"
             >
               <span>Home</span>
               <i className="tDot" />
@@ -760,7 +795,7 @@ export default function CinematicIntro() {
 
             <div
               className="tItem"
-              data-p=".81"
+              data-p=".94"
             >
               <span>Powered</span>
               <i className="tDot" />
@@ -780,10 +815,6 @@ export default function CinematicIntro() {
         </div>
       </section>
 
-      {/* ==================================================
-          TRANSITION / BRIDGE
-          ================================================== */}
-
       <section className="bridge">
         <div className="reveal">
           <div className="bridgeEyebrow">
@@ -800,14 +831,13 @@ export default function CinematicIntro() {
           </h2>
 
           <p>
-            The journey begins with
-            sunlight and continues
-            through generation,
-            conversion, storage and
-            everyday use. Now explore
-            the solar solutions behind
-            that complete energy
-            ecosystem.
+            The cinematic introduction
+            explains the energy journey.
+            From here, the website
+            becomes a clear path into
+            Desh Solar&apos;s solutions,
+            projects and engineering
+            services.
           </p>
 
           <div className="flowRow">
