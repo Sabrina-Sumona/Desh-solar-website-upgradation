@@ -89,8 +89,6 @@ export default function MiniSystemBuilder() {
       <div className="miniSystemBuilderGlow" />
 
       <div className="miniSystemBuilderInner">
-        {/* HEADER */}
-
         <div className="miniSystemBuilderHeader">
           <div>
             <div className="miniSystemBuilderEyebrow">
@@ -112,12 +110,8 @@ export default function MiniSystemBuilder() {
           </p>
         </div>
 
-        {/* MAIN BUILDER */}
-
         <div className="miniBuilderSteps">
-          {/* PROPERTY TYPE */}
-
-          <div className="miniBuilderStep">
+          <div className="miniBuilderStep miniBuilderPropertyStep">
             <div className="miniBuilderStepHeader">
               <span>
                 01
@@ -169,9 +163,7 @@ export default function MiniSystemBuilder() {
             </div>
           </div>
 
-          {/* SYSTEM TYPE */}
-
-          <div className="miniBuilderStep">
+          <div className="miniBuilderStep miniBuilderSystemStep">
             <div className="miniBuilderStepHeader">
               <span>
                 02
@@ -228,8 +220,6 @@ export default function MiniSystemBuilder() {
               )}
             </div>
           </div>
-
-          {/* NEXT STEP */}
 
           <div className="miniBuilderStep miniBuilderContinueStep">
             <div className="miniBuilderStepHeader">
