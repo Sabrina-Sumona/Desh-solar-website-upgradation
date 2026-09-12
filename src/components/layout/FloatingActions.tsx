@@ -1,11 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 export default function FloatingActions() {
   const [showBackToTop, setShowBackToTop] =
     useState(false);
+
+  const animationFrameRef =
+    useRef<number | null>(null);
 
   useEffect(() => {
     const updateVisibility = () => {
@@ -29,6 +36,14 @@ export default function FloatingActions() {
         "scroll",
         updateVisibility
       );
+
+      if (
+        animationFrameRef.current !== null
+      ) {
+        cancelAnimationFrame(
+          animationFrameRef.current
+        );
+      }
     };
   }, []);
 
@@ -38,13 +53,156 @@ export default function FloatingActions() {
         "(prefers-reduced-motion: reduce)"
       ).matches;
 
-    window.scrollTo({
-      top: 0,
-      behavior:
-        reduceMotion
-          ? "auto"
-          : "smooth",
-    });
+    const html =
+      document.documentElement;
+
+    const body =
+      document.body;
+
+    const previousHtmlScrollBehavior =
+      html.style.scrollBehavior;
+
+    const previousBodyScrollBehavior =
+      body.style.scrollBehavior;
+
+    /*
+     * Disable the global CSS smooth scrolling
+     * temporarily because we are controlling
+     * the animation ourselves.
+     */
+    html.style.scrollBehavior = "auto";
+    body.style.scrollBehavior = "auto";
+
+    if (
+      animationFrameRef.current !== null
+    ) {
+      cancelAnimationFrame(
+        animationFrameRef.current
+      );
+
+      animationFrameRef.current = null;
+    }
+
+    if (reduceMotion) {
+      window.scrollTo(0, 0);
+
+      html.style.scrollBehavior =
+        previousHtmlScrollBehavior;
+
+      body.style.scrollBehavior =
+        previousBodyScrollBehavior;
+
+      return;
+    }
+
+    const startPosition =
+      window.scrollY;
+
+    if (startPosition <= 0) {
+      window.scrollTo(0, 0);
+
+      html.style.scrollBehavior =
+        previousHtmlScrollBehavior;
+
+      body.style.scrollBehavior =
+        previousBodyScrollBehavior;
+
+      return;
+    }
+
+    const startTime =
+      performance.now();
+
+    /*
+     * Smooth but not too slow.
+     * Long pages still reach the top quickly.
+     */
+    const duration = Math.min(
+      1000,
+      Math.max(
+        650,
+        startPosition * 0.12
+      )
+    );
+
+    /*
+     * Smooth ease-in-out curve.
+     */
+    const easeInOutCubic = (
+      progress: number
+    ) => {
+      return progress < 0.5
+        ? 4 *
+            progress *
+            progress *
+            progress
+        : 1 -
+            Math.pow(
+              -2 * progress + 2,
+              3
+            ) /
+              2;
+    };
+
+    const animateScroll = (
+      currentTime: number
+    ) => {
+      const elapsed =
+        currentTime - startTime;
+
+      const progress = Math.min(
+        elapsed / duration,
+        1
+      );
+
+      const easedProgress =
+        easeInOutCubic(progress);
+
+      const nextPosition =
+        startPosition *
+        (1 - easedProgress);
+
+      window.scrollTo(
+        0,
+        nextPosition
+      );
+
+      if (progress < 1) {
+        animationFrameRef.current =
+          requestAnimationFrame(
+            animateScroll
+          );
+
+        return;
+      }
+
+      /*
+       * Final position is exactly 0.
+       * There is no visible snap because
+       * the animation already reached 0.
+       */
+      window.scrollTo(0, 0);
+
+      animationFrameRef.current =
+        null;
+
+      /*
+       * Restore the original CSS behavior
+       * after the scroll is completely done.
+       */
+      requestAnimationFrame(() => {
+        html.style.scrollBehavior =
+          previousHtmlScrollBehavior;
+
+        body.style.scrollBehavior =
+          previousBodyScrollBehavior;
+      });
+    };
+
+    animationFrameRef.current =
+      requestAnimationFrame(
+        animateScroll
+      );
   };
 
   return (
