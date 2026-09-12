@@ -78,6 +78,13 @@
   width: 100%;
   overflow: hidden;
 
+  cursor: grab;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  touch-action: pan-y;
+
   -webkit-mask-image:
     linear-gradient(
       90deg,
@@ -97,24 +104,20 @@
     );
 }
 
-.brandMarqueeTrack {
-  display: flex;
-
-  width: max-content;
-
-  will-change: transform;
-
-  animation:
-    brandMarqueeMove
-    34s linear
-    infinite;
+.brandMarqueeViewport.isDragging {
+  cursor: grabbing;
 }
 
-.brandMarqueeViewport:hover
-.brandMarqueeTrack,
-.brandMarqueeViewport:focus-within
+.brandMarqueeViewport.isDragging * {
+  cursor: grabbing !important;
+}
+
 .brandMarqueeTrack {
-  animation-play-state: paused;
+  display: flex;
+  width: max-content;
+
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .brandMarqueeGroup {
@@ -124,14 +127,12 @@
   flex: 0 0 auto;
 
   gap: 12px;
-
   padding-right: 12px;
 }
 
 /* =========================================================
    TRANSPARENT LOGO AREA
    No card/background/border around individual logos.
-   Every brand uses the same visual slot.
    ========================================================= */
 
 .brandMarqueeLogo {
@@ -147,12 +148,10 @@
   flex: 0 0 auto;
 
   padding: 0;
-
   border: 0;
   border-radius: 0;
 
   background: transparent;
-
   box-shadow: none;
 
   overflow: visible;
@@ -168,7 +167,6 @@
 
 .brandMarqueeLogo:hover {
   transform: translateY(-2px);
-
   opacity: 0.92;
 
   border: 0;
@@ -176,14 +174,14 @@
   box-shadow: none;
 }
 
+.brandMarqueeViewport.isDragging
+.brandMarqueeLogo:hover {
+  transform: none;
+  opacity: 1;
+}
+
 /* =========================================================
    LOGO IMAGE
-   Equal display box for every logo.
-
-   Different company logos naturally have different aspect
-   ratios, so forcing identical width AND height would distort
-   the original artwork. Instead, every logo occupies the same
-   160 × 46 px display area with object-fit: contain.
    ========================================================= */
 
 .brandMarqueeLogoImage {
@@ -201,15 +199,17 @@
   object-fit: contain;
   object-position: center;
 
-  filter: none;
+  pointer-events: none;
 
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+
+  filter: none;
   transform: none;
 }
 
-/*
- * Override the previous per-brand sizing classes.
- * All logos now use exactly the same display box.
- */
+/* Same display box for all logos */
 
 .brandLogoHuawei,
 .brandLogoCrown,
@@ -231,20 +231,6 @@
 }
 
 /* =========================================================
-   CONTINUOUS MOVEMENT
-   ========================================================= */
-
-@keyframes brandMarqueeMove {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-/* =========================================================
    TABLET
    ========================================================= */
 
@@ -256,8 +242,6 @@
   .brandMarqueeLogo {
     width: 170px;
     height: 58px;
-
-    padding: 0;
   }
 
   .brandMarqueeLogoImage,
@@ -292,7 +276,6 @@
 
   .brandMarqueeTop {
     width: 90vw;
-
     margin-bottom: 17px;
   }
 
@@ -302,7 +285,6 @@
 
   .brandMarqueeEyebrow {
     font-size: 8px;
-
     letter-spacing: 0.15em;
   }
 
@@ -326,23 +308,14 @@
       );
   }
 
-  .brandMarqueeTrack {
-    animation-duration: 27s;
-  }
-
   .brandMarqueeGroup {
     gap: 9px;
-
     padding-right: 9px;
   }
 
   .brandMarqueeLogo {
     width: 148px;
     height: 54px;
-
-    padding: 0;
-
-    border-radius: 0;
   }
 
   .brandMarqueeLogoImage,
@@ -371,21 +344,7 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .brandMarqueeTrack {
-    animation: none;
-  }
-
-  .brandMarqueeViewport {
-    overflow-x: auto;
-
-    -webkit-mask-image: none;
-    mask-image: none;
-
-    scrollbar-width: thin;
-  }
-
-  .brandMarqueeLogo,
-  .brandMarqueeLogo::after {
+  .brandMarqueeLogo {
     transition: none;
   }
 }
