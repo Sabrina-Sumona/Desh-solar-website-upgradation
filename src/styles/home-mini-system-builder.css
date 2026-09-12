@@ -69,11 +69,9 @@
 .miniSystemBuilderHeader {
   display: flex;
 
-  align-items:
-    flex-end;
+  align-items: flex-end;
 
-  justify-content:
-    space-between;
+  justify-content: space-between;
 
   gap: 60px;
 
@@ -142,11 +140,19 @@
       minmax(0, 1fr)
     );
 
+  align-items: stretch;
+
   gap: 10px;
 }
 
 .miniBuilderStep {
+  display: flex;
+
+  flex-direction: column;
+
   min-width: 0;
+
+  min-height: 198px;
 
   padding: 17px;
 
@@ -177,6 +183,10 @@
 
   align-items: center;
 
+  flex: 0 0 auto;
+
+  min-height: 34px;
+
   gap: 10px;
 
   margin-bottom: 14px;
@@ -187,6 +197,7 @@
   height: 30px;
 
   display: grid;
+
   place-items: center;
 
   flex: 0 0 auto;
@@ -248,23 +259,6 @@
   gap: 6px;
 }
 
-.miniBuilderPropertyOptions {
-  grid-template-columns:
-    repeat(
-      3,
-      minmax(0, 1fr)
-    );
-}
-
-.miniBuilderGoalOptions,
-.miniBuilderBackupOptions {
-  grid-template-columns:
-    repeat(
-      5,
-      minmax(0, 1fr)
-    );
-}
-
 .miniBuilderOption {
   min-width: 0;
 
@@ -300,12 +294,12 @@
     border-color 0.2s ease,
     background 0.2s ease,
     color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .miniBuilderOption:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
   border-color:
     rgba(145, 239, 91, 0.28);
@@ -337,11 +331,27 @@
 }
 
 .miniBuilderOption:disabled {
-  opacity: 0.34;
+  opacity: 0.28;
 
   cursor: not-allowed;
 
   transform: none;
+
+  box-shadow: none;
+}
+
+.miniBuilderOption:disabled:hover {
+  transform: none;
+
+  border-color:
+    rgba(255, 255, 255, 0.08);
+
+  color: #b5c5cb;
+
+  background:
+    rgba(255, 255, 255, 0.018);
+
+  box-shadow: none;
 }
 
 .miniBuilderOption > span {
@@ -364,11 +374,130 @@
 }
 
 .miniBuilderOption.active strong {
-  color: #f5ffeF;
+  color: #f5ffef;
+}
+
+/* =========================================================
+   PROPERTY OPTIONS
+   ========================================================= */
+
+.miniBuilderPropertyOptions {
+  flex: 1;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  grid-template-rows:
+    repeat(
+      2,
+      minmax(58px, 1fr)
+    );
+}
+
+.miniBuilderPropertyOptions
+  .miniBuilderOption {
+  height: 100%;
+}
+
+/* =========================================================
+   SYSTEM TYPE OPTIONS
+   ========================================================= */
+
+.miniBuilderSystemOptions {
+  flex: 1;
+
+  grid-template-columns:
+    repeat(
+      3,
+      minmax(0, 1fr)
+    );
+
+  align-items: stretch;
+}
+
+.miniBuilderSystemOption {
+  height: 100%;
+
+  min-height: 118px;
+
+  gap: 8px;
+
+  padding:
+    15px 10px;
+}
+
+.miniBuilderSystemOption > span {
+  font-size: 21px;
+}
+
+.miniBuilderSystemOption strong {
+  font-size: 10px;
+}
+
+.miniBuilderSystemOption small {
+  display: block;
+
+  margin-top: 1px;
+
+  color: #8198a2;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  line-height: 1.35;
+
+  text-align: center;
+
+  transition:
+    color 0.2s ease;
+}
+
+.miniBuilderSystemOption:hover small {
+  color: #a9bbc3;
+}
+
+.miniBuilderSystemOption.active small {
+  color: #b9cea9;
+}
+
+/* =========================================================
+   BACKUP OPTIONS
+   ========================================================= */
+
+.miniBuilderBackupOptions {
+  grid-template-columns:
+    repeat(
+      5,
+      minmax(0, 1fr)
+    );
 }
 
 .miniBuilderTextOption {
-  min-height: 46px;
+  min-height: 58px;
+}
+
+.miniBuilderBackupHint {
+  display: flex;
+
+  align-items: center;
+
+  flex: 1;
+
+  min-height: 42px;
+
+  margin:
+    8px 2px
+    0;
+
+  color: #8198a2;
+
+  font-size: 8px;
+  font-weight: 500;
+
+  line-height: 1.5;
 }
 
 /* =========================================================
@@ -386,7 +515,7 @@
 
   gap: 30px;
 
-  margin-top: 10px;
+  margin-top: 12px;
 
   padding:
     15px 17px;
@@ -408,6 +537,10 @@
 /* =========================================================
    SELECTED SUMMARY
    ========================================================= */
+
+.miniBuilderSelection {
+  min-width: 0;
+}
 
 .miniBuilderSelection small {
   display: block;
@@ -477,10 +610,14 @@
 
   align-items: center;
 
+  justify-self: end;
+
   gap: 18px;
 }
 
 .miniBuilderAction p {
+  width: 280px;
+
   max-width: 280px;
 
   margin: 0;
@@ -511,7 +648,7 @@
 
   border-radius: 999px;
 
-  color: #f3ffeD;
+  color: #f3ffed;
 
   background:
     rgba(145, 239, 91, 0.065);
@@ -533,8 +670,7 @@
 }
 
 .miniBuilderContinue:hover {
-  transform:
-    translateY(-2px);
+  transform: translateY(-2px);
 
   border-color:
     rgba(145, 239, 91, 0.72);
@@ -554,7 +690,7 @@
 }
 
 /* =========================================================
-   LAPTOP
+   LAPTOP / STACKED CARDS
    ========================================================= */
 
 @media (max-width: 1200px) {
@@ -563,12 +699,41 @@
       1fr;
   }
 
+  .miniBuilderStep {
+    min-height: auto;
+  }
+
   .miniBuilderPropertyOptions {
     grid-template-columns:
       repeat(
         6,
-        1fr
+        minmax(0, 1fr)
       );
+
+    grid-template-rows: none;
+  }
+
+  .miniBuilderPropertyOptions
+    .miniBuilderOption {
+    height: auto;
+  }
+
+  .miniBuilderSystemOptions {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+
+  .miniBuilderSystemOption {
+    min-height: 72px;
+
+    height: auto;
+  }
+
+  .miniBuilderBackupHint {
+    min-height: 0;
   }
 }
 
@@ -593,8 +758,16 @@
   }
 
   .miniBuilderAction {
+    justify-self: stretch;
+
     justify-content:
       space-between;
+  }
+
+  .miniBuilderAction p {
+    width: auto;
+
+    max-width: 350px;
   }
 }
 
@@ -626,16 +799,23 @@
     grid-template-columns:
       repeat(
         2,
-        1fr
+        minmax(0, 1fr)
       );
   }
 
-  .miniBuilderGoalOptions,
+  .miniBuilderSystemOptions {
+    grid-template-columns:
+      repeat(
+        3,
+        minmax(0, 1fr)
+      );
+  }
+
   .miniBuilderBackupOptions {
     grid-template-columns:
       repeat(
         2,
-        1fr
+        minmax(0, 1fr)
       );
   }
 
@@ -651,6 +831,31 @@
     font-size: 10px;
   }
 
+  .miniBuilderSystemOption {
+    min-height: 72px;
+
+    height: auto;
+
+    padding:
+      9px 5px;
+  }
+
+  .miniBuilderSystemOption > span {
+    font-size: 18px;
+  }
+
+  .miniBuilderSystemOption strong {
+    font-size: 9px;
+  }
+
+  .miniBuilderSystemOption small {
+    font-size: 6.5px;
+  }
+
+  .miniBuilderBackupHint {
+    font-size: 8px;
+  }
+
   .miniBuilderSelection small {
     font-size: 8px;
   }
@@ -664,6 +869,8 @@
   }
 
   .miniBuilderAction p {
+    width: auto;
+
     max-width: 100%;
 
     margin-bottom: 12px;
@@ -686,8 +893,22 @@
    ========================================================= */
 
 @media (max-width: 420px) {
-  .miniBuilderPropertyOptions,
-  .miniBuilderGoalOptions,
+  .miniBuilderPropertyOptions {
+    grid-template-columns:
+      1fr;
+  }
+
+  .miniBuilderSystemOptions {
+    grid-template-columns:
+      1fr;
+  }
+
+  .miniBuilderSystemOption {
+    min-height: 58px;
+
+    height: auto;
+  }
+
   .miniBuilderBackupOptions {
     grid-template-columns:
       1fr;

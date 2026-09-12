@@ -11,12 +11,10 @@ type PropertyType =
   | "filling-station"
   | "other";
 
-type GoalType =
-  | "reduce-cost"
-  | "backup"
-  | "solar-backup"
-  | "maximize-solar"
-  | "off-grid";
+type SystemType =
+  | "on-grid"
+  | "off-grid"
+  | "hybrid";
 
 type BackupType =
   | "none"
@@ -58,31 +56,24 @@ const PROPERTY_OPTIONS = [
   },
 ];
 
-const GOAL_OPTIONS = [
+const SYSTEM_OPTIONS = [
   {
-    value: "reduce-cost" as GoalType,
-    label: "Cost Saving",
-    icon: "↓",
+    value: "on-grid" as SystemType,
+    label: "On-Grid",
+    description: "Bill saving",
+    icon: "↔",
   },
   {
-    value: "backup" as GoalType,
-    label: "Backup",
-    icon: "▣",
-  },
-  {
-    value: "solar-backup" as GoalType,
-    label: "Solar + Backup",
-    icon: "↯",
-  },
-  {
-    value: "maximize-solar" as GoalType,
-    label: "Max Solar",
-    icon: "☀",
-  },
-  {
-    value: "off-grid" as GoalType,
+    value: "off-grid" as SystemType,
     label: "Off-Grid",
+    description: "Independent power",
     icon: "◎",
+  },
+  {
+    value: "hybrid" as SystemType,
+    label: "Hybrid",
+    description: "Solar + backup",
+    icon: "⚡",
   },
 ];
 
@@ -113,8 +104,8 @@ export default function MiniSystemBuilder() {
   const [property, setProperty] =
     useState<PropertyType>("home");
 
-  const [goal, setGoal] =
-    useState<GoalType>("solar-backup");
+  const [systemType, setSystemType] =
+    useState<SystemType>("hybrid");
 
   const [backup, setBackup] =
     useState<BackupType>("essential");
@@ -124,34 +115,68 @@ export default function MiniSystemBuilder() {
       (item) => item.value === property
     ) ?? PROPERTY_OPTIONS[0];
 
-  const selectedGoal =
-    GOAL_OPTIONS.find(
-      (item) => item.value === goal
-    ) ?? GOAL_OPTIONS[2];
+  const selectedSystem =
+    SYSTEM_OPTIONS.find(
+      (item) => item.value === systemType
+    ) ?? SYSTEM_OPTIONS[2];
 
   const selectedBackup =
     BACKUP_OPTIONS.find(
       (item) => item.value === backup
     ) ?? BACKUP_OPTIONS[1];
 
-  function handleGoalSelect(
-    nextGoal: GoalType
+  function handleSystemSelect(
+    nextSystem: SystemType
   ) {
-    setGoal(nextGoal);
+    setSystemType(nextSystem);
 
+    /*
+     * Standard on-grid systems do not use
+     * battery backup.
+     */
+    if (nextSystem === "on-grid") {
+      setBackup("none");
+      return;
+    }
+
+    /*
+     * Off-grid and hybrid systems require
+     * battery/storage planning.
+     *
+     * If the previous selection was "None",
+     * move to Essential as the starting point.
+     */
     if (
-      nextGoal === "off-grid" &&
-      backup === "none"
+      nextSystem === "off-grid" ||
+      nextSystem === "hybrid"
     ) {
-      setBackup("extended");
+      if (backup === "none") {
+        setBackup("essential");
+      }
     }
   }
 
   function handleBackupSelect(
     nextBackup: BackupType
   ) {
+    /*
+     * On-grid:
+     * backup is not part of this system type.
+     */
+    if (systemType === "on-grid") {
+      if (nextBackup !== "none") {
+        return;
+      }
+    }
+
+    /*
+     * Off-grid and hybrid:
+     * battery backup is part of the system,
+     * so "None" is not available.
+     */
     if (
-      goal === "off-grid" &&
+      (systemType === "off-grid" ||
+        systemType === "hybrid") &&
       nextBackup === "none"
     ) {
       return;
@@ -160,9 +185,16 @@ export default function MiniSystemBuilder() {
     setBackup(nextBackup);
   }
 
+  const backupHint =
+    systemType === "on-grid"
+      ? "On-grid systems focus on bill saving and normally do not provide battery backup during a grid outage."
+      : systemType === "off-grid"
+        ? "Off-grid systems operate independently from the utility grid and require battery storage."
+        : "Hybrid systems combine solar, battery storage and grid support for savings plus backup.";
+
   const builderHref =
     `/build-your-system?property=${property}` +
-    `&goal=${goal}` +
+    `&systemType=${systemType}` +
     `&backup=${backup}`;
 
   return (
@@ -253,7 +285,7 @@ export default function MiniSystemBuilder() {
             </div>
           </div>
 
-          {/* GOAL */}
+          {/* SYSTEM TYPE */}
 
           <div className="miniBuilderStep">
             <div className="miniBuilderStepHeader">
@@ -263,34 +295,34 @@ export default function MiniSystemBuilder() {
 
               <div>
                 <small>
-                  GOAL
+                  SYSTEM
                 </small>
 
                 <strong>
-                  Energy goal
+                  System type
                 </strong>
               </div>
             </div>
 
-            <div className="miniBuilderOptions miniBuilderGoalOptions">
-              {GOAL_OPTIONS.map(
+            <div className="miniBuilderOptions miniBuilderSystemOptions">
+              {SYSTEM_OPTIONS.map(
                 (option) => (
                   <button
                     key={option.value}
                     type="button"
-                    className={`miniBuilderOption ${
-                      goal ===
+                    className={`miniBuilderOption miniBuilderSystemOption ${
+                      systemType ===
                       option.value
                         ? "active"
                         : ""
                     }`}
                     onClick={() =>
-                      handleGoalSelect(
+                      handleSystemSelect(
                         option.value
                       )
                     }
                     aria-pressed={
-                      goal ===
+                      systemType ===
                       option.value
                     }
                   >
@@ -301,6 +333,12 @@ export default function MiniSystemBuilder() {
                     <strong>
                       {option.label}
                     </strong>
+
+                    <small>
+                      {
+                        option.description
+                      }
+                    </small>
                   </button>
                 )
               )}
@@ -330,16 +368,16 @@ export default function MiniSystemBuilder() {
               {BACKUP_OPTIONS.map(
                 (option) => {
                   const disabled =
-                    goal ===
-                      "off-grid" &&
-                    option.value ===
-                      "none";
+                    systemType ===
+                    "on-grid"
+                      ? option.value !==
+                        "none"
+                      : option.value ===
+                        "none";
 
                   return (
                     <button
-                      key={
-                        option.value
-                      }
+                      key={option.value}
                       type="button"
                       disabled={
                         disabled
@@ -370,6 +408,10 @@ export default function MiniSystemBuilder() {
                 }
               )}
             </div>
+
+            <p className="miniBuilderBackupHint">
+              {backupHint}
+            </p>
           </div>
         </div>
 
@@ -394,7 +436,7 @@ export default function MiniSystemBuilder() {
 
               <span>
                 {
-                  selectedGoal.label
+                  selectedSystem.label
                 }
               </span>
 
