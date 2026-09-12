@@ -157,6 +157,7 @@ function getSimulation(
 
     if (remaining > 0.05) {
       grid = -remaining;
+
       flowStates.push(
         "grid-export"
       );
@@ -183,6 +184,7 @@ function getSimulation(
 
     if (remaining > 0.05) {
       grid = remaining;
+
       flowStates.push(
         "grid-import"
       );
@@ -297,6 +299,7 @@ function formatTime(value: number) {
   const hour24 = Math.floor(
     normalizedMinutes / 60
   );
+
   const minute =
     normalizedMinutes % 60;
 
@@ -464,6 +467,7 @@ export default function LiveEnergyStory() {
                     offset="0%"
                     stopColor="#17313c"
                   />
+
                   <stop
                     offset="100%"
                     stopColor="#0b1c24"
@@ -481,6 +485,7 @@ export default function LiveEnergyStory() {
                     offset="0%"
                     stopColor="#173140"
                   />
+
                   <stop
                     offset="100%"
                     stopColor="#0a1820"
@@ -498,6 +503,7 @@ export default function LiveEnergyStory() {
                     offset="0%"
                     stopColor="#255273"
                   />
+
                   <stop
                     offset="100%"
                     stopColor="#102b3d"
@@ -515,8 +521,10 @@ export default function LiveEnergyStory() {
                     stdDeviation="7"
                     result="blur"
                   />
+
                   <feMerge>
                     <feMergeNode in="blur" />
+
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
@@ -532,8 +540,10 @@ export default function LiveEnergyStory() {
                     stdDeviation="4"
                     result="blur"
                   />
+
                   <feMerge>
                     <feMergeNode in="blur" />
+
                     <feMergeNode in="SourceGraphic" />
                   </feMerge>
                 </filter>
@@ -553,6 +563,7 @@ export default function LiveEnergyStory() {
                     height="90"
                     fill="white"
                   />
+
                   <circle
                     cx="730"
                     cy="76"
@@ -581,16 +592,14 @@ export default function LiveEnergyStory() {
                     />
                   </>
                 ) : (
-                  <>
-                    <circle
-                      cx="720"
-                      cy="85"
-                      r="24"
-                      className="liveMoon"
-                      filter="url(#softGlow)"
-                      mask="url(#liveMoonMask)"
-                    />
-                  </>
+                  <circle
+                    cx="720"
+                    cy="85"
+                    r="24"
+                    className="liveMoon"
+                    filter="url(#softGlow)"
+                    mask="url(#liveMoonMask)"
+                  />
                 )}
               </g>
 
@@ -610,26 +619,31 @@ export default function LiveEnergyStory() {
                   cy="80"
                   r="1.8"
                 />
+
                 <circle
                   cx="180"
                   cy="55"
                   r="1.2"
                 />
+
                 <circle
                   cx="630"
                   cy="90"
                   r="1.5"
                 />
+
                 <circle
                   cx="790"
                   cy="145"
                   r="1.4"
                 />
+
                 <circle
                   cx="345"
                   cy="90"
                   r="1.3"
                 />
+
                 <circle
                   cx="550"
                   cy="50"
@@ -642,13 +656,9 @@ export default function LiveEnergyStory() {
                 className="liveGround"
               />
 
-              {/* ------------------------------------------
-                  HOUSE
-                  ------------------------------------------ */}
+              {/* HOUSE */}
 
               <g className="liveHouse">
-                {/* Wider architectural shell for a less compact layout */}
-
                 <path
                   d="M185 285 L450 125 L715 285 Z"
                   fill="url(#roofGradient)"
@@ -665,8 +675,6 @@ export default function LiveEnergyStory() {
                   className="liveHouseWall"
                 />
 
-                {/* Door */}
-
                 <rect
                   x="430"
                   y="374"
@@ -682,8 +690,6 @@ export default function LiveEnergyStory() {
                   r="3"
                   className="liveDoorHandle"
                 />
-
-                {/* Left window */}
 
                 <g className="liveWindow">
                   <rect
@@ -709,8 +715,6 @@ export default function LiveEnergyStory() {
                   />
                 </g>
 
-                {/* Right window */}
-
                 <g className="liveWindow">
                   <rect
                     x="545"
@@ -734,8 +738,6 @@ export default function LiveEnergyStory() {
                     y2="364"
                   />
                 </g>
-
-                {/* Solar panels — spaced cleanly across the roof */}
 
                 <g className="livePanels">
                   <polygon
@@ -778,12 +780,7 @@ export default function LiveEnergyStory() {
                 </g>
               </g>
 
-              {/* ------------------------------------------
-                  SOLAR PANEL -> INVERTER
-
-                  Routed through the open strip beside the
-                  left window so the architecture remains clear.
-                  ------------------------------------------ */}
+              {/* SOLAR PANEL -> INVERTER */}
 
               <path
                 d="M432 250 C405 279 329 282 262 302 L262 443 C272 450 281 452 292 452"
@@ -794,9 +791,7 @@ export default function LiveEnergyStory() {
                 }`}
               />
 
-              {/* ------------------------------------------
-                  INVERTER — below the left window
-                  ------------------------------------------ */}
+              {/* INVERTER */}
 
               <g
                 className="liveDevice liveInverter"
@@ -832,9 +827,7 @@ export default function LiveEnergyStory() {
                 </text>
               </g>
 
-              {/* ------------------------------------------
-                  LOAD — clear central zone above the door
-                  ------------------------------------------ */}
+              {/* LOAD */}
 
               <g
                 className="liveLoadNode liveLoadNodeMain"
@@ -856,21 +849,14 @@ export default function LiveEnergyStory() {
                 </text>
               </g>
 
-              {/* ------------------------------------------
-                  INVERTER -> LOAD
-
-                  The line uses the vertical clear channel
-                  between the left window and the door.
-                  ------------------------------------------ */}
+              {/* INVERTER -> LOAD */}
 
               <path
                 d="M384 442 L410 442 L410 352 C410 328 428 316 441 316"
                 className="liveFlowLine liveFlowLoad active"
               />
 
-              {/* ------------------------------------------
-                  BATTERY — below/right of the right window
-                  ------------------------------------------ */}
+              {/* BATTERY */}
 
               <g
                 className="liveDevice liveBattery"
@@ -916,12 +902,7 @@ export default function LiveEnergyStory() {
                 </text>
               </g>
 
-              {/* ------------------------------------------
-                  INVERTER <-> BATTERY
-
-                  Routed below the door so neither the door
-                  nor the windows are crossed.
-                  ------------------------------------------ */}
+              {/* INVERTER <-> BATTERY */}
 
               <path
                 d="M384 468 C398 496 410 518 440 520 L590 520 C610 520 620 500 628 492"
@@ -943,9 +924,7 @@ export default function LiveEnergyStory() {
                 }`}
               />
 
-              {/* ------------------------------------------
-                  GRID
-                  ------------------------------------------ */}
+              {/* GRID */}
 
               <g
                 className="liveGridTower"
@@ -1004,12 +983,7 @@ export default function LiveEnergyStory() {
                 />
               </g>
 
-              {/* ------------------------------------------
-                  INVERTER <-> GRID
-
-                  The line stays outside the house and keeps
-                  the lower-left side visually open.
-                  ------------------------------------------ */}
+              {/* INVERTER <-> GRID */}
 
               <path
                 d="M292 458 C252 472 210 467 157 435"
@@ -1031,9 +1005,12 @@ export default function LiveEnergyStory() {
                 }`}
               />
 
+              {/* LABELS */}
+
               <text
-                x="444"
-                y="108"
+                x="425"
+                y="150"
+                textAnchor="middle"
                 className="liveSvgLabel"
               >
                 SOLAR ARRAY
@@ -1087,6 +1064,7 @@ export default function LiveEnergyStory() {
                   <small>
                     SIMULATED TIME
                   </small>
+
                   <strong>
                     {formatTime(hour)}
                   </strong>
@@ -1128,6 +1106,7 @@ export default function LiveEnergyStory() {
 
               <div className="liveEnergyDisclaimer">
                 <span />
+
                 Illustrative energy
                 behavior for explaining
                 system operation.
@@ -1157,6 +1136,7 @@ export default function LiveEnergyStory() {
                 <span>
                   {isDay ? "☀" : "☾"}
                 </span>
+
                 <strong>
                   {formatTime(hour)}
                 </strong>
@@ -1171,14 +1151,20 @@ export default function LiveEnergyStory() {
               <div className="liveEnergyMetric liveEnergyMetricSolar">
                 <div>
                   <span>☀</span>
-                  <small>SOLAR</small>
+
+                  <small>
+                    SOLAR
+                  </small>
                 </div>
 
                 <strong>
                   {simulation.solar.toFixed(
                     1
                   )}
-                  <em>kW</em>
+
+                  <em>
+                    kW
+                  </em>
                 </strong>
 
                 <p>
@@ -1191,14 +1177,20 @@ export default function LiveEnergyStory() {
               <div className="liveEnergyMetric liveEnergyMetricLoad">
                 <div>
                   <span>⌂</span>
-                  <small>LOAD</small>
+
+                  <small>
+                    LOAD
+                  </small>
                 </div>
 
                 <strong>
                   {simulation.load.toFixed(
                     1
                   )}
-                  <em>kW</em>
+
+                  <em>
+                    kW
+                  </em>
                 </strong>
 
                 <p>
@@ -1209,6 +1201,7 @@ export default function LiveEnergyStory() {
               <div className="liveEnergyMetric liveEnergyMetricBattery">
                 <div>
                   <span>▣</span>
+
                   <small>
                     BATTERY
                   </small>
@@ -1218,26 +1211,39 @@ export default function LiveEnergyStory() {
                   {
                     simulation.batterySoc
                   }
-                  <em>%</em>
+
+                  <em>
+                    %
+                  </em>
                 </strong>
 
-                <p>{batteryLabel}</p>
+                <p>
+                  {batteryLabel}
+                </p>
               </div>
 
               <div className="liveEnergyMetric liveEnergyMetricGrid">
                 <div>
                   <span>↔</span>
-                  <small>GRID</small>
+
+                  <small>
+                    GRID
+                  </small>
                 </div>
 
                 <strong>
                   {Math.abs(
                     simulation.grid
                   ).toFixed(1)}
-                  <em>kW</em>
+
+                  <em>
+                    kW
+                  </em>
                 </strong>
 
-                <p>{gridLabel}</p>
+                <p>
+                  {gridLabel}
+                </p>
               </div>
             </div>
 
@@ -1249,20 +1255,29 @@ export default function LiveEnergyStory() {
               <div>
                 {simulation.solar >
                   0 && (
-                  <span>Solar</span>
+                  <span>
+                    Solar
+                  </span>
                 )}
 
                 {simulation.solar >
                   0 && <b>→</b>}
 
-                <span>Inverter</span>
+                <span>
+                  Inverter
+                </span>
 
                 {hasFlow(
                   "battery-charge"
                 ) && (
                   <>
-                    <b>→</b>
-                    <span>Battery</span>
+                    <b>
+                      →
+                    </b>
+
+                    <span>
+                      Battery
+                    </span>
                   </>
                 )}
 
@@ -1270,20 +1285,35 @@ export default function LiveEnergyStory() {
                   "battery-discharge"
                 ) && (
                   <>
-                    <b>←</b>
-                    <span>Battery</span>
+                    <b>
+                      ←
+                    </b>
+
+                    <span>
+                      Battery
+                    </span>
                   </>
                 )}
 
-                <b>→</b>
-                <span>Loads</span>
+                <b>
+                  →
+                </b>
+
+                <span>
+                  Loads
+                </span>
 
                 {hasFlow(
                   "grid-import"
                 ) && (
                   <>
-                    <b>←</b>
-                    <span>Grid</span>
+                    <b>
+                      ←
+                    </b>
+
+                    <span>
+                      Grid
+                    </span>
                   </>
                 )}
 
@@ -1291,8 +1321,13 @@ export default function LiveEnergyStory() {
                   "grid-export"
                 ) && (
                   <>
-                    <b>→</b>
-                    <span>Grid</span>
+                    <b>
+                      →
+                    </b>
+
+                    <span>
+                      Grid
+                    </span>
                   </>
                 )}
               </div>
