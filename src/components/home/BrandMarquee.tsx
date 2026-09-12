@@ -47,7 +47,7 @@ const BRANDS: Brand[] = [
   },
   {
     name: "AIKO",
-    image: "/assets/brand/aiko'.png",
+    image: "/assets/brand/aiko-logo.png",
     logoClassName: "brandLogoAiko",
   },
   {
