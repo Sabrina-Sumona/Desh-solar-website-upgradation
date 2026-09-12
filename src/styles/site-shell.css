@@ -3145,6 +3145,99 @@ span:nth-child(3) {
     rgba(37, 211, 102, 0.18);
 }
 
+
+.socialImo {
+  /*
+   * Match the other footer social buttons with a visible border
+   * while keeping the imo artwork centered and crisp.
+   */
+  overflow:
+    hidden;
+
+  padding:
+    0;
+
+  border:
+    1.5px solid
+    rgba(43, 103, 168, 0.72);
+
+  background:
+    rgba(43, 103, 168, 0.1);
+
+  box-shadow:
+    none;
+}
+
+.socialImo:hover,
+.socialImo:focus-visible {
+  border-color:
+    #2b67a8;
+
+  background:
+    #2b67a8;
+
+  box-shadow:
+    0 0 14px
+    rgba(43, 103, 168, 0.26);
+}
+
+.socialImoLogo {
+  display:
+    block;
+
+  width:
+    28px;
+
+  height:
+    28px;
+
+  max-width:
+    none;
+
+  object-fit:
+    cover;
+
+  border-radius:
+    50%;
+
+  filter:
+    brightness(0.9)
+    saturate(0.95);
+
+  pointer-events:
+    none;
+
+  user-select:
+    none;
+
+  -webkit-user-drag:
+    none;
+
+  transition:
+    filter 0.2s ease;
+}
+
+.socialImo:hover
+.socialImoLogo,
+.socialImo:focus-visible
+.socialImoLogo {
+  filter:
+    brightness(1.12)
+    saturate(1.08);
+}
+
+/*
+ * Keep IMO crisp by avoiding the 1.04 scale used by the SVG
+ * social icons. It still moves upward exactly like the others.
+ */
+.socialLinks a.socialImo:hover,
+.socialLinks a.socialImo:focus,
+.socialLinks a.socialImo:focus-visible,
+.socialLinks a.socialImo:active {
+  transform:
+    translateY(-2px);
+}
+
 .socialLinks a:hover {
   transform:
     translateY(-2px)
