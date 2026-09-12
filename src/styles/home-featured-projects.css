@@ -150,7 +150,7 @@
 }
 
 /* =========================================================
-   AUTO-MOVING VIEWPORT
+   AUTO-MOVING + DRAGGABLE VIEWPORT
    ========================================================= */
 
 .featuredProjectsViewport {
@@ -163,10 +163,17 @@
   padding:
     4px 0 8px;
 
+  cursor: grab;
+
+  user-select: none;
+  -webkit-user-select: none;
+
   /*
-   * Soft edge fade helps the moving cards feel like a
-   * continuous cinematic strip instead of a clipped grid.
+   * Horizontal touch movement belongs to the carousel.
+   * Vertical movement can still scroll the page normally.
    */
+  touch-action: pan-y;
+
   -webkit-mask-image:
     linear-gradient(
       90deg,
@@ -186,24 +193,27 @@
     );
 }
 
+.featuredProjectsViewport.isDragging {
+  cursor: grabbing;
+}
+
+.featuredProjectsViewport.isDragging * {
+  cursor: grabbing !important;
+}
+
 .featuredProjectsTrack {
   display: flex;
 
   width: max-content;
 
+  transform:
+    translate3d(
+      0,
+      0,
+      0
+    );
+
   will-change: transform;
-
-  animation:
-    featuredProjectsMarquee
-    42s linear
-    infinite;
-}
-
-.featuredProjectsViewport:hover
-.featuredProjectsTrack,
-.featuredProjectsViewport:focus-within
-.featuredProjectsTrack {
-  animation-play-state: paused;
 }
 
 .featuredProjectsGroup {
@@ -264,6 +274,11 @@
     0 0 30px rgba(145, 239, 91, 0.04);
 }
 
+.featuredProjectsViewport.isDragging
+.featuredProjectCard:hover {
+  transform: none;
+}
+
 /* =========================================================
    IMAGE
    ========================================================= */
@@ -278,10 +293,19 @@
   overflow: hidden;
 
   background: #081820;
+
+  cursor: inherit;
 }
 
 .featuredProjectImageAsset {
   object-fit: cover;
+
+  pointer-events: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+
+  -webkit-user-drag: none;
 
   transition:
     transform 0.55s ease,
@@ -297,9 +321,19 @@
     saturate(1.04);
 }
 
+.featuredProjectsViewport.isDragging
+.featuredProjectCard:hover
+.featuredProjectImageAsset {
+  transform: none;
+
+  filter: none;
+}
+
 .featuredProjectOverlay {
   position: absolute;
   inset: 0;
+
+  pointer-events: none;
 
   background:
     linear-gradient(
@@ -309,40 +343,13 @@
     );
 }
 
-.featuredProjectNumber {
-  position: absolute;
-
-  top: 17px;
-  left: 17px;
-
-  width: 38px;
-  height: 38px;
-
-  display: grid;
-  place-items: center;
-
-  border:
-    1px solid rgba(255, 255, 255, 0.18);
-
-  border-radius: 50%;
-
-  color: var(--green-2);
-
-  background:
-    rgba(5, 18, 25, 0.72);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  font-size: 10px;
-  font-weight: 900;
-}
-
 .featuredProjectCategory {
   position: absolute;
 
   left: 17px;
   bottom: 16px;
+
+  pointer-events: none;
 
   color: #fff;
 
@@ -363,6 +370,8 @@
 
 .featuredProjectContent {
   padding: 21px 20px 19px;
+
+  cursor: inherit;
 }
 
 .featuredProjectContent h3 {
@@ -411,6 +420,8 @@
 
   font-size: 10px;
   font-weight: 850;
+
+  cursor: pointer;
 
   transition:
     color 0.2s ease;
@@ -505,30 +516,6 @@
 }
 
 /* =========================================================
-   ANIMATION
-   ========================================================= */
-
-@keyframes featuredProjectsMarquee {
-  from {
-    transform:
-      translate3d(
-        0,
-        0,
-        0
-      );
-  }
-
-  to {
-    transform:
-      translate3d(
-        -50%,
-        0,
-        0
-      );
-  }
-}
-
-/* =========================================================
    TABLET
    ========================================================= */
 
@@ -612,10 +599,6 @@
       );
   }
 
-  .featuredProjectsTrack {
-    animation-duration: 34s;
-  }
-
   .featuredProjectsGroup {
     gap: 12px;
 
@@ -648,24 +631,11 @@
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-  .featuredProjectsTrack {
-    animation: none;
-  }
-
   .featuredProjectCard,
   .featuredProjectImageAsset,
   .featuredProjectLink,
   .featuredProjectLink span,
   .featuredProjectsHeaderRight a {
     transition: none;
-  }
-
-  .featuredProjectsViewport {
-    overflow-x: auto;
-
-    -webkit-mask-image: none;
-    mask-image: none;
-
-    scrollbar-width: thin;
   }
 }
