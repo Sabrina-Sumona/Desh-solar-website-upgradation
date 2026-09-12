@@ -81,7 +81,9 @@
 
 .liveEnergyHeader {
   display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(300px, 0.7fr);
   align-items: end;
   gap: 65px;
   margin-bottom: 55px;
@@ -94,7 +96,9 @@
   font-weight: 900;
   letter-spacing: 0.17em;
   text-transform: uppercase;
-  text-shadow: 0 0 10px rgba(145, 239, 91, 0.12);
+  text-shadow:
+    0 0 10px
+    rgba(145, 239, 91, 0.12);
 }
 
 .liveEnergyHeader h2 {
@@ -130,7 +134,9 @@
 
 .liveEnergyExperience {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(390px, 0.65fr);
+  grid-template-columns:
+    minmax(0, 1.35fr)
+    minmax(390px, 0.65fr);
   gap: 20px;
   align-items: stretch;
 }
@@ -144,7 +150,9 @@
   min-height: 735px;
   overflow: hidden;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.075);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
   border-radius: 28px;
   background:
     linear-gradient(
@@ -199,10 +207,13 @@
   align-items: center;
   gap: 7px;
   padding: 8px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   color: #b8c7cd;
-  background: rgba(255, 255, 255, 0.035);
+  background:
+    rgba(255, 255, 255, 0.035);
   font-size: 10px;
   font-weight: 800;
 }
@@ -215,7 +226,9 @@
 
 .liveEnergyPhaseBadge--day span {
   background: #ffd376;
-  box-shadow: 0 0 10px rgba(255, 211, 118, 0.8);
+  box-shadow:
+    0 0 10px
+    rgba(255, 211, 118, 0.8);
 }
 
 .liveEnergyPhaseBadge--twilight span {
@@ -224,7 +237,9 @@
 
 .liveEnergyPhaseBadge--night span {
   background: #72ccff;
-  box-shadow: 0 0 10px rgba(114, 204, 255, 0.65);
+  box-shadow:
+    0 0 10px
+    rgba(114, 204, 255, 0.65);
 }
 
 /* =========================================================
@@ -234,7 +249,10 @@
 .liveEnergySvg {
   position: absolute;
 
-  /* Wider usable canvas gives the house and devices more breathing room. */
+  /*
+   * Wider usable canvas gives the
+   * house and devices more breathing room.
+   */
   inset: 48px 0 172px;
 
   width: 100%;
@@ -260,20 +278,21 @@
   opacity: 0.96;
 }
 
+/*
+ * The crescent uses a transparency mask,
+ * so the actual visual background shows
+ * through the cut-out in every phase.
+ */
 
-/* The crescent uses a transparency mask, so the actual
-   visual background shows through the cut-out in every phase. */
 .liveEnergyStory--twilight .liveMoon {
   fill: #f4e6da;
   opacity: 0.88;
 }
 
-
 .liveEnergyStory--night .liveMoon {
   fill: #dbeeff;
   opacity: 0.98;
 }
-
 
 .liveStars {
   fill: rgba(220, 238, 255, 0.8);
@@ -313,7 +332,11 @@
 
 .liveEnergyStory--night .liveWindow rect {
   fill: rgba(255, 211, 118, 0.32);
-  filter: drop-shadow(0 0 6px rgba(255, 211, 118, 0.16));
+  filter:
+    drop-shadow(
+      0 0 6px
+      rgba(255, 211, 118, 0.16)
+    );
 }
 
 .liveWindow line {
@@ -323,7 +346,11 @@
 .livePanels polygon {
   stroke: rgba(114, 204, 255, 0.58);
   stroke-width: 2;
-  filter: drop-shadow(0 0 5px rgba(89, 189, 255, 0.08));
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(89, 189, 255, 0.08)
+    );
 }
 
 .livePanels line {
@@ -356,13 +383,17 @@
 
 .liveBatteryOutline {
   fill: transparent !important;
-  stroke: rgba(145, 239, 91, 0.42) !important;
+  stroke:
+    rgba(145, 239, 91, 0.42)
+    !important;
 }
 
 .liveBatteryFill {
   fill: var(--green-2) !important;
   opacity: 0.82;
-  transition: y 0.4s ease, height 0.4s ease;
+  transition:
+    y 0.4s ease,
+    height 0.4s ease;
 }
 
 .liveBattery text {
@@ -397,43 +428,69 @@
   stroke-width: 2;
   stroke-linecap: round;
   stroke-dasharray: 8 10;
-  transition: stroke 0.3s ease, opacity 0.3s ease;
+  transition:
+    stroke 0.3s ease,
+    opacity 0.3s ease;
   opacity: 0.45;
 }
 
 .liveFlowLine.active {
   opacity: 1;
-  animation: liveFlowForward 1.15s linear infinite;
+  animation:
+    liveFlowForward
+    1.15s linear infinite;
 }
 
 .liveFlowLine.reverse {
-  animation: liveFlowReverse 1.15s linear infinite;
+  animation:
+    liveFlowReverse
+    1.15s linear infinite;
 }
 
 .liveFlowSolar.active {
   stroke: #ffd376;
-  filter: drop-shadow(0 0 5px rgba(255, 211, 118, 0.5));
+  filter:
+    drop-shadow(
+      0 0 5px
+      rgba(255, 211, 118, 0.5)
+    );
 }
 
 .liveFlowLoad.active {
   stroke: #72ccff;
-  filter: drop-shadow(0 0 4px rgba(114, 204, 255, 0.4));
+  filter:
+    drop-shadow(
+      0 0 4px
+      rgba(114, 204, 255, 0.4)
+    );
 }
 
 .liveFlowBattery.active {
   stroke: var(--green-2);
-  filter: drop-shadow(0 0 4px rgba(200, 255, 125, 0.4));
+  filter:
+    drop-shadow(
+      0 0 4px
+      rgba(200, 255, 125, 0.4)
+    );
 }
 
 .liveFlowGrid.active {
   stroke: #83bfe3;
-  filter: drop-shadow(0 0 4px rgba(131, 191, 227, 0.35));
+  filter:
+    drop-shadow(
+      0 0 4px
+      rgba(131, 191, 227, 0.35)
+    );
 }
 
 .liveLoadNodeMain circle {
   fill: rgba(8, 24, 32, 0.98);
   stroke: rgba(145, 239, 91, 0.3);
-  filter: drop-shadow(0 0 7px rgba(145, 239, 91, 0.08));
+  filter:
+    drop-shadow(
+      0 0 7px
+      rgba(145, 239, 91, 0.08)
+    );
 }
 
 @keyframes liveFlowForward {
@@ -514,7 +571,9 @@
   bottom: 20px;
   z-index: 6;
   padding: 18px 20px 16px;
-  border: 1px solid rgba(255, 255, 255, 0.075);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
   border-radius: 22px;
   background:
     linear-gradient(
@@ -523,8 +582,10 @@
       rgba(6, 20, 28, 0.96)
     );
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.02),
-    0 10px 24px rgba(0, 0, 0, 0.18);
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.02),
+    0 10px 24px
+      rgba(0, 0, 0, 0.18);
 }
 
 .liveEnergyControlTop {
@@ -554,10 +615,13 @@
 
 .liveEnergyControlTop button {
   padding: 8px 11px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   color: #a5b6be;
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    rgba(255, 255, 255, 0.025);
   font-size: 9px;
   font-weight: 700;
   cursor: pointer;
@@ -569,8 +633,10 @@
 
 .liveEnergyControlTop button:hover {
   color: #eef5f7;
-  border-color: rgba(145, 239, 91, 0.3);
-  background: rgba(145, 239, 91, 0.04);
+  border-color:
+    rgba(145, 239, 91, 0.3);
+  background:
+    rgba(145, 239, 91, 0.04);
 }
 
 .liveEnergyControl input[type="range"] {
@@ -590,7 +656,9 @@
     );
 }
 
-.liveEnergyControl input[type="range"]::-webkit-slider-thumb {
+.liveEnergyControl
+  input[type="range"]
+  ::-webkit-slider-thumb {
   width: 20px;
   height: 20px;
   appearance: none;
@@ -598,12 +666,36 @@
   border-radius: 50%;
   background: var(--green-2);
   box-shadow:
-    0 0 0 2px rgba(145, 239, 91, 0.22),
-    0 0 15px rgba(145, 239, 91, 0.28);
+    0 0 0 2px
+      rgba(145, 239, 91, 0.22),
+    0 0 15px
+      rgba(145, 239, 91, 0.28);
   cursor: pointer;
 }
 
-.liveEnergyControl input[type="range"]::-moz-range-thumb {
+/*
+ * Keep this selector separately as WebKit
+ * does not support a space before the pseudo element.
+ */
+
+.liveEnergyControl
+  input[type="range"]::-webkit-slider-thumb {
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  border: 3px solid #071119;
+  border-radius: 50%;
+  background: var(--green-2);
+  box-shadow:
+    0 0 0 2px
+      rgba(145, 239, 91, 0.22),
+    0 0 15px
+      rgba(145, 239, 91, 0.28);
+  cursor: pointer;
+}
+
+.liveEnergyControl
+  input[type="range"]::-moz-range-thumb {
   width: 16px;
   height: 16px;
   border: 3px solid #071119;
@@ -643,7 +735,9 @@
   height: 2px;
   margin-top: 7px;
   background: var(--green-2);
-  box-shadow: 0 0 8px rgba(145, 239, 91, 0.18);
+  box-shadow:
+    0 0 8px
+    rgba(145, 239, 91, 0.18);
 }
 
 /* =========================================================
@@ -654,13 +748,18 @@
   display: flex;
   flex-direction: column;
 
-  /* Vertically center the whole Energy Status content group.
-     Internal text and cards remain left-aligned. */
+  /*
+   * Vertically center the whole Energy Status
+   * content group. Internal content stays
+   * left-aligned.
+   */
   justify-content: center;
 
   min-height: 700px;
   padding: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.075);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
   border-radius: 28px;
   background:
     linear-gradient(
@@ -680,7 +779,8 @@
 .liveEnergyDashboardHeader h3 {
   max-width: 490px;
   margin: 10px 0 0;
-  font-size: clamp(26px, 2vw, 37px);
+  font-size:
+    clamp(26px, 2vw, 37px);
   line-height: 0.96;
   letter-spacing: -0.04em;
 }
@@ -724,9 +824,12 @@
 .liveEnergyMetric {
   min-height: 108px;
   padding: 12px 13px;
-  border: 1px solid rgba(255, 255, 255, 0.075);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
   border-radius: 15px;
-  background: rgba(255, 255, 255, 0.02);
+  background:
+    rgba(255, 255, 255, 0.02);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -794,9 +897,12 @@
 .liveEnergyResult {
   margin-top: 12px;
   padding: 12px 14px;
-  border: 1px solid rgba(145, 239, 91, 0.14);
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.14);
   border-radius: 14px;
-  background: rgba(145, 239, 91, 0.03);
+  background:
+    rgba(145, 239, 91, 0.03);
 }
 
 .liveEnergyResult > small {
@@ -816,10 +922,13 @@
 
 .liveEnergyResult span {
   padding: 5px 8px;
-  border: 1px solid rgba(255, 255, 255, 0.075);
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.075);
   border-radius: 999px;
   color: #e3ecef;
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    rgba(255, 255, 255, 0.025);
   font-size: 10px;
   font-weight: 700;
 }
@@ -874,7 +983,8 @@
   }
 
   .liveEnergyHeader h2 {
-    font-size: clamp(42px, 13vw, 62px);
+    font-size:
+      clamp(42px, 13vw, 62px);
   }
 
   .liveEnergyHeaderCopy p {
@@ -888,8 +998,8 @@
 
   .liveEnergyVisual {
     /*
-     * Mobile layout must grow with the time controller.
-     * The controller is no longer absolutely overlaid on the diagram.
+     * On mobile the time controller belongs
+     * to normal document flow.
      */
     min-height: 0;
     padding: 18px;
@@ -897,9 +1007,7 @@
 
   .liveEnergySvg {
     /*
-     * Give the system diagram its own fixed mobile stage.
-     * It remains absolute, but the normal-flow content below reserves
-     * enough space before the legend and controls begin.
+     * Dedicated mobile diagram area.
      */
     top: 50px;
     right: -42px;
@@ -938,10 +1046,8 @@
 
   .liveEnergyControl {
     /*
-     * Critical mobile fix:
-     * keep the slider/time panel in normal document flow so it can never
-     * cover the house, devices, flow lines or legend, even when its
-     * content becomes taller on narrow screens.
+     * Do not absolutely position the
+     * control panel on mobile.
      */
     position: relative;
 
@@ -954,31 +1060,116 @@
     padding: 16px;
   }
 
-  .liveEnergyTicks {
-    font-size: 8px;
-  }
-
   .liveEnergyDisclaimer {
     font-size: 9px;
   }
 }
 
+/* =========================================================
+   MOBILE TIME CONTROL
+   ========================================================= */
+
 @media (max-width: 520px) {
-  .liveEnergyTicks {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
-    font-size: 7px;
-    text-align: center;
+  .liveEnergyControl {
+    padding: 16px 14px;
   }
 
   .liveEnergyControlTop {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
+    margin-bottom: 18px;
   }
 
   .liveEnergyControlTop button {
     align-self: flex-start;
+  }
+
+  .liveEnergyControl
+    input[type="range"] {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  /*
+   * The slider runs from:
+   *
+   * 5:00 AM  = 5
+   * 12:00 AM = 24
+   *
+   * Actual label positions:
+   *
+   * 5:00 AM  = 0%
+   * 9:00 AM  = 21.0526%
+   * 1:00 PM  = 42.1053%
+   * 6:00 PM  = 68.4211%
+   * 12:00 AM = 100%
+   *
+   * Using absolute percentage positions
+   * keeps every label horizontally aligned
+   * with its actual point on the range.
+   */
+
+  .liveEnergyTicks {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    height: 18px;
+
+    margin-top: 10px;
+
+    color: #91a6af;
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .liveEnergyTicks span {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+  }
+
+  .liveEnergyTicks
+    span:nth-child(1) {
+    left: 0;
+    transform: none;
+    text-align: left;
+  }
+
+  .liveEnergyTicks
+    span:nth-child(2) {
+    left: 21.0526%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .liveEnergyTicks
+    span:nth-child(3) {
+    left: 42.1053%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .liveEnergyTicks
+    span:nth-child(4) {
+    left: 68.4211%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .liveEnergyTicks
+    span:nth-child(5) {
+    right: 0;
+    left: auto;
+    transform: none;
+    text-align: right;
+  }
+
+  .liveEnergyDisclaimer {
+    margin-top: 10px;
   }
 }
 
@@ -996,20 +1187,36 @@
     text-align: left;
   }
 
-  .liveEnergyTicks {
-    grid-template-columns: 1fr;
-    gap: 5px;
-    text-align: left;
-  }
+  /*
+   * Keep timeline labels horizontal.
+   * Do not convert liveEnergyTicks
+   * to a one-column grid here.
+   */
 
   .liveEnergyVisualLegend {
     justify-content: flex-start;
-
     gap: 10px;
-
     margin-top: 388px;
-
     flex-wrap: wrap;
+  }
+}
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .liveEnergyControl {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  .liveEnergyTicks {
+    font-size: 6.5px;
+  }
+
+  .liveEnergyControlTop strong {
+    font-size: 20px;
   }
 }
 
