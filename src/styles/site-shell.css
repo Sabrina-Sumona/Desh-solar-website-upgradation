@@ -3117,6 +3117,34 @@ span:nth-child(3) {
     #ff0033;
 }
 
+
+.socialWhatsapp {
+  color:
+    #25d366;
+
+  border:
+    1px solid
+    rgba(37, 211, 102, 0.52);
+
+  background:
+    rgba(37, 211, 102, 0.08);
+}
+
+.socialWhatsapp:hover {
+  color:
+    #ffffff;
+
+  border-color:
+    #25d366;
+
+  background:
+    #25d366;
+
+  box-shadow:
+    0 0 14px
+    rgba(37, 211, 102, 0.18);
+}
+
 .socialLinks a:hover {
   transform:
     translateY(-2px)
