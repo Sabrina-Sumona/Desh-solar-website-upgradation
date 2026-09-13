@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import ProductQuickView from "@/components/products/ProductQuickView";
+import ProductCompare from "@/components/products/ProductCompare";
 import { useMemo, useState } from "react";
 import {
   productApplications,
@@ -29,9 +30,13 @@ function numericPower(value: string) {
 function ProductCard({
   product,
   onQuickView,
+  isCompared,
+  onCompare,
 }: {
   product: Product;
   onQuickView: (product: Product) => void;
+  isCompared: boolean;
+  onCompare: (product: Product) => void;
 }) {
   return (
     <article className="realProduct">
@@ -85,8 +90,13 @@ function ProductCard({
           >
             Quick View
           </button>
-          <button type="button" className="piCardCompareBtn">
-            Compare
+          <button
+            type="button"
+            className={`piCardCompareBtn${isCompared ? " isSelected" : ""}`}
+            onClick={() => onCompare(product)}
+            aria-pressed={isCompared}
+          >
+            {isCompared ? "Selected ✓" : "Compare"}
           </button>
         </div>
 
@@ -112,6 +122,9 @@ export default function ProductsCatalog() {
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
     null
   );
+  const [compareProducts, setCompareProducts] = useState<Product[]>([]);
+  const [compareOpen, setCompareOpen] = useState(false);
+  const [compareNotice, setCompareNotice] = useState("");
 
   const brands = useMemo(() => {
     const map = new Map<string, string>();
@@ -164,6 +177,39 @@ export default function ProductsCatalog() {
       (a, b) => a.featuredOrder - b.featuredOrder
     );
   }, [application, brand, category, search, sort]);
+
+  const toggleCompare = (product: Product) => {
+    setCompareProducts((current) => {
+      const alreadySelected = current.some((item) => item.id === product.id);
+
+      if (alreadySelected) {
+        return current.filter((item) => item.id !== product.id);
+      }
+
+      if (current.length > 0 && current[0].category !== product.category) {
+        setCompareNotice(
+          `Compare works best within one category. Started a new ${product.categoryLabel} comparison.`
+        );
+
+        window.setTimeout(() => setCompareNotice(""), 2400);
+        return [product];
+      }
+
+      if (current.length >= 4) {
+        setCompareNotice("You can compare up to 4 products at a time.");
+        window.setTimeout(() => setCompareNotice(""), 2400);
+        return current;
+      }
+
+      return [...current, product];
+    });
+  };
+
+  const removeCompareProduct = (productId: string) => {
+    setCompareProducts((current) =>
+      current.filter((item) => item.id !== productId)
+    );
+  };
 
   const selectQuickCategory = (value: string) => {
     setCategory(value);
@@ -310,6 +356,10 @@ export default function ProductsCatalog() {
                 key={product.id}
                 product={product}
                 onQuickView={setQuickViewProduct}
+                isCompared={compareProducts.some(
+                  (item) => item.id === product.id
+                )}
+                onCompare={toggleCompare}
               />
             ))}
           </div>
@@ -337,6 +387,24 @@ export default function ProductsCatalog() {
         product={quickViewProduct}
         onClose={() => setQuickViewProduct(null)}
       />
+
+      <ProductCompare
+        products={compareProducts}
+        isOpen={compareOpen}
+        onOpen={() => setCompareOpen(true)}
+        onClose={() => setCompareOpen(false)}
+        onRemove={removeCompareProduct}
+        onClear={() => {
+          setCompareProducts([]);
+          setCompareOpen(false);
+        }}
+      />
+
+      {compareNotice && (
+        <div className="pcNotice" role="status">
+          {compareNotice}
+        </div>
+      )}
     </>
   );
 }
