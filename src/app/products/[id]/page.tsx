@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import ProductDetailsActions from "@/components/products/ProductDetailsActions";
+import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import { products, type Product } from "@/data/products";
 
 import "@/styles/product-details.css";
@@ -305,54 +306,10 @@ export default async function ProductDetailsPage({
         </div>
       </section>
 
-      <section className="pdSection">
-        <div className="pdShell">
-          <div className="pdSectionHead">
-            <div>
-              <div className="pdEyebrow">AT A GLANCE</div>
-              <h2>Important information first.</h2>
-            </div>
-
-            <p>
-              The catalogue keeps the customer-facing facts clear first.
-              Final technical selection should still be checked against the
-              exact model datasheet and system design.
-            </p>
-          </div>
-
-          <div className="pdSpecGrid">
-            <article className="pdSpecCard">
-              <small>CATEGORY</small>
-              <b>{product.categoryLabel}</b>
-            </article>
-
-            <article className="pdSpecCard">
-              <small>BRAND / PACKAGE</small>
-              <b>{product.brandLabel}</b>
-            </article>
-
-            <article className="pdSpecCard">
-              <small>POWER / CAPACITY</small>
-              <b>{product.power}</b>
-            </article>
-
-            <article className="pdSpecCard">
-              <small>TYPE</small>
-              <b>{operationType}</b>
-            </article>
-
-            <article className="pdSpecCard">
-              <small>WARRANTY</small>
-              <b>{product.warranty}</b>
-            </article>
-
-            <article className="pdSpecCard pdSpecCardWide">
-              <small>SYSTEM ROLE</small>
-              <b>{product.role}</b>
-            </article>
-          </div>
-        </div>
-      </section>
+      <ProductTechnicalDetails
+        product={product}
+        operationType={operationType}
+      />
 
       <section className="pdSection pdAlt">
         <div className="pdShell">

@@ -1036,3 +1036,220 @@
     font-size: 27px;
   }
 }
+
+/* =========================================================
+   CATEGORY-AWARE TECHNICAL DETAILS
+   ========================================================= */
+
+.pdTechnicalSection {
+  position: relative;
+  background:
+    radial-gradient(
+      circle at 86% 14%,
+      rgba(89, 189, 255, 0.035),
+      transparent 24%
+    ),
+    #05090d;
+}
+
+.pdTechnicalSection[data-product-category="panel"] {
+  --pdTechnicalAccent: #c8ff7d;
+  --pdTechnicalAccentSoft: rgba(200, 255, 125, 0.08);
+  --pdTechnicalAccentLine: rgba(200, 255, 125, 0.2);
+}
+
+.pdTechnicalSection[data-product-category="inverter"] {
+  --pdTechnicalAccent: #72cfff;
+  --pdTechnicalAccentSoft: rgba(89, 189, 255, 0.075);
+  --pdTechnicalAccentLine: rgba(89, 189, 255, 0.19);
+}
+
+.pdTechnicalSection[data-product-category="battery"] {
+  --pdTechnicalAccent: #8de7ff;
+  --pdTechnicalAccentSoft: rgba(77, 203, 238, 0.07);
+  --pdTechnicalAccentLine: rgba(77, 203, 238, 0.19);
+}
+
+.pdTechnicalSection[data-product-category="portable"] {
+  --pdTechnicalAccent: #ffd37b;
+  --pdTechnicalAccentSoft: rgba(255, 193, 87, 0.065);
+  --pdTechnicalAccentLine: rgba(255, 193, 87, 0.18);
+}
+
+.pdTechnicalSection[data-product-category="system"] {
+  --pdTechnicalAccent: #c8ff7d;
+  --pdTechnicalAccentSoft: rgba(145, 239, 91, 0.065);
+  --pdTechnicalAccentLine: rgba(145, 239, 91, 0.19);
+}
+
+.pdTechnicalHead .pdEyebrow {
+  color: var(--pdTechnicalAccent, var(--pd-green2));
+}
+
+.pdTechnicalHead .pdEyebrow::before {
+  background: var(--pdTechnicalAccent, var(--pd-green2));
+}
+
+.pdTechnicalLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(330px, 0.8fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.pdTechnicalFacts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.pdTechnicalFact {
+  min-height: 142px;
+  padding: 19px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.018),
+      rgba(255, 255, 255, 0.007)
+    );
+}
+
+.pdTechnicalFact small {
+  display: block;
+  color: #8aa0aa;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.pdTechnicalFact b {
+  display: block;
+  margin-top: 19px;
+  color: #f2f7f8;
+  font-size: 15px;
+  line-height: 1.32;
+}
+
+.pdTechnicalFact span {
+  display: block;
+  margin-top: 7px;
+  color: #70858f;
+  font-size: 7px;
+  line-height: 1.45;
+}
+
+.pdConfirmPanel {
+  padding: 21px;
+  border: 1px solid
+    var(--pdTechnicalAccentLine, rgba(200, 255, 125, 0.18));
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      var(--pdTechnicalAccentSoft, rgba(200, 255, 125, 0.07)),
+      transparent 34%
+    ),
+    rgba(255, 255, 255, 0.012);
+}
+
+.pdConfirmPanelHeader {
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.pdConfirmPanelHeader > span {
+  display: inline-flex;
+  padding: 5px 7px;
+  border: 1px solid
+    var(--pdTechnicalAccentLine, rgba(200, 255, 125, 0.18));
+  border-radius: 999px;
+  color: var(--pdTechnicalAccent, var(--pd-green2));
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
+}
+
+.pdConfirmPanelHeader strong {
+  display: block;
+  margin-top: 10px;
+  color: #edf4f6;
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.pdConfirmList {
+  margin-top: 13px;
+}
+
+.pdConfirmList > div {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 9px;
+  align-items: start;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.pdConfirmList > div:last-child {
+  border-bottom: 0;
+}
+
+.pdConfirmList span {
+  color: var(--pdTechnicalAccent, var(--pd-green2));
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.pdConfirmList p {
+  margin: 0;
+  color: #a7b7be;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.pdConfirmNote {
+  margin: 15px 0 0;
+  padding-top: 13px;
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+  color: #718690;
+  font-size: 8px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1100px) {
+  .pdTechnicalLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .pdTechnicalFacts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .pdTechnicalFacts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pdTechnicalFact {
+    min-height: 128px;
+    padding: 16px;
+  }
+
+  .pdConfirmPanel {
+    padding: 18px;
+  }
+}
+
+@media (max-width: 460px) {
+  .pdTechnicalFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .pdTechnicalFact {
+    min-height: 112px;
+  }
+}
+
