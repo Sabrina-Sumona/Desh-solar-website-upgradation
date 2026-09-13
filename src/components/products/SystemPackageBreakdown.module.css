@@ -1,0 +1,256 @@
+.section {
+  padding: 72px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background:
+    radial-gradient(
+      circle at 14% 20%,
+      rgba(145, 239, 91, 0.04),
+      transparent 28%
+    ),
+    #061017;
+}
+
+.shell {
+  width: min(1640px, calc(100% - 6vw));
+  margin: 0 auto;
+}
+
+.heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 34px;
+  margin-bottom: 26px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #c8ff7d;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: #c8ff7d;
+}
+
+.heading h2 {
+  margin: 9px 0 0;
+  color: #f7fafb;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.heading > p {
+  max-width: 520px;
+  margin: 0;
+  color: #8498a2;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.factGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 12px;
+}
+
+.factGrid article {
+  min-height: 96px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.factGrid small {
+  display: block;
+  color: #7e99a5;
+  font-size: 6.5px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.factGrid b {
+  display: block;
+  margin-top: 12px;
+  color: #eef4f6;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.componentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.componentCard {
+  min-height: 218px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 17px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.018),
+      rgba(255, 255, 255, 0.007)
+    );
+}
+
+.componentNumber {
+  color: #6f8a96;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.componentCard h3 {
+  margin: 24px 0 8px;
+  color: #f1f5f6;
+  font-size: 20px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.componentCard strong {
+  display: block;
+  color: #c8ff7d;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.componentCard p {
+  margin: 12px 0 0;
+  color: #8197a1;
+  font-size: 9px;
+  line-height: 1.65;
+}
+
+.beforePanel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: 28px;
+  margin-top: 12px;
+  padding: 23px;
+  border: 1px solid rgba(145, 239, 91, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      circle at 0% 0%,
+      rgba(145, 239, 91, 0.045),
+      transparent 32%
+    ),
+    rgba(255, 255, 255, 0.01);
+}
+
+.beforePanel small {
+  color: #a9cb93;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+}
+
+.beforePanel h3 {
+  margin: 8px 0 0;
+  color: #f2f6f7;
+  font-size: 24px;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.beforeList > div {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+}
+
+.beforeList > div:last-child {
+  border-bottom: 0;
+}
+
+.beforeList span {
+  color: #b8f66a;
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.beforeList p {
+  margin: 0;
+  color: #a2b2b9;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.note {
+  margin-top: 12px;
+  padding: 13px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.01);
+  color: #748a94;
+  font-size: 8px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+@media (max-width: 1050px) {
+  .factGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .componentGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .beforePanel {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .section {
+    padding: 54px 0;
+  }
+
+  .shell {
+    width: calc(100% - 28px);
+  }
+
+  .heading {
+    display: block;
+  }
+
+  .heading > p {
+    margin-top: 12px;
+  }
+
+  .componentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .componentCard {
+    min-height: 0;
+  }
+
+  .beforePanel {
+    padding: 19px;
+  }
+}
+
+@media (max-width: 440px) {
+  .factGrid {
+    grid-template-columns: 1fr;
+  }
+}
