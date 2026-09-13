@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import ProductDetailsActions from "@/components/products/ProductDetailsActions";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
+import SystemPackageBreakdown from "@/components/products/SystemPackageBreakdown";
 import { products, type Product } from "@/data/products";
 
 import "@/styles/product-details.css";
@@ -311,6 +312,8 @@ export default async function ProductDetailsPage({
         product={product}
         operationType={operationType}
       />
+
+      <SystemPackageBreakdown product={product} />
 
       <section className="pdSection pdAlt">
         <div className="pdShell">
