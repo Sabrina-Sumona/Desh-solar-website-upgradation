@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import ProductDetailsActions from "@/components/products/ProductDetailsActions";
+import ProductImageGallery from "@/components/products/ProductImageGallery";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
 import SystemPackageBreakdown from "@/components/products/SystemPackageBreakdown";
@@ -217,25 +218,7 @@ export default async function ProductDetailsPage({
 
           <div className="pdHeroGrid">
             <div className="pdMediaPanel">
-              <div className="pdProductImage">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  width={1100}
-                  height={850}
-                  priority
-                  sizes="(max-width: 900px) 94vw, 48vw"
-                />
-
-                <span className="pdImageBadge">
-                  {product.categoryLabel}
-                </span>
-              </div>
-
-              <p className="pdMediaHint">
-                Real product / system imagery from the local Desh Solar
-                catalogue asset set.
-              </p>
+              <ProductImageGallery product={product} />
             </div>
 
             <div className="pdHeroContent">
