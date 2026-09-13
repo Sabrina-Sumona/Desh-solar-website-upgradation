@@ -131,45 +131,82 @@ function buildWhatsAppMessage(
   subtotal: number,
   hasQuoteItems: boolean
 ) {
-  const itemLines = items.map(
+  const itemLines = items.flatMap(
     (item, index) => {
       const linePrice = item.quoteOnly
-        ? "Quote required"
+        ? "Quotation required"
         : money(item.price * item.qty);
 
-      return `${index + 1}. ${item.name}
-Qty: ${item.qty}
-${linePrice}`;
+      return [
+        `*${index + 1}. ${item.name}*`,
+        `   Quantity: ${item.qty}`,
+        `   Price: ${linePrice}`,
+        "",
+      ];
     }
   );
 
+  const requestType = hasQuoteItems
+    ? "Order + Quotation Request"
+    : "Order Request";
+
+  const summaryLines = [
+    `*Request Type:* ${requestType}`,
+    `*Total Quantity:* ${items.reduce(
+      (total, item) => total + item.qty,
+      0
+    )}`,
+    hasQuoteItems
+      ? `*Fixed-price Subtotal:* ${money(subtotal)}`
+      : `*Subtotal:* ${money(subtotal)}`,
+  ];
+
+  if (hasQuoteItems) {
+    summaryLines.push(
+      "*Note:* One or more selected products require final quotation."
+    );
+  }
+
   return [
-    "DESH SOLAR ORDER / QUOTATION REQUEST",
+    "☀️ *DESH SOLAR*",
+    "*ORDER / QUOTATION REQUEST*",
+    "━━━━━━━━━━━━━━━━━━━━",
     "",
-    `Customer: ${form.name}`,
-    `Phone: ${form.phone}`,
+    "👤 *CUSTOMER DETAILS*",
+    `*Name:* ${form.name}`,
+    `*Phone:* ${form.phone}`,
     form.email.trim()
-      ? `Email: ${form.email.trim()}`
+      ? `*Email:* ${form.email.trim()}`
       : null,
-    `District/Area: ${form.district}`,
-    `Address: ${form.address}`,
-    `Service: ${serviceLabel(form.service)}`,
     "",
-    "Selected Products:",
+    "📍 *DELIVERY / INSTALLATION DETAILS*",
+    `*District / Area:* ${form.district}`,
+    `*Address:* ${form.address}`,
+    `*Service:* ${serviceLabel(form.service)}`,
+    "",
+    "🛒 *SELECTED PRODUCTS*",
     ...itemLines,
-    "",
-    hasQuoteItems
-      ? `Current fixed-price subtotal: ${money(subtotal)}`
-      : `Subtotal: ${money(subtotal)}`,
-    hasQuoteItems
-      ? "One or more selected items require final quotation."
-      : null,
+    "💰 *ORDER SUMMARY*",
+    ...summaryLines,
     "",
     form.notes.trim()
-      ? `Customer Notes: ${form.notes.trim()}`
+      ? "📝 *CUSTOMER NOTES*"
       : null,
+    form.notes.trim()
+      ? form.notes.trim()
+      : null,
+    form.notes.trim()
+      ? ""
+      : null,
+    "✅ *PLEASE CONFIRM*",
+    "• Final product availability",
+    "• Final price / quotation",
+    "• Delivery charge and schedule",
+    "• Installation scope and cost, if applicable",
+    "• Product and system compatibility",
     "",
-    "Please confirm final price, availability, delivery, installation scope, and technical compatibility.",
+    "Thank you.",
+    "*Desh Solar*",
   ]
     .filter(Boolean)
     .join("\n");
