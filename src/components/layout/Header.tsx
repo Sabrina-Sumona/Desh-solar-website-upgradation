@@ -71,6 +71,35 @@ const FEATURE_LINKS = [
   },
 ];
 
+const CART_KEY = "deshSolarCartV1";
+
+function getStoredCartCount() {
+  if (typeof window === "undefined") {
+    return 0;
+  }
+
+  try {
+    const parsed = JSON.parse(
+      window.localStorage.getItem(CART_KEY) || "[]"
+    );
+
+    if (!Array.isArray(parsed)) {
+      return 0;
+    }
+
+    return parsed.reduce((total, item) => {
+      const quantity = Math.max(
+        1,
+        Number(item?.qty) || 1
+      );
+
+      return total + quantity;
+    }, 0);
+  } catch {
+    return 0;
+  }
+}
+
 function CartIcon() {
   return (
     <svg
@@ -95,6 +124,42 @@ export default function Header() {
   const pathname = usePathname();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const syncCartCount = () => {
+      setCartCount(getStoredCartCount());
+    };
+
+    syncCartCount();
+
+    window.addEventListener(
+      "deshsolar:cartchange",
+      syncCartCount
+    );
+    window.addEventListener("storage", syncCartCount);
+    window.addEventListener("focus", syncCartCount);
+    window.addEventListener("pageshow", syncCartCount);
+
+    return () => {
+      window.removeEventListener(
+        "deshsolar:cartchange",
+        syncCartCount
+      );
+      window.removeEventListener(
+        "storage",
+        syncCartCount
+      );
+      window.removeEventListener(
+        "focus",
+        syncCartCount
+      );
+      window.removeEventListener(
+        "pageshow",
+        syncCartCount
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (!mobileOpen) {
@@ -346,9 +411,11 @@ export default function Header() {
 
             <span
               className="cartCount"
-              aria-label="0 items in cart"
+              aria-label={`${cartCount} ${
+                cartCount === 1 ? "item" : "items"
+              } in cart`}
             >
-              0
+              {cartCount}
             </span>
           </Link>
         </div>
@@ -551,8 +618,13 @@ export default function Header() {
               Cart
             </span>
 
-            <span className="mobileCartCount">
-              0
+            <span
+              className="mobileCartCount"
+              aria-label={`${cartCount} ${
+                cartCount === 1 ? "item" : "items"
+              } in cart`}
+            >
+              {cartCount}
             </span>
           </Link>
         </div>

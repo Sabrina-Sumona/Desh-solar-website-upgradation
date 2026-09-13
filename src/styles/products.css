@@ -1678,3 +1678,119 @@
   }
 }
 
+/* =========================================================
+   PRODUCT CARD CART QUANTITY CONTROLS
+   ========================================================= */
+
+.piCartAddedControls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px;
+  margin-top: 6px;
+}
+
+.piCartQuantityRow {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 34px;
+  min-height: 36px;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid rgba(145, 239, 91, 0.2);
+  border-radius: 9px;
+  background: rgba(145, 239, 91, 0.035);
+}
+
+.piCartQtyButton {
+  display: grid;
+  width: 34px;
+  min-height: 34px;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #c8ff7d;
+  font-size: 13px;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.piCartQtyButton:first-child {
+  border-right: 1px solid rgba(145, 239, 91, 0.12);
+}
+
+.piCartQtyButton:last-child {
+  border-left: 1px solid rgba(145, 239, 91, 0.12);
+}
+
+.piCartQtyButton:hover:not(:disabled) {
+  background: rgba(145, 239, 91, 0.08);
+  color: #efffde;
+}
+
+.piCartQtyButton:disabled {
+  color: #536b5a;
+  cursor: not-allowed;
+}
+
+.piCartQtyStatus {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 6px;
+}
+
+.piCartQtyStatus strong {
+  color: #eef7e9;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.piCartQtyStatus span {
+  overflow: hidden;
+  color: #91aa86;
+  font-size: 6.5px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.piCartRemoveAction {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.015);
+  color: #8fa2aa;
+  font-size: 7px;
+  font-weight: 900;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    background 0.18s ease;
+}
+
+.piCartRemoveAction:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.025);
+  color: #d5e0e4;
+}
+
+@media (max-width: 639px) {
+  .piCartAddedControls {
+    grid-template-columns: minmax(0, 1fr) 64px;
+  }
+
+  .piCartQtyStatus span {
+    font-size: 6px;
+  }
+
+  .piCartRemoveAction {
+    padding: 0 7px;
+  }
+}
+

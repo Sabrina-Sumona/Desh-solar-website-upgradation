@@ -37,10 +37,14 @@ function readCart(): CartItem[] {
 }
 
 function writeCart(items: CartItem[]) {
-  window.localStorage.setItem(CART_KEY, JSON.stringify(items));
+  window.localStorage.setItem(
+    CART_KEY,
+    JSON.stringify(items)
+  );
 
   const count = items.reduce(
-    (total, item) => total + Math.max(1, Number(item.qty) || 1),
+    (total, item) =>
+      total + Math.max(1, Number(item.qty) || 1),
     0
   );
 
@@ -60,7 +64,9 @@ function writeCart(items: CartItem[]) {
         items,
         count,
         subtotal,
-        hasQuote: items.some((item) => item.quoteOnly),
+        hasQuote: items.some(
+          (item) => item.quoteOnly
+        ),
       },
     })
   );
@@ -69,96 +75,191 @@ function writeCart(items: CartItem[]) {
 export default function ProductDetailsActions({
   product,
 }: ProductDetailsActionsProps) {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [cartQuantity, setCartQuantity] = useState(0);
-  const [status, setStatus] = useState("Add to Cart");
 
   const refreshFromCart = () => {
     const item = readCart().find(
-      (cartItem) => String(cartItem.id) === product.id
+      (cartItem) =>
+        String(cartItem.id) === product.id
     );
 
-    setCartQuantity(item ? Math.max(1, Number(item.qty) || 1) : 0);
+    setCartQuantity(
+      item
+        ? Math.max(1, Number(item.qty) || 1)
+        : 0
+    );
   };
 
   useEffect(() => {
     refreshFromCart();
 
-    const handleCartChange = () => refreshFromCart();
-    const handleStorage = () => refreshFromCart();
+    const handleCartChange = () =>
+      refreshFromCart();
+    const handleStorage = () =>
+      refreshFromCart();
 
     window.addEventListener(
       "deshsolar:cartchange",
       handleCartChange
     );
-    window.addEventListener("storage", handleStorage);
+    window.addEventListener(
+      "storage",
+      handleStorage
+    );
 
     return () => {
       window.removeEventListener(
         "deshsolar:cartchange",
         handleCartChange
       );
-      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener(
+        "storage",
+        handleStorage
+      );
     };
   }, [product.id]);
 
-  const addToCart = () => {
+  const updateCartQuantity = (
+    nextQuantity: number
+  ) => {
     const items = readCart();
-    const existing = items.find(
-      (item) => String(item.id) === product.id
+
+    const existingIndex = items.findIndex(
+      (item) =>
+        String(item.id) === product.id
     );
 
-    if (existing) {
-      existing.qty =
-        Math.max(1, Number(existing.qty) || 1) + quantity;
+    if (nextQuantity <= 0) {
+      const nextItems =
+        existingIndex >= 0
+          ? items.filter(
+              (_, index) =>
+                index !== existingIndex
+            )
+          : items;
+
+      writeCart(nextItems);
+      setCartQuantity(0);
+      setQuantity(0);
+      return;
+    }
+
+    if (existingIndex >= 0) {
+      items[existingIndex] = {
+        ...items[existingIndex],
+        qty: nextQuantity,
+      };
     } else {
       items.push({
         id: product.id,
         name: product.name,
         price: product.price ?? 0,
-        priceText: product.priceText || "Contact for price",
+        priceText:
+          product.priceText ||
+          "Contact for price",
         image: product.image,
         category: product.categoryLabel,
         quoteOnly: product.price === null,
-        qty: quantity,
+        qty: nextQuantity,
       });
     }
 
     writeCart(items);
-    refreshFromCart();
+    setCartQuantity(nextQuantity);
+  };
 
-    setStatus(
-      product.price === null ? "Added for Quote ✓" : "Added to Cart ✓"
+  const addToCart = () => {
+    const items = readCart();
+
+    const existing = items.find(
+      (item) =>
+        String(item.id) === product.id
     );
 
-    window.setTimeout(() => {
-      setStatus("Add to Cart");
-    }, 1600);
+    const existingQuantity = existing
+      ? Math.max(
+          1,
+          Number(existing.qty) || 1
+        )
+      : 0;
+
+    updateCartQuantity(
+      existingQuantity + quantity
+    );
+
+    setQuantity(0);
   };
+
+  const decreaseCart = () => {
+    updateCartQuantity(cartQuantity - 1);
+  };
+
+  const increaseCart = () => {
+    updateCartQuantity(
+      Math.min(99, cartQuantity + 1)
+    );
+  };
+
+  const removeFromCart = () => {
+    updateCartQuantity(0);
+  };
+
+  const inCart = cartQuantity > 0;
 
   return (
     <div className="pdPurchaseControls">
-      <div className="pdQuantityControl">
-        <span>QUANTITY</span>
+      <div
+        className={`pdQuantityControl ${
+          inCart ? "pdQuantityControlInCart" : ""
+        }`}
+      >
+        <span>
+          {inCart ? "IN CART" : "QUANTITY"}
+        </span>
 
         <div>
           <button
             type="button"
-            aria-label="Decrease quantity"
-            onClick={() =>
-              setQuantity((current) => Math.max(1, current - 1))
+            aria-label={
+              inCart && cartQuantity === 1
+                ? `Remove ${product.name} from cart`
+                : "Decrease quantity"
+            }
+            onClick={
+              inCart
+                ? decreaseCart
+                : () =>
+                    setQuantity((current) =>
+                      Math.max(
+                        0,
+                        current - 1
+                      )
+                    )
             }
           >
             −
           </button>
 
-          <strong>{quantity}</strong>
+          <strong>
+            {inCart
+              ? cartQuantity
+              : quantity}
+          </strong>
 
           <button
             type="button"
             aria-label="Increase quantity"
-            onClick={() =>
-              setQuantity((current) => Math.min(99, current + 1))
+            onClick={
+              inCart
+                ? increaseCart
+                : () =>
+                    setQuantity((current) =>
+                      Math.min(
+                        99,
+                        current + 1
+                      )
+                    )
             }
           >
             +
@@ -166,16 +267,33 @@ export default function ProductDetailsActions({
         </div>
       </div>
 
-      <button
-        className="pdAddCart"
-        type="button"
-        onClick={addToCart}
-      >
-        {status}
-        {cartQuantity > 0 && (
-          <span>{cartQuantity} in cart</span>
-        )}
-      </button>
+      {inCart ? (
+        <button
+          className="pdRemoveCart"
+          type="button"
+          onClick={removeFromCart}
+        >
+          Remove from Cart
+          <span>
+            {cartQuantity}{" "}
+            {cartQuantity === 1
+              ? "item"
+              : "items"}
+          </span>
+        </button>
+      ) : (
+        <button
+          className="pdAddCart"
+          type="button"
+          onClick={addToCart}
+          disabled={quantity <= 0}
+          aria-disabled={quantity <= 0}
+        >
+          {product.price === null
+            ? "Add for Quote"
+            : "Add to Cart"}
+        </button>
+      )}
     </div>
   );
 }
