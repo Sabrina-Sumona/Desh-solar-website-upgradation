@@ -733,3 +733,389 @@
     min-height: 182px;
   }
 }
+/* =========================================================
+   PRODUCT QUICK VIEW — PROTOTYPE-STYLE RIGHT DRAWER
+   ========================================================= */
+
+.pqvdBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(0, 0, 0, 0.64);
+  cursor: default;
+  animation: pqvdBackdropIn 0.2s ease both;
+}
+
+.pqvdDrawer {
+  position: fixed;
+  z-index: 5010;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(560px, 100%);
+  overflow-y: auto;
+  border-left: 1px solid rgba(255, 255, 255, 0.09);
+  background:
+    radial-gradient(
+      circle at 90% 5%,
+      rgba(89, 189, 255, 0.04),
+      transparent 28%
+    ),
+    #07131a;
+  box-shadow: -28px 0 80px rgba(0, 0, 0, 0.34);
+  animation: pqvdDrawerIn 0.28s ease both;
+}
+
+.pqvdHead {
+  position: sticky;
+  z-index: 4;
+  top: 0;
+  display: flex;
+  min-height: 62px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(7, 19, 26, 0.95);
+  backdrop-filter: blur(12px);
+}
+
+.pqvdHead small {
+  color: #7698a8;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pqvdHead button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: transparent;
+  color: #dce6ea;
+  font-size: 19px;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pqvdHead button:hover,
+.pqvdHead button:focus-visible {
+  border-color: rgba(145, 239, 91, 0.32);
+  color: #dfffc4;
+  outline: none;
+  transform: rotate(3deg);
+}
+
+.pqvdContent {
+  padding: 22px;
+}
+
+.pqvdMedia {
+  display: grid;
+  height: 250px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      180deg,
+      #f4f7f7 0%,
+      #e7eeee 100%
+    );
+}
+
+.pqvdMedia img {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.pqvdEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: #9dd3e7;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pqvdEyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: #b8f66a;
+}
+
+.pqvdContent h2 {
+  margin: 13px 0 9px;
+  color: #f5f8f9;
+  font-size: 29px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.pqvdLead {
+  margin: 0;
+  color: #778d97;
+  font-size: 10px;
+  line-height: 1.62;
+}
+
+.pqvdTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.pqvdTags span {
+  padding: 6px 8px;
+  border: 1px solid rgba(184, 246, 106, 0.13);
+  border-radius: 999px;
+  color: #9aae8e;
+  font-size: 7px;
+  font-weight: 800;
+}
+
+.pqvdSection {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.pqvdSection > small {
+  display: block;
+  color: #7192a1;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pqvdSection h3 {
+  margin: 7px 0 8px;
+  color: #f1f5f6;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+.pqvdSection > p {
+  margin: 0;
+  color: #758b95;
+  font-size: 9px;
+  line-height: 1.62;
+}
+
+.pqvdMiniFlow {
+  display: flex;
+  min-height: 82px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 11px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.pqvdFlowItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.pqvdFlowItem > span {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.075);
+  border-radius: 11px;
+  color: #617882;
+  font-size: 13px;
+  font-weight: 900;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.pqvdFlowItem > span.active {
+  border-color: rgba(184, 246, 106, 0.2);
+  background: rgba(184, 246, 106, 0.035);
+  color: #b8f66a;
+}
+
+.pqvdFlowItem > i {
+  color: #b8f66a;
+  font-size: 10px;
+  font-style: normal;
+}
+
+.pqvdQuickTool {
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.pqvdQuickTool label {
+  display: block;
+  color: #6f8590;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.pqvdQuickTool input {
+  width: 100%;
+  height: 40px;
+  margin-top: 7px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  outline: none;
+  background: #06131a;
+  color: #e4edef;
+  font-size: 10px;
+}
+
+.pqvdQuickTool input:focus {
+  border-color: rgba(184, 246, 106, 0.3);
+}
+
+.pqvdToolResult {
+  margin-top: 9px;
+  color: #b8f66a;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.pqvdToolNote {
+  display: block;
+  margin-top: 5px;
+  color: #647983;
+  font-size: 7px;
+  line-height: 1.48;
+}
+
+.pqvdActions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.pqvdActions a {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(184, 246, 106, 0.2);
+  border-radius: 11px;
+  background: rgba(184, 246, 106, 0.015);
+  color: #edf7ea;
+  font-size: 8px;
+  font-weight: 900;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pqvdActions a:hover {
+  border-color: rgba(184, 246, 106, 0.34);
+  background: rgba(184, 246, 106, 0.045);
+  color: #f7fff1;
+  transform: translateY(-1px);
+}
+
+.pqvdActions a.secondary {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: #99abb3;
+}
+
+.pqvdActions a.secondary:hover {
+  border-color: rgba(89, 189, 255, 0.2);
+  color: #c9e4ef;
+}
+
+@keyframes pqvdBackdropIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pqvdDrawerIn {
+  from {
+    transform: translateX(102%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 620px) {
+  .pqvdDrawer {
+    width: 100%;
+  }
+
+  .pqvdContent {
+    padding: 16px;
+  }
+
+  .pqvdMedia {
+    height: 220px;
+    border-radius: 15px;
+  }
+
+  .pqvdContent h2 {
+    font-size: 27px;
+  }
+
+  .pqvdMiniFlow {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .pqvdFlowItem > span {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pqvdBackdrop,
+  .pqvdDrawer {
+    animation: none;
+  }
+}
