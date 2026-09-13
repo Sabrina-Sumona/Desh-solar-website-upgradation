@@ -250,11 +250,13 @@
 
 .realProductMedia {
   position: relative;
-  height: 180px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
   display: grid;
   place-items: center;
-  background: linear-gradient(180deg, #eff4f4 0%, #e7efef 100%);
+  background: linear-gradient(180deg, #f4f6f6 0%, #e9efef 100%);
 }
 
 .realProductMedia img {
@@ -262,13 +264,13 @@
   height: 100%;
   object-fit: contain;
   object-position: center;
-  padding: 10px;
+  padding: 6px;
   image-rendering: auto;
   transition: transform 0.35s ease;
 }
 
 .realProduct:hover .realProductMedia img {
-  transform: scale(1.025);
+  transform: scale(1.01);
 }
 
 .realProductBadge {
@@ -306,30 +308,30 @@
 
 .plProductHeader > div:first-child span {
   display: block;
-  color: #6f8792;
-  font-size: 6px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
+  color: #9db4be;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
 }
 
 .plProductHeader > div:first-child b {
   display: block;
   margin-top: 2px;
-  color: #b7c6cc;
-  font-size: 8px;
-  font-weight: 800;
+  color: #d5e1e5;
+  font-size: 9px;
+  font-weight: 900;
 }
 
 .plRating {
   flex: 0 0 auto;
   min-width: 58px;
   padding: 5px 6px;
-  border: 1px solid rgba(89, 189, 255, 0.12);
+  border: 1px solid rgba(89, 189, 255, 0.2);
   border-radius: 8px;
-  background: rgba(89, 189, 255, 0.025);
-  color: #78a7bc;
-  font-size: 6px;
+  background: rgba(89, 189, 255, 0.045);
+  color: #a8d1e2;
+  font-size: 7px;
   font-weight: 900;
   text-align: center;
   letter-spacing: 0.05em;
@@ -360,10 +362,10 @@
 
 .plPriceLabel {
   display: block;
-  margin-bottom: 2px;
-  color: #687e88;
-  font-size: 6px;
-  font-weight: 800;
+  margin-bottom: 3px;
+  color: #9db4be;
+  font-size: 7px;
+  font-weight: 900;
   letter-spacing: 0.11em;
 }
 
@@ -375,7 +377,7 @@
 
 .realProductPrice del {
   margin-left: 5px;
-  color: #60747e;
+  color: #8fa3ac;
   font-size: 9px;
 }
 
@@ -400,11 +402,11 @@
 
 .piCardActionGrid button {
   min-height: 34px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  background: rgba(255, 255, 255, 0.02);
-  color: #aebfc6;
-  font-size: 7px;
-  font-weight: 800;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+  color: #d0dde2;
+  font-size: 8px;
+  font-weight: 900;
 }
 
 .piCardActionGrid button:hover {
@@ -415,32 +417,35 @@
 .piDetailsPrimary {
   min-height: 37px;
   margin-top: 6px;
-  border: 1px solid rgba(184, 246, 106, 0.3);
-  background: rgba(184, 246, 106, 0.065);
-  color: #eaffd5;
-  font-size: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.025);
+  color: #e1eaed;
+  font-size: 8.5px;
   font-weight: 900;
 }
 
 .piDetailsPrimary:hover {
-  border-color: rgba(184, 246, 106, 0.48);
-  background: rgba(184, 246, 106, 0.1);
+  border-color: rgba(145, 239, 91, 0.32);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--green2);
   transform: translateY(-1px);
 }
 
 .piAddCartAction {
   min-height: 34px;
   margin-top: 6px;
-  border: 1px solid rgba(145, 239, 91, 0.32);
-  background: linear-gradient(180deg, #87e950, #5ec52f);
-  color: #09210c;
+  border: 1px solid rgba(145, 239, 91, 0.16);
+  background: rgba(145, 239, 91, 0.035);
+  color: #b8f66a;
   font-size: 7px;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .piAddCartAction:hover {
+  border-color: rgba(145, 239, 91, 0.28);
+  background: rgba(145, 239, 91, 0.075);
+  color: #e9ffd8;
   transform: translateY(-1px);
-  filter: brightness(1.04);
 }
 
 .productsEmptyState {
@@ -482,10 +487,6 @@
 @media (min-width: 1650px) {
   .realProductGrid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-
-  .realProductMedia {
-    height: 170px;
   }
 }
 
@@ -661,6 +662,7 @@
   .realProductMedia {
     height: 100%;
     min-height: 190px;
+    aspect-ratio: auto;
     border-right: 1px solid rgba(255, 255, 255, 0.05);
   }
 
