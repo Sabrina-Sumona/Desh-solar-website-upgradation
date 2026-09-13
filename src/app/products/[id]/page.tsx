@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import ProductDetailsActions from "@/components/products/ProductDetailsActions";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
+import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
 import { products, type Product } from "@/data/products";
 
 import "@/styles/product-details.css";
@@ -366,6 +367,11 @@ export default async function ProductDetailsPage({
           </div>
         </div>
       </section>
+
+      <ProductPlanningPanel
+        product={product}
+        variant="details"
+      />
 
       <section className="pdSection">
         <div className="pdShell">

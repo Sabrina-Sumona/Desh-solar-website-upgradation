@@ -1,0 +1,236 @@
+.panel {
+  --plan-line: rgba(255, 255, 255, 0.075);
+  --plan-muted: #78909b;
+  --plan-text: #eef4f6;
+  --plan-accent: #b8f66a;
+}
+
+.quick {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.details {
+  width: min(1640px, calc(100% - 6vw));
+  margin: 0 auto;
+  padding: 72px 0;
+}
+
+.sectionHeading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 34px;
+  margin-bottom: 26px;
+}
+
+.sectionHeading > div > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #c8ff7d;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sectionHeading > div > span::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: #c8ff7d;
+}
+
+.sectionHeading h2 {
+  margin: 9px 0 0;
+  color: #f7fafb;
+  font-size: clamp(34px, 4vw, 58px);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+}
+
+.sectionHeading > p {
+  max-width: 520px;
+  margin: 0;
+  color: #8498a2;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+}
+
+.details .grid {
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+}
+
+.quick .grid {
+  grid-template-columns: 1fr;
+}
+
+.whyCard,
+.toolCard {
+  border: 1px solid var(--plan-line);
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.017),
+      rgba(255, 255, 255, 0.008)
+    );
+}
+
+.details .whyCard,
+.details .toolCard {
+  min-height: 250px;
+  padding: 24px;
+}
+
+.quick .whyCard,
+.quick .toolCard {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.quick .toolCard {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.065);
+}
+
+.whyCard small,
+.toolCard small {
+  display: block;
+  color: #7192a1;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.whyCard h3,
+.toolCard h3 {
+  margin: 9px 0 10px;
+  color: var(--plan-text);
+  line-height: 1.15;
+}
+
+.details .whyCard h3 {
+  font-size: 23px;
+}
+
+.toolCard h3 {
+  font-size: 18px;
+}
+
+.whyCard p {
+  margin: 10px 0 0;
+  color: var(--plan-muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.quick .whyCard p {
+  font-size: 9px;
+  line-height: 1.62;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.tags span {
+  padding: 6px 9px;
+  border: 1px solid rgba(145, 239, 91, 0.14);
+  border-radius: 999px;
+  background: rgba(145, 239, 91, 0.025);
+  color: #b8caaa;
+  font-size: 7px;
+  font-weight: 800;
+}
+
+.tool {
+  margin-top: 12px;
+  padding: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.tool label {
+  display: block;
+  color: #6f8590;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tool input {
+  width: 100%;
+  height: 42px;
+  margin-top: 8px;
+  padding: 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  outline: none;
+  background: #06131a;
+  color: #e4edef;
+  font-size: 10px;
+}
+
+.tool input:focus {
+  border-color: rgba(184, 246, 106, 0.3);
+}
+
+.tool strong {
+  display: block;
+  margin-top: 10px;
+  color: var(--plan-accent);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.tool span {
+  display: block;
+  margin-top: 6px;
+  color: #647983;
+  font-size: 7px;
+  line-height: 1.55;
+}
+
+@media (max-width: 900px) {
+  .details .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sectionHeading {
+    display: block;
+  }
+
+  .sectionHeading > p {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .details {
+    width: calc(100% - 28px);
+    padding: 54px 0;
+  }
+
+  .details .whyCard,
+  .details .toolCard {
+    min-height: 0;
+    padding: 19px;
+  }
+}
