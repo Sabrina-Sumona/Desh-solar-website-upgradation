@@ -1324,3 +1324,120 @@
   }
 }
 
+/* =========================================================
+   READABILITY TUNING
+   Slightly larger and brighter supporting text.
+   ========================================================= */
+
+.pdEyebrow,
+.pdBreadcrumb {
+  font-size: 10px;
+}
+
+.pdImageBadge,
+.pdBestFor > small,
+.pdPriceBlock small,
+.pdAvailability small,
+.pdQuantityControl > span,
+.pdSpecCard small,
+.pdRoleInfo > small,
+.pdGuidanceGrid small,
+.pdBuilderBand small,
+.pdFinalCta small,
+.pdTechnicalFact small {
+  font-size: 9px;
+}
+
+.pdMediaHint,
+.pdBestFor span,
+.pdSecondaryAction,
+.pdSnapshotNote,
+.pdFinalCta a,
+.pdConfirmNote {
+  font-size: 10px;
+}
+
+.pdAddCart,
+.pdRemoveCart,
+.pdViewAll,
+.pdRelatedMeta span,
+.pdRelatedLink,
+.pdConfirmList p {
+  font-size: 10px;
+}
+
+.pdAddCart span,
+.pdRemoveCart span,
+.pdRoleTags span,
+.pdRelatedBody > small,
+.pdConfirmList span {
+  font-size: 9px;
+}
+
+.pdRelatedImage > span,
+.pdConfirmPanelHeader > span {
+  font-size: 8px;
+}
+
+.pdSectionHead > p,
+.pdFinalCta p {
+  font-size: 11px;
+}
+
+.pdTechnicalFact span {
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.pdMediaHint {
+  color: #91a4ad;
+}
+
+.pdBestFor > small,
+.pdPriceBlock small,
+.pdAvailability small,
+.pdSpecCard small,
+.pdTechnicalFact small {
+  color: #9dafb7;
+}
+
+.pdQuantityControl > span {
+  color: #aebdc3;
+}
+
+.pdSnapshotNote,
+.pdTechnicalFact span,
+.pdConfirmNote {
+  color: #8fa2aa;
+}
+
+.pdSectionHead > p,
+.pdFinalCta p {
+  color: #94a6ae;
+}
+
+.pdRelatedBody > small,
+.pdRelatedMeta span {
+  color: #a8bbc4;
+}
+
+.pdConfirmList p {
+  color: #b7c5ca;
+}
+
+@media (max-width: 720px) {
+  .pdEyebrow,
+  .pdBreadcrumb {
+    font-size: 10px;
+  }
+
+  .pdWhy {
+    font-size: 13px;
+  }
+
+  .pdSectionHead > p,
+  .pdFinalCta p {
+    font-size: 11px;
+  }
+}
+

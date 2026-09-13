@@ -655,3 +655,117 @@
     text-align: center;
   }
 }
+
+/* =========================================================
+   READABILITY TUNING
+   Larger and brighter supporting text without changing layout.
+   ========================================================= */
+
+.eyebrow {
+  font-size: 10px;
+}
+
+.hero p {
+  color: #96a9b1;
+  font-size: 12px;
+}
+
+.cardHeader small,
+.summary > small {
+  color: #96aab3;
+  font-size: 9px;
+}
+
+.headerActions a,
+.clearButton {
+  font-size: 9px;
+}
+
+.emptyState p {
+  color: #91a5ae;
+  font-size: 11px;
+}
+
+.emptyState > a {
+  font-size: 9px;
+}
+
+.imageWrap > span {
+  font-size: 9px;
+}
+
+.itemTopline > span {
+  color: #9bb2bc;
+  font-size: 9px;
+}
+
+.itemTopline > b {
+  color: #acd7e8;
+  font-size: 8px;
+}
+
+.itemMetaRow small {
+  color: #97aab3;
+  font-size: 9px;
+}
+
+.quantity span {
+  font-size: 11px;
+}
+
+.itemBottom a,
+.itemBottom button {
+  font-size: 9px;
+}
+
+.summaryRow span {
+  color: #97aab3;
+  font-size: 10px;
+}
+
+.quoteBanner {
+  color: #a6c6d4;
+  font-size: 10px;
+}
+
+.summaryNote {
+  color: #91a3ab;
+  font-size: 10px;
+}
+
+.checkoutButton {
+  font-size: 10px;
+}
+
+.consultLink {
+  color: #91aab5;
+  font-size: 9px;
+}
+
+.supportBand small {
+  color: #a2b896;
+  font-size: 9px;
+}
+
+.supportBand p {
+  color: #93a6ae;
+  font-size: 10px;
+}
+
+.supportBand a {
+  font-size: 9px;
+}
+
+@media (max-width: 720px) {
+  .hero p {
+    font-size: 11px;
+  }
+
+  .itemMetaRow small,
+  .itemTopline > span,
+  .itemBottom a,
+  .itemBottom button {
+    font-size: 9px;
+  }
+}
+

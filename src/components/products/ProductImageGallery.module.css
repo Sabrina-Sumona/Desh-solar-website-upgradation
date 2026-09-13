@@ -43,7 +43,7 @@
   border-radius: 999px;
   background: rgba(5, 14, 20, 0.88);
   color: #c8ff7d;
-  font-size: 7px;
+  font-size: 9px;
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -61,8 +61,8 @@
   border: 1px solid rgba(255, 255, 255, 0.13);
   border-radius: 999px;
   background: rgba(5, 14, 20, 0.82);
-  color: #dce7ea;
-  font-size: 7px;
+  color: #eef5f6;
+  font-size: 9px;
   font-weight: 800;
   backdrop-filter: blur(8px);
 }
@@ -79,8 +79,8 @@
   padding: 6px 8px;
   border-radius: 999px;
   background: rgba(5, 14, 20, 0.82);
-  color: #cfdee3;
-  font-size: 7px;
+  color: #e0eaed;
+  font-size: 9px;
   font-weight: 900;
   backdrop-filter: blur(8px);
 }
@@ -130,14 +130,14 @@
 }
 
 .galleryMeta > span {
-  color: #8ba1aa;
-  font-size: 8px;
+  color: #a8bac2;
+  font-size: 10px;
   font-weight: 800;
 }
 
 .galleryMeta > small {
-  color: #657b85;
-  font-size: 7px;
+  color: #8fa2aa;
+  font-size: 9px;
   text-align: right;
 }
 
@@ -190,8 +190,8 @@
 
 .lightboxHeader small {
   display: block;
-  color: #86a6b4;
-  font-size: 7px;
+  color: #a6c0cb;
+  font-size: 9px;
   font-weight: 900;
   letter-spacing: 0.06em;
 }
@@ -287,8 +287,8 @@
   padding: 7px 9px;
   border-radius: 999px;
   background: rgba(5, 14, 20, 0.82);
-  color: #d8e5e8;
-  font-size: 7px;
+  color: #edf4f6;
+  font-size: 9px;
   font-weight: 900;
 }
 
