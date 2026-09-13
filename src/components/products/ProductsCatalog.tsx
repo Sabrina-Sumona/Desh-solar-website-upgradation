@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import ProductQuickView from "@/components/products/ProductQuickView";
 import { useMemo, useState } from "react";
 import {
   productApplications,
@@ -25,7 +26,13 @@ function numericPower(value: string) {
   return match ? Number(match[0]) : 0;
 }
 
-function ProductCard({ product }: { product: Product }) {
+function ProductCard({
+  product,
+  onQuickView,
+}: {
+  product: Product;
+  onQuickView: (product: Product) => void;
+}) {
   return (
     <article className="realProduct">
       <Link
@@ -70,7 +77,12 @@ function ProductCard({ product }: { product: Product }) {
         </div>
 
         <div className="piCardActionGrid">
-          <button type="button" className="piCardQuickBtn">
+          <button
+            type="button"
+            className="piCardQuickBtn"
+            onClick={() => onQuickView(product)}
+            aria-label={`Quick view ${product.name}`}
+          >
             Quick View
           </button>
           <button type="button" className="piCardCompareBtn">
@@ -97,6 +109,9 @@ export default function ProductsCatalog() {
   const [sort, setSort] = useState<SortValue>("featured");
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(
+    null
+  );
 
   const brands = useMemo(() => {
     const map = new Map<string, string>();
@@ -291,7 +306,11 @@ export default function ProductsCatalog() {
         {visibleProducts.length > 0 ? (
           <div className="realProductGrid">
             {visibleProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard
+                key={product.id}
+                product={product}
+                onQuickView={setQuickViewProduct}
+              />
             ))}
           </div>
         ) : (
@@ -313,6 +332,11 @@ export default function ProductsCatalog() {
           </div>
         )}
       </section>
+
+      <ProductQuickView
+        product={quickViewProduct}
+        onClose={() => setQuickViewProduct(null)}
+      />
     </>
   );
 }
