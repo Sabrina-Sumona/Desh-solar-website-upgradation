@@ -408,28 +408,16 @@ export default function Header() {
                       </Link>
                     ))}
                   </div>
-                </div>
 
-                <div className="megaFeature">
-                  <small>
-                    Complete Solar Planning
-                  </small>
+                  <Link
+                    href="/build-your-system"
+                    className="megaBuildLink"
+                  >
+                    <span>
+                      Build Your System
+                    </span>
 
-                  <h4>
-                    Build a system around
-                    your energy needs.
-                  </h4>
-
-                  <p>
-                    Start with your property,
-                    energy goal and backup
-                    requirement.
-                  </p>
-
-                  <Link href="/build-your-system">
-                    Build Your System
-
-                    <span>→</span>
+                    <b>→</b>
                   </Link>
                 </div>
               </div>
