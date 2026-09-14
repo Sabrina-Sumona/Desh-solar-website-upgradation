@@ -200,10 +200,14 @@ function buildWhatsAppMessage(
       "District / Area",
       form.district
     ),
-    whatsappField(
-      "Full Address",
-      form.address
-    ),
+    ...(form.address.trim()
+      ? [
+          whatsappField(
+            "Full Address",
+            form.address.trim()
+          ),
+        ]
+      : []),
     whatsappField(
       "Service",
       serviceLabel(form.service)
@@ -374,11 +378,6 @@ export default function CheckoutClient() {
     if (!form.district.trim()) {
       nextErrors.district =
         "Please enter your district or area.";
-    }
-
-    if (!form.address.trim()) {
-      nextErrors.address =
-        "Please enter your delivery or installation address.";
     }
 
     if (!form.agree) {
@@ -598,7 +597,7 @@ export default function CheckoutClient() {
 
                 <label className={styles.fullField}>
                   <span>
-                    Full Address <b>*</b>
+                    Full Address <small>(Optional)</small>
                   </span>
                   <textarea
                     value={form.address}
@@ -608,15 +607,10 @@ export default function CheckoutClient() {
                         event.target.value
                       )
                     }
-                    placeholder="House, road, area, district"
+                    placeholder="House, road, area"
                     rows={3}
                     autoComplete="street-address"
                   />
-                  {errors.address && (
-                    <small className={styles.error}>
-                      {errors.address}
-                    </small>
-                  )}
                 </label>
               </div>
             </section>
