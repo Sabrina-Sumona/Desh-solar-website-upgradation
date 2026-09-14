@@ -218,14 +218,27 @@ export default function ProductPlanningPanel({
 
             {profile.tool !== "system" && (
               <input
-                type="number"
-                min={profile.tool === "panel" ? 0 : 50}
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 value={value}
-                onChange={(event) =>
+                aria-label={planning.label}
+                onChange={(event) => {
+                  const digits =
+                    event.target.value.replace(
+                      /\D/g,
+                      ""
+                    );
+
                   setValue(
-                    Math.max(0, Number(event.target.value) || 0)
-                  )
-                }
+                    digits
+                      ? Math.max(
+                          0,
+                          Number(digits)
+                        )
+                      : 0
+                  );
+                }}
               />
             )}
 
