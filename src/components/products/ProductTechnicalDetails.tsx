@@ -49,6 +49,10 @@ function findEnergy(text: string) {
   return match ? `${match[1]} kWh` : null;
 }
 
+function formatDimensionFeet(valueMm: number) {
+  return (valueMm / 304.8).toFixed(2);
+}
+
 function formatDimensions(
   dimensions:
     | {
@@ -62,7 +66,9 @@ function formatDimensions(
     return "Confirm exact model";
   }
 
-  return `${dimensions.length} × ${dimensions.width} × ${dimensions.depth} mm`;
+  return `${formatDimensionFeet(dimensions.length)} × ${formatDimensionFeet(
+    dimensions.width
+  )} × ${formatDimensionFeet(dimensions.depth)} ft`;
 }
 
 function formatWeight(
