@@ -49,6 +49,44 @@ function findEnergy(text: string) {
   return match ? `${match[1]} kWh` : null;
 }
 
+function formatDimensions(
+  dimensions:
+    | {
+        length: number;
+        width: number;
+        depth: number;
+      }
+    | undefined
+) {
+  if (!dimensions) {
+    return "Confirm exact model";
+  }
+
+  return `${dimensions.length} × ${dimensions.width} × ${dimensions.depth} mm`;
+}
+
+function formatWeight(
+  weightKg: number | undefined
+) {
+  return typeof weightKg === "number"
+    ? `${weightKg} kg`
+    : "Confirm exact model";
+}
+
+function getFaceAreaSqFt(product: Product) {
+  const dimensions = product.physical?.dimensionsMm;
+
+  if (!dimensions) {
+    return null;
+  }
+
+  return (
+    dimensions.length *
+    dimensions.width /
+    92903.04
+  );
+}
+
 function findPhase(text: string) {
   if (/3[\s-]*phase|three[\s-]*phase/i.test(text)) {
     return "3-Phase";
@@ -85,6 +123,50 @@ function getPanelContent(
         note: "Derived from catalogue naming",
       },
       {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+        note: product.physical?.dimensionsMm
+          ? "Length × width × thickness"
+          : "Exact listed model / datasheet required",
+      },
+      ...(product.physical?.foldedDimensionsMm
+        ? [
+            {
+              label: "FOLDED DIMENSIONS",
+              value: formatDimensions(
+                product.physical.foldedDimensionsMm
+              ),
+              note: "Transport / storage size",
+            },
+          ]
+        : []),
+      {
+        label: "PANEL FACE AREA",
+        value: getFaceAreaSqFt(product)
+          ? `~${getFaceAreaSqFt(product)!.toFixed(1)} sq ft`
+          : "Confirm exact model",
+        note: "Calculated from length × width",
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
+      },
+      ...(product.physical?.modelReference
+        ? [
+            {
+              label: "MODEL REFERENCE",
+              value:
+                product.physical.modelReference,
+              note:
+                "Used for the physical-size reference",
+            },
+          ]
+        : []),
+      {
         label: "PRIMARY APPLICATION",
         value: compactList(product.bestFor),
       },
@@ -105,7 +187,7 @@ function getPanelContent(
     confirmItems: [
       "Module efficiency and cell technology",
       "Voc, Vmp, Isc and Imp electrical ratings",
-      "Physical dimensions, weight and mounting limits",
+      "Mounting-hole spacing, clamp zones and mechanical-load limits",
       "Connector type and cable specification",
       "Temperature coefficients and operating limits",
       "Product and performance warranty terms",
@@ -129,6 +211,18 @@ function getInverterContent(
         label: "RATED POWER",
         value: product.power,
         note: "Catalogue rating",
+      },
+      {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
       },
       {
         label: "SYSTEM ARCHITECTURE",
@@ -189,6 +283,18 @@ function getBatteryContent(
         note: "Catalogue rating",
       },
       {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
+      },
+      {
         label: "CHEMISTRY",
         value: chemistry,
         note: "Only shown when stated in catalogue text",
@@ -237,6 +343,18 @@ function getPortableContent(
       {
         label: "CATALOGUE RATING",
         value: product.power,
+      },
+      {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
       },
       {
         label: "FORMAT",

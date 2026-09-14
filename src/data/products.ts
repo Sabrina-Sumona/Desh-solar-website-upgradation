@@ -18,6 +18,20 @@ export type Product = {
   image: string;
   role: string;
   bestFor: string[];
+  physical?: {
+    modelReference?: string;
+    dimensionsMm?: {
+      length: number;
+      width: number;
+      depth: number;
+    };
+    foldedDimensionsMm?: {
+      length: number;
+      width: number;
+      depth: number;
+    };
+    weightKg?: number;
+  };
   featuredOrder: number;
 };
 
@@ -40,13 +54,27 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 45w portable solar panel ecoflow solar panel 45 w home portable portable compact pv outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow-45.jpg",
+    "image": "/assets/products-real/ecoflow45.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
       "Compact PV",
       "Outdoor"
     ],
+    "physical": {
+      "modelReference": "EcoFlow 45W Portable Solar Panel",
+      "dimensionsMm": {
+        "length": 980,
+        "width": 309,
+        "depth": 25
+      },
+      "foldedDimensionsMm": {
+        "length": 222,
+        "width": 309,
+        "depth": 45
+      },
+      "weightKg": 1.4
+    },
     "featuredOrder": 0
   },
   {
@@ -67,13 +95,27 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 60w portable solar panel ecoflow solar panel 60 w home portable portable compact pv outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow-60.jpg",
+    "image": "/assets/products-real/ecoflow60.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
       "Compact PV",
       "Outdoor"
     ],
+    "physical": {
+      "modelReference": "EcoFlow 60W Portable Solar Panel",
+      "dimensionsMm": {
+        "length": 1356,
+        "width": 309,
+        "depth": 25
+      },
+      "foldedDimensionsMm": {
+        "length": 317,
+        "width": 309,
+        "depth": 45
+      },
+      "weightKg": 2.0
+    },
     "featuredOrder": 1
   },
   {
@@ -94,13 +136,27 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 160w portable solar panel ecoflow solar panel 160 w home portable portable higher portable output outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow-160.jpg",
+    "image": "/assets/products-real/ecoflow160.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
       "Higher portable output",
       "Outdoor"
     ],
+    "physical": {
+      "modelReference": "EcoFlow 160W Portable Solar Panel",
+      "dimensionsMm": {
+        "length": 1570,
+        "width": 680,
+        "depth": 24
+      },
+      "foldedDimensionsMm": {
+        "length": 420,
+        "width": 680,
+        "depth": 24
+      },
+      "weightKg": 5.6
+    },
     "featuredOrder": 2
   },
   {
@@ -129,6 +185,14 @@ export const products: Product[] = [
       "Commercial",
       "Roof-efficient PV"
     ],
+    "physical": {
+      "modelReference": "Jinko JKM590N-72HL4 family",
+      "dimensionsMm": {
+        "length": 2278,
+        "width": 1134,
+        "depth": 30
+      }
+    },
     "featuredOrder": 3
   },
   {
@@ -183,6 +247,15 @@ export const products: Product[] = [
       "Commercial",
       "Industrial"
     ],
+    "physical": {
+      "modelReference": "Jinko 715W bifacial dual-glass listing",
+      "dimensionsMm": {
+        "length": 2384,
+        "width": 1303,
+        "depth": 33
+      },
+      "weightKg": 37.5
+    },
     "featuredOrder": 5
   },
   {
@@ -211,6 +284,15 @@ export const products: Product[] = [
       "Commercial",
       "High-output PV"
     ],
+    "physical": {
+      "modelReference": "Jinko JKM625N-66HL4M-BDV",
+      "dimensionsMm": {
+        "length": 2382,
+        "width": 1134,
+        "depth": 30
+      },
+      "weightKg": 32.4
+    },
     "featuredOrder": 6
   },
   {
@@ -238,6 +320,15 @@ export const products: Product[] = [
       "Bifacial",
       "Outdoor"
     ],
+    "physical": {
+      "modelReference": "EcoFlow 125W Solar Panel",
+      "dimensionsMm": {
+        "length": 1154,
+        "width": 612,
+        "depth": 22
+      },
+      "weightKg": 4.2
+    },
     "featuredOrder": 7
   },
   {
@@ -266,6 +357,14 @@ export const products: Product[] = [
       "Commercial",
       "Industrial"
     ],
+    "physical": {
+      "modelReference": "LONGi Hi-MO 7 615W family",
+      "dimensionsMm": {
+        "length": 2382,
+        "width": 1134,
+        "depth": 30
+      }
+    },
     "featuredOrder": 8
   },
   {

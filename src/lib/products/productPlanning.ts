@@ -146,3 +146,33 @@ export function parseEnergyKwh(product: Product) {
 
   return null;
 }
+
+export function getProductFaceAreaSqFt(
+  product: Product
+) {
+  const dimensions = product.physical?.dimensionsMm;
+
+  if (
+    !dimensions ||
+    dimensions.length <= 0 ||
+    dimensions.width <= 0
+  ) {
+    return null;
+  }
+
+  const squareMillimeters =
+    dimensions.length * dimensions.width;
+
+  return squareMillimeters / 92903.04;
+}
+
+export function isPortablePanelProduct(
+  product: Product
+) {
+  return Boolean(
+    product.physical?.foldedDimensionsMm
+  ) || /portable/i.test(
+    `${product.name} ${product.search}`
+  );
+}
+

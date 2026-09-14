@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import type { Product } from "@/data/products";
 import {
+  getProductFaceAreaSqFt,
   getProductPlanningProfile,
+  isPortablePanelProduct,
   parseEnergyKwh,
   parsePanelWatts,
   parseRatedKw,
@@ -44,13 +46,50 @@ export default function ProductPlanningPanel({
 
     if (profile.tool === "panel") {
       const watts = parsePanelWatts(product);
+      const faceAreaSqFt =
+        getProductFaceAreaSqFt(product);
+      const portable =
+        isPortablePanelProduct(product);
 
       if (!watts || watts <= 0) {
         return {
-          label: "Usable roof area (sq ft)",
-          result: "Confirm panel wattage before estimating roof fit",
+          label: portable
+            ? "Available setup area (sq ft)"
+            : "Usable roof area (sq ft)",
+          result:
+            "Confirm panel wattage before estimating fit",
           note:
-            "Final panel count also depends on real roof geometry, setbacks, orientation and the inverter string design.",
+            "Final panel count also depends on real geometry, spacing, orientation and electrical design.",
+        };
+      }
+
+      if (faceAreaSqFt && faceAreaSqFt > 0) {
+        const planningAreaPerPanel =
+          faceAreaSqFt * (portable ? 1.1 : 1.2);
+
+        const count = Math.max(
+          0,
+          Math.floor(
+            Math.max(0, value) /
+              planningAreaPerPanel
+          )
+        );
+
+        return {
+          label: portable
+            ? "Available setup area (sq ft)"
+            : "Usable roof area (sq ft)",
+          result: `~${count} panels • ~${(
+            (count * watts) /
+            1000
+          ).toFixed(1)} kWp`,
+          note: portable
+            ? `Uses this product's unfolded face area (~${faceAreaSqFt.toFixed(
+                1
+              )} sq ft) plus a small setup allowance. Final placement depends on orientation, stand angle and shading.`
+            : `Uses this product's face area (~${faceAreaSqFt.toFixed(
+                1
+              )} sq ft) plus a ~20% planning allowance for spacing and layout. Final design still requires roof setbacks, access paths, shading and string checks.`,
         };
       }
 
@@ -61,13 +100,15 @@ export default function ProductPlanningPanel({
       );
 
       return {
-        label: "Usable roof area (sq ft)",
+        label: portable
+          ? "Available setup area (sq ft)"
+          : "Usable roof area (sq ft)",
         result: `~${count} panels • ~${(
           (count * watts) /
           1000
         ).toFixed(1)} kWp`,
         note:
-          "Illustrative estimate using ~65 sq ft per kWp planning allowance. Final layout requires a site survey.",
+          "Product dimensions are not confirmed for this exact listing, so this uses the fallback ~65 sq ft per kWp planning allowance. Final layout requires a site review.",
       };
     }
 
@@ -119,7 +160,9 @@ export default function ProductPlanningPanel({
 
   const heading =
     profile.tool === "panel"
-      ? "Estimate roof fit"
+      ? isPortablePanelProduct(product)
+        ? "Estimate setup fit"
+        : "Estimate roof fit"
       : profile.tool === "inverter"
         ? "Check load class"
         : profile.tool === "system"
