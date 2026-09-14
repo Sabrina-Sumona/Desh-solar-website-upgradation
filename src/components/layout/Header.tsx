@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
 
 const PRODUCT_LINKS = [
@@ -74,9 +74,15 @@ const FEATURE_LINKS = [
 
 const CART_KEY = "deshSolarCartV1";
 
-function getStoredCartCount() {
+type HeaderCartItem = {
+  id: string;
+  name: string;
+  qty: number;
+};
+
+function getStoredCartItems(): HeaderCartItem[] {
   if (typeof window === "undefined") {
-    return 0;
+    return [];
   }
 
   try {
@@ -85,20 +91,37 @@ function getStoredCartCount() {
     );
 
     if (!Array.isArray(parsed)) {
-      return 0;
+      return [];
     }
 
-    return parsed.reduce((total, item) => {
-      const quantity = Math.max(
-        1,
-        Number(item?.qty) || 1
-      );
-
-      return total + quantity;
-    }, 0);
+    return parsed
+      .filter(
+        (item) =>
+          item &&
+          typeof item.id !== "undefined"
+      )
+      .map((item) => ({
+        id: String(item.id),
+        name:
+          typeof item.name === "string" &&
+          item.name.trim()
+            ? item.name
+            : "Product",
+        qty: Math.max(
+          1,
+          Number(item.qty) || 1
+        ),
+      }));
   } catch {
-    return 0;
+    return [];
   }
+}
+
+function getStoredCartCount() {
+  return getStoredCartItems().reduce(
+    (total, item) => total + item.qty,
+    0
+  );
 }
 
 function CartIcon() {
@@ -127,39 +150,145 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
+  const [cartToast, setCartToast] = useState<{
+    type: "added" | "removed";
+    productName: string;
+  } | null>(null);
+
+  const previousCartItemsRef =
+    useRef<HeaderCartItem[]>([]);
+  const cartToastTimerRef =
+    useRef<number | null>(null);
 
   useEffect(() => {
-    const syncCartCount = () => {
-      setCartCount(getStoredCartCount());
+    const showCartToast = (
+      type: "added" | "removed",
+      productName: string
+    ) => {
+      setCartToast({
+        type,
+        productName,
+      });
+
+      if (cartToastTimerRef.current !== null) {
+        window.clearTimeout(
+          cartToastTimerRef.current
+        );
+      }
+
+      cartToastTimerRef.current =
+        window.setTimeout(() => {
+          setCartToast(null);
+          cartToastTimerRef.current = null;
+        }, 2400);
     };
 
-    syncCartCount();
+    const syncCart = (
+      showToast = false
+    ) => {
+      const currentItems =
+        getStoredCartItems();
+      const previousItems =
+        previousCartItemsRef.current;
+
+      setCartCount(
+        currentItems.reduce(
+          (total, item) =>
+            total + item.qty,
+          0
+        )
+      );
+
+      if (showToast) {
+        const previousIds = new Set(
+          previousItems.map(
+            (item) => item.id
+          )
+        );
+        const currentIds = new Set(
+          currentItems.map(
+            (item) => item.id
+          )
+        );
+
+        const addedItem =
+          currentItems.find(
+            (item) =>
+              !previousIds.has(item.id)
+          );
+
+        const removedItem =
+          previousItems.find(
+            (item) =>
+              !currentIds.has(item.id)
+          );
+
+        if (addedItem) {
+          showCartToast(
+            "added",
+            addedItem.name
+          );
+        } else if (removedItem) {
+          showCartToast(
+            "removed",
+            removedItem.name
+          );
+        }
+      }
+
+      previousCartItemsRef.current =
+        currentItems;
+    };
+
+    syncCart(false);
+
+    const handleCartChange = () =>
+      syncCart(true);
+    const handleStorage = () =>
+      syncCart(true);
+    const handlePassiveSync = () =>
+      syncCart(false);
 
     window.addEventListener(
       "deshsolar:cartchange",
-      syncCartCount
+      handleCartChange
     );
-    window.addEventListener("storage", syncCartCount);
-    window.addEventListener("focus", syncCartCount);
-    window.addEventListener("pageshow", syncCartCount);
+    window.addEventListener(
+      "storage",
+      handleStorage
+    );
+    window.addEventListener(
+      "focus",
+      handlePassiveSync
+    );
+    window.addEventListener(
+      "pageshow",
+      handlePassiveSync
+    );
 
     return () => {
       window.removeEventListener(
         "deshsolar:cartchange",
-        syncCartCount
+        handleCartChange
       );
       window.removeEventListener(
         "storage",
-        syncCartCount
+        handleStorage
       );
       window.removeEventListener(
         "focus",
-        syncCartCount
+        handlePassiveSync
       );
       window.removeEventListener(
         "pageshow",
-        syncCartCount
+        handlePassiveSync
       );
+
+      if (cartToastTimerRef.current !== null) {
+        window.clearTimeout(
+          cartToastTimerRef.current
+        );
+      }
     };
   }, []);
 
@@ -646,6 +775,35 @@ export default function Header() {
           </button>
         </div>
       </div>
+
+      {cartToast && (
+        <div
+          className={`headerCartToast ${
+            cartToast.type === "added"
+              ? "headerCartToastAdded"
+              : "headerCartToastRemoved"
+          }`}
+          role="status"
+          aria-live="polite"
+        >
+          <span
+            className="headerCartToastPointer"
+            aria-hidden="true"
+          />
+
+          <small>CART</small>
+
+          <strong>
+            {cartToast.type === "added"
+              ? "Added to Cart"
+              : "Removed from Cart"}
+          </strong>
+
+          <span className="headerCartToastProduct">
+            {cartToast.productName}
+          </span>
+        </div>
+      )}
 
       <CartQuickDrawer
         open={cartOpen}
