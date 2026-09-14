@@ -296,6 +296,8 @@ export default function CheckoutClient() {
     useState<CheckoutForm>(INITIAL_FORM);
   const [hydrated, setHydrated] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [whatsAppFallbackUrl, setWhatsAppFallbackUrl] =
+    useState("");
   const [savingLead, setSavingLead] = useState(false);
   const [leadSaveError, setLeadSaveError] =
     useState("");
@@ -375,6 +377,7 @@ export default function CheckoutClient() {
     }
 
     setSubmitted(false);
+    setWhatsAppFallbackUrl("");
   };
 
   const validate = () => {
@@ -430,6 +433,7 @@ export default function CheckoutClient() {
 
     setLeadSaveError("");
     setSubmitted(false);
+    setWhatsAppFallbackUrl("");
     setSavingLead(true);
 
     const normalizedPhone =
@@ -526,12 +530,14 @@ export default function CheckoutClient() {
       if (whatsappWindow) {
         whatsappWindow.location.href = url;
       } else {
-        window.location.href = url;
+        setWhatsAppFallbackUrl(url);
       }
     } catch (error) {
       if (whatsappWindow) {
         whatsappWindow.close();
       }
+
+      setWhatsAppFallbackUrl("");
 
       setLeadSaveError(
         error instanceof Error
@@ -982,10 +988,40 @@ export default function CheckoutClient() {
               </p>
 
               {submitted && (
-                <div className={styles.sentNotice}>
-                  WhatsApp opened with your order request.
-                  Review the message and tap Send to
-                  contact Desh Solar.
+                <div
+                  className={styles.sentNotice}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <strong>
+                    Contact information saved.
+                  </strong>
+
+                  {whatsAppFallbackUrl ? (
+                    <>
+                      <span>
+                        Your browser did not open WhatsApp
+                        automatically. Use the button below
+                        to continue with your prepared order
+                        message.
+                      </span>
+
+                      <a
+                        className={styles.whatsappFallback}
+                        href={whatsAppFallbackUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Open WhatsApp →
+                      </a>
+                    </>
+                  ) : (
+                    <span>
+                      WhatsApp opened with your prepared
+                      order request. Review the message and
+                      tap Send to contact Desh Solar.
+                    </span>
+                  )}
                 </div>
               )}
             </section>

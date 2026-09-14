@@ -324,6 +324,13 @@
   transform: translateY(-1px);
 }
 
+
+.submitButton:disabled {
+  cursor: wait;
+  opacity: 0.62;
+  transform: none;
+}
+
 .confirmPanel > p {
   margin: 10px 0 0;
   color: #657c86;
@@ -334,13 +341,49 @@
 
 .sentNotice {
   margin-top: 12px;
-  padding: 11px 12px;
-  border: 1px solid rgba(145, 239, 91, 0.15);
+  padding: 12px;
+  border: 1px solid rgba(145, 239, 91, 0.16);
   border-radius: 10px;
-  background: rgba(145, 239, 91, 0.025);
+  background: rgba(145, 239, 91, 0.028);
   color: #a6c795;
   font-size: 8px;
-  line-height: 1.5;
+  line-height: 1.55;
+}
+
+.sentNotice strong,
+.sentNotice span {
+  display: block;
+}
+
+.sentNotice strong {
+  margin-bottom: 4px;
+  color: #dffacb;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.whatsappFallback {
+  min-height: 40px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(145, 239, 91, 0.22);
+  border-radius: 9px;
+  background: rgba(145, 239, 91, 0.055);
+  color: #e3ffd1;
+  font-size: 8px;
+  font-weight: 900;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.whatsappFallback:hover {
+  border-color: rgba(145, 239, 91, 0.38);
+  background: rgba(145, 239, 91, 0.09);
+  transform: translateY(-1px);
 }
 
 .sideColumn {
