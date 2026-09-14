@@ -18,6 +18,7 @@ type CustomerLeadPayload = {
 
 type GoogleSheetResponse = {
   success?: boolean;
+  duplicate?: boolean;
   code?: string;
   message?: string;
 };
@@ -146,6 +147,28 @@ function createRateKey(
     .slice(0, 32);
 }
 
+function createSubmissionKey(
+  lead: CustomerLeadPayload,
+  secret: string
+) {
+  const canonicalLead = [
+    lead.name.toLowerCase(),
+    lead.phone.toLowerCase(),
+    lead.email.toLowerCase(),
+    lead.address.toLowerCase(),
+    lead.fullAddress.toLowerCase(),
+    lead.additionalNotes.toLowerCase(),
+  ].join("|");
+
+  return createHmac(
+    "sha256",
+    secret
+  )
+    .update(canonicalLead)
+    .digest("hex")
+    .slice(0, 40);
+}
+
 async function saveLeadToGoogleSheet(
   lead: CustomerLeadPayload,
   clientIdentifier: string
@@ -173,6 +196,12 @@ async function saveLeadToGoogleSheet(
       secret
     );
 
+  const submissionKey =
+    createSubmissionKey(
+      lead,
+      secret
+    );
+
   const controller =
     new AbortController();
 
@@ -194,6 +223,7 @@ async function saveLeadToGoogleSheet(
         body: JSON.stringify({
           secret,
           rateKey,
+          submissionKey,
           ...lead,
         }),
         cache: "no-store",
@@ -236,6 +266,11 @@ async function saveLeadToGoogleSheet(
         "GOOGLE_SHEETS_SAVE_REJECTED"
       );
     }
+
+    return {
+      duplicate:
+        result.duplicate === true,
+    };
   } finally {
     clearTimeout(timeout);
   }
@@ -276,13 +311,16 @@ export async function POST(
       );
     }
 
-    await saveLeadToGoogleSheet(
-      lead,
-      getClientIdentifier(request)
-    );
+    const result =
+      await saveLeadToGoogleSheet(
+        lead,
+        getClientIdentifier(request)
+      );
 
     return NextResponse.json({
       success: true,
+      duplicate:
+        result.duplicate,
     });
   } catch (error) {
     if (
