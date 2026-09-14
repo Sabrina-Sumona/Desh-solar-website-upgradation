@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
 
 const PRODUCT_LINKS = [
   {
@@ -125,6 +126,7 @@ export default function Header() {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [cartOpen, setCartOpen] = useState(false);
 
   useEffect(() => {
     const syncCartCount = () => {
@@ -178,6 +180,15 @@ export default function Header() {
   const closeMobileMenu = () => {
     setMobileOpen(false);
   };
+
+  const openCart = useCallback(() => {
+    setMobileOpen(false);
+    setCartOpen(true);
+  }, []);
+
+  const closeCart = useCallback(() => {
+    setCartOpen(false);
+  }, []);
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -382,19 +393,24 @@ export default function Header() {
               CART
               ================================================= */}
 
-          <Link
-            href="/cart"
+          <button
+            type="button"
             aria-current={
               isActive("/cart")
                 ? "page"
                 : undefined
             }
+            aria-expanded={cartOpen}
+            aria-controls="cartQuickDrawer"
             className={`navCart ${
               isActive("/cart")
                 ? "navCartActive"
                 : ""
             }`}
-            aria-label="Shopping cart"
+            aria-label={`Open shopping cart. ${cartCount} ${
+              cartCount === 1 ? "item" : "items"
+            } in cart`}
+            onClick={openCart}
           >
             <span
               className="navCartGlow"
@@ -411,13 +427,11 @@ export default function Header() {
 
             <span
               className="cartCount"
-              aria-label={`${cartCount} ${
-                cartCount === 1 ? "item" : "items"
-              } in cart`}
+              aria-hidden="true"
             >
               {cartCount}
             </span>
-          </Link>
+          </button>
         </div>
 
         {/* =================================================
@@ -594,19 +608,24 @@ export default function Header() {
               MOBILE CART
               =============================================== */}
 
-          <Link
-            href="/cart"
-            onClick={closeMobileMenu}
+          <button
+            type="button"
+            onClick={openCart}
             aria-current={
               isActive("/cart")
                 ? "page"
                 : undefined
             }
+            aria-expanded={cartOpen}
+            aria-controls="cartQuickDrawer"
             className={`mobileCart ${
               isActive("/cart")
                 ? "mobileCartActive"
                 : ""
             }`}
+            aria-label={`Open shopping cart. ${cartCount} ${
+              cartCount === 1 ? "item" : "items"
+            } in cart`}
           >
             <span className="mobileCartGlow" />
 
@@ -620,15 +639,18 @@ export default function Header() {
 
             <span
               className="mobileCartCount"
-              aria-label={`${cartCount} ${
-                cartCount === 1 ? "item" : "items"
-              } in cart`}
+              aria-hidden="true"
             >
               {cartCount}
             </span>
-          </Link>
+          </button>
         </div>
       </div>
+
+      <CartQuickDrawer
+        open={cartOpen}
+        onClose={closeCart}
+      />
     </header>
   );
 }
