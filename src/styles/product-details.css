@@ -756,6 +756,68 @@
   font-weight: 900;
 }
 
+.pdDecisionSupportAnchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: 96px;
+}
+
+.pdBuilderActions {
+  display: grid;
+  width: 390px;
+  flex: 0 0 390px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+}
+
+.pdBuilderActions > .pdBuilderButton {
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  font-family: inherit !important;
+  font-size: 10px !important;
+  font-weight: 850 !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.pdBuilderButton {
+  width: 100%;
+  min-height: 46px;
+  padding-inline: 14px;
+  white-space: nowrap;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pdBuilderButton:hover {
+  border-color: rgba(200, 255, 125, 0.42);
+  background: rgba(145, 239, 91, 0.09);
+  transform: translateY(-1px);
+}
+
+.pdBuilderButtonSecondary {
+  border-color: rgba(137, 191, 214, 0.18);
+  background: rgba(137, 191, 214, 0.025);
+  color: #bed3dd;
+}
+
+.pdBuilderButtonSecondary:hover {
+  border-color: rgba(137, 191, 214, 0.32);
+  background: rgba(137, 191, 214, 0.06);
+  color: #e0edf2;
+}
+
 /* =========================================================
    RELATED PRODUCTS
    ========================================================= */
@@ -1074,9 +1136,18 @@
     padding: 22px;
   }
 
+  .pdBuilderActions {
+    display: grid;
+    width: 100%;
+    flex: none;
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 18px;
+  }
+
   .pdBuilderButton {
     width: 100%;
-    margin-top: 18px;
+    margin-top: 0;
   }
 
   .pdRelatedBody h3 {
@@ -1438,6 +1509,164 @@
   .pdSectionHead > p,
   .pdFinalCta p {
     font-size: 11px;
+  }
+}
+
+.pdBuilderUseButton {
+  cursor: pointer;
+}
+
+.pdBuilderUseButton.isAdded {
+  border-color: rgba(200, 255, 125, 0.38);
+  background: rgba(145, 239, 91, 0.105);
+  color: #e9ffd9;
+  cursor: default;
+}
+
+.pdBuilderUseButton.isAdded:hover {
+  border-color: rgba(200, 255, 125, 0.38);
+  background: rgba(145, 239, 91, 0.105);
+  transform: none;
+}
+
+/* Build Your System toast */
+.pdSystemToast {
+  position: fixed;
+  top: 68px;
+  right: 145px;
+  z-index: 1400;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  width: min(330px, calc(100vw - 28px));
+  padding: 12px 14px;
+  border: 1px solid rgba(200, 255, 125, 0.24);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.06),
+      rgba(7, 18, 24, 0.97) 48%
+    ),
+    #071218;
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(16px);
+  animation: pdSystemToastIn 0.22s ease-out;
+}
+
+.pdSystemToast::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 84px;
+  width: 9px;
+  height: 9px;
+  border-top: 1px solid rgba(200, 255, 125, 0.24);
+  border-left: 1px solid rgba(200, 255, 125, 0.24);
+  background: #0a171d;
+  transform: rotate(45deg);
+}
+
+.pdSystemToast.isRemoved {
+  border-color: rgba(137, 191, 214, 0.22);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(137, 191, 214, 0.05),
+      rgba(7, 18, 24, 0.97) 48%
+    ),
+    #071218;
+}
+
+.pdSystemToast.isRemoved::before {
+  border-color: rgba(137, 191, 214, 0.22);
+}
+
+.pdSystemToastIcon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  align-self: center;
+  border: 1px solid rgba(200, 255, 125, 0.28);
+  border-radius: 9px;
+  background: rgba(145, 239, 91, 0.07);
+  color: #d9ffc0;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.pdSystemToast.isRemoved .pdSystemToastIcon {
+  border-color: rgba(137, 191, 214, 0.24);
+  background: rgba(137, 191, 214, 0.05);
+  color: #b9d8e5;
+}
+
+.pdSystemToast > div {
+  min-width: 0;
+}
+
+.pdSystemToast small,
+.pdSystemToast strong,
+.pdSystemToast > div > span {
+  display: block;
+}
+
+.pdSystemToast small {
+  color: #91a7b0;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.pdSystemToast strong {
+  margin-top: 3px;
+  color: #e8f5ed;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.pdSystemToast > div > span {
+  overflow: hidden;
+  margin-top: 3px;
+  color: #8398a1;
+  font-size: 9px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@keyframes pdSystemToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .pdSystemToast {
+    top: 72px;
+    right: 14px;
+  }
+
+  .pdSystemToast::before {
+    right: 38px;
+  }
+}
+
+@media (max-width: 560px) {
+  .pdSystemToast {
+    top: 68px;
+    right: 14px;
+    left: 14px;
+    width: auto;
   }
 }
 

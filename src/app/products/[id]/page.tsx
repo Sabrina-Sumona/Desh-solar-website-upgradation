@@ -7,6 +7,7 @@ import ProductDetailsActions from "@/components/products/ProductDetailsActions";
 import ProductImageGallery from "@/components/products/ProductImageGallery";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
+import ProductSystemBuildActions from "@/components/products/ProductSystemBuildActions";
 import SystemPackageBreakdown from "@/components/products/SystemPackageBreakdown";
 import { products, type Product } from "@/data/products";
 
@@ -198,12 +199,6 @@ export default async function ProductDetailsPage({
     `Assalamu Alaikum. I want to know more about ${product.name} (${product.id}).`
   );
 
-  const buildSystemHref =
-    `/build-your-system?selectedProduct=${encodeURIComponent(product.id)}` +
-    `&productType=${encodeURIComponent(product.category)}` +
-    `&selectedName=${encodeURIComponent(product.name)}` +
-    `&selectedRating=${encodeURIComponent(product.power)}`;
-
   return (
     <main className="pdPage">
       <section className="pdHero">
@@ -297,6 +292,12 @@ export default async function ProductDetailsPage({
       />
 
       <SystemPackageBreakdown product={product} />
+
+      <span
+        id="decision-support"
+        className="pdDecisionSupportAnchor"
+        aria-hidden="true"
+      />
 
       <ProductPlanningPanel
         product={product}
@@ -411,9 +412,9 @@ export default async function ProductDetailsPage({
             </p>
           </div>
 
-          <Link className="pdBuilderButton" href={buildSystemHref}>
-            Use in My System →
-          </Link>
+          <ProductSystemBuildActions
+            product={product}
+          />
         </div>
       </section>
 
