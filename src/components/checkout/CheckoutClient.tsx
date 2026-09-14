@@ -278,6 +278,7 @@ export default function CheckoutClient() {
   const [savingLead, setSavingLead] = useState(false);
   const [leadSaveError, setLeadSaveError] =
     useState("");
+  const [website, setWebsite] = useState("");
   const [errors, setErrors] = useState<
     Partial<Record<keyof CheckoutForm, string>>
   >({});
@@ -445,6 +446,7 @@ export default function CheckoutClient() {
             address: form.district.trim(),
             fullAddress: form.address.trim(),
             additionalNotes: form.notes.trim(),
+            website,
           }),
         }
       );
@@ -459,10 +461,17 @@ export default function CheckoutClient() {
 
           if (
             errorData?.code ===
-            "EXCEL_FILE_LOCKED"
+            "RATE_LIMITED"
           ) {
             message =
-              "The customer-leads.xlsx file is currently open. Close the Excel file and try Confirm Order again.";
+              "Too many order requests were sent from this connection. Please wait a few minutes and try again.";
+          } else if (
+            typeof errorData?.message ===
+            "string" &&
+            errorData.message.trim()
+          ) {
+            message =
+              errorData.message.trim();
           }
         } catch {
           // Keep the safe fallback message.
@@ -551,6 +560,34 @@ export default function CheckoutClient() {
             onSubmit={handleSubmit}
             noValidate
           >
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-10000px",
+                top: "auto",
+                width: "1px",
+                height: "1px",
+                overflow: "hidden",
+              }}
+            >
+              <label>
+                Website
+                <input
+                  type="text"
+                  name="website"
+                  value={website}
+                  onChange={(event) =>
+                    setWebsite(
+                      event.target.value
+                    )
+                  }
+                  autoComplete="off"
+                  tabIndex={-1}
+                />
+              </label>
+            </div>
+
             <section className={styles.panel}>
               <header className={styles.panelHeader}>
                 <span>01</span>

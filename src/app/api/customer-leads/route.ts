@@ -2,6 +2,7 @@ import {
   NextRequest,
   NextResponse,
 } from "next/server";
+import { createHmac } from "node:crypto";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -17,6 +18,7 @@ type CustomerLeadPayload = {
 
 type GoogleSheetResponse = {
   success?: boolean;
+  code?: string;
   message?: string;
 };
 
@@ -85,8 +87,68 @@ function parseLead(
   return lead;
 }
 
+function hasHoneypotValue(
+  body: unknown
+) {
+  if (
+    !body ||
+    typeof body !== "object"
+  ) {
+    return false;
+  }
+
+  const record =
+    body as Record<string, unknown>;
+
+  return Boolean(
+    cleanText(
+      record.website,
+      200
+    )
+  );
+}
+
+function getClientIdentifier(
+  request: NextRequest
+) {
+  const forwardedFor =
+    request.headers.get(
+      "x-forwarded-for"
+    );
+
+  const forwardedIp =
+    forwardedFor
+      ?.split(",")[0]
+      ?.trim();
+
+  const realIp =
+    request.headers
+      .get("x-real-ip")
+      ?.trim();
+
+  return (
+    forwardedIp ||
+    realIp ||
+    "local-development"
+  );
+}
+
+function createRateKey(
+  clientIdentifier: string,
+  secret: string
+) {
+  return createHmac(
+    "sha256",
+    secret
+  )
+    .update(clientIdentifier)
+    .digest("hex")
+    .slice(0, 32);
+}
+
 async function saveLeadToGoogleSheet(
-  lead: CustomerLeadPayload
+  lead: CustomerLeadPayload,
+  clientIdentifier: string
 ) {
   const webAppUrl =
     process.env
@@ -104,6 +166,12 @@ async function saveLeadToGoogleSheet(
       "GOOGLE_SHEETS_CONFIGURATION_MISSING"
     );
   }
+
+  const rateKey =
+    createRateKey(
+      clientIdentifier,
+      secret
+    );
 
   const controller =
     new AbortController();
@@ -125,6 +193,7 @@ async function saveLeadToGoogleSheet(
         },
         body: JSON.stringify({
           secret,
+          rateKey,
           ...lead,
         }),
         cache: "no-store",
@@ -153,6 +222,15 @@ async function saveLeadToGoogleSheet(
       );
     }
 
+    if (
+      !result?.success &&
+      result?.code === "RATE_LIMITED"
+    ) {
+      throw new Error(
+        "RATE_LIMITED"
+      );
+    }
+
     if (!result?.success) {
       throw new Error(
         "GOOGLE_SHEETS_SAVE_REJECTED"
@@ -169,6 +247,17 @@ export async function POST(
   try {
     const body =
       await request.json();
+
+    /*
+     * Honeypot:
+     * real users never see or fill the hidden Website field.
+     * Bots that automatically populate it are silently ignored.
+     */
+    if (hasHoneypotValue(body)) {
+      return NextResponse.json({
+        success: true,
+      });
+    }
 
     const lead =
       parseLead(body);
@@ -188,7 +277,8 @@ export async function POST(
     }
 
     await saveLeadToGoogleSheet(
-      lead
+      lead,
+      getClientIdentifier(request)
     );
 
     return NextResponse.json({
@@ -227,6 +317,24 @@ export async function POST(
         },
         {
           status: 500,
+        }
+      );
+    }
+
+    if (
+      error instanceof Error &&
+      error.message ===
+        "RATE_LIMITED"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          code: "RATE_LIMITED",
+          message:
+            "Too many order requests. Please wait a few minutes and try again.",
+        },
+        {
+          status: 429,
         }
       );
     }
