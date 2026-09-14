@@ -1,191 +1,232 @@
-import { NextRequest, NextResponse } from "next/server";
-import ExcelJS from "exceljs";
-import fs from "node:fs";
-import path from "node:path";
+import {
+  NextRequest,
+  NextResponse,
+} from "next/server";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-const DATA_DIRECTORY = path.join(process.cwd(), "data");
-const EXCEL_FILE = path.join(DATA_DIRECTORY, "customer-leads.xlsx");
-const SHEET_NAME = "Customers";
-
-const STATUS_OPTIONS = [
-  "New Entry",
-  "Contacted",
-  "Not Confirmed",
-  "Confirmed",
-  "Sale Complete",
-] as const;
-
-const DEFAULT_STATUS = STATUS_OPTIONS[0];
-
-type CustomerLead = {
+type CustomerLeadPayload = {
   name: string;
   phone: string;
   email: string;
   address: string;
   fullAddress: string;
   additionalNotes: string;
-  status: string;
 };
 
-let writeQueue: Promise<void> = Promise.resolve();
+type GoogleSheetResponse = {
+  success?: boolean;
+  message?: string;
+};
 
-function cleanText(value: unknown, maxLength: number) {
+function cleanText(
+  value: unknown,
+  maxLength: number
+) {
   if (typeof value !== "string") {
     return "";
   }
 
-  return value.replace(/\s+/g, " ").trim().slice(0, maxLength);
+  return value
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
 }
 
-function parseLead(body: unknown): CustomerLead | null {
-  if (!body || typeof body !== "object") {
+function parseLead(
+  body: unknown
+): CustomerLeadPayload | null {
+  if (
+    !body ||
+    typeof body !== "object"
+  ) {
     return null;
   }
 
-  const record = body as Record<string, unknown>;
+  const record =
+    body as Record<string, unknown>;
 
-  const lead: CustomerLead = {
-    name: cleanText(record.name, 120),
-    phone: cleanText(record.phone, 40),
-    email: cleanText(record.email, 160),
-    address: cleanText(record.address, 160),
-    fullAddress: cleanText(record.fullAddress, 500),
-    additionalNotes: cleanText(record.additionalNotes, 1000),
-    status: DEFAULT_STATUS,
+  const lead: CustomerLeadPayload = {
+    name: cleanText(
+      record.name,
+      120
+    ),
+    phone: cleanText(
+      record.phone,
+      40
+    ),
+    email: cleanText(
+      record.email,
+      160
+    ),
+    address: cleanText(
+      record.address,
+      160
+    ),
+    fullAddress: cleanText(
+      record.fullAddress,
+      500
+    ),
+    additionalNotes: cleanText(
+      record.additionalNotes,
+      1000
+    ),
   };
 
-  if (!lead.name || !lead.phone || !lead.address) {
+  if (
+    !lead.name ||
+    !lead.phone ||
+    !lead.address
+  ) {
     return null;
   }
 
   return lead;
 }
 
-function configureWorksheet(worksheet: ExcelJS.Worksheet) {
-  worksheet.columns = [
-    { header: "Name", key: "name", width: 28 },
-    { header: "Phone", key: "phone", width: 20 },
-    { header: "Email", key: "email", width: 34 },
-    { header: "Address", key: "address", width: 24 },
-    { header: "Full Address", key: "fullAddress", width: 45 },
-    { header: "Additional Notes", key: "additionalNotes", width: 50 },
-    { header: "Status", key: "status", width: 20 },
-  ];
+async function saveLeadToGoogleSheet(
+  lead: CustomerLeadPayload
+) {
+  const webAppUrl =
+    process.env
+      .GOOGLE_SHEETS_WEB_APP_URL;
 
-  worksheet.getRow(1).font = { bold: true };
-  worksheet.getRow(1).alignment = { vertical: "middle" };
+  const secret =
+    process.env
+      .GOOGLE_SHEETS_LEAD_SECRET;
 
-  worksheet.views = [{ state: "frozen", ySplit: 1 }];
-  worksheet.autoFilter = { from: "A1", to: "G1" };
+  if (
+    !webAppUrl ||
+    !secret
+  ) {
+    throw new Error(
+      "GOOGLE_SHEETS_CONFIGURATION_MISSING"
+    );
+  }
 
-  const statusFormula = `"${STATUS_OPTIONS.join(",")}"`;
+  const controller =
+    new AbortController();
 
-  for (let rowNumber = 2; rowNumber <= worksheet.rowCount; rowNumber += 1) {
-    const cell = worksheet.getCell(`G${rowNumber}`);
+  const timeout =
+    setTimeout(
+      () => controller.abort(),
+      12000
+    );
 
-    if (!cell.value) {
-      cell.value = DEFAULT_STATUS;
+  try {
+    const response = await fetch(
+      webAppUrl,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+        body: JSON.stringify({
+          secret,
+          ...lead,
+        }),
+        cache: "no-store",
+        redirect: "follow",
+        signal: controller.signal,
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(
+        "GOOGLE_SHEETS_HTTP_ERROR"
+      );
     }
 
-    cell.dataValidation = {
-      type: "list",
-      allowBlank: false,
-      formulae: [statusFormula],
-      showErrorMessage: true,
-      errorTitle: "Invalid Status",
-      error: "Select a status from the dropdown list.",
-    };
+    let result:
+      | GoogleSheetResponse
+      | null = null;
+
+    try {
+      result =
+        (await response.json()) as
+          GoogleSheetResponse;
+    } catch {
+      throw new Error(
+        "GOOGLE_SHEETS_INVALID_RESPONSE"
+      );
+    }
+
+    if (!result?.success) {
+      throw new Error(
+        "GOOGLE_SHEETS_SAVE_REJECTED"
+      );
+    }
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
-async function appendLead(lead: CustomerLead) {
-  await fs.promises.mkdir(DATA_DIRECTORY, { recursive: true });
-
-  const workbook = new ExcelJS.Workbook();
-
-  if (fs.existsSync(EXCEL_FILE)) {
-    await workbook.xlsx.readFile(EXCEL_FILE);
-  }
-
-  let worksheet = workbook.getWorksheet(SHEET_NAME);
-
-  if (!worksheet) {
-    worksheet = workbook.addWorksheet(SHEET_NAME);
-  }
-
-  configureWorksheet(worksheet);
-
-  const row = worksheet.addRow({
-    name: lead.name,
-    phone: lead.phone,
-    email: lead.email,
-    address: lead.address,
-    fullAddress: lead.fullAddress,
-    additionalNotes: lead.additionalNotes,
-    status: lead.status,
-  });
-
-  row.alignment = {
-    vertical: "top",
-    wrapText: true,
-  };
-
-  worksheet.getCell(`G${row.number}`).dataValidation = {
-    type: "list",
-    allowBlank: false,
-    formulae: [`"${STATUS_OPTIONS.join(",")}"`],
-    showErrorMessage: true,
-    errorTitle: "Invalid Status",
-    error: "Select a status from the dropdown list.",
-  };
-
-  await workbook.xlsx.writeFile(EXCEL_FILE);
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(
+  request: NextRequest
+) {
   try {
-    const body = await request.json();
-    const lead = parseLead(body);
+    const body =
+      await request.json();
+
+    const lead =
+      parseLead(body);
 
     if (!lead) {
       return NextResponse.json(
         {
           success: false,
-          message: "Invalid customer information.",
+          code: "INVALID_CUSTOMER_DATA",
+          message:
+            "Required customer information is missing.",
         },
-        { status: 400 }
+        {
+          status: 400,
+        }
       );
     }
 
-    writeQueue = writeQueue
-      .catch(() => undefined)
-      .then(() => appendLead(lead));
-
-    await writeQueue;
+    await saveLeadToGoogleSheet(
+      lead
+    );
 
     return NextResponse.json({
       success: true,
     });
   } catch (error) {
-    const fileError =
-      error as NodeJS.ErrnoException;
-
     if (
-      fileError?.code === "EBUSY" ||
-      fileError?.code === "EPERM" ||
-      fileError?.code === "EACCES"
+      error instanceof Error &&
+      error.name === "AbortError"
     ) {
       return NextResponse.json(
         {
           success: false,
-          code: "EXCEL_FILE_LOCKED",
+          code: "GOOGLE_SHEETS_TIMEOUT",
           message:
-            "The Excel file is currently open or locked.",
+            "Google Sheets took too long to respond.",
         },
         {
-          status: 423,
+          status: 504,
+        }
+      );
+    }
+
+    if (
+      error instanceof Error &&
+      error.message ===
+        "GOOGLE_SHEETS_CONFIGURATION_MISSING"
+    ) {
+      return NextResponse.json(
+        {
+          success: false,
+          code:
+            "GOOGLE_SHEETS_CONFIGURATION_MISSING",
+          message:
+            "Google Sheets integration is not configured.",
+        },
+        {
+          status: 500,
         }
       );
     }
@@ -193,12 +234,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        code: "EXCEL_SAVE_FAILED",
+        code: "GOOGLE_SHEETS_SAVE_FAILED",
         message:
           "Could not save customer information.",
       },
       {
-        status: 500,
+        status: 502,
       }
     );
   }
