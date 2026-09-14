@@ -407,7 +407,7 @@ export default function CheckoutClient() {
 
     if (!form.agree) {
       nextErrors.agree =
-        "Please confirm the order-review notice.";
+        "Please confirm the order and contact-details notice.";
     }
 
     setErrors(nextErrors);
@@ -942,9 +942,11 @@ export default function CheckoutClient() {
                 <span>
                   I understand that online catalogue
                   prices and product availability may
-                  change, and Desh Solar will confirm the
-                  final commercial and technical details
-                  before the order is finalized.
+                  change. I also agree that Desh Solar may
+                  store and use the contact details I
+                  provide to follow up about this order
+                  request and confirm the final commercial
+                  and technical details.
                 </span>
               </label>
 
@@ -972,11 +974,11 @@ export default function CheckoutClient() {
               )}
 
               <p>
-                Confirming saves your contact details,
-                address and additional notes, then opens
-                WhatsApp with your checkout details prepared
-                for Desh Solar. Your cart is not cleared
-                automatically.
+                Your submitted contact details are used
+                for this order follow-up. Confirming then
+                opens WhatsApp with your checkout details
+                prepared for Desh Solar. Your cart is not
+                cleared automatically.
               </p>
 
               {submitted && (
