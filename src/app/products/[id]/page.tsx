@@ -139,22 +139,244 @@ function getTechnicalReview(product: Product) {
   }
 }
 
-function getRelatedProducts(product: Product) {
-  return products
-    .filter(
-      (candidate) =>
-        candidate.id !== product.id &&
-        candidate.category === product.category
-    )
-    .sort((a, b) => {
-      const brandMatchA = a.brand === product.brand ? 0 : 1;
-      const brandMatchB = b.brand === product.brand ? 0 : 1;
+type CapacityMetric = {
+  family: string;
+  value: number;
+};
 
-      if (brandMatchA !== brandMatchB) {
-        return brandMatchA - brandMatchB;
+function firstNumber(
+  text: string,
+  pattern: RegExp
+) {
+  const match = text.match(pattern);
+
+  if (!match) {
+    return null;
+  }
+
+  const value = Number(match[1]);
+
+  return Number.isFinite(value)
+    ? value
+    : null;
+}
+
+function isPortablePanelProduct(
+  product: Product
+) {
+  return (
+    product.category === "panel" &&
+    (
+      product.apps.includes("portable") ||
+      product.name
+        .toLowerCase()
+        .includes("portable")
+    )
+  );
+}
+
+function getCapacityMetric(
+  product: Product
+): CapacityMetric | null {
+  const power = product.power;
+  const name = product.name.toLowerCase();
+
+  if (product.category === "panel") {
+    const watts = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*w\b/i
+    );
+
+    if (watts === null) {
+      return null;
+    }
+
+    return {
+      family: isPortablePanelProduct(product)
+        ? "panel-portable"
+        : "panel-fixed",
+      value: watts,
+    };
+  }
+
+  if (product.category === "inverter") {
+    const kilowatts = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*kw\b/i
+    );
+
+    if (kilowatts === null) {
+      return null;
+    }
+
+    return {
+      family: "inverter",
+      value: kilowatts,
+    };
+  }
+
+  if (product.category === "portable") {
+    const watts = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*w\b/i
+    );
+
+    if (watts === null) {
+      return null;
+    }
+
+    return {
+      family: "portable-power",
+      value: watts,
+    };
+  }
+
+  if (product.category === "battery") {
+    const ampHours = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*ah\b/i
+    );
+
+    if (ampHours !== null) {
+      return {
+        family: "battery-ah",
+        value: ampHours,
+      };
+    }
+
+    const kilowattHours = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*kwh\b/i
+    );
+
+    if (kilowattHours !== null) {
+      return {
+        family: "battery-kwh",
+        value: kilowattHours,
+      };
+    }
+
+    return null;
+  }
+
+  if (product.category === "system") {
+    const horsepower = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*hp\b/i
+    );
+
+    if (
+      horsepower !== null ||
+      name.includes("pump")
+    ) {
+      return horsepower === null
+        ? null
+        : {
+            family: "system-pump",
+            value: horsepower,
+          };
+    }
+
+    const kilowatts = firstNumber(
+      power,
+      /(\d+(?:\.\d+)?)\s*kw\b/i
+    );
+
+    if (kilowatts === null) {
+      return null;
+    }
+
+    return {
+      family: "system-solar",
+      value: kilowatts,
+    };
+  }
+
+  return null;
+}
+
+function getSimilarCapacityProducts(
+  product: Product
+) {
+  const sourceMetric =
+    getCapacityMetric(product);
+
+  if (!sourceMetric) {
+    return [];
+  }
+
+  return products
+    .filter((candidate) => {
+      if (
+        candidate.id === product.id ||
+        candidate.category !==
+          product.category
+      ) {
+        return false;
       }
 
-      return a.featuredOrder - b.featuredOrder;
+      const metric =
+        getCapacityMetric(candidate);
+
+      return (
+        metric !== null &&
+        metric.family ===
+          sourceMetric.family
+      );
+    })
+    .sort((a, b) => {
+      const metricA =
+        getCapacityMetric(a);
+      const metricB =
+        getCapacityMetric(b);
+
+      if (!metricA || !metricB) {
+        return 0;
+      }
+
+      const differenceA =
+        Math.abs(
+          metricA.value -
+            sourceMetric.value
+        );
+
+      const differenceB =
+        Math.abs(
+          metricB.value -
+            sourceMetric.value
+        );
+
+      if (
+        differenceA !== differenceB
+      ) {
+        return (
+          differenceA -
+          differenceB
+        );
+      }
+
+      const brandMatchA =
+        a.brand === product.brand
+          ? 0
+          : 1;
+      const brandMatchB =
+        b.brand === product.brand
+          ? 0
+          : 1;
+
+      if (
+        brandMatchA !== brandMatchB
+      ) {
+        return (
+          brandMatchA -
+          brandMatchB
+        );
+      }
+
+      return (
+        a.featuredOrder -
+        b.featuredOrder
+      );
     })
     .slice(0, 4);
 }
@@ -193,11 +415,12 @@ export default async function ProductDetailsPage({
     notFound();
   }
 
-  const relatedProducts = getRelatedProducts(product);
+  const relatedProducts = getSimilarCapacityProducts(product);
   const operationType = getOperationType(product);
   const whatsappText = encodeURIComponent(
     `Assalamu Alaikum. I want to know more about ${product.name} (${product.id}).`
   );
+
 
   return (
     <main className="pdPage">
@@ -423,8 +646,8 @@ export default async function ProductDetailsPage({
           <div className="pdShell">
             <div className="pdSectionHead">
               <div>
-                <div className="pdEyebrow">RELATED PRODUCTS</div>
-                <h2>More from this category.</h2>
+                <div className="pdEyebrow">SIMILAR CAPACITY</div>
+                <h2>Similar capacity products.</h2>
               </div>
 
               <Link className="pdViewAll" href="/products">

@@ -839,13 +839,15 @@
 }
 
 .pdRelatedGrid {
-  display: grid;
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
 }
 
 .pdRelatedCard {
+  flex: 0 0 calc((100% - 36px) / 4);
+  min-width: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.075);
   border-radius: 17px;
@@ -1030,9 +1032,8 @@
     grid-column: span 1;
   }
 
-  .pdRelatedGrid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+  .pdRelatedCard {
+    flex-basis: calc((100% - 12px) / 2);
   }
 
   .pdRoleFlow {
@@ -1111,9 +1112,12 @@
   }
 
   .pdSpecGrid,
-  .pdGuidanceGrid,
-  .pdRelatedGrid {
+  .pdGuidanceGrid {
     grid-template-columns: 1fr;
+  }
+
+  .pdRelatedCard {
+    flex-basis: 100%;
   }
 
   .pdRoleFlow {
