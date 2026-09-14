@@ -441,6 +441,11 @@ export default function CheckoutClient() {
         form.phone
       );
 
+    const normalizedEmail =
+      form.email
+        .trim()
+        .toLowerCase();
+
     if (!normalizedPhone) {
       setErrors((current) => ({
         ...current,
@@ -454,6 +459,7 @@ export default function CheckoutClient() {
     const normalizedForm = {
       ...form,
       phone: normalizedPhone,
+      email: normalizedEmail,
     };
 
     const message = buildWhatsAppMessage(
@@ -487,7 +493,7 @@ export default function CheckoutClient() {
           body: JSON.stringify({
             name: form.name.trim(),
             phone: normalizedPhone,
-            email: form.email.trim(),
+            email: normalizedEmail,
             address: form.district.trim(),
             fullAddress: form.address.trim(),
             additionalNotes: form.notes.trim(),

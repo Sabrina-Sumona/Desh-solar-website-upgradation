@@ -66,6 +66,34 @@ function normalizeBangladeshPhone(
   return null;
 }
 
+function normalizeOptionalEmail(
+  value: unknown
+) {
+  if (typeof value !== "string") {
+    return "";
+  }
+
+  const email =
+    value
+      .trim()
+      .toLowerCase()
+      .slice(0, 160);
+
+  if (!email) {
+    return "";
+  }
+
+  if (
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+      email
+    )
+  ) {
+    return null;
+  }
+
+  return email;
+}
+
 function parseLead(
   body: unknown
 ): CustomerLeadPayload | null {
@@ -84,16 +112,22 @@ function parseLead(
       record.phone
     );
 
+  const email =
+    normalizeOptionalEmail(
+      record.email
+    );
+
+  if (email === null) {
+    return null;
+  }
+
   const lead: CustomerLeadPayload = {
     name: cleanText(
       record.name,
       120
     ),
     phone: phone || "",
-    email: cleanText(
-      record.email,
-      160
-    ),
+    email,
     address: cleanText(
       record.address,
       160
