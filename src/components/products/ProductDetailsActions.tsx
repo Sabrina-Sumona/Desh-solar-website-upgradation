@@ -75,8 +75,8 @@ function writeCart(items: CartItem[]) {
 export default function ProductDetailsActions({
   product,
 }: ProductDetailsActionsProps) {
-  const [quantity, setQuantity] = useState(0);
-  const [cartQuantity, setCartQuantity] = useState(0);
+  const [cartQuantity, setCartQuantity] =
+    useState(0);
 
   const refreshFromCart = () => {
     const item = readCart().find(
@@ -141,7 +141,6 @@ export default function ProductDetailsActions({
 
       writeCart(nextItems);
       setCartQuantity(0);
-      setQuantity(0);
       return;
     }
 
@@ -159,7 +158,9 @@ export default function ProductDetailsActions({
           product.priceText ||
           "Contact for price",
         image: product.image,
-        category: product.categoryLabel,
+        category:
+          product.categoryLabel ||
+          "Product",
         quoteOnly: product.price === null,
         qty: nextQuantity,
       });
@@ -170,14 +171,12 @@ export default function ProductDetailsActions({
   };
 
   const addToCart = () => {
-    const items = readCart();
-
-    const existing = items.find(
+    const existing = readCart().find(
       (item) =>
         String(item.id) === product.id
     );
 
-    const existingQuantity = existing
+    const currentQuantity = existing
       ? Math.max(
           1,
           Number(existing.qty) || 1
@@ -185,17 +184,15 @@ export default function ProductDetailsActions({
       : 0;
 
     updateCartQuantity(
-      existingQuantity + quantity
+      Math.min(99, currentQuantity + 1)
     );
-
-    setQuantity(0);
   };
 
-  const decreaseCart = () => {
+  const decrementCart = () => {
     updateCartQuantity(cartQuantity - 1);
   };
 
-  const increaseCart = () => {
+  const incrementCart = () => {
     updateCartQuantity(
       Math.min(99, cartQuantity + 1)
     );
@@ -205,93 +202,62 @@ export default function ProductDetailsActions({
     updateCartQuantity(0);
   };
 
-  const inCart = cartQuantity > 0;
-
   return (
     <div className="pdPurchaseControls">
-      <div
-        className={`pdQuantityControl ${
-          inCart ? "pdQuantityControlInCart" : ""
-        }`}
-      >
-        <span>
-          {inCart ? "IN CART" : "QUANTITY"}
-        </span>
+      {cartQuantity > 0 ? (
+        <div className="pdDetailCartAddedControls">
+          <div className="pdDetailCartQuantityRow">
+            <button
+              type="button"
+              className="pdDetailCartQtyButton"
+              onClick={decrementCart}
+              aria-label={
+                cartQuantity === 1
+                  ? `Remove ${product.name} from cart`
+                  : `Decrease quantity of ${product.name}`
+              }
+            >
+              −
+            </button>
 
-        <div>
-          <button
-            type="button"
-            aria-label={
-              inCart && cartQuantity === 1
-                ? `Remove ${product.name} from cart`
-                : "Decrease quantity"
-            }
-            onClick={
-              inCart
-                ? decreaseCart
-                : () =>
-                    setQuantity((current) =>
-                      Math.max(
-                        0,
-                        current - 1
-                      )
-                    )
-            }
-          >
-            −
-          </button>
+            <div className="pdDetailCartQtyStatus">
+              <strong>{cartQuantity}</strong>
+              <span>
+                {product.price === null
+                  ? "selected for quote"
+                  : "in cart"}
+              </span>
+            </div>
 
-          <strong>
-            {inCart
-              ? cartQuantity
-              : quantity}
-          </strong>
+            <button
+              type="button"
+              className="pdDetailCartQtyButton"
+              onClick={incrementCart}
+              disabled={cartQuantity >= 99}
+              aria-label={`Increase quantity of ${product.name}`}
+            >
+              +
+            </button>
+          </div>
 
           <button
             type="button"
-            aria-label="Increase quantity"
-            onClick={
-              inCart
-                ? increaseCart
-                : () =>
-                    setQuantity((current) =>
-                      Math.min(
-                        99,
-                        current + 1
-                      )
-                    )
-            }
+            className="pdRemoveCart"
+            onClick={removeFromCart}
           >
-            +
+            Remove from Cart
           </button>
         </div>
-      </div>
-
-      {inCart ? (
-        <button
-          className="pdRemoveCart"
-          type="button"
-          onClick={removeFromCart}
-        >
-          Remove from Cart
-          <span>
-            {cartQuantity}{" "}
-            {cartQuantity === 1
-              ? "item"
-              : "items"}
-          </span>
-        </button>
       ) : (
         <button
           className="pdAddCart"
           type="button"
           onClick={addToCart}
-          disabled={quantity <= 0}
-          aria-disabled={quantity <= 0}
+          aria-label={`Add ${product.name} to cart`}
         >
           {product.price === null
-            ? "Add for Quote"
-            : "Add to Cart"}
+            ? "Add for Quote +"
+            : "Add to Cart +"}
         </button>
       )}
     </div>

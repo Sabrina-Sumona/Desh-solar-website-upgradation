@@ -258,136 +258,42 @@
 }
 
 .pdPurchaseControls {
-  display: grid;
-  grid-template-columns: auto minmax(190px, 1fr);
-  gap: 10px;
-  margin-top: 14px;
-}
-
-.pdQuantityControl {
-  display: flex;
-  min-width: 160px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  min-height: 48px;
-  padding: 0 8px 0 13px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.018);
-}
-
-.pdQuantityControl > span {
-  color: #93a6ae;
-  font-size: 7px;
-  font-weight: 900;
-  letter-spacing: 0.09em;
-}
-
-.pdQuantityControl > div {
-  display: grid;
-  grid-template-columns: 30px 31px 30px;
-  align-items: center;
-}
-
-.pdQuantityControl button {
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.025);
-  color: #d8e4e8;
-  cursor: pointer;
-}
-
-.pdQuantityControl strong {
-  text-align: center;
-  font-size: 11px;
+  margin-top: 8px;
 }
 
 .pdAddCart {
   position: relative;
-  display: flex;
+
+  width: fit-content;
+  min-width: 190px;
+  max-width: 100%;
   min-height: 48px;
+
+  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  border: 1px solid rgba(145, 239, 91, 0.25);
+
+  padding:
+    0 28px;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.22);
+
   border-radius: 12px;
-  background: rgba(145, 239, 91, 0.055);
-  color: #dfffc4;
-  font-size: 9px;
+
+  color:
+    #c8ff7d;
+
+  background:
+    rgba(145, 239, 91, 0.045);
+
+  font-family: inherit;
+  font-size: 10px;
   font-weight: 900;
+
   cursor: pointer;
-  transition:
-    border-color 0.18s ease,
-    background 0.18s ease,
-    transform 0.18s ease;
-}
 
-.pdAddCart:hover {
-  border-color: rgba(145, 239, 91, 0.42);
-  background: rgba(145, 239, 91, 0.09);
-  transform: translateY(-1px);
-}
-
-.pdAddCart span {
-  padding: 4px 7px;
-  border-radius: 999px;
-  background: rgba(200, 255, 125, 0.09);
-  color: #b9cfaa;
-  font-size: 7px;
-}
-
-
-.pdAddCart:disabled {
-  border-color: rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.012);
-  color: #61747d;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.pdAddCart:disabled:hover {
-  border-color: rgba(255, 255, 255, 0.07);
-  background: rgba(255, 255, 255, 0.012);
-  color: #61747d;
-  transform: none;
-}
-
-
-.pdQuantityControlInCart {
-  border-color: rgba(145, 239, 91, 0.18);
-  background: rgba(145, 239, 91, 0.028);
-}
-
-.pdQuantityControlInCart > span {
-  color: #a8c994;
-}
-
-.pdQuantityControlInCart strong {
-  color: #efffe2;
-}
-
-.pdQuantityControl button:hover {
-  border-color: rgba(145, 239, 91, 0.28);
-  color: #c8ff7d;
-}
-
-.pdRemoveCart {
-  position: relative;
-  display: flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.11);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.018);
-  color: #b8c8ce;
-  font-size: 9px;
-  font-weight: 900;
-  cursor: pointer;
   transition:
     border-color 0.18s ease,
     background 0.18s ease,
@@ -395,19 +301,228 @@
     transform 0.18s ease;
 }
 
-.pdRemoveCart:hover {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.03);
-  color: #edf4f6;
-  transform: translateY(-1px);
+.pdAddCart:hover {
+  border-color:
+    rgba(145, 239, 91, 0.38);
+
+  background:
+    rgba(145, 239, 91, 0.085);
+
+  color:
+    #efffde;
+
+  transform:
+    translateY(-1px);
 }
 
-.pdRemoveCart span {
-  padding: 4px 7px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #8499a2;
-  font-size: 7px;
+.pdDetailCartAddedControls {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pdDetailCartQuantityRow {
+  width: fit-content;
+  min-height: 48px;
+
+  display: grid;
+
+  grid-template-columns:
+    48px
+    104px
+    48px;
+
+  align-items: stretch;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(145, 239, 91, 0.2);
+
+  border-radius: 12px;
+
+  background:
+    rgba(145, 239, 91, 0.035);
+}
+
+.pdDetailCartQtyButton {
+  width: 48px;
+  min-height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  padding: 0;
+
+  border: 0;
+
+  color:
+    #c8ff7d;
+
+  background:
+    transparent;
+
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.pdDetailCartQtyButton:first-child {
+  border-right:
+    1px solid
+    rgba(145, 239, 91, 0.12);
+}
+
+.pdDetailCartQtyButton:last-child {
+  border-left:
+    1px solid
+    rgba(145, 239, 91, 0.12);
+}
+
+.pdDetailCartQtyButton:hover:not(:disabled) {
+  color:
+    #efffde;
+
+  background:
+    rgba(145, 239, 91, 0.08);
+}
+
+.pdDetailCartQtyButton:disabled {
+  color:
+    #536b5a;
+
+  cursor:
+    not-allowed;
+}
+
+.pdDetailCartQtyStatus {
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding:
+    0 10px;
+}
+
+.pdDetailCartQtyStatus strong {
+  color:
+    #eef7e9;
+
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.pdDetailCartQtyStatus span {
+  overflow: hidden;
+
+  color:
+    #91aa86;
+
+  font-size: 9px;
+  font-weight: 800;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.pdRemoveCart {
+  min-width: 138px;
+  min-height: 48px;
+
+  padding:
+    0 15px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.1);
+
+  border-radius: 12px;
+
+  color:
+    #8fa2aa;
+
+  background:
+    rgba(255, 255, 255, 0.015);
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.pdRemoveCart:hover {
+  border-color:
+    rgba(255, 255, 255, 0.18);
+
+  color:
+    #d5e0e4;
+
+  background:
+    rgba(255, 255, 255, 0.03);
+
+  transform:
+    translateY(-1px);
+}
+
+@media (max-width: 520px) {
+  .pdDetailCartAddedControls {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr)
+      118px;
+  }
+
+  .pdDetailCartQuantityRow {
+    width: 100%;
+    grid-template-columns:
+      42px
+      minmax(76px, 1fr)
+      42px;
+  }
+
+  .pdDetailCartQtyButton {
+    width: 42px;
+  }
+
+  .pdDetailCartQtyStatus {
+    gap: 5px;
+
+    padding:
+      0 6px;
+  }
+
+  .pdDetailCartQtyStatus span {
+    font-size: 8px;
+  }
+
+  .pdRemoveCart {
+    min-width: 0;
+
+    padding:
+      0 9px;
+  }
 }
 
 .pdContactRow {
@@ -1671,3 +1786,9 @@
   }
 }
 
+@media (max-width: 520px) {
+  .pdAddCart {
+    width: 100%;
+    min-width: 0;
+  }
+}

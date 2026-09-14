@@ -479,8 +479,6 @@ export default async function ProductDetailsPage({
                 </div>
               </div>
 
-              <ProductDetailsActions product={product} />
-
               <div className="pdContactRow">
                 <a
                   className="pdSecondaryAction"
@@ -498,6 +496,8 @@ export default async function ProductDetailsPage({
                   Call 01754-477488
                 </a>
               </div>
+
+              <ProductDetailsActions product={product} />
 
               <p className="pdSnapshotNote">
                 Price, stock, warranty and specifications can change.
