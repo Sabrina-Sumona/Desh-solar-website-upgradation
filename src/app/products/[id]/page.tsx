@@ -298,6 +298,11 @@ export default async function ProductDetailsPage({
 
       <SystemPackageBreakdown product={product} />
 
+      <ProductPlanningPanel
+        product={product}
+        variant="details"
+      />
+
       <section className="pdSection pdAlt">
         <div className="pdShell">
           <div className="pdSectionHead">
@@ -353,11 +358,6 @@ export default async function ProductDetailsPage({
           </div>
         </div>
       </section>
-
-      <ProductPlanningPanel
-        product={product}
-        variant="details"
-      />
 
       <section className="pdSection">
         <div className="pdShell">

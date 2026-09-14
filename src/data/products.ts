@@ -54,7 +54,7 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 45w portable solar panel ecoflow solar panel 45 w home portable portable compact pv outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow45.jpg",
+    "image": "/assets/products-real/ecoflow-45.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
@@ -95,7 +95,7 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 60w portable solar panel ecoflow solar panel 60 w home portable portable compact pv outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow60.jpg",
+    "image": "/assets/products-real/ecoflow-60.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
@@ -136,7 +136,7 @@ export const products: Product[] = [
     ],
     "search": "ecoflow 160w portable solar panel ecoflow solar panel 160 w home portable portable higher portable output outdoor",
     "warranty": "See current listing",
-    "image": "/assets/products-real/ecoflow160.jpg",
+    "image": "/assets/products-real/ecoflow-160.jpg",
     "role": "Generation",
     "bestFor": [
       "Portable",
