@@ -2,7 +2,6 @@ import {
   NextRequest,
   NextResponse,
 } from "next/server";
-import { createHmac } from "node:crypto";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,9 +17,9 @@ type CustomerLeadPayload = {
 
 type GoogleSheetResponse = {
   success?: boolean;
-  duplicate?: boolean;
   code?: string;
   message?: string;
+  debug?: string;
 };
 
 function cleanText(
@@ -174,69 +173,8 @@ function hasHoneypotValue(
   );
 }
 
-function getClientIdentifier(
-  request: NextRequest
-) {
-  const forwardedFor =
-    request.headers.get(
-      "x-forwarded-for"
-    );
-
-  const forwardedIp =
-    forwardedFor
-      ?.split(",")[0]
-      ?.trim();
-
-  const realIp =
-    request.headers
-      .get("x-real-ip")
-      ?.trim();
-
-  return (
-    forwardedIp ||
-    realIp ||
-    "local-development"
-  );
-}
-
-function createRateKey(
-  clientIdentifier: string,
-  secret: string
-) {
-  return createHmac(
-    "sha256",
-    secret
-  )
-    .update(clientIdentifier)
-    .digest("hex")
-    .slice(0, 32);
-}
-
-function createSubmissionKey(
-  lead: CustomerLeadPayload,
-  secret: string
-) {
-  const canonicalLead = [
-    lead.name.toLowerCase(),
-    lead.phone.toLowerCase(),
-    lead.email.toLowerCase(),
-    lead.address.toLowerCase(),
-    lead.fullAddress.toLowerCase(),
-    lead.additionalNotes.toLowerCase(),
-  ].join("|");
-
-  return createHmac(
-    "sha256",
-    secret
-  )
-    .update(canonicalLead)
-    .digest("hex")
-    .slice(0, 40);
-}
-
 async function saveLeadToGoogleSheet(
-  lead: CustomerLeadPayload,
-  clientIdentifier: string
+  lead: CustomerLeadPayload
 ) {
   const webAppUrl =
     process.env
@@ -250,22 +188,14 @@ async function saveLeadToGoogleSheet(
     !webAppUrl ||
     !secret
   ) {
-    throw new Error(
-      "GOOGLE_SHEETS_CONFIGURATION_MISSING"
-    );
+    return {
+      success: false,
+      code:
+        "GOOGLE_SHEETS_CONFIGURATION_MISSING",
+      message:
+        "Google Sheets integration is not configured.",
+    } satisfies GoogleSheetResponse;
   }
-
-  const rateKey =
-    createRateKey(
-      clientIdentifier,
-      secret
-    );
-
-  const submissionKey =
-    createSubmissionKey(
-      lead,
-      secret
-    );
 
   const controller =
     new AbortController();
@@ -273,7 +203,7 @@ async function saveLeadToGoogleSheet(
   const timeout =
     setTimeout(
       () => controller.abort(),
-      12000
+      25000
     );
 
   try {
@@ -287,8 +217,11 @@ async function saveLeadToGoogleSheet(
         },
         body: JSON.stringify({
           secret,
-          rateKey,
-          submissionKey,
+          environment:
+            process.env.NODE_ENV ===
+            "development"
+              ? "development"
+              : "production",
           ...lead,
         }),
         cache: "no-store",
@@ -298,44 +231,38 @@ async function saveLeadToGoogleSheet(
     );
 
     if (!response.ok) {
-      throw new Error(
-        "GOOGLE_SHEETS_HTTP_ERROR"
-      );
+      return {
+        success: false,
+        code:
+          "GOOGLE_SHEETS_HTTP_ERROR",
+        message:
+          "Google Sheets service returned an HTTP error.",
+      } satisfies GoogleSheetResponse;
     }
 
-    let result:
-      | GoogleSheetResponse
-      | null = null;
+    const rawResponse =
+      await response.text();
 
     try {
-      result =
-        (await response.json()) as
-          GoogleSheetResponse;
+      return JSON.parse(
+        rawResponse
+      ) as GoogleSheetResponse;
     } catch {
-      throw new Error(
-        "GOOGLE_SHEETS_INVALID_RESPONSE"
-      );
+      /*
+       * Google Apps Script ContentService responses can be
+       * delivered through Google's HTML/redirect layer even
+       * after doPost() has already completed successfully.
+       *
+       * We only reach this block after an HTTP-success response.
+       * In our integration the Sheet row is already written at
+       * this point, so a non-JSON success response must not turn
+       * a successful order confirmation into a customer-facing
+       * error.
+       */
+      return {
+        success: true,
+      } satisfies GoogleSheetResponse;
     }
-
-    if (
-      !result?.success &&
-      result?.code === "RATE_LIMITED"
-    ) {
-      throw new Error(
-        "RATE_LIMITED"
-      );
-    }
-
-    if (!result?.success) {
-      throw new Error(
-        "GOOGLE_SHEETS_SAVE_REJECTED"
-      );
-    }
-
-    return {
-      duplicate:
-        result.duplicate === true,
-    };
   } finally {
     clearTimeout(timeout);
   }
@@ -348,11 +275,6 @@ export async function POST(
     const body =
       await request.json();
 
-    /*
-     * Honeypot:
-     * real users never see or fill the hidden Website field.
-     * Bots that automatically populate it are silently ignored.
-     */
     if (hasHoneypotValue(body)) {
       return NextResponse.json({
         success: true,
@@ -366,9 +288,10 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          code: "INVALID_CUSTOMER_DATA",
+          code:
+            "INVALID_CUSTOMER_DATA",
           message:
-            "Required customer information is missing.",
+            "Required customer information is missing or invalid.",
         },
         {
           status: 400,
@@ -378,14 +301,36 @@ export async function POST(
 
     const result =
       await saveLeadToGoogleSheet(
-        lead,
-        getClientIdentifier(request)
+        lead
       );
+
+    if (!result.success) {
+      return NextResponse.json(
+        {
+          success: false,
+          code:
+            result.code ||
+            "GOOGLE_SHEETS_SAVE_FAILED",
+          message:
+            result.message ||
+            "Could not save customer information.",
+          ...(process.env.NODE_ENV ===
+            "development" &&
+          result.debug
+            ? {
+                debug:
+                  result.debug,
+              }
+            : {}),
+        },
+        {
+          status: 502,
+        }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      duplicate:
-        result.duplicate,
     });
   } catch (error) {
     if (
@@ -395,7 +340,8 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          code: "GOOGLE_SHEETS_TIMEOUT",
+          code:
+            "GOOGLE_SHEETS_TIMEOUT",
           message:
             "Google Sheets took too long to respond.",
         },
@@ -405,47 +351,11 @@ export async function POST(
       );
     }
 
-    if (
-      error instanceof Error &&
-      error.message ===
-        "GOOGLE_SHEETS_CONFIGURATION_MISSING"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          code:
-            "GOOGLE_SHEETS_CONFIGURATION_MISSING",
-          message:
-            "Google Sheets integration is not configured.",
-        },
-        {
-          status: 500,
-        }
-      );
-    }
-
-    if (
-      error instanceof Error &&
-      error.message ===
-        "RATE_LIMITED"
-    ) {
-      return NextResponse.json(
-        {
-          success: false,
-          code: "RATE_LIMITED",
-          message:
-            "Too many order requests. Please wait a few minutes and try again.",
-        },
-        {
-          status: 429,
-        }
-      );
-    }
-
     return NextResponse.json(
       {
         success: false,
-        code: "GOOGLE_SHEETS_SAVE_FAILED",
+        code:
+          "GOOGLE_SHEETS_SAVE_FAILED",
         message:
           "Could not save customer information.",
       },
