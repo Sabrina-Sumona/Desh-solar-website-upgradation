@@ -37,6 +37,35 @@ function cleanText(
     .slice(0, maxLength);
 }
 
+function normalizeBangladeshPhone(
+  value: unknown
+) {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const digits =
+    value.replace(/\D/g, "");
+
+  if (
+    /^01[3-9]\d{8}$/.test(
+      digits
+    )
+  ) {
+    return `+88${digits}`;
+  }
+
+  if (
+    /^8801[3-9]\d{8}$/.test(
+      digits
+    )
+  ) {
+    return `+${digits}`;
+  }
+
+  return null;
+}
+
 function parseLead(
   body: unknown
 ): CustomerLeadPayload | null {
@@ -50,15 +79,17 @@ function parseLead(
   const record =
     body as Record<string, unknown>;
 
+  const phone =
+    normalizeBangladeshPhone(
+      record.phone
+    );
+
   const lead: CustomerLeadPayload = {
     name: cleanText(
       record.name,
       120
     ),
-    phone: cleanText(
-      record.phone,
-      40
-    ),
+    phone: phone || "",
     email: cleanText(
       record.email,
       160

@@ -89,15 +89,36 @@ function readCart(): CartItem[] {
   }
 }
 
-function normalizePhone(value: string) {
-  return value.replace(/[^\d+]/g, "").trim();
+function normalizeBangladeshPhone(
+  value: string
+) {
+  const digits =
+    value.replace(/\D/g, "");
+
+  if (
+    /^01[3-9]\d{8}$/.test(
+      digits
+    )
+  ) {
+    return `+88${digits}`;
+  }
+
+  if (
+    /^8801[3-9]\d{8}$/.test(
+      digits
+    )
+  ) {
+    return `+${digits}`;
+  }
+
+  return null;
 }
 
 function isValidPhone(value: string) {
-  const normalized = normalizePhone(value);
-
-  return /^(?:\+?8801|01)\d{9}$/.test(
-    normalized
+  return (
+    normalizeBangladeshPhone(
+      value
+    ) !== null
   );
 }
 
@@ -411,9 +432,29 @@ export default function CheckoutClient() {
     setSubmitted(false);
     setSavingLead(true);
 
+    const normalizedPhone =
+      normalizeBangladeshPhone(
+        form.phone
+      );
+
+    if (!normalizedPhone) {
+      setErrors((current) => ({
+        ...current,
+        phone:
+          "Enter a valid Bangladesh mobile number.",
+      }));
+
+      return;
+    }
+
+    const normalizedForm = {
+      ...form,
+      phone: normalizedPhone,
+    };
+
     const message = buildWhatsAppMessage(
       items,
-      form,
+      normalizedForm,
       subtotal,
       hasQuoteItems
     );
@@ -441,7 +482,7 @@ export default function CheckoutClient() {
           },
           body: JSON.stringify({
             name: form.name.trim(),
-            phone: form.phone.trim(),
+            phone: normalizedPhone,
             email: form.email.trim(),
             address: form.district.trim(),
             fullAddress: form.address.trim(),
@@ -634,8 +675,9 @@ export default function CheckoutClient() {
                         event.target.value
                       )
                     }
-                    placeholder="01XXXXXXXXX"
+                    placeholder="01XXXXXXXXX or +8801XXXXXXXXX"
                     autoComplete="tel"
+                    inputMode="tel"
                   />
                   {errors.phone && (
                     <small className={styles.error}>
