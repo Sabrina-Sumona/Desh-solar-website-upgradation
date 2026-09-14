@@ -275,6 +275,9 @@ export default function CheckoutClient() {
     useState<CheckoutForm>(INITIAL_FORM);
   const [hydrated, setHydrated] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [savingLead, setSavingLead] = useState(false);
+  const [leadSaveError, setLeadSaveError] =
+    useState("");
   const [errors, setErrors] = useState<
     Partial<Record<keyof CheckoutForm, string>>
   >({});
@@ -390,18 +393,22 @@ export default function CheckoutClient() {
     return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
 
-    if (!items.length) {
+    if (!items.length || savingLead) {
       return;
     }
 
     if (!validate()) {
       return;
     }
+
+    setLeadSaveError("");
+    setSubmitted(false);
+    setSavingLead(true);
 
     const message = buildWhatsAppMessage(
       items,
@@ -414,13 +421,76 @@ export default function CheckoutClient() {
       `https://wa.me/${WHATSAPP_NUMBER}` +
       `?text=${encodeURIComponent(message)}`;
 
-    setSubmitted(true);
-
-    window.open(
-      url,
-      "_blank",
-      "noopener,noreferrer"
+    const whatsappWindow = window.open(
+      "",
+      "_blank"
     );
+
+    if (whatsappWindow) {
+      whatsappWindow.opener = null;
+    }
+
+    try {
+      const response = await fetch(
+        "/api/customer-leads",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name.trim(),
+            phone: form.phone.trim(),
+            email: form.email.trim(),
+            address: form.district.trim(),
+            fullAddress: form.address.trim(),
+            additionalNotes: form.notes.trim(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        let message =
+          "Could not save your contact information. Please try again.";
+
+        try {
+          const errorData =
+            await response.json();
+
+          if (
+            errorData?.code ===
+            "EXCEL_FILE_LOCKED"
+          ) {
+            message =
+              "The customer-leads.xlsx file is currently open. Close the Excel file and try Confirm Order again.";
+          }
+        } catch {
+          // Keep the safe fallback message.
+        }
+
+        throw new Error(message);
+      }
+
+      setSubmitted(true);
+
+      if (whatsappWindow) {
+        whatsappWindow.location.href = url;
+      } else {
+        window.location.href = url;
+      }
+    } catch (error) {
+      if (whatsappWindow) {
+        whatsappWindow.close();
+      }
+
+      setLeadSaveError(
+        error instanceof Error
+          ? error.message
+          : "Could not save your contact information. Please try again."
+      );
+    } finally {
+      setSavingLead(false);
+    }
   };
 
   if (!hydrated) {
@@ -809,15 +879,25 @@ export default function CheckoutClient() {
                 className={styles.submitButton}
                 type="submit"
                 form="checkoutForm"
+                disabled={savingLead}
               >
-                Confirm Order →
+                {savingLead
+                  ? "Saving Contact..."
+                  : "Confirm Order →"}
               </button>
 
+              {leadSaveError && (
+                <small className={styles.error}>
+                  {leadSaveError}
+                </small>
+              )}
+
               <p>
-                This opens WhatsApp with your checkout
-                details prepared for Desh Solar. Your cart
-                is not cleared automatically, so you can
-                return and make changes.
+                Confirming saves your contact details,
+                address and additional notes, then opens
+                WhatsApp with your checkout details prepared
+                for Desh Solar. Your cart is not cleared
+                automatically.
               </p>
 
               {submitted && (
