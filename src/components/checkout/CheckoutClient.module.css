@@ -277,7 +277,7 @@
 }
 
 .confirmPanel {
-  padding: 20px;
+  padding: 18px;
 }
 
 .confirm {
@@ -343,9 +343,17 @@
   line-height: 1.5;
 }
 
-.summary {
+.sideColumn {
   position: sticky;
   top: 98px;
+
+  display: grid;
+  gap: 13px;
+
+  min-width: 0;
+}
+
+.summary {
   overflow: hidden;
 }
 
@@ -531,7 +539,7 @@
     grid-template-columns: 1fr;
   }
 
-  .summary {
+  .sideColumn {
     position: static;
   }
 }

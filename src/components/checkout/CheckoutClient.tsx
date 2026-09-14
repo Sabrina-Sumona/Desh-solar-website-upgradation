@@ -424,6 +424,7 @@ export default function CheckoutClient() {
           className={`${styles.shell} ${styles.layout}`}
         >
           <form
+            id="checkoutForm"
             className={styles.form}
             onSubmit={handleSubmit}
             noValidate
@@ -641,60 +642,10 @@ export default function CheckoutClient() {
               </label>
             </section>
 
-            <section className={styles.confirmPanel}>
-              <label className={styles.confirm}>
-                <input
-                  type="checkbox"
-                  checked={form.agree}
-                  onChange={(event) =>
-                    updateField(
-                      "agree",
-                      event.target.checked
-                    )
-                  }
-                />
-                <span>
-                  I understand that online catalogue
-                  prices and product availability may
-                  change, and Desh Solar will confirm the
-                  final commercial and technical details
-                  before the order is finalized.
-                </span>
-              </label>
-
-              {errors.agree && (
-                <small className={styles.error}>
-                  {errors.agree}
-                </small>
-              )}
-
-              <button
-                className={styles.submitButton}
-                type="submit"
-              >
-                {hasQuoteItems
-                  ? "Send Order & Quote Request →"
-                  : "Send Order Request →"}
-              </button>
-
-              <p>
-                This opens WhatsApp with your checkout
-                details prepared for Desh Solar. Your cart
-                is not cleared automatically, so you can
-                return and make changes.
-              </p>
-
-              {submitted && (
-                <div className={styles.sentNotice}>
-                  WhatsApp opened with your order request.
-                  Review the message and tap Send to
-                  contact Desh Solar.
-                </div>
-              )}
-            </section>
           </form>
 
-          <aside className={styles.summary}>
+          <div className={styles.sideColumn}>
+            <aside className={styles.summary}>
             <header>
               <small>ORDER SUMMARY</small>
               <h2>
@@ -779,6 +730,58 @@ export default function CheckoutClient() {
               </p>
             </div>
           </aside>
+
+            <section className={styles.confirmPanel}>
+              <label className={styles.confirm}>
+                <input
+                  type="checkbox"
+                  checked={form.agree}
+                  onChange={(event) =>
+                    updateField(
+                      "agree",
+                      event.target.checked
+                    )
+                  }
+                />
+                <span>
+                  I understand that online catalogue
+                  prices and product availability may
+                  change, and Desh Solar will confirm the
+                  final commercial and technical details
+                  before the order is finalized.
+                </span>
+              </label>
+
+              {errors.agree && (
+                <small className={styles.error}>
+                  {errors.agree}
+                </small>
+              )}
+
+              <button
+                className={styles.submitButton}
+                type="submit"
+                form="checkoutForm"
+              >
+                Confirm Order →
+              </button>
+
+              <p>
+                This opens WhatsApp with your checkout
+                details prepared for Desh Solar. Your cart
+                is not cleared automatically, so you can
+                return and make changes.
+              </p>
+
+              {submitted && (
+                <div className={styles.sentNotice}>
+                  WhatsApp opened with your order request.
+                  Review the message and tap Send to
+                  contact Desh Solar.
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </section>
     </main>
