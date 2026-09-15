@@ -2,9 +2,17 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  type FormEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
+import { products } from "@/data/products";
 
 const PRODUCT_LINKS = [
   {
@@ -124,6 +132,25 @@ function getStoredCartCount() {
   );
 }
 
+function SearchIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="6.5" />
+      <path d="m16 16 4 4" />
+    </svg>
+  );
+}
+
 function CartIcon() {
   return (
     <svg
@@ -146,10 +173,13 @@ function CartIcon() {
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [cartToast, setCartToast] = useState<{
     type: "added" | "removed";
     productName: string;
@@ -159,6 +189,35 @@ export default function Header() {
     useRef<HeaderCartItem[]>([]);
   const cartToastTimerRef =
     useRef<number | null>(null);
+  const searchInputRef =
+    useRef<HTMLInputElement | null>(null);
+
+  const searchResults = useMemo(() => {
+    const query = searchQuery
+      .trim()
+      .toLowerCase();
+
+    if (!query) {
+      return [];
+    }
+
+    return products
+      .filter((product) => {
+        const haystack = [
+          product.name,
+          product.brandLabel,
+          product.categoryLabel,
+          product.power,
+          product.search,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+        return haystack.includes(query);
+      })
+      .slice(0, 6);
+  }, [searchQuery]);
 
   useEffect(() => {
     const showCartToast = (
@@ -318,6 +377,84 @@ export default function Header() {
   const closeCart = useCallback(() => {
     setCartOpen(false);
   }, []);
+
+  const closeSearch = useCallback(() => {
+    setSearchOpen(false);
+  }, []);
+
+  const openSearch = useCallback(() => {
+    setMobileOpen(false);
+    setCartOpen(false);
+    setSearchOpen(true);
+
+    window.requestAnimationFrame(() => {
+      searchInputRef.current?.focus();
+    });
+  }, []);
+
+  const toggleSearch = useCallback(() => {
+    if (searchOpen) {
+      closeSearch();
+      return;
+    }
+
+    openSearch();
+  }, [
+    searchOpen,
+    closeSearch,
+    openSearch,
+  ]);
+
+  useEffect(() => {
+    if (!searchOpen) {
+      return;
+    }
+
+    const handleKeyDown = (
+      event: KeyboardEvent
+    ) => {
+      if (event.key === "Escape") {
+        closeSearch();
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleKeyDown
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleKeyDown
+      );
+    };
+  }, [searchOpen, closeSearch]);
+
+  useEffect(() => {
+    setSearchOpen(false);
+  }, [pathname]);
+
+  const submitSearch = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const query = searchQuery.trim();
+
+    if (!query) {
+      searchInputRef.current?.focus();
+      return;
+    }
+
+    closeSearch();
+
+    router.push(
+      `/products?search=${encodeURIComponent(
+        query
+      )}`
+    );
+  };
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -507,6 +644,31 @@ export default function Header() {
           </div>
 
           {/* =================================================
+              PRODUCT SEARCH
+              ================================================= */}
+
+          <button
+            type="button"
+            className={`navSearchButton ${
+              searchOpen
+                ? "navSearchButtonActive"
+                : ""
+            }`}
+            aria-label="Search products"
+            aria-expanded={searchOpen}
+            aria-controls="headerProductSearch"
+            onClick={toggleSearch}
+          >
+            <span className="navSearchIcon">
+              <SearchIcon />
+            </span>
+
+            <span className="navSearchLabel">
+              Search
+            </span>
+          </button>
+
+          {/* =================================================
               CART
               ================================================= */}
 
@@ -552,34 +714,203 @@ export default function Header() {
         </div>
 
         {/* =================================================
-            MOBILE MENU TOGGLE
+            MOBILE / TABLET INDEPENDENT TOOLS
+            Search remains outside the hamburger menu.
             ================================================= */}
 
-        <button
-          type="button"
-          className={`navToggle ${
-            mobileOpen
-              ? "active"
-              : ""
-          }`}
-          aria-label={
-            mobileOpen
-              ? "Close navigation menu"
-              : "Open navigation menu"
-          }
-          aria-expanded={mobileOpen}
-          aria-controls="mobileMenu"
-          onClick={() =>
-            setMobileOpen(
-              (open) => !open
-            )
-          }
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <div className="navMobileTools">
+          <button
+            type="button"
+            className={`navSearchButton navSearchButtonMobile ${
+              searchOpen
+                ? "navSearchButtonActive"
+                : ""
+            }`}
+            aria-label="Search products"
+            aria-expanded={searchOpen}
+            aria-controls="headerProductSearch"
+            onClick={toggleSearch}
+          >
+            <span className="navSearchIcon">
+              <SearchIcon />
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className={`navToggle ${
+              mobileOpen
+                ? "active"
+                : ""
+            }`}
+            aria-label={
+              mobileOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
+            }
+            aria-expanded={mobileOpen}
+            aria-controls="mobileMenu"
+            onClick={() => {
+              setSearchOpen(false);
+              setMobileOpen(
+                (open) => !open
+              );
+            }}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </nav>
+
+      {searchOpen && (
+        <>
+          <button
+            type="button"
+            className="headerSearchBackdrop"
+            aria-label="Close product search"
+            onClick={closeSearch}
+          />
+
+          <section
+            id="headerProductSearch"
+            className="headerProductSearch"
+            aria-label="Product search"
+          >
+            <form
+              className="headerProductSearchForm"
+              onSubmit={submitSearch}
+            >
+              <span
+                className="headerProductSearchIcon"
+                aria-hidden="true"
+              >
+                <SearchIcon />
+              </span>
+
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(event) =>
+                  setSearchQuery(
+                    event.target.value
+                  )
+                }
+                placeholder="Search solar panels, batteries, inverters..."
+                autoComplete="off"
+                aria-label="Search Desh Solar products"
+              />
+
+              <button
+                type="submit"
+                className="headerProductSearchSubmit"
+              >
+                Search
+              </button>
+
+              <button
+                type="button"
+                className="headerProductSearchClose"
+                aria-label="Close product search"
+                onClick={closeSearch}
+              >
+                ×
+              </button>
+            </form>
+
+            <div className="headerProductSearchResults">
+              {!searchQuery.trim() ? (
+                <p className="headerProductSearchHint">
+                  Start typing a product name, brand, category or power rating.
+                </p>
+              ) : searchResults.length > 0 ? (
+                <>
+                  <div className="headerProductSearchResultList">
+                    {searchResults.map(
+                      (product) => (
+                        <Link
+                          key={product.id}
+                          href={`/products/${product.id}`}
+                          className="headerProductSearchResult"
+                          onClick={closeSearch}
+                        >
+                          <span className="headerProductSearchThumb">
+                            <Image
+                              src={product.image}
+                              alt=""
+                              width={72}
+                              height={56}
+                            />
+                          </span>
+
+                          <span className="headerProductSearchMeta">
+                            <small>
+                              {product.brandLabel}
+                              {" · "}
+                              {product.categoryLabel}
+                            </small>
+
+                            <strong>
+                              {product.name}
+                            </strong>
+
+                            <span>
+                              {product.power}
+                              {" · "}
+                              {product.priceText}
+                            </span>
+                          </span>
+
+                          <b aria-hidden="true">
+                            →
+                          </b>
+                        </Link>
+                      )
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="headerProductSearchAll"
+                    onClick={() => {
+                      const query =
+                        searchQuery.trim();
+
+                      if (!query) {
+                        return;
+                      }
+
+                      closeSearch();
+                      router.push(
+                        `/products?search=${encodeURIComponent(
+                          query
+                        )}`
+                      );
+                    }}
+                  >
+                    View all matching products
+                    <span aria-hidden="true">
+                      →
+                    </span>
+                  </button>
+                </>
+              ) : (
+                <div className="headerProductSearchEmpty">
+                  <strong>
+                    No matching products found.
+                  </strong>
+
+                  <span>
+                    Try a product type, brand or power rating.
+                  </span>
+                </div>
+              )}
+            </div>
+          </section>
+        </>
+      )}
 
       {/* ===================================================
           MOBILE MENU

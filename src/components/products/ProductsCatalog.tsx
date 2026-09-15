@@ -97,14 +97,19 @@ const VALID_CATEGORY_VALUES = new Set([
   "system",
 ]);
 
-function CategoryQuerySync({
-  onCategoryChange,
+function CatalogQuerySync({
+  onQueryChange,
 }: {
-  onCategoryChange: (category: string) => void;
+  onQueryChange: (
+    category: string,
+    search: string
+  ) => void;
 }) {
   const searchParams = useSearchParams();
   const requestedCategory =
     searchParams.get("category");
+  const requestedSearch =
+    searchParams.get("search") || "";
 
   useEffect(() => {
     const nextCategory =
@@ -115,10 +120,14 @@ function CategoryQuerySync({
         ? requestedCategory
         : "all";
 
-    onCategoryChange(nextCategory);
+    onQueryChange(
+      nextCategory,
+      requestedSearch
+    );
   }, [
     requestedCategory,
-    onCategoryChange,
+    requestedSearch,
+    onQueryChange,
   ]);
 
   return null;
@@ -381,9 +390,13 @@ export default function ProductsCatalog() {
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareNotice, setCompareNotice] = useState("");
 
-  const applyCategoryFromUrl = useCallback(
-    (nextCategory: string) => {
+  const applyQueryFromUrl = useCallback(
+    (
+      nextCategory: string,
+      nextSearch: string
+    ) => {
       setCategory(nextCategory);
+      setSearch(nextSearch);
       setBrand("all");
       setApplication("all");
     },
@@ -484,9 +497,9 @@ export default function ProductsCatalog() {
   return (
     <>
       <Suspense fallback={null}>
-        <CategoryQuerySync
-          onCategoryChange={
-            applyCategoryFromUrl
+        <CatalogQuerySync
+          onQueryChange={
+            applyQueryFromUrl
           }
         />
       </Suspense>
