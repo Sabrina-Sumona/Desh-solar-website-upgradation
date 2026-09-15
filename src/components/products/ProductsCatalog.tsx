@@ -10,6 +10,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import {
@@ -389,6 +390,13 @@ export default function ProductsCatalog() {
   const [compareProducts, setCompareProducts] = useState<Product[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareNotice, setCompareNotice] = useState("");
+  const [quickCategoriesFixed, setQuickCategoriesFixed] =
+    useState(false);
+
+  const quickCategoriesSlotRef =
+    useRef<HTMLDivElement | null>(null);
+  const catalogSectionRef =
+    useRef<HTMLElement | null>(null);
 
   const applyQueryFromUrl = useCallback(
     (
@@ -402,6 +410,62 @@ export default function ProductsCatalog() {
     },
     []
   );
+
+  useEffect(() => {
+    const updateQuickCategoryDock = () => {
+      const slot =
+        quickCategoriesSlotRef.current;
+      const catalog =
+        catalogSectionRef.current;
+
+      if (!slot || !catalog) {
+        setQuickCategoriesFixed(false);
+        return;
+      }
+
+      const slotRect =
+        slot.getBoundingClientRect();
+      const catalogRect =
+        catalog.getBoundingClientRect();
+
+      const triggerTop =
+        window.innerWidth <= 720
+          ? 78
+          : 86;
+
+      const keepVisibleUntil =
+        triggerTop + 72;
+
+      setQuickCategoriesFixed(
+        slotRect.top <= triggerTop &&
+          catalogRect.bottom >
+            keepVisibleUntil
+      );
+    };
+
+    updateQuickCategoryDock();
+
+    window.addEventListener(
+      "scroll",
+      updateQuickCategoryDock,
+      { passive: true }
+    );
+    window.addEventListener(
+      "resize",
+      updateQuickCategoryDock
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        updateQuickCategoryDock
+      );
+      window.removeEventListener(
+        "resize",
+        updateQuickCategoryDock
+      );
+    };
+  }, []);
 
   const brands = useMemo(() => {
     const map = new Map<string, string>();
@@ -515,23 +579,48 @@ export default function ProductsCatalog() {
         </div>
 
         <div
-          className="plQuickCategories"
-          aria-label="Product category shortcuts"
+          ref={quickCategoriesSlotRef}
+          className="plQuickCategoriesSlot"
         >
-          {productCategories.map((item) => (
-            <button
-              key={item.value}
-              type="button"
-              className={category === item.value ? "active" : ""}
-              onClick={() => selectQuickCategory(item.value)}
-            >
-              {item.label}
-            </button>
-          ))}
+          <div
+            className={`plQuickCategories${
+              quickCategoriesFixed
+                ? " isFixed"
+                : ""
+            }`}
+            aria-label="Product category shortcuts"
+          >
+            {productCategories.map((item) => (
+              <button
+                key={item.value}
+                type="button"
+                className={
+                  category === item.value
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  selectQuickCategory(
+                    item.value
+                  )
+                }
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="productsCatalogSection" id="catalog">
+      <section
+        ref={catalogSectionRef}
+        className={`productsCatalogSection${
+          quickCategoriesFixed
+            ? " quickCategoriesDocked"
+            : ""
+        }`}
+        id="catalog"
+      >
         <div className="demoSectionHead">
           <div>
             <div className="demoEyebrow">Product Catalogue</div>
