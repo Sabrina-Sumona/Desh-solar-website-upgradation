@@ -2,9 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import ProductQuickView from "@/components/products/ProductQuickView";
 import ProductCompare from "@/components/products/ProductCompare";
-import { useEffect, useMemo, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   productApplications,
   productCategories,
@@ -81,6 +88,41 @@ const categoryLabels: Record<string, string> = {
   portable: "Portable Power",
   system: "Complete System / Pump",
 };
+
+const VALID_CATEGORY_VALUES = new Set([
+  "panel",
+  "inverter",
+  "battery",
+  "portable",
+  "system",
+]);
+
+function CategoryQuerySync({
+  onCategoryChange,
+}: {
+  onCategoryChange: (category: string) => void;
+}) {
+  const searchParams = useSearchParams();
+  const requestedCategory =
+    searchParams.get("category");
+
+  useEffect(() => {
+    const nextCategory =
+      requestedCategory &&
+      VALID_CATEGORY_VALUES.has(
+        requestedCategory
+      )
+        ? requestedCategory
+        : "all";
+
+    onCategoryChange(nextCategory);
+  }, [
+    requestedCategory,
+    onCategoryChange,
+  ]);
+
+  return null;
+}
 
 function numericPower(value: string) {
   const match = value.replace(/,/g, "").match(/[0-9]+(?:\.[0-9]+)?/);
@@ -191,6 +233,10 @@ function ProductCard({
   };
 
   const decrementCart = () => {
+    if (cartQuantity <= 1) {
+      return;
+    }
+
     updateCartQuantity(cartQuantity - 1);
   };
 
@@ -271,11 +317,8 @@ function ProductCard({
                 type="button"
                 className="piCartQtyButton"
                 onClick={decrementCart}
-                aria-label={
-                  cartQuantity === 1
-                    ? `Remove ${product.name} from cart`
-                    : `Decrease quantity of ${product.name}`
-                }
+                disabled={cartQuantity <= 1}
+                aria-label={`Decrease quantity of ${product.name}`}
               >
                 −
               </button>
@@ -337,6 +380,15 @@ export default function ProductsCatalog() {
   const [compareProducts, setCompareProducts] = useState<Product[]>([]);
   const [compareOpen, setCompareOpen] = useState(false);
   const [compareNotice, setCompareNotice] = useState("");
+
+  const applyCategoryFromUrl = useCallback(
+    (nextCategory: string) => {
+      setCategory(nextCategory);
+      setBrand("all");
+      setApplication("all");
+    },
+    []
+  );
 
   const brands = useMemo(() => {
     const map = new Map<string, string>();
@@ -431,6 +483,14 @@ export default function ProductsCatalog() {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <CategoryQuerySync
+          onCategoryChange={
+            applyCategoryFromUrl
+          }
+        />
+      </Suspense>
+
       <section className="plCompactHero">
         <div className="plCompactHeroCopy">
           <div className="demoEyebrow">Desh Solar Products</div>
