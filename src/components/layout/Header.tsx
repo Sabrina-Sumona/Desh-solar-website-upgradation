@@ -725,9 +725,9 @@ export default function Header() {
         <div className="navMobileTools">
           <button
             type="button"
-            className={`navSearchButton navSearchButtonMobile ${
+            className={`navSearchButtonMobile ${
               searchOpen
-                ? "navSearchButtonActive"
+                ? "navSearchButtonMobileActive"
                 : ""
             }`}
             aria-label="Search products"

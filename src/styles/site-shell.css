@@ -4696,3 +4696,121 @@ span:nth-child(3) {
   }
 }
 
+/* =========================================================
+   MOBILE SEARCH BUTTON — EXACT HAMBURGER VISUAL MATCH
+   The mobile search button is intentionally independent from
+   desktop .navSearchButton so it cannot inherit pill styling.
+   ========================================================= */
+
+.navSearchButtonMobile {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.11);
+
+  border-radius: 13px;
+
+  color: #dce7eb;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.032),
+      rgba(255, 255, 255, 0.012)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.035);
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease,
+    box-shadow 0.22s ease,
+    color 0.22s ease;
+}
+
+.navSearchButtonMobile:hover,
+.navSearchButtonMobileActive {
+  border-color:
+    rgba(145, 239, 91, 0.24);
+
+  color: #eaffdc;
+
+  background:
+    rgba(145, 239, 91, 0.045);
+
+  box-shadow:
+    0 0 16px
+    rgba(145, 239, 91, 0.04),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.035);
+}
+
+.navSearchButtonMobile .navSearchIcon {
+  width: 18px;
+  height: 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  color: currentColor;
+
+  filter: none;
+  transform: none;
+}
+
+.navSearchButtonMobile .navSearchIcon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 1280px) {
+  .navSearchButtonMobile {
+    display: flex;
+  }
+}
+
+@media (max-width: 720px) {
+  .navSearchButtonMobile {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navSearchButtonMobile {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navSearchButtonMobile,
+  .navSearchButtonMobile .navSearchIcon {
+    transition: none;
+  }
+}
+
