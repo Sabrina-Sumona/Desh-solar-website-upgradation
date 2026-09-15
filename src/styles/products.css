@@ -1907,3 +1907,33 @@
   }
 }
 
+/* =========================================================
+   INDEPENDENT PACKAGES CATALOG
+   ========================================================= */
+
+.plCompactHero.packageHero {
+  grid-template-columns: 1fr;
+}
+
+.catalogToolbar.packageToolbar {
+  grid-template-columns:
+    minmax(220px, 1.35fr)
+    repeat(3, minmax(140px, 0.62fr))
+    auto;
+}
+
+@media (min-width: 900px) and (max-width: 1279px) {
+  .catalogToolbar.packageToolbar {
+    grid-template-columns:
+      minmax(220px, 1fr)
+      minmax(150px, 0.65fr)
+      auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .plCompactHero.packageHero {
+    display: block;
+  }
+}
+

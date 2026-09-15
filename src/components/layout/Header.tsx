@@ -31,13 +31,17 @@ const PRODUCT_LINKS = [
     icon: "▣",
   },
   {
-    label: "Complete Systems",
-    href: "/products?category=system",
-    icon: "◎",
+    label: "Portable Power",
+    href: "/products?category=portable",
+    icon: "⚡",
   },
 ];
 
 const MAIN_NAV_LINKS = [
+  {
+    label: "Packages",
+    href: "/packages",
+  },
   {
     label: "Projects",
     href: "/projects",

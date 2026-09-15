@@ -22,6 +22,10 @@ import {
 
 type SortValue = "featured" | "price-low" | "price-high" | "power-high";
 
+type ProductsCatalogProps = {
+  catalogMode?: "products" | "packages";
+};
+
 type CartItem = {
   id: string;
   name: string;
@@ -95,8 +99,12 @@ const VALID_CATEGORY_VALUES = new Set([
   "inverter",
   "battery",
   "portable",
-  "system",
 ]);
+
+const PRODUCT_CATEGORY_OPTIONS =
+  productCategories.filter(
+    (item) => item.value !== "system"
+  );
 
 function CatalogQuerySync({
   onQueryChange,
@@ -144,11 +152,13 @@ function ProductCard({
   onQuickView,
   isCompared,
   onCompare,
+  catalogMode,
 }: {
   product: Product;
   onQuickView: (product: Product) => void;
   isCompared: boolean;
   onCompare: (product: Product) => void;
+  catalogMode: "products" | "packages";
 }) {
   const [cartQuantity, setCartQuantity] = useState(0);
 
@@ -317,7 +327,9 @@ function ProductCard({
         </div>
 
         <Link className="piDetailsPrimary" href={`/products/${product.id}`}>
-          View Product Details →
+          {catalogMode === "packages"
+            ? "View Package Details →"
+            : "View Product Details →"}
         </Link>
 
         {cartQuantity > 0 ? (
@@ -377,7 +389,11 @@ function ProductCard({
   );
 }
 
-export default function ProductsCatalog() {
+export default function ProductsCatalog({
+  catalogMode = "products",
+}: ProductsCatalogProps) {
+  const isPackageCatalog =
+    catalogMode === "packages";
   const [category, setCategory] = useState("all");
   const [brand, setBrand] = useState("all");
   const [application, setApplication] = useState("all");
@@ -403,15 +419,24 @@ export default function ProductsCatalog() {
       nextCategory: string,
       nextSearch: string
     ) => {
-      setCategory(nextCategory);
+      setCategory(
+        isPackageCatalog
+          ? "all"
+          : nextCategory
+      );
       setSearch(nextSearch);
       setBrand("all");
       setApplication("all");
     },
-    []
+    [isPackageCatalog]
   );
 
   useEffect(() => {
+    if (isPackageCatalog) {
+      setQuickCategoriesFixed(false);
+      return;
+    }
+
     const updateQuickCategoryDock = () => {
       const slot =
         quickCategoriesSlotRef.current;
@@ -465,24 +490,34 @@ export default function ProductsCatalog() {
         updateQuickCategoryDock
       );
     };
-  }, []);
+  }, [isPackageCatalog]);
+
+  const catalogProducts = useMemo(
+    () =>
+      products.filter((product) =>
+        isPackageCatalog
+          ? product.category === "system"
+          : product.category !== "system"
+      ),
+    [isPackageCatalog]
+  );
 
   const brands = useMemo(() => {
     const map = new Map<string, string>();
 
-    products.forEach((product) => {
+    catalogProducts.forEach((product) => {
       map.set(product.brand, product.brandLabel);
     });
 
     return [...map.entries()]
       .sort((a, b) => a[1].localeCompare(b[1]))
       .map(([value, label]) => ({ value, label }));
-  }, []);
+  }, [catalogProducts]);
 
   const visibleProducts = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    const filtered = products.filter((product) => {
+    const filtered = catalogProducts.filter((product) => {
       const categoryMatch =
         category === "all" || product.category === category;
       const brandMatch = brand === "all" || product.brand === brand;
@@ -517,7 +552,14 @@ export default function ProductsCatalog() {
     return [...filtered].sort(
       (a, b) => a.featuredOrder - b.featuredOrder
     );
-  }, [application, brand, category, search, sort]);
+  }, [
+    application,
+    brand,
+    catalogProducts,
+    category,
+    search,
+    sort,
+  ]);
 
   const toggleCompare = (product: Product) => {
     setCompareProducts((current) => {
@@ -568,48 +610,69 @@ export default function ProductsCatalog() {
         />
       </Suspense>
 
-      <section className="plCompactHero">
+      <section
+        className={`plCompactHero${
+          isPackageCatalog
+            ? " packageHero"
+            : ""
+        }`}
+      >
         <div className="plCompactHeroCopy">
-          <div className="demoEyebrow">Desh Solar Products</div>
-          <h1>Solar products &amp; complete systems.</h1>
+          <div className="demoEyebrow">
+            {isPackageCatalog
+              ? "Desh Solar Packages"
+              : "Desh Solar Products"}
+          </div>
+
+          <h1>
+            {isPackageCatalog
+              ? "Complete solar packages."
+              : "Solar products."}
+          </h1>
+
           <p>
-            Panels, inverters, batteries, portable power and complete solar
-            systems — browse the catalogue immediately below.
+            {isPackageCatalog
+              ? "Complete solar systems and solar pump packages — browse ready-made configurations for different energy requirements."
+              : "Panels, inverters, batteries and portable power — browse individual solar products below."}
           </p>
         </div>
 
-        <div
-          ref={quickCategoriesSlotRef}
-          className="plQuickCategoriesSlot"
-        >
+        {!isPackageCatalog && (
           <div
-            className={`plQuickCategories${
-              quickCategoriesFixed
-                ? " isFixed"
-                : ""
-            }`}
-            aria-label="Product category shortcuts"
+            ref={quickCategoriesSlotRef}
+            className="plQuickCategoriesSlot"
           >
-            {productCategories.map((item) => (
-              <button
-                key={item.value}
-                type="button"
-                className={
-                  category === item.value
-                    ? "active"
-                    : ""
-                }
-                onClick={() =>
-                  selectQuickCategory(
-                    item.value
-                  )
-                }
-              >
-                {item.label}
-              </button>
-            ))}
+            <div
+              className={`plQuickCategories${
+                quickCategoriesFixed
+                  ? " isFixed"
+                  : ""
+              }`}
+              aria-label="Product category shortcuts"
+            >
+              {PRODUCT_CATEGORY_OPTIONS.map(
+                (item) => (
+                  <button
+                    key={item.value}
+                    type="button"
+                    className={
+                      category === item.value
+                        ? "active"
+                        : ""
+                    }
+                    onClick={() =>
+                      selectQuickCategory(
+                        item.value
+                      )
+                    }
+                  >
+                    {item.label}
+                  </button>
+                )
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       <section
@@ -623,13 +686,22 @@ export default function ProductsCatalog() {
       >
         <div className="demoSectionHead">
           <div>
-            <div className="demoEyebrow">Product Catalogue</div>
-            <h2>Browse products.</h2>
+            <div className="demoEyebrow">
+              {isPackageCatalog
+                ? "Package Catalogue"
+                : "Product Catalogue"}
+            </div>
+            <h2>
+              {isPackageCatalog
+                ? "Browse packages."
+                : "Browse products."}
+            </h2>
           </div>
 
           <p className="demoSectionLead">
-            Browse quickly. Open a product for full specifications and system
-            details.
+            {isPackageCatalog
+              ? "Browse complete configurations. Open a package for its system details."
+              : "Browse quickly. Open a product for full specifications and system details."}
           </p>
         </div>
 
@@ -650,9 +722,19 @@ export default function ProductsCatalog() {
           />
         )}
 
-        <div className={`catalogToolbar${filtersOpen ? " isOpen" : ""}`}>
+        <div
+          className={`catalogToolbar${
+            isPackageCatalog
+              ? " packageToolbar"
+              : ""
+          }${filtersOpen ? " isOpen" : ""}`}
+        >
           <div className="piMobileFilterHead">
-            <b>Product Filters</b>
+            <b>
+              {isPackageCatalog
+                ? "Package Filters"
+                : "Product Filters"}
+            </b>
             <button type="button" onClick={() => setFiltersOpen(false)}>
               ×
             </button>
@@ -663,23 +745,44 @@ export default function ProductsCatalog() {
             type="search"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search products, brands or capacity…"
-            aria-label="Search products"
+            placeholder={
+              isPackageCatalog
+                ? "Search packages, system size or application…"
+                : "Search products, brands or capacity…"
+            }
+            aria-label={
+              isPackageCatalog
+                ? "Search packages"
+                : "Search products"
+            }
           />
 
-          <select
-            className="catalogSelect"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-            aria-label="Product category"
-          >
-            <option value="all">All categories</option>
-            <option value="panel">Solar Panel</option>
-            <option value="portable">Portable Power</option>
-            <option value="battery">Lithium Battery</option>
-            <option value="inverter">Solar Inverter</option>
-            <option value="system">Complete System / Pump</option>
-          </select>
+          {!isPackageCatalog && (
+            <select
+              className="catalogSelect"
+              value={category}
+              onChange={(event) =>
+                setCategory(event.target.value)
+              }
+              aria-label="Product category"
+            >
+              <option value="all">
+                All categories
+              </option>
+              <option value="panel">
+                Solar Panel
+              </option>
+              <option value="portable">
+                Portable Power
+              </option>
+              <option value="battery">
+                Lithium Battery
+              </option>
+              <option value="inverter">
+                Solar Inverter
+              </option>
+            </select>
+          )}
 
           <select
             className="catalogSelect"
@@ -734,13 +837,18 @@ export default function ProductsCatalog() {
                   (item) => item.id === product.id
                 )}
                 onCompare={toggleCompare}
+                catalogMode={catalogMode}
               />
             ))}
           </div>
         ) : (
           <div className="productsEmptyState">
             <span>NO MATCH</span>
-            <h3>No products match these filters.</h3>
+            <h3>
+              {isPackageCatalog
+                ? "No packages match these filters."
+                : "No products match these filters."}
+            </h3>
             <button
               type="button"
               onClick={() => {

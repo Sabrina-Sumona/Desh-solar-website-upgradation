@@ -380,8 +380,8 @@
 
   width:
     min(
-      780px,
-      76vw
+      430px,
+      calc(100vw - 32px)
     );
 
   padding: 16px;
@@ -395,7 +395,7 @@
   overflow: hidden;
 
   transform:
-    translate(-38%, -8px)
+    translate(-28%, -8px)
     scale(0.985);
 
   transform-origin:
@@ -445,7 +445,7 @@
     auto;
 
   transform:
-    translate(-38%, 0)
+    translate(-28%, 0)
     scale(1);
 }
 
@@ -477,9 +477,9 @@
   display: grid;
 
   grid-template-columns:
-    1.08fr 0.92fr;
+    minmax(0, 1fr);
 
-  gap: 12px;
+  gap: 0;
 }
 
 .megaGroup,
@@ -631,6 +631,67 @@
 
   transform:
     translateX(0);
+}
+
+
+.megaBuildLink {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  padding: 0 14px;
+  border: 1px solid rgba(145, 239, 91, 0.18);
+  border-radius: 12px;
+  color: #dfffc9;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.06),
+      rgba(145, 239, 91, 0.025)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  font-size: 10px;
+  font-weight: 900;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.megaBuildLink span {
+  min-width: 0;
+}
+
+.megaBuildLink b {
+  flex: 0 0 auto;
+  color: var(--green-2);
+  font-size: 15px;
+  transition: transform 0.18s ease;
+}
+
+.megaBuildLink:hover {
+  border-color: rgba(145, 239, 91, 0.34);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.1),
+      rgba(145, 239, 91, 0.04)
+    );
+  color: #f0ffe5;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 0 18px rgba(145, 239, 91, 0.045);
+  transform: translateY(-1px);
+}
+
+.megaBuildLink:hover b {
+  transform: translateX(3px);
 }
 
 .megaFeature small {
@@ -3746,6 +3807,8 @@ span:nth-child(3) {
   .navMegaPanel,
   .megaLinks a,
   .megaLinks b,
+  .megaBuildLink,
+  .megaBuildLink b,
   .megaFeature > a,
   .navFeatureItem,
   .navFeatureItem::before,
