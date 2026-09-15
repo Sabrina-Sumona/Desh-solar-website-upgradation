@@ -647,42 +647,30 @@
   .plQuickCategories.isFixed {
     top: 78px;
     left: 14px;
-    right: auto;
-    width: calc(100vw - 28px);
-    max-width: calc(100vw - 28px);
+    right: 14px;
+    width: auto;
+    max-width: none;
     box-sizing: border-box;
-    display: flex;
-    grid-template-columns: none;
-    justify-content: flex-start;
-    gap: 7px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 7px 10px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    justify-content: stretch;
+    gap: 6px;
+    overflow: hidden;
+    padding: 7px;
     border-radius: 14px;
     transform: none;
-    scroll-padding-inline: 10px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-inline: contain;
-  }
-
-  .plQuickCategories.isFixed::-webkit-scrollbar {
-    display: none;
-  }
-
-  .plQuickCategories.isFixed::after {
-    content: "";
-    flex: 0 0 2px;
-    width: 2px;
   }
 
   .plQuickCategories.isFixed button {
-    width: auto;
-    min-width: max-content;
-    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
     min-height: 36px;
-    padding: 0 11px;
-    white-space: nowrap;
+    padding: 0 4px;
+    overflow: hidden;
+    font-size: 7px;
+    line-height: 1.05;
+    text-align: center;
+    white-space: normal;
   }
 
   .productsCatalogSection.quickCategoriesDocked
@@ -1934,6 +1922,22 @@
 @media (max-width: 720px) {
   .plCompactHero.packageHero {
     display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  .plQuickCategories.isFixed {
+    left: 10px;
+    right: 10px;
+    gap: 4px;
+    padding: 6px;
+  }
+
+  .plQuickCategories.isFixed button {
+    min-height: 34px;
+    padding: 0 2px;
+    font-size: 6.5px;
+    line-height: 1.05;
   }
 }
 
