@@ -4216,12 +4216,15 @@ span:nth-child(3) {
 .navSearchButton {
   position: relative;
   isolation: isolate;
-  min-height: 42px;
+  width: 142px;
+  min-width: 142px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   flex: 0 0 auto;
-  gap: 7px;
-  padding: 0 12px;
+  gap: 9px;
+  padding: 0 16px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.11);
   border-radius: 999px;
@@ -4289,8 +4292,8 @@ span:nth-child(3) {
 }
 
 .navSearchIcon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4300,14 +4303,15 @@ span:nth-child(3) {
 
 .navSearchIcon svg {
   display: block;
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 .navSearchLabel {
   color: #cbd8dd;
-  font-size: 11px;
-  font-weight: 750;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .navMobileTools {
@@ -4696,6 +4700,15 @@ span:nth-child(3) {
   }
 }
 
+
+
+@media (max-width: 1280px) {
+  .navSearchButton {
+    width: auto;
+    min-width: 0;
+  }
+}
+
 /* =========================================================
    MOBILE SEARCH BUTTON — EXACT HAMBURGER VISUAL MATCH
    The mobile search button is intentionally independent from
@@ -4814,3 +4827,314 @@ span:nth-child(3) {
   }
 }
 
+/* =========================================================
+   EXPANDING INLINE PRODUCT SEARCH
+   No separate search panel: the header field itself grows.
+   ========================================================= */
+
+.navInlineSearch {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 999px;
+  color: #dce7eb;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.032),
+      rgba(255, 255, 255, 0.012)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  transition:
+    width 0.24s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navInlineSearch.isOpen {
+  width: 270px;
+  border-color: rgba(145, 239, 91, 0.27);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(145, 239, 91, 0.055),
+      rgba(255, 255, 255, 0.012)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.045),
+    0 0 18px rgba(145, 239, 91, 0.045);
+}
+
+.navInlineSearchToggle,
+.navMobileInlineSearchToggle {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  color: #dce7eb;
+  background: transparent;
+  cursor: pointer;
+}
+
+.navInlineSearchToggle svg,
+.navMobileInlineSearchToggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.navInlineSearch input {
+  width: 0;
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  opacity: 0;
+  color: #edf5f7;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  pointer-events: none;
+  transition:
+    width 0.24s ease,
+    opacity 0.16s ease,
+    padding 0.24s ease;
+}
+
+.navInlineSearch.isOpen input {
+  width: 100%;
+  padding: 0 6px 0 2px;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.navInlineSearch input::placeholder,
+.navMobileInlineSearch input::placeholder {
+  color: #71858e;
+}
+
+.navInlineSearchClose,
+.navMobileInlineSearchClose {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  margin-right: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: #91a5ad;
+  background: transparent;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.navInlineSearchClose:hover,
+.navMobileInlineSearchClose:hover {
+  color: #e7f5ec;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+/* Independent mobile/tablet search remains beside hamburger. */
+.navMobileInlineSearch {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  display: none;
+  flex: 0 0 auto;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 13px;
+  color: #dce7eb;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.032),
+      rgba(255, 255, 255, 0.012)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  transition:
+    width 0.24s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.navMobileInlineSearch input {
+  width: 0;
+  min-width: 0;
+  height: 100%;
+  flex: 1 1 auto;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  opacity: 0;
+  color: #edf5f7;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  pointer-events: none;
+  transition:
+    width 0.24s ease,
+    opacity 0.16s ease,
+    padding 0.24s ease;
+}
+
+.navMobileInlineSearch.isOpen input {
+  width: 100%;
+  padding: 0 4px 0 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 1280px) {
+  .navInlineSearch {
+    display: none;
+  }
+
+  .navMobileInlineSearch {
+    display: inline-flex;
+  }
+
+  .navMobileInlineSearch.isOpen {
+    position: fixed;
+    z-index: 2520;
+    top: 84px;
+    left: 14px;
+    right: 14px;
+    width: auto;
+    height: 44px;
+    border-color: rgba(145, 239, 91, 0.27);
+    border-radius: 14px;
+    background:
+      linear-gradient(
+        135deg,
+        rgba(145, 239, 91, 0.055),
+        rgba(5, 15, 20, 0.985)
+      );
+    box-shadow:
+      0 12px 34px rgba(0, 0, 0, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+}
+
+@media (max-width: 720px) {
+  .navMobileInlineSearch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navMobileInlineSearchToggle {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .navMobileInlineSearch.isOpen {
+    top: 74px;
+    left: 14px;
+    right: 14px;
+    width: auto;
+    height: 42px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navMobileInlineSearch {
+    width: 38px;
+    height: 38px;
+  }
+
+  .navMobileInlineSearchToggle {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+  }
+
+  .navMobileInlineSearch.isOpen {
+    top: 72px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    height: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navInlineSearch,
+  .navInlineSearch input,
+  .navMobileInlineSearch,
+  .navMobileInlineSearch input {
+    transition: none;
+  }
+}
+
+
+
+/* =========================================================
+   MOBILE EXPANDED SEARCH LAYOUT SPACE
+   The header nav is fixed, so the expanded search row needs
+   document space to prevent overlap with page content.
+   ========================================================= */
+
+.mobileSearchLayoutSpacer {
+  display: none;
+}
+
+@media (max-width: 1280px) {
+  .mobileSearchLayoutSpacer {
+    display: block;
+    height: 58px;
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .mobileSearchLayoutSpacer {
+    height: 54px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobileSearchLayoutSpacer {
+    height: 52px;
+  }
+}
+
+
+/* =========================================================
+   SEARCH FIELD — SINGLE CLEAR / CLOSE CONTROL
+   Hide the browser-native search cancel icon so there is only
+   one custom × button at the right side of the field.
+   ========================================================= */
+
+.navInlineSearch input::-webkit-search-cancel-button,
+.navMobileInlineSearch input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+  display: none;
+}
+
+.navInlineSearch input::-ms-clear,
+.navMobileInlineSearch input::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}

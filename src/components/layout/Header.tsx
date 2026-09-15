@@ -5,14 +5,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   type FormEvent,
+  type RefObject,
   useCallback,
   useEffect,
-  useMemo,
   useRef,
   useState,
 } from "react";
 import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
-import { products } from "@/data/products";
 
 const PRODUCT_LINKS = [
   {
@@ -193,35 +192,10 @@ export default function Header() {
     useRef<HeaderCartItem[]>([]);
   const cartToastTimerRef =
     useRef<number | null>(null);
-  const searchInputRef =
+  const desktopSearchInputRef =
     useRef<HTMLInputElement | null>(null);
-
-  const searchResults = useMemo(() => {
-    const query = searchQuery
-      .trim()
-      .toLowerCase();
-
-    if (!query) {
-      return [];
-    }
-
-    return products
-      .filter((product) => {
-        const haystack = [
-          product.name,
-          product.brandLabel,
-          product.categoryLabel,
-          product.power,
-          product.search,
-        ]
-          .filter(Boolean)
-          .join(" ")
-          .toLowerCase();
-
-        return haystack.includes(query);
-      })
-      .slice(0, 6);
-  }, [searchQuery]);
+  const mobileSearchInputRef =
+    useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     const showCartToast = (
@@ -386,28 +360,20 @@ export default function Header() {
     setSearchOpen(false);
   }, []);
 
-  const openSearch = useCallback(() => {
-    setMobileOpen(false);
-    setCartOpen(false);
-    setSearchOpen(true);
+  const openSearch = useCallback(
+    (
+      inputRef: RefObject<HTMLInputElement | null>
+    ) => {
+      setMobileOpen(false);
+      setCartOpen(false);
+      setSearchOpen(true);
 
-    window.requestAnimationFrame(() => {
-      searchInputRef.current?.focus();
-    });
-  }, []);
-
-  const toggleSearch = useCallback(() => {
-    if (searchOpen) {
-      closeSearch();
-      return;
-    }
-
-    openSearch();
-  }, [
-    searchOpen,
-    closeSearch,
-    openSearch,
-  ]);
+      window.requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    },
+    []
+  );
 
   useEffect(() => {
     if (!searchOpen) {
@@ -447,7 +413,12 @@ export default function Header() {
     const query = searchQuery.trim();
 
     if (!query) {
-      searchInputRef.current?.focus();
+      const input =
+        window.innerWidth <= 1280
+          ? mobileSearchInputRef.current
+          : desktopSearchInputRef.current;
+
+      input?.focus();
       return;
     }
 
@@ -499,6 +470,80 @@ export default function Header() {
             ================================================= */}
 
         <div className="navLinks">
+          {/* =================================================
+              PRODUCT SEARCH
+              ================================================= */}
+
+          <form
+            className={`navInlineSearch ${
+              searchOpen
+                ? "isOpen"
+                : ""
+            }`}
+            role="search"
+            onSubmit={submitSearch}
+          >
+            <button
+              type="button"
+              className="navInlineSearchToggle"
+              aria-label={
+                searchOpen
+                  ? "Focus product search"
+                  : "Open product search"
+              }
+              aria-expanded={searchOpen}
+              onClick={() =>
+                openSearch(
+                  desktopSearchInputRef
+                )
+              }
+            >
+              <SearchIcon />
+            </button>
+
+            <input
+              ref={desktopSearchInputRef}
+              type="search"
+              value={searchQuery}
+              onChange={(event) =>
+                setSearchQuery(
+                  event.target.value
+                )
+              }
+              placeholder="Search products..."
+              autoComplete="off"
+              aria-label="Search products"
+              tabIndex={searchOpen ? 0 : -1}
+            />
+
+            {searchOpen && (
+              <button
+                type="button"
+                className="navInlineSearchClose"
+                aria-label={
+                  searchQuery
+                    ? "Clear product search"
+                    : "Close product search"
+                }
+                onClick={() => {
+                  if (searchQuery) {
+                    setSearchQuery("");
+
+                    window.requestAnimationFrame(() => {
+                      desktopSearchInputRef.current?.focus();
+                    });
+
+                    return;
+                  }
+
+                  closeSearch();
+                }}
+              >
+                ×
+              </button>
+            )}
+          </form>
+
           {/* PRODUCTS */}
 
           <div className="navMegaWrap">
@@ -648,31 +693,6 @@ export default function Header() {
           </div>
 
           {/* =================================================
-              PRODUCT SEARCH
-              ================================================= */}
-
-          <button
-            type="button"
-            className={`navSearchButton ${
-              searchOpen
-                ? "navSearchButtonActive"
-                : ""
-            }`}
-            aria-label="Search products"
-            aria-expanded={searchOpen}
-            aria-controls="headerProductSearch"
-            onClick={toggleSearch}
-          >
-            <span className="navSearchIcon">
-              <SearchIcon />
-            </span>
-
-            <span className="navSearchLabel">
-              Search
-            </span>
-          </button>
-
-          {/* =================================================
               CART
               ================================================= */}
 
@@ -723,22 +743,75 @@ export default function Header() {
             ================================================= */}
 
         <div className="navMobileTools">
-          <button
-            type="button"
-            className={`navSearchButtonMobile ${
+          <form
+            className={`navMobileInlineSearch ${
               searchOpen
-                ? "navSearchButtonMobileActive"
+                ? "isOpen"
                 : ""
             }`}
-            aria-label="Search products"
-            aria-expanded={searchOpen}
-            aria-controls="headerProductSearch"
-            onClick={toggleSearch}
+            role="search"
+            onSubmit={submitSearch}
           >
-            <span className="navSearchIcon">
+            <button
+              type="button"
+              className="navMobileInlineSearchToggle"
+              aria-label={
+                searchOpen
+                  ? "Focus product search"
+                  : "Open product search"
+              }
+              aria-expanded={searchOpen}
+              onClick={() =>
+                openSearch(
+                  mobileSearchInputRef
+                )
+              }
+            >
               <SearchIcon />
-            </span>
-          </button>
+            </button>
+
+            <input
+              ref={mobileSearchInputRef}
+              type="search"
+              value={searchQuery}
+              onChange={(event) =>
+                setSearchQuery(
+                  event.target.value
+                )
+              }
+              placeholder="Search products..."
+              autoComplete="off"
+              aria-label="Search products"
+              tabIndex={searchOpen ? 0 : -1}
+            />
+
+            {searchOpen && (
+              <button
+                type="button"
+                className="navMobileInlineSearchClose"
+                aria-label={
+                  searchQuery
+                    ? "Clear product search"
+                    : "Close product search"
+                }
+                onClick={() => {
+                  if (searchQuery) {
+                    setSearchQuery("");
+
+                    window.requestAnimationFrame(() => {
+                      mobileSearchInputRef.current?.focus();
+                    });
+
+                    return;
+                  }
+
+                  closeSearch();
+                }}
+              >
+                ×
+              </button>
+            )}
+          </form>
 
           <button
             type="button"
@@ -769,151 +842,10 @@ export default function Header() {
       </nav>
 
       {searchOpen && (
-        <>
-          <button
-            type="button"
-            className="headerSearchBackdrop"
-            aria-label="Close product search"
-            onClick={closeSearch}
-          />
-
-          <section
-            id="headerProductSearch"
-            className="headerProductSearch"
-            aria-label="Product search"
-          >
-            <form
-              className="headerProductSearchForm"
-              onSubmit={submitSearch}
-            >
-              <span
-                className="headerProductSearchIcon"
-                aria-hidden="true"
-              >
-                <SearchIcon />
-              </span>
-
-              <input
-                ref={searchInputRef}
-                type="search"
-                value={searchQuery}
-                onChange={(event) =>
-                  setSearchQuery(
-                    event.target.value
-                  )
-                }
-                placeholder="Search solar panels, batteries, inverters..."
-                autoComplete="off"
-                aria-label="Search Desh Solar products"
-              />
-
-              <button
-                type="submit"
-                className="headerProductSearchSubmit"
-              >
-                Search
-              </button>
-
-              <button
-                type="button"
-                className="headerProductSearchClose"
-                aria-label="Close product search"
-                onClick={closeSearch}
-              >
-                ×
-              </button>
-            </form>
-
-            <div className="headerProductSearchResults">
-              {!searchQuery.trim() ? (
-                <p className="headerProductSearchHint">
-                  Start typing a product name, brand, category or power rating.
-                </p>
-              ) : searchResults.length > 0 ? (
-                <>
-                  <div className="headerProductSearchResultList">
-                    {searchResults.map(
-                      (product) => (
-                        <Link
-                          key={product.id}
-                          href={`/products/${product.id}`}
-                          className="headerProductSearchResult"
-                          onClick={closeSearch}
-                        >
-                          <span className="headerProductSearchThumb">
-                            <Image
-                              src={product.image}
-                              alt=""
-                              width={72}
-                              height={56}
-                            />
-                          </span>
-
-                          <span className="headerProductSearchMeta">
-                            <small>
-                              {product.brandLabel}
-                              {" · "}
-                              {product.categoryLabel}
-                            </small>
-
-                            <strong>
-                              {product.name}
-                            </strong>
-
-                            <span>
-                              {product.power}
-                              {" · "}
-                              {product.priceText}
-                            </span>
-                          </span>
-
-                          <b aria-hidden="true">
-                            →
-                          </b>
-                        </Link>
-                      )
-                    )}
-                  </div>
-
-                  <button
-                    type="button"
-                    className="headerProductSearchAll"
-                    onClick={() => {
-                      const query =
-                        searchQuery.trim();
-
-                      if (!query) {
-                        return;
-                      }
-
-                      closeSearch();
-                      router.push(
-                        `/products?search=${encodeURIComponent(
-                          query
-                        )}`
-                      );
-                    }}
-                  >
-                    View all matching products
-                    <span aria-hidden="true">
-                      →
-                    </span>
-                  </button>
-                </>
-              ) : (
-                <div className="headerProductSearchEmpty">
-                  <strong>
-                    No matching products found.
-                  </strong>
-
-                  <span>
-                    Try a product type, brand or power rating.
-                  </span>
-                </div>
-              )}
-            </div>
-          </section>
-        </>
+        <div
+          className="mobileSearchLayoutSpacer"
+          aria-hidden="true"
+        />
       )}
 
       {/* ===================================================
