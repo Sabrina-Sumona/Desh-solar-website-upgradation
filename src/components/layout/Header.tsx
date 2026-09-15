@@ -9,7 +9,7 @@ import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
 const PRODUCT_LINKS = [
   {
     label: "Solar Panels",
-    href: "/products?category=solar-panel",
+    href: "/products?category=panel",
     icon: "☀",
   },
   {
@@ -24,7 +24,7 @@ const PRODUCT_LINKS = [
   },
   {
     label: "Complete Systems",
-    href: "/products?category=complete-system",
+    href: "/products?category=system",
     icon: "◎",
   },
 ];
