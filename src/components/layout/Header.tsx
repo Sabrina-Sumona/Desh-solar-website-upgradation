@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   type FormEvent,
   type RefObject,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
 import CartQuickDrawer from "@/components/cart/CartQuickDrawer";
+import { products } from "@/data/products";
 
 const PRODUCT_LINKS = [
   {
@@ -177,12 +179,17 @@ function CartIcon() {
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const urlSearchQuery =
+    searchParams.get("search") || "";
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [searchSuggestionsOpen, setSearchSuggestionsOpen] =
+    useState(false);
   const [productsMenuOpen, setProductsMenuOpen] =
     useState(false);
   const [cartToast, setCartToast] = useState<{
@@ -198,6 +205,37 @@ export default function Header() {
     useRef<HTMLInputElement | null>(null);
   const mobileSearchInputRef =
     useRef<HTMLInputElement | null>(null);
+
+  const matchingProducts = useMemo(() => {
+    const query = searchQuery
+      .trim()
+      .toLowerCase();
+
+    if (!query) {
+      return [];
+    }
+
+    return products
+      .filter(
+        (product) =>
+          product.category !== "system"
+      )
+      .filter((product) => {
+        const searchableText = [
+          product.name,
+          product.brandLabel,
+          product.categoryLabel,
+          product.power,
+          product.search,
+        ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+        return searchableText.includes(query);
+      })
+      .slice(0, 5);
+  }, [searchQuery]);
 
   useEffect(() => {
     const showCartToast = (
@@ -361,6 +399,7 @@ export default function Header() {
 
   const closeSearch = useCallback(() => {
     setSearchOpen(false);
+    setSearchSuggestionsOpen(false);
   }, []);
 
   const openSearch = useCallback(
@@ -406,9 +445,25 @@ export default function Header() {
   }, [searchOpen, closeSearch]);
 
   useEffect(() => {
-    setSearchOpen(false);
     setProductsMenuOpen(false);
-  }, [pathname]);
+
+    const hasSearchResult =
+      pathname === "/products" &&
+      urlSearchQuery.trim().length > 0;
+
+    if (hasSearchResult) {
+      setSearchQuery(urlSearchQuery);
+      setSearchOpen(true);
+      setSearchSuggestionsOpen(false);
+      return;
+    }
+
+    setSearchOpen(false);
+    setSearchSuggestionsOpen(false);
+  }, [
+    pathname,
+    urlSearchQuery,
+  ]);
 
   useEffect(() => {
     const closeProductsMenuOnScroll = () => {
@@ -429,11 +484,7 @@ export default function Header() {
     };
   }, []);
 
-  const submitSearch = (
-    event: FormEvent<HTMLFormElement>
-  ) => {
-    event.preventDefault();
-
+  const performSearch = useCallback(() => {
     const query = searchQuery.trim();
 
     if (!query) {
@@ -446,13 +497,24 @@ export default function Header() {
       return;
     }
 
-    closeSearch();
+    setSearchOpen(true);
+    setSearchSuggestionsOpen(false);
 
     router.push(
       `/products?search=${encodeURIComponent(
         query
       )}`
     );
+  }, [
+    searchQuery,
+    router,
+  ]);
+
+  const submitSearch = (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    performSearch();
   };
 
   const isActive = (href: string) => {
@@ -499,7 +561,7 @@ export default function Header() {
               ================================================= */}
 
           <form
-            className={`navInlineSearch ${
+            className={`navSearchDock ${
               searchOpen
                 ? "isOpen"
                 : ""
@@ -507,51 +569,48 @@ export default function Header() {
             role="search"
             onSubmit={submitSearch}
           >
-            <button
-              type="button"
-              className="navInlineSearchToggle"
-              aria-label={
-                searchOpen
-                  ? "Focus product search"
-                  : "Open product search"
-              }
-              aria-expanded={searchOpen}
-              onClick={() =>
-                openSearch(
-                  desktopSearchInputRef
-                )
-              }
+            <div
+              id="desktopProductSearchExtension"
+              className="navSearchExtension"
+              aria-hidden={!searchOpen}
             >
-              <SearchIcon />
-            </button>
+              <input
+                ref={desktopSearchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(event) => {
+                  const value =
+                    event.target.value;
 
-            <input
-              ref={desktopSearchInputRef}
-              type="search"
-              value={searchQuery}
-              onChange={(event) =>
-                setSearchQuery(
-                  event.target.value
-                )
-              }
-              placeholder="Search products..."
-              autoComplete="off"
-              aria-label="Search products"
-              tabIndex={searchOpen ? 0 : -1}
-            />
+                  setSearchQuery(value);
+                  setSearchSuggestionsOpen(
+                    value.trim().length > 0
+                  );
+                }}
+                onFocus={() => {
+                  if (searchQuery.trim()) {
+                    setSearchSuggestionsOpen(true);
+                  }
+                }}
+                placeholder="Search products..."
+                autoComplete="off"
+                aria-label="Search products"
+                tabIndex={searchOpen ? 0 : -1}
+              />
 
-            {searchOpen && (
               <button
                 type="button"
-                className="navInlineSearchClose"
+                className="navSearchExtensionClose"
                 aria-label={
                   searchQuery
                     ? "Clear product search"
                     : "Close product search"
                 }
+                tabIndex={searchOpen ? 0 : -1}
                 onClick={() => {
                   if (searchQuery) {
                     setSearchQuery("");
+                    setSearchSuggestionsOpen(false);
 
                     window.requestAnimationFrame(() => {
                       desktopSearchInputRef.current?.focus();
@@ -565,7 +624,119 @@ export default function Header() {
               >
                 ×
               </button>
-            )}
+            </div>
+
+            <button
+              type="button"
+              className="navSearchDockToggle"
+              aria-label={
+                searchOpen
+                  ? "Search products"
+                  : "Open product search"
+              }
+              aria-expanded={searchOpen}
+              aria-controls="desktopProductSearchExtension"
+              onClick={() => {
+                if (!searchOpen) {
+                  openSearch(
+                    desktopSearchInputRef
+                  );
+                  return;
+                }
+
+                performSearch();
+              }}
+            >
+              <SearchIcon />
+            </button>
+
+            {searchOpen &&
+              searchSuggestionsOpen &&
+              searchQuery.trim() && (
+                <div
+                  className="navSearchSuggestions navSearchSuggestionsDesktop"
+                  role="listbox"
+                  aria-label="Matching products"
+                >
+                  {matchingProducts.length > 0 ? (
+                    <>
+                      <div className="navSearchSuggestionList">
+                        {matchingProducts.map(
+                          (product) => (
+                            <Link
+                              key={product.id}
+                              href={`/products/${product.id}`}
+                              className="navSearchSuggestionItem"
+                              onClick={() =>
+                                setSearchSuggestionsOpen(
+                                  false
+                                )
+                              }
+                            >
+                              <span className="navSearchSuggestionImage">
+                                <Image
+                                  src={product.image}
+                                  alt=""
+                                  width={56}
+                                  height={48}
+                                />
+                              </span>
+
+                              <span className="navSearchSuggestionInfo">
+                                <small>
+                                  {product.brandLabel}
+                                  {" · "}
+                                  {product.categoryLabel}
+                                </small>
+
+                                <strong>
+                                  {product.name}
+                                </strong>
+
+                                <span>
+                                  {product.priceText}
+                                  {product.power
+                                    ? ` · ${product.power}`
+                                    : ""}
+                                </span>
+                              </span>
+
+                              <b aria-hidden="true">
+                                →
+                              </b>
+                            </Link>
+                          )
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="navSearchViewAll"
+                        onClick={performSearch}
+                      >
+                        <span>
+                          View all matching products
+                        </span>
+
+                        <b aria-hidden="true">
+                          →
+                        </b>
+                      </button>
+                    </>
+                  ) : (
+                    <div className="navSearchNoResults">
+                      <strong>
+                        No matching products
+                      </strong>
+
+                      <span>
+                        Try a product name, brand,
+                        category or capacity.
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
           </form>
 
           {/* PRODUCTS */}
@@ -804,15 +975,20 @@ export default function Header() {
               className="navMobileInlineSearchToggle"
               aria-label={
                 searchOpen
-                  ? "Focus product search"
+                  ? "Search products"
                   : "Open product search"
               }
               aria-expanded={searchOpen}
-              onClick={() =>
-                openSearch(
-                  mobileSearchInputRef
-                )
-              }
+              onClick={() => {
+                if (!searchOpen) {
+                  openSearch(
+                    mobileSearchInputRef
+                  );
+                  return;
+                }
+
+                performSearch();
+              }}
             >
               <SearchIcon />
             </button>
@@ -821,11 +997,20 @@ export default function Header() {
               ref={mobileSearchInputRef}
               type="search"
               value={searchQuery}
-              onChange={(event) =>
-                setSearchQuery(
-                  event.target.value
-                )
-              }
+              onChange={(event) => {
+                const value =
+                  event.target.value;
+
+                setSearchQuery(value);
+                setSearchSuggestionsOpen(
+                  value.trim().length > 0
+                );
+              }}
+              onFocus={() => {
+                if (searchQuery.trim()) {
+                  setSearchSuggestionsOpen(true);
+                }
+              }}
               placeholder="Search products..."
               autoComplete="off"
               aria-label="Search products"
@@ -844,6 +1029,7 @@ export default function Header() {
                 onClick={() => {
                   if (searchQuery) {
                     setSearchQuery("");
+                    setSearchSuggestionsOpen(false);
 
                     window.requestAnimationFrame(() => {
                       mobileSearchInputRef.current?.focus();
@@ -858,6 +1044,94 @@ export default function Header() {
                 ×
               </button>
             )}
+
+            {searchOpen &&
+              searchSuggestionsOpen &&
+              searchQuery.trim() && (
+                <div
+                  className="navSearchSuggestions navSearchSuggestionsMobile"
+                  role="listbox"
+                  aria-label="Matching products"
+                >
+                  {matchingProducts.length > 0 ? (
+                    <>
+                      <div className="navSearchSuggestionList">
+                        {matchingProducts.map(
+                          (product) => (
+                            <Link
+                              key={product.id}
+                              href={`/products/${product.id}`}
+                              className="navSearchSuggestionItem"
+                              onClick={() =>
+                                setSearchSuggestionsOpen(
+                                  false
+                                )
+                              }
+                            >
+                              <span className="navSearchSuggestionImage">
+                                <Image
+                                  src={product.image}
+                                  alt=""
+                                  width={56}
+                                  height={48}
+                                />
+                              </span>
+
+                              <span className="navSearchSuggestionInfo">
+                                <small>
+                                  {product.brandLabel}
+                                  {" · "}
+                                  {product.categoryLabel}
+                                </small>
+
+                                <strong>
+                                  {product.name}
+                                </strong>
+
+                                <span>
+                                  {product.priceText}
+                                  {product.power
+                                    ? ` · ${product.power}`
+                                    : ""}
+                                </span>
+                              </span>
+
+                              <b aria-hidden="true">
+                                →
+                              </b>
+                            </Link>
+                          )
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="navSearchViewAll"
+                        onClick={performSearch}
+                      >
+                        <span>
+                          View all matching products
+                        </span>
+
+                        <b aria-hidden="true">
+                          →
+                        </b>
+                      </button>
+                    </>
+                  ) : (
+                    <div className="navSearchNoResults">
+                      <strong>
+                        No matching products
+                      </strong>
+
+                      <span>
+                        Try a product name, brand,
+                        category or capacity.
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
           </form>
 
           <button
