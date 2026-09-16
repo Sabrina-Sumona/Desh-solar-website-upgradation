@@ -204,6 +204,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Desh Solar on Facebook"
+                title="Facebook"
                 className="socialFacebook"
               >
                 <svg
@@ -219,6 +220,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Desh Solar on LinkedIn"
+                title="LinkedIn"
                 className="socialLinkedin"
               >
                 <svg
@@ -234,6 +236,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Desh Solar on YouTube"
+                title="YouTube"
                 className="socialYoutube"
               >
                 <svg
@@ -249,6 +252,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Chat with Desh Solar on WhatsApp"
+                title="WhatsApp: 01754-477488"
                 className="socialWhatsapp"
               >
                 <svg
@@ -267,9 +271,11 @@ export default function Footer() {
                 title="imo: 01754-477488"
                 className="socialImo"
               >
-                <img
+                <Image
                   src="/assets/imo-icon.png"
                   alt=""
+                  width={24}
+                  height={24}
                   className="socialImoLogo"
                   aria-hidden="true"
                 />
