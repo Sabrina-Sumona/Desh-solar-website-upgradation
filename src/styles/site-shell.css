@@ -49,9 +49,9 @@
   background:
     linear-gradient(
       180deg,
-      rgba(2, 8, 12, 0.97) 0%,
-      rgba(3, 11, 15, 0.83) 55%,
-      rgba(3, 11, 15, 0.28) 100%
+      rgba(2, 8, 12, 0.999) 0%,
+      rgba(3, 11, 15, 0.999) 55%,
+      rgba(3, 11, 15, 0.999) 100%
     );
 
   box-shadow:
@@ -59,12 +59,12 @@
     rgba(0, 0, 0, 0.16);
 
   backdrop-filter:
-    blur(14px)
-    saturate(1.08);
+    blur(13px)
+    saturate(1.07);
 
   -webkit-backdrop-filter:
-    blur(14px)
-    saturate(1.08);
+    blur(13px)
+    saturate(1.07);
 }
 
 /* =========================================================
