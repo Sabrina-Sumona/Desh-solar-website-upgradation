@@ -3176,6 +3176,57 @@ span:nth-child(3) {
     #ff0033;
 }
 
+.socialGmail {
+  color:
+    #ffffff;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.14);
+
+  background:
+    rgba(255, 255, 255, 0.025);
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.025);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.socialGmail:hover,
+.socialGmail:focus-visible {
+  color:
+    #ffffff;
+
+  border-color:
+    rgba(234, 67, 53, 0.58);
+
+  background:
+    rgba(234, 67, 53, 0.075);
+
+  box-shadow:
+    0 0 0 1px
+    rgba(234, 67, 53, 0.035),
+    0 7px 18px
+    rgba(0, 0, 0, 0.18);
+}
+
+.socialGmailIcon {
+  width:
+    16px !important;
+
+  height:
+    16px !important;
+
+  fill:
+    none !important;
+}
+
 .socialLinks a:hover {
   transform:
     translateY(-2px)
@@ -5174,64 +5225,67 @@ span:nth-child(3) {
 
   border:
     1.5px solid
-    rgba(43, 103, 168, 0.72);
+    rgba(72, 151, 229, 0.6);
 
   background:
-    rgba(43, 103, 168, 0.1);
+    transparent;
 
   box-shadow:
-    none;
+    inset 0 0 0 1px
+    rgba(255, 255, 255, 0.02);
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .socialImo:hover,
 .socialImo:focus-visible {
   border-color:
-    #2b67a8;
+    rgba(47, 128, 237, 1);
 
   background:
-    #2b67a8;
+    #2f80ed;
 
   box-shadow:
-    0 0 14px
-    rgba(43, 103, 168, 0.26);
+    0 0 16px
+    rgba(47, 128, 237, 0.28),
+    inset 0 1px 0
+    rgba(255, 255, 255, 0.12);
 }
 
 .socialImoLogo {
   display: block;
 
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
+
   max-width: none;
 
-  object-fit: cover;
+  object-fit: contain;
 
-  border-radius:
-    50%;
+  filter: none;
 
-  filter:
-    brightness(0.9)
-    saturate(0.95);
+  pointer-events: none;
 
-  pointer-events:
-    none;
+  user-select: none;
 
-  user-select:
-    none;
-
-  -webkit-user-drag:
-    none;
+  -webkit-user-drag: none;
 
   transition:
-    filter 0.2s ease;
+    transform 0.2s ease;
 }
 
 .socialImo:hover
 .socialImoLogo,
 .socialImo:focus-visible
 .socialImoLogo {
-  filter:
-    brightness(1.12)
-    saturate(1.08);
+  filter: none;
+
+  transform:
+    scale(1.04);
 }
 
 .socialLinks a.socialImo:hover,
@@ -5251,8 +5305,8 @@ span:nth-child(3) {
 }
 
 .footerContactSocials .socialImoLogo {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
 }
 
 /* =========================================================
@@ -5950,6 +6004,104 @@ span:nth-child(3) {
   .navSearchSuggestionItem,
   .navSearchViewAll {
     transition: none;
+  }
+}
+
+/* =========================================================
+   FOOTER CONTACT ROW — COMPACT DESKTOP LAYOUT
+   Phone + mobile + social actions share one row.
+   ========================================================= */
+
+.footerContactMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  gap: 8px;
+
+  margin-top: 8px;
+
+  white-space: nowrap;
+}
+
+.footerContactMeta > .footerPhone {
+  flex: 0 0 auto;
+
+  gap: 5px;
+
+  font-size: 10.5px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.footerContactMeta > .footerPhone svg {
+  width: 13px;
+  height: 13px;
+}
+
+.footerPhone .footerMobileIcon {
+  fill: none;
+
+  stroke: var(--green-2);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footerContactSocials {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+
+  gap: 5px;
+
+  margin-left: 1px;
+}
+
+.footerContactSocials a,
+.footerContactSocials .socialWhatsapp,
+.footerContactSocials .socialImo {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+}
+
+.footerContactSocials svg {
+  width: 13px;
+  height: 13px;
+}
+
+.footerContactSocials .socialImoLogo {
+  width: 22px;
+  height: 22px;
+}
+
+/* Tablet/mobile can wrap naturally when the available width is smaller. */
+@media (max-width: 760px) {
+  .footerContactMeta {
+    flex-wrap: wrap;
+
+    gap: 8px 10px;
+
+    white-space: normal;
+  }
+
+  .footerContactSocials {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 430px) {
+  .footerContactMeta {
+    gap: 8px;
+  }
+
+  .footerContactMeta > .footerPhone {
+    font-size: 10px;
+  }
+
+  .footerContactSocials {
+    width: 100%;
   }
 }
 

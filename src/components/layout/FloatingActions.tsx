@@ -208,9 +208,9 @@ export default function FloatingActions() {
   return (
     <>
       <a
-        href="tel:01754477488"
+        href="tel:0255168220"
         className="floatingAction floatingPhone"
-        aria-label="Call Desh Solar at 01754-477488"
+        aria-label="Call Desh Solar at 0255-168220"
         title="Call Desh Solar"
       >
         <Image
@@ -223,7 +223,7 @@ export default function FloatingActions() {
         />
 
         <span className="floatingActionTooltip">
-          01754-477488
+          0255-168220
         </span>
       </a>
 

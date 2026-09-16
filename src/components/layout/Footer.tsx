@@ -77,14 +77,14 @@ export default function Footer() {
           <h4>Head Office</h4>
 
           <p>
-            Navana Zohura Square, Ground Floor, Bangla Motor,
-            Dhaka-1205, Bangladesh
+            28, Kazi Nazrul Islam Avenue, Navana Zohura Square,
+            Abasik Gate, Ground Floor, Bangla Motor, Dhaka-1205
           </p>
 
           <div className="footerMap">
             <iframe
               title="Desh Solar Head Office map"
-              src="https://www.google.com/maps?q=Navana%20Zohura%20Square%2C%20Ground%20Floor%2C%20Bangla%20Motor%2C%20Dhaka-1205%2C%20Bangladesh&output=embed"
+              src="https://www.google.com/maps?q=Navana%20Zohura%20Square%2C%2028%20Kazi%20Nazrul%20Islam%20Avenue%2C%20Bangla%20Motor%2C%20Dhaka-1205%2C%20Bangladesh&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
@@ -93,14 +93,45 @@ export default function Footer() {
 
           <div className="footerContactMeta">
             <a
-              href="tel:01754477488"
+              href="tel:0255168220"
               className="footerPhone"
+              aria-label="Call Desh Solar hotline at 0255-168220"
             >
               <svg
                 viewBox="0 0 24 24"
                 aria-hidden="true"
               >
                 <path d="M6.62 10.79a15.46 15.46 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1.02l-2.19 2.2Z" />
+              </svg>
+
+              <span>
+                0255-168220
+              </span>
+            </a>
+
+            <a
+              href="tel:01754477488"
+              className="footerPhone footerMobilePhone"
+              aria-label="Call Desh Solar mobile at 01754-477488"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                className="footerMobileIcon"
+              >
+                <rect
+                  x="7"
+                  y="2.5"
+                  width="10"
+                  height="19"
+                  rx="2"
+                />
+                <path d="M10 5h4" />
+                <circle
+                  cx="12"
+                  cy="18.5"
+                  r="0.8"
+                />
               </svg>
 
               <span>
@@ -112,6 +143,62 @@ export default function Footer() {
               className="socialLinks footerContactSocials"
               aria-label="Desh Solar social media and messaging"
             >
+              <a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=info.deshsolar@gmail.com"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open Gmail to email Desh Solar at info.deshsolar@gmail.com"
+                title="Email info.deshsolar@gmail.com"
+                className="socialGmail"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                  className="socialGmailIcon"
+                >
+                  <path
+                    d="M3.5 6.4 12 12.6l8.5-6.2"
+                    fill="none"
+                    stroke="#EA4335"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M3.5 6.4V18h3.2V8.75"
+                    fill="none"
+                    stroke="#4285F4"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M20.5 6.4V18h-3.2V8.75"
+                    fill="none"
+                    stroke="#34A853"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M3.5 6.4 12 12.6"
+                    fill="none"
+                    stroke="#FBBC04"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12 12.6 20.5 6.4"
+                    fill="none"
+                    stroke="#EA4335"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
+
               <a
                 href="https://www.facebook.com/deshsolar71"
                 target="_blank"
@@ -180,11 +267,9 @@ export default function Footer() {
                 title="imo: 01754-477488"
                 className="socialImo"
               >
-                <Image
+                <img
                   src="/assets/imo-icon.png"
                   alt=""
-                  width={64}
-                  height={64}
                   className="socialImoLogo"
                   aria-hidden="true"
                 />
