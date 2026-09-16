@@ -183,6 +183,8 @@ export default function Header() {
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [productsMenuOpen, setProductsMenuOpen] =
+    useState(false);
   const [cartToast, setCartToast] = useState<{
     type: "added" | "removed";
     productName: string;
@@ -349,6 +351,7 @@ export default function Header() {
 
   const openCart = useCallback(() => {
     setMobileOpen(false);
+    setProductsMenuOpen(false);
     setCartOpen(true);
   }, []);
 
@@ -365,6 +368,7 @@ export default function Header() {
       inputRef: RefObject<HTMLInputElement | null>
     ) => {
       setMobileOpen(false);
+      setProductsMenuOpen(false);
       setCartOpen(false);
       setSearchOpen(true);
 
@@ -403,7 +407,27 @@ export default function Header() {
 
   useEffect(() => {
     setSearchOpen(false);
+    setProductsMenuOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const closeProductsMenuOnScroll = () => {
+      setProductsMenuOpen(false);
+    };
+
+    window.addEventListener(
+      "scroll",
+      closeProductsMenuOnScroll,
+      { passive: true }
+    );
+
+    return () => {
+      window.removeEventListener(
+        "scroll",
+        closeProductsMenuOnScroll
+      );
+    };
+  }, []);
 
   const submitSearch = (
     event: FormEvent<HTMLFormElement>
@@ -546,7 +570,15 @@ export default function Header() {
 
           {/* PRODUCTS */}
 
-          <div className="navMegaWrap">
+          <div
+            className="navMegaWrap"
+            onMouseEnter={() =>
+              setProductsMenuOpen(true)
+            }
+            onMouseLeave={() =>
+              setProductsMenuOpen(false)
+            }
+          >
             <Link
               href="/products"
               aria-current={
@@ -559,6 +591,9 @@ export default function Header() {
                   ? "navItemActive"
                   : ""
               }`}
+              onClick={() =>
+                setProductsMenuOpen(false)
+              }
             >
               <span className="navItemGlow" />
 
@@ -567,7 +602,13 @@ export default function Header() {
               </span>
             </Link>
 
-            <div className="navMegaPanel">
+            <div
+              className={`navMegaPanel ${
+                productsMenuOpen
+                  ? "isOpen"
+                  : ""
+              }`}
+            >
               <div className="megaAmbientGlow" />
 
               <div className="megaGrid">
@@ -581,6 +622,9 @@ export default function Header() {
                       <Link
                         href={item.href}
                         key={item.label}
+                        onClick={() =>
+                          setProductsMenuOpen(false)
+                        }
                       >
                         <i>
                           {item.icon}
@@ -598,6 +642,9 @@ export default function Header() {
                   <Link
                     href="/build-your-system"
                     className="megaBuildLink"
+                    onClick={() =>
+                      setProductsMenuOpen(false)
+                    }
                   >
                     <span>
                       Build Your System
@@ -829,6 +876,7 @@ export default function Header() {
             aria-controls="mobileMenu"
             onClick={() => {
               setSearchOpen(false);
+              setProductsMenuOpen(false);
               setMobileOpen(
                 (open) => !open
               );

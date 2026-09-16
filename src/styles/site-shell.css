@@ -433,10 +433,7 @@
     transform 0.22s ease;
 }
 
-.navMegaWrap:hover
-.navMegaPanel,
-.navMegaWrap:focus-within
-.navMegaPanel {
+.navMegaPanel.isOpen {
   opacity: 1;
 
   visibility: visible;
