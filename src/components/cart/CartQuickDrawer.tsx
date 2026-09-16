@@ -126,12 +126,13 @@ export default function CartQuickDrawer({
   const closeButtonRef =
     useRef<HTMLButtonElement>(null);
 
-  const syncCart = () => {
-    setItems(readCart());
-  };
-
   useEffect(() => {
-    syncCart();
+    const syncCart = () => {
+      setItems(readCart());
+    };
+
+    const initialFrame =
+      window.requestAnimationFrame(syncCart);
 
     window.addEventListener(
       "deshsolar:cartchange",
@@ -141,6 +142,7 @@ export default function CartQuickDrawer({
     window.addEventListener("focus", syncCart);
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener(
         "deshsolar:cartchange",
         syncCart
@@ -161,7 +163,9 @@ export default function CartQuickDrawer({
       return;
     }
 
-    syncCart();
+    const syncFrame = window.requestAnimationFrame(() => {
+      setItems(readCart());
+    });
 
     const previousOverflow =
       document.body.style.overflow;
@@ -189,6 +193,7 @@ export default function CartQuickDrawer({
     );
 
     return () => {
+      window.cancelAnimationFrame(syncFrame);
       document.body.style.overflow =
         previousOverflow;
 

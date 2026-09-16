@@ -311,8 +311,10 @@ export default function CheckoutClient() {
       setItems(readCart());
     };
 
-    syncCart();
-    setHydrated(true);
+    const initialFrame = window.requestAnimationFrame(() => {
+      syncCart();
+      setHydrated(true);
+    });
 
     window.addEventListener(
       "deshsolar:cartchange",
@@ -321,6 +323,7 @@ export default function CheckoutClient() {
     window.addEventListener("storage", syncCart);
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener(
         "deshsolar:cartchange",
         syncCart

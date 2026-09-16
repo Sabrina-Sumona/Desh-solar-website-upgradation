@@ -162,7 +162,7 @@ function ProductCard({
 }) {
   const [cartQuantity, setCartQuantity] = useState(0);
 
-  const syncCartQuantity = () => {
+  const syncCartQuantity = useCallback(() => {
     const item = readCart().find(
       (cartItem) => String(cartItem.id) === product.id
     );
@@ -170,10 +170,11 @@ function ProductCard({
     setCartQuantity(
       item ? Math.max(1, Number(item.qty) || 1) : 0
     );
-  };
+  }, [product.id]);
 
   useEffect(() => {
-    syncCartQuantity();
+    const initialFrame =
+      window.requestAnimationFrame(syncCartQuantity);
 
     const handleCartChange = () => syncCartQuantity();
     const handleStorage = () => syncCartQuantity();
@@ -185,13 +186,14 @@ function ProductCard({
     window.addEventListener("storage", handleStorage);
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener(
         "deshsolar:cartchange",
         handleCartChange
       );
       window.removeEventListener("storage", handleStorage);
     };
-  }, [product.id]);
+  }, [syncCartQuantity]);
 
   const updateCartQuantity = (nextQuantity: number) => {
     const items = readCart();
@@ -433,7 +435,6 @@ export default function ProductsCatalog({
 
   useEffect(() => {
     if (isPackageCatalog) {
-      setQuickCategoriesFixed(false);
       return;
     }
 
@@ -468,7 +469,8 @@ export default function ProductsCatalog({
       );
     };
 
-    updateQuickCategoryDock();
+    const initialDockFrame =
+      window.requestAnimationFrame(updateQuickCategoryDock);
 
     window.addEventListener(
       "scroll",
@@ -481,6 +483,7 @@ export default function ProductsCatalog({
     );
 
     return () => {
+      window.cancelAnimationFrame(initialDockFrame);
       window.removeEventListener(
         "scroll",
         updateQuickCategoryDock

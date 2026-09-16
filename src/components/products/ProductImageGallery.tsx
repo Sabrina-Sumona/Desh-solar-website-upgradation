@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { Product } from "@/data/products";
 import { getProductGalleryImages } from "@/lib/products/productGallery";
@@ -12,7 +12,7 @@ type ProductImageGalleryProps = {
   product: Product;
 };
 
-export default function ProductImageGallery({
+function ProductImageGalleryContent({
   product,
 }: ProductImageGalleryProps) {
   const images = useMemo(
@@ -27,22 +27,17 @@ export default function ProductImageGallery({
   const activeImage = images[activeIndex] ?? product.image;
   const hasMultipleImages = images.length > 1;
 
-  const showPrevious = () => {
+  const showPrevious = useCallback(() => {
     setActiveIndex((current) =>
       current <= 0 ? images.length - 1 : current - 1
     );
-  };
+  }, [images.length]);
 
-  const showNext = () => {
+  const showNext = useCallback(() => {
     setActiveIndex((current) =>
       current >= images.length - 1 ? 0 : current + 1
     );
-  };
-
-  useEffect(() => {
-    setActiveIndex(0);
-    setLightboxOpen(false);
-  }, [product.id]);
+  }, [images.length]);
 
   useEffect(() => {
     if (!lightboxOpen) {
@@ -77,7 +72,12 @@ export default function ProductImageGallery({
       window.removeEventListener("keydown", handleKeyDown);
       window.clearTimeout(focusTimer);
     };
-  }, [lightboxOpen, hasMultipleImages, images.length]);
+  }, [
+    lightboxOpen,
+    hasMultipleImages,
+    showPrevious,
+    showNext,
+  ]);
 
   return (
     <>
@@ -257,5 +257,17 @@ export default function ProductImageGallery({
         </div>
       )}
     </>
+  );
+}
+
+
+export default function ProductImageGallery({
+  product,
+}: ProductImageGalleryProps) {
+  return (
+    <ProductImageGalleryContent
+      key={product.id}
+      product={product}
+    />
   );
 }

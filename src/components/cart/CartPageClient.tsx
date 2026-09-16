@@ -104,8 +104,10 @@ export default function CartPageClient() {
   };
 
   useEffect(() => {
-    loadCart();
-    setHydrated(true);
+    const initialFrame = window.requestAnimationFrame(() => {
+      loadCart();
+      setHydrated(true);
+    });
 
     const handleStorage = () => loadCart();
     const handleCartChange = () => loadCart();
@@ -117,6 +119,7 @@ export default function CartPageClient() {
     );
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener(
         "deshsolar:cartchange",

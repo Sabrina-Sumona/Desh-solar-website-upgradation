@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { Product } from "@/data/products";
 
 type ProductDetailsActionsProps = {
@@ -78,7 +78,7 @@ export default function ProductDetailsActions({
   const [cartQuantity, setCartQuantity] =
     useState(0);
 
-  const refreshFromCart = () => {
+  const refreshFromCart = useCallback(() => {
     const item = readCart().find(
       (cartItem) =>
         String(cartItem.id) === product.id
@@ -89,10 +89,11 @@ export default function ProductDetailsActions({
         ? Math.max(1, Number(item.qty) || 1)
         : 0
     );
-  };
+  }, [product.id]);
 
   useEffect(() => {
-    refreshFromCart();
+    const initialFrame =
+      window.requestAnimationFrame(refreshFromCart);
 
     const handleCartChange = () =>
       refreshFromCart();
@@ -109,6 +110,7 @@ export default function ProductDetailsActions({
     );
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener(
         "deshsolar:cartchange",
         handleCartChange
@@ -118,7 +120,7 @@ export default function ProductDetailsActions({
         handleStorage
       );
     };
-  }, [product.id]);
+  }, [refreshFromCart]);
 
   const updateCartQuantity = (
     nextQuantity: number
