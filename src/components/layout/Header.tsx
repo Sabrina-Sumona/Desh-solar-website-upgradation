@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   type FormEvent,
   type RefObject,
@@ -179,9 +179,6 @@ function CartIcon() {
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const urlSearchQuery =
-    searchParams.get("search") || "";
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -447,23 +444,41 @@ export default function Header() {
   useEffect(() => {
     setProductsMenuOpen(false);
 
-    const hasSearchResult =
-      pathname === "/products" &&
-      urlSearchQuery.trim().length > 0;
+    const syncSearchFromUrl = () => {
+      const urlSearchQuery =
+        new URLSearchParams(
+          window.location.search
+        ).get("search") || "";
 
-    if (hasSearchResult) {
-      setSearchQuery(urlSearchQuery);
-      setSearchOpen(true);
+      const hasSearchResult =
+        pathname === "/products" &&
+        urlSearchQuery.trim().length > 0;
+
+      if (hasSearchResult) {
+        setSearchQuery(urlSearchQuery);
+        setSearchOpen(true);
+        setSearchSuggestionsOpen(false);
+        return;
+      }
+
+      setSearchOpen(false);
       setSearchSuggestionsOpen(false);
-      return;
-    }
+    };
 
-    setSearchOpen(false);
-    setSearchSuggestionsOpen(false);
-  }, [
-    pathname,
-    urlSearchQuery,
-  ]);
+    syncSearchFromUrl();
+
+    window.addEventListener(
+      "popstate",
+      syncSearchFromUrl
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        syncSearchFromUrl
+      );
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const closeProductsMenuOnScroll = () => {
