@@ -2048,3 +2048,167 @@
   }
 }
 
+/* =========================================================
+   PRODUCTS PAGE — FILTERS BELOW LIVE SEARCH SUGGESTIONS
+   Search -> suggestions -> quick filters remain a continuous
+   stack with no vertical gap. Result-count-aware offsets keep
+   the filter row immediately below 1–5 live suggestions.
+   ========================================================= */
+
+/* Tablet / compact desktop: search bottom = 120px.
+   Suggestion panel:
+   list padding 14px + 64px items + 5px gaps + 47px View All. */
+@media (min-width: 721px) and (max-width: 1280px) {
+  body:has(.navSearchSuggestionsMobile)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 176px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(1)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 245px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(2)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 314px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(3)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 383px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(4)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 452px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(5)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 521px;
+  }
+
+  /* Keep the main catalogue toolbar under the fixed quick filters. */
+  body:has(.navSearchSuggestionsMobile)
+  .productsPage
+  .productsCatalogSection.quickCategoriesDocked
+  .catalogToolbar {
+    top: calc(
+      var(--products-search-suggestion-bottom, 176px)
+      + 70px
+    );
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(1)
+  ) {
+    --products-search-suggestion-bottom: 245px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(2)
+  ) {
+    --products-search-suggestion-bottom: 314px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(3)
+  ) {
+    --products-search-suggestion-bottom: 383px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(4)
+  ) {
+    --products-search-suggestion-bottom: 452px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(5)
+  ) {
+    --products-search-suggestion-bottom: 521px;
+  }
+}
+
+/* Mobile: search bottom = 110px.
+   Mobile suggestion items are 59px high. */
+@media (max-width: 720px) {
+  body:has(.navSearchSuggestionsMobile)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 166px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(1)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 230px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(2)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 294px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(3)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 358px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(4)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 422px;
+  }
+
+  body:has(
+    .navSearchSuggestionList
+    > .navSearchSuggestionItem:nth-child(5)
+  )
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 486px;
+  }
+}
+
