@@ -130,6 +130,13 @@ function getStoredCartItems(): HeaderCartItem[] {
   }
 }
 
+function getStoredCartCount() {
+  return getStoredCartItems().reduce(
+    (total, item) => total + item.qty,
+    0
+  );
+}
+
 function SearchIcon() {
   return (
     <svg
@@ -307,10 +314,7 @@ export default function Header() {
         currentItems;
     };
 
-    const initialCartFrame =
-      window.requestAnimationFrame(() => {
-        syncCart(false);
-      });
+    syncCart(false);
 
     const handleCartChange = () =>
       syncCart(true);
@@ -337,7 +341,6 @@ export default function Header() {
     );
 
     return () => {
-      window.cancelAnimationFrame(initialCartFrame);
       window.removeEventListener(
         "deshsolar:cartchange",
         handleCartChange
@@ -439,6 +442,8 @@ export default function Header() {
   }, [searchOpen, closeSearch]);
 
   useEffect(() => {
+    setProductsMenuOpen(false);
+
     const syncSearchFromUrl = () => {
       const urlSearchQuery =
         new URLSearchParams(
@@ -460,11 +465,7 @@ export default function Header() {
       setSearchSuggestionsOpen(false);
     };
 
-    const initialSearchFrame =
-      window.requestAnimationFrame(() => {
-        setProductsMenuOpen(false);
-        syncSearchFromUrl();
-      });
+    syncSearchFromUrl();
 
     window.addEventListener(
       "popstate",
@@ -472,7 +473,6 @@ export default function Header() {
     );
 
     return () => {
-      window.cancelAnimationFrame(initialSearchFrame);
       window.removeEventListener(
         "popstate",
         syncSearchFromUrl
@@ -986,7 +986,7 @@ export default function Header() {
             onSubmit={submitSearch}
           >
             <button
-              type="button"
+              type={searchOpen ? "submit" : "button"}
               className="navMobileInlineSearchToggle"
               aria-label={
                 searchOpen
@@ -999,10 +999,7 @@ export default function Header() {
                   openSearch(
                     mobileSearchInputRef
                   );
-                  return;
                 }
-
-                performSearch();
               }}
             >
               <SearchIcon />
