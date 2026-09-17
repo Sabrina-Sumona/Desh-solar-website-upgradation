@@ -1862,23 +1862,29 @@
 .piCartRemoveAction {
   min-height: 36px;
   padding: 0 10px;
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 104, 104, 0.12);
   border-radius: 9px;
-  background: rgba(255, 255, 255, 0.015);
-  color: #8fa2aa;
+  background: rgba(255, 90, 90, 0.02);
+  color: #b58f92;
   font-size: 7px;
   font-weight: 900;
   cursor: pointer;
   transition:
-    border-color 0.18s ease,
-    color 0.18s ease,
-    background 0.18s ease;
+    border-color 0.16s ease,
+    color 0.16s ease,
+    background 0.16s ease;
 }
 
-.piCartRemoveAction:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.025);
-  color: #d5e0e4;
+.piCartRemoveAction:hover,
+.piCartRemoveAction:focus-visible {
+  border-color: rgba(255, 104, 104, 0.28);
+  background: rgba(255, 90, 90, 0.055);
+  color: #ffd4d4;
+}
+
+.piCartRemoveAction:focus-visible {
+  outline: 2px solid rgba(255, 104, 104, 0.2);
+  outline-offset: 2px;
 }
 
 @media (max-width: 639px) {
