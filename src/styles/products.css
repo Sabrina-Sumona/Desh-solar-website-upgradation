@@ -1947,3 +1947,104 @@
   }
 }
 
+/* =========================================================
+   PRODUCTS PAGE — SEARCH-OPEN FILTER OFFSET
+   Keep product filters below the expanded mobile/tablet
+   header search bar instead of letting the layers overlap.
+   ========================================================= */
+
+@media (min-width: 721px) and (max-width: 1280px) {
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 136px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .catalogToolbar {
+    top: 136px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .productsCatalogSection.quickCategoriesDocked
+  .catalogToolbar {
+    top: 206px;
+  }
+}
+
+@media (max-width: 720px) {
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 124px;
+  }
+}
+
+@media (max-width: 420px) {
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 120px;
+  }
+}
+
+/* =========================================================
+   PRODUCTS PAGE — NO-GAP SEARCH + FILTER STACK
+   When the mobile/tablet search is open:
+   header -> search -> quick filters are flush with no gap.
+   ========================================================= */
+
+@media (min-width: 721px) and (max-width: 1280px) {
+  body:has(.productsPage)
+  .navMobileInlineSearch.isOpen {
+    top: 76px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 120px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .catalogToolbar {
+    top: 120px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .productsCatalogSection.quickCategoriesDocked
+  .catalogToolbar {
+    top: 190px;
+  }
+}
+
+@media (max-width: 720px) {
+  body:has(.productsPage)
+  .navMobileInlineSearch.isOpen {
+    top: 68px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 110px;
+  }
+}
+
+@media (max-width: 420px) {
+  body:has(.productsPage)
+  .navMobileInlineSearch.isOpen {
+    top: 68px;
+  }
+
+  body:has(.navMobileInlineSearch.isOpen)
+  .productsPage
+  .plQuickCategories.isFixed {
+    top: 108px;
+  }
+}
+
