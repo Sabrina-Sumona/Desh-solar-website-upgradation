@@ -553,6 +553,22 @@ export default function Header() {
     router,
   ]);
 
+  const handleSearchIconClick = (
+    inputRef: RefObject<HTMLInputElement | null>
+  ) => {
+    if (!searchOpen) {
+      openSearch(inputRef);
+      return;
+    }
+
+    if (!searchQuery.trim()) {
+      closeSearch();
+      return;
+    }
+
+    performSearch();
+  };
+
   const submitSearch = (
     event: FormEvent<HTMLFormElement>
   ) => {
@@ -674,21 +690,16 @@ export default function Header() {
               className="navSearchDockToggle"
               aria-label={
                 searchOpen
-                  ? "Search products"
+                  ? searchQuery.trim()
+                    ? "Search products"
+                    : "Close product search"
                   : "Open product search"
               }
               aria-expanded={searchOpen}
               aria-controls="desktopProductSearchExtension"
-              onClick={() => {
-                if (!searchOpen) {
-                  openSearch(
-                    desktopSearchInputRef
-                  );
-                  return;
-                }
-
-                performSearch();
-              }}
+              onClick={() =>
+                handleSearchIconClick(desktopSearchInputRef)
+              }
             >
               <SearchIcon />
             </button>
@@ -1014,21 +1025,19 @@ export default function Header() {
             onSubmit={submitSearch}
           >
             <button
-              type={searchOpen ? "submit" : "button"}
+              type="button"
               className="navMobileInlineSearchToggle"
               aria-label={
                 searchOpen
-                  ? "Search products"
+                  ? searchQuery.trim()
+                    ? "Search products"
+                    : "Close product search"
                   : "Open product search"
               }
               aria-expanded={searchOpen}
-              onClick={() => {
-                if (!searchOpen) {
-                  openSearch(
-                    mobileSearchInputRef
-                  );
-                }
-              }}
+              onClick={() =>
+                handleSearchIconClick(mobileSearchInputRef)
+              }
             >
               <SearchIcon />
             </button>
