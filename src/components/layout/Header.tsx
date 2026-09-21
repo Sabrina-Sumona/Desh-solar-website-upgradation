@@ -580,6 +580,26 @@ export default function Header() {
     performSearch();
   };
 
+  const clearSearchAndReload = useCallback(() => {
+    setSearchQuery("");
+    setSearchSuggestionsOpen(false);
+
+    const currentUrl = new URL(window.location.href);
+    currentUrl.searchParams.delete("search");
+
+    const remainingParams =
+      currentUrl.searchParams.toString();
+
+    const targetUrl =
+      currentUrl.pathname +
+      (remainingParams
+        ? `?${remainingParams}`
+        : "") +
+      currentUrl.hash;
+
+    window.location.assign(targetUrl);
+  }, []);
+
   const isActive = (href: string) => {
     if (href === "/") {
       return pathname === "/";
@@ -672,13 +692,7 @@ export default function Header() {
                 tabIndex={searchOpen ? 0 : -1}
                 onClick={() => {
                   if (searchQuery) {
-                    setSearchQuery("");
-                    setSearchSuggestionsOpen(false);
-
-                    window.requestAnimationFrame(() => {
-                      desktopSearchInputRef.current?.focus();
-                    });
-
+                    clearSearchAndReload();
                     return;
                   }
 
@@ -702,7 +716,9 @@ export default function Header() {
               aria-expanded={searchOpen}
               aria-controls="desktopProductSearchExtension"
               onClick={() =>
-                handleSearchIconClick(desktopSearchInputRef)
+                handleSearchIconClick(
+                  desktopSearchInputRef
+                )
               }
             >
               <SearchIcon />
@@ -855,9 +871,7 @@ export default function Header() {
                           setProductsMenuOpen(false)
                         }
                       >
-                        <i>
-                          {item.icon}
-                        </i>
+                        <i>{item.icon}</i>
 
                         <span>
                           {item.label}
@@ -896,9 +910,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={
-                  active
-                    ? "page"
-                    : undefined
+                  active ? "page" : undefined
                 }
                 className={`navItem navInteractiveItem ${
                   active
@@ -941,9 +953,7 @@ export default function Header() {
                   href={item.href}
                   key={item.href}
                   aria-current={
-                    active
-                      ? "page"
-                      : undefined
+                    active ? "page" : undefined
                   }
                   className={`navFeatureItem ${
                     item.className
@@ -987,7 +997,9 @@ export default function Header() {
                 : ""
             }`}
             aria-label={`Open shopping cart. ${cartCount} ${
-              cartCount === 1 ? "item" : "items"
+              cartCount === 1
+                ? "item"
+                : "items"
             } in cart`}
             onClick={openCart}
           >
@@ -1040,7 +1052,9 @@ export default function Header() {
               }
               aria-expanded={searchOpen}
               onClick={() =>
-                handleSearchIconClick(mobileSearchInputRef)
+                handleSearchIconClick(
+                  mobileSearchInputRef
+                )
               }
             >
               <SearchIcon />
@@ -1081,13 +1095,7 @@ export default function Header() {
                 }
                 onClick={() => {
                   if (searchQuery) {
-                    setSearchQuery("");
-                    setSearchSuggestionsOpen(false);
-
-                    window.requestAnimationFrame(() => {
-                      mobileSearchInputRef.current?.focus();
-                    });
-
+                    clearSearchAndReload();
                     return;
                   }
 
@@ -1202,7 +1210,9 @@ export default function Header() {
             aria-expanded={cartOpen}
             aria-controls="cartQuickDrawer"
             aria-label={`Open shopping cart. ${cartCount} ${
-              cartCount === 1 ? "item" : "items"
+              cartCount === 1
+                ? "item"
+                : "items"
             } in cart`}
             onClick={openCart}
           >
@@ -1396,7 +1406,6 @@ export default function Header() {
               );
             })}
           </div>
-
         </div>
       </div>
 
