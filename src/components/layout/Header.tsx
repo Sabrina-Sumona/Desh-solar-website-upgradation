@@ -387,6 +387,8 @@ export default function Header() {
   const openCart = useCallback(() => {
     setMobileOpen(false);
     setProductsMenuOpen(false);
+    setSearchOpen(false);
+    setSearchSuggestionsOpen(false);
     setCartOpen(true);
   }, []);
 
@@ -1148,6 +1150,40 @@ export default function Header() {
 
           <button
             type="button"
+            className={`navMobileCartButton ${
+              isActive("/cart")
+                ? "navMobileCartButtonActive"
+                : ""
+            }`}
+            aria-current={
+              isActive("/cart")
+                ? "page"
+                : undefined
+            }
+            aria-expanded={cartOpen}
+            aria-controls="cartQuickDrawer"
+            aria-label={`Open shopping cart. ${cartCount} ${
+              cartCount === 1 ? "item" : "items"
+            } in cart`}
+            onClick={openCart}
+          >
+            <span
+              className="navMobileCartIcon"
+              aria-hidden="true"
+            >
+              <CartIcon />
+            </span>
+
+            <span
+              className="navMobileCartCount"
+              aria-hidden="true"
+            >
+              {cartCount}
+            </span>
+          </button>
+
+          <button
+            type="button"
             className={`navToggle ${
               mobileOpen
                 ? "active"
@@ -1322,46 +1358,6 @@ export default function Header() {
             })}
           </div>
 
-          {/* ===============================================
-              MOBILE CART
-              =============================================== */}
-
-          <button
-            type="button"
-            onClick={openCart}
-            aria-current={
-              isActive("/cart")
-                ? "page"
-                : undefined
-            }
-            aria-expanded={cartOpen}
-            aria-controls="cartQuickDrawer"
-            className={`mobileCart ${
-              isActive("/cart")
-                ? "mobileCartActive"
-                : ""
-            }`}
-            aria-label={`Open shopping cart. ${cartCount} ${
-              cartCount === 1 ? "item" : "items"
-            } in cart`}
-          >
-            <span className="mobileCartGlow" />
-
-            <span className="mobileCartLabel">
-              <span className="mobileCartIcon">
-                <CartIcon />
-              </span>
-
-              Cart
-            </span>
-
-            <span
-              className="mobileCartCount"
-              aria-hidden="true"
-            >
-              {cartCount}
-            </span>
-          </button>
         </div>
       </div>
 
