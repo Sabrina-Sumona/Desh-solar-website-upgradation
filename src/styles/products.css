@@ -1860,8 +1860,14 @@
 }
 
 .piCartRemoveAction {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
   min-height: 36px;
+  box-sizing: border-box;
+  overflow: hidden;
   padding: 0 10px;
+  white-space: nowrap;
   border: 1px solid rgba(255, 104, 104, 0.12);
   border-radius: 9px;
   background: rgba(255, 90, 90, 0.02);
@@ -1889,7 +1895,9 @@
 
 @media (max-width: 639px) {
   .piCartAddedControls {
-    grid-template-columns: minmax(0, 1fr) 64px;
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) 74px;
   }
 
   .piCartQtyStatus span {
@@ -1897,7 +1905,7 @@
   }
 
   .piCartRemoveAction {
-    padding: 0 7px;
+    padding: 0 5px;
   }
 }
 
