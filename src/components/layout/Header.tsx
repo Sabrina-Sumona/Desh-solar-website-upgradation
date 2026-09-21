@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   type FormEvent,
   type RefObject,
@@ -181,7 +181,6 @@ function CartIcon() {
 
 export default function Header() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -543,15 +542,20 @@ export default function Header() {
     setSearchOpen(true);
     setSearchSuggestionsOpen(false);
 
-    router.push(
-      `/products?search=${encodeURIComponent(
-        query
-      )}`
-    );
-  }, [
-    searchQuery,
-    router,
-  ]);
+    const searchUrl =
+      `/products?search=${encodeURIComponent(query)}`;
+
+    // Reload the document so every submission resets the catalog state,
+    // including a repeated search whose URL has not changed.
+    if (
+      window.location.pathname + window.location.search === searchUrl
+    ) {
+      window.location.reload();
+      return;
+    }
+
+    window.location.assign(searchUrl);
+  }, [searchQuery]);
 
   const handleSearchIconClick = (
     inputRef: RefObject<HTMLInputElement | null>
