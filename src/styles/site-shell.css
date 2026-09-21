@@ -7170,11 +7170,20 @@ span:nth-child(3) {
     order: 0;
   }
 
+  /*
+     Laptop search uses one control at a time:
+     - closed: show the search icon before Products
+     - open: hide that upper icon and use the search action inside
+       the full-width search field, matching the mobile toggle behavior.
+  */
+  .navSearchDock.isOpen {
+    width: 0;
+    min-width: 0;
+    flex: 0 0 0;
+  }
+
   .navSearchDock.isOpen .navSearchDockToggle {
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    margin: 0;
+    display: none;
   }
 
   /* Anchor both panels to the full-width fixed nav, not the 44px dock. */
