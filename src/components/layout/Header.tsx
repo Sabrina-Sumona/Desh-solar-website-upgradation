@@ -133,13 +133,6 @@ function getStoredCartItems(): HeaderCartItem[] {
   }
 }
 
-function getStoredCartCount() {
-  return getStoredCartItems().reduce(
-    (total, item) => total + item.qty,
-    0
-  );
-}
-
 function SearchIcon() {
   return (
     <svg
@@ -281,6 +274,7 @@ export default function Header() {
             (item) => item.id
           )
         );
+
         const currentIds = new Set(
           currentItems.map(
             (item) => item.id
@@ -320,8 +314,10 @@ export default function Header() {
 
     const handleCartChange = () =>
       syncCart(true);
+
     const handleStorage = () =>
       syncCart(true);
+
     const handlePassiveSync = () =>
       syncCart(false);
 
@@ -329,14 +325,17 @@ export default function Header() {
       "deshsolar:cartchange",
       handleCartChange
     );
+
     window.addEventListener(
       "storage",
       handleStorage
     );
+
     window.addEventListener(
       "focus",
       handlePassiveSync
     );
+
     window.addEventListener(
       "pageshow",
       handlePassiveSync
@@ -347,14 +346,17 @@ export default function Header() {
         "deshsolar:cartchange",
         handleCartChange
       );
+
       window.removeEventListener(
         "storage",
         handleStorage
       );
+
       window.removeEventListener(
         "focus",
         handlePassiveSync
       );
+
       window.removeEventListener(
         "pageshow",
         handlePassiveSync
@@ -373,24 +375,30 @@ export default function Header() {
       return;
     }
 
-    const originalOverflow = document.body.style.overflow;
+    const originalOverflow =
+      document.body.style.overflow;
 
     document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow = originalOverflow;
+      document.body.style.overflow =
+        originalOverflow;
     };
   }, [mobileOpen]);
 
   useEffect(() => {
-    const mobileViewport = window.matchMedia(MOBILE_NAV_QUERY);
+    const mobileViewport =
+      window.matchMedia(
+        MOBILE_NAV_QUERY
+      );
 
-    const resetNavigationOnLayoutChange = () => {
-      setMobileOpen(false);
-      setProductsMenuOpen(false);
-      setSearchOpen(false);
-      setSearchSuggestionsOpen(false);
-    };
+    const resetNavigationOnLayoutChange =
+      () => {
+        setMobileOpen(false);
+        setProductsMenuOpen(false);
+        setSearchOpen(false);
+        setSearchSuggestionsOpen(false);
+      };
 
     mobileViewport.addEventListener(
       "change",
@@ -469,9 +477,9 @@ export default function Header() {
   }, [searchOpen, closeSearch]);
 
   useEffect(() => {
-    setProductsMenuOpen(false);
-
     const syncSearchFromUrl = () => {
+      setProductsMenuOpen(false);
+
       const urlSearchQuery =
         new URLSearchParams(
           window.location.search
@@ -488,11 +496,15 @@ export default function Header() {
         return;
       }
 
+      setSearchQuery("");
       setSearchOpen(false);
       setSearchSuggestionsOpen(false);
     };
 
-    syncSearchFromUrl();
+    const frameId =
+      window.requestAnimationFrame(
+        syncSearchFromUrl
+      );
 
     window.addEventListener(
       "popstate",
@@ -500,6 +512,8 @@ export default function Header() {
     );
 
     return () => {
+      window.cancelAnimationFrame(frameId);
+
       window.removeEventListener(
         "popstate",
         syncSearchFromUrl
@@ -531,7 +545,9 @@ export default function Header() {
 
     if (!query) {
       const input =
-        window.matchMedia(MOBILE_NAV_QUERY).matches
+        window.matchMedia(
+          MOBILE_NAV_QUERY
+        ).matches
           ? mobileSearchInputRef.current
           : desktopSearchInputRef.current;
 
@@ -543,18 +559,20 @@ export default function Header() {
     setSearchSuggestionsOpen(false);
 
     const searchUrl =
-      `/products?search=${encodeURIComponent(query)}`;
+      `/products?search=${encodeURIComponent(
+        query
+      )}`;
 
-    // Reload the document so every submission resets the catalog state,
-    // including a repeated search whose URL has not changed.
     if (
-      window.location.pathname + window.location.search === searchUrl
+      window.location.pathname +
+        window.location.search ===
+      searchUrl
     ) {
       window.location.reload();
       return;
     }
 
-    window.location.assign(searchUrl);
+    window.location.href = searchUrl;
   }, [searchQuery]);
 
   const handleSearchIconClick = (
@@ -580,25 +598,45 @@ export default function Header() {
     performSearch();
   };
 
-  const clearSearchAndReload = useCallback(() => {
-    setSearchQuery("");
-    setSearchSuggestionsOpen(false);
+  const clearSearchAndReload = useCallback(
+    (
+      inputRef: RefObject<HTMLInputElement | null>
+    ) => {
+      setSearchQuery("");
+      setSearchSuggestionsOpen(false);
 
-    const currentUrl = new URL(window.location.href);
-    currentUrl.searchParams.delete("search");
+      const currentUrl =
+        new URL(window.location.href);
 
-    const remainingParams =
-      currentUrl.searchParams.toString();
+      if (
+        currentUrl.searchParams.has(
+          "search"
+        )
+      ) {
+        currentUrl.searchParams.delete(
+          "search"
+        );
 
-    const targetUrl =
-      currentUrl.pathname +
-      (remainingParams
-        ? `?${remainingParams}`
-        : "") +
-      currentUrl.hash;
+        const remainingParams =
+          currentUrl.searchParams.toString();
 
-    window.location.assign(targetUrl);
-  }, []);
+        const targetUrl =
+          currentUrl.pathname +
+          (remainingParams
+            ? `?${remainingParams}`
+            : "") +
+          currentUrl.hash;
+
+        window.location.href = targetUrl;
+        return;
+      }
+
+      window.requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    },
+    []
+  );
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -614,9 +652,7 @@ export default function Header() {
         className="nav"
         aria-label="Primary navigation"
       >
-        {/* =================================================
-            BRAND
-            ================================================= */}
+        {/* BRAND */}
 
         <Link
           href="/"
@@ -634,20 +670,14 @@ export default function Header() {
           />
         </Link>
 
-        {/* =================================================
-            DESKTOP NAVIGATION
-            ================================================= */}
+        {/* DESKTOP NAVIGATION */}
 
         <div className="navLinks">
-          {/* =================================================
-              PRODUCT SEARCH
-              ================================================= */}
+          {/* PRODUCT SEARCH */}
 
           <form
             className={`navSearchDock ${
-              searchOpen
-                ? "isOpen"
-                : ""
+              searchOpen ? "isOpen" : ""
             }`}
             role="search"
             onSubmit={submitSearch}
@@ -666,19 +696,24 @@ export default function Header() {
                     event.target.value;
 
                   setSearchQuery(value);
+
                   setSearchSuggestionsOpen(
                     value.trim().length > 0
                   );
                 }}
                 onFocus={() => {
                   if (searchQuery.trim()) {
-                    setSearchSuggestionsOpen(true);
+                    setSearchSuggestionsOpen(
+                      true
+                    );
                   }
                 }}
                 placeholder="Search products..."
                 autoComplete="off"
                 aria-label="Search products"
-                tabIndex={searchOpen ? 0 : -1}
+                tabIndex={
+                  searchOpen ? 0 : -1
+                }
               />
 
               <button
@@ -689,10 +724,14 @@ export default function Header() {
                     ? "Clear product search"
                     : "Close product search"
                 }
-                tabIndex={searchOpen ? 0 : -1}
+                tabIndex={
+                  searchOpen ? 0 : -1
+                }
                 onClick={() => {
                   if (searchQuery) {
-                    clearSearchAndReload();
+                    clearSearchAndReload(
+                      desktopSearchInputRef
+                    );
                     return;
                   }
 
@@ -732,13 +771,16 @@ export default function Header() {
                   role="listbox"
                   aria-label="Matching products"
                 >
-                  {matchingProducts.length > 0 ? (
+                  {matchingProducts.length >
+                  0 ? (
                     <>
                       <div className="navSearchSuggestionList">
                         {matchingProducts.map(
                           (product) => (
                             <Link
-                              key={product.id}
+                              key={
+                                product.id
+                              }
                               href={`/products/${product.id}`}
                               className="navSearchSuggestionItem"
                               onClick={() =>
@@ -749,26 +791,43 @@ export default function Header() {
                             >
                               <span className="navSearchSuggestionImage">
                                 <Image
-                                  src={product.image}
+                                  src={
+                                    product.image
+                                  }
                                   alt=""
-                                  width={56}
-                                  height={48}
+                                  width={
+                                    56
+                                  }
+                                  height={
+                                    48
+                                  }
                                 />
                               </span>
 
                               <span className="navSearchSuggestionInfo">
                                 <small>
-                                  {product.brandLabel}
-                                  {" · "}
-                                  {product.categoryLabel}
+                                  {
+                                    product.brandLabel
+                                  }
+                                  {
+                                    " · "
+                                  }
+                                  {
+                                    product.categoryLabel
+                                  }
                                 </small>
 
                                 <strong>
-                                  {product.name}
+                                  {
+                                    product.name
+                                  }
                                 </strong>
 
                                 <span>
-                                  {product.priceText}
+                                  {
+                                    product.priceText
+                                  }
+
                                   {product.power
                                     ? ` · ${product.power}`
                                     : ""}
@@ -786,10 +845,14 @@ export default function Header() {
                       <button
                         type="button"
                         className="navSearchViewAll"
-                        onClick={performSearch}
+                        onClick={
+                          performSearch
+                        }
                       >
                         <span>
-                          View all matching products
+                          View all
+                          matching
+                          products
                         </span>
 
                         <b aria-hidden="true">
@@ -804,8 +867,9 @@ export default function Header() {
                       </strong>
 
                       <span>
-                        Try a product name, brand,
-                        category or capacity.
+                        Try a product name,
+                        brand, category or
+                        capacity.
                       </span>
                     </div>
                   )}
@@ -863,30 +927,42 @@ export default function Header() {
                   </div>
 
                   <div className="megaLinks">
-                    {PRODUCT_LINKS.map((item) => (
-                      <Link
-                        href={item.href}
-                        key={item.label}
-                        onClick={() =>
-                          setProductsMenuOpen(false)
-                        }
-                      >
-                        <i>{item.icon}</i>
+                    {PRODUCT_LINKS.map(
+                      (item) => (
+                        <Link
+                          href={
+                            item.href
+                          }
+                          key={
+                            item.label
+                          }
+                          onClick={() =>
+                            setProductsMenuOpen(
+                              false
+                            )
+                          }
+                        >
+                          <i>
+                            {item.icon}
+                          </i>
 
-                        <span>
-                          {item.label}
-                        </span>
+                          <span>
+                            {item.label}
+                          </span>
 
-                        <b>→</b>
-                      </Link>
-                    ))}
+                          <b>→</b>
+                        </Link>
+                      )
+                    )}
                   </div>
 
                   <Link
                     href="/build-your-system"
                     className="megaBuildLink"
                     onClick={() =>
-                      setProductsMenuOpen(false)
+                      setProductsMenuOpen(
+                        false
+                      )
                     }
                   >
                     <span>
@@ -902,34 +978,37 @@ export default function Header() {
 
           {/* STANDARD NAVIGATION */}
 
-          {MAIN_NAV_LINKS.map((item) => {
-            const active = isActive(item.href);
+          {MAIN_NAV_LINKS.map(
+            (item) => {
+              const active =
+                isActive(item.href);
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={
-                  active ? "page" : undefined
-                }
-                className={`navItem navInteractiveItem ${
-                  active
-                    ? "navItemActive"
-                    : ""
-                }`}
-              >
-                <span className="navItemGlow" />
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    active
+                      ? "page"
+                      : undefined
+                  }
+                  className={`navItem navInteractiveItem ${
+                    active
+                      ? "navItemActive"
+                      : ""
+                  }`}
+                >
+                  <span className="navItemGlow" />
 
-                <span className="navItemText">
-                  {item.label}
-                </span>
-              </Link>
-            );
-          })}
+                  <span className="navItemText">
+                    {item.label}
+                  </span>
+                </Link>
+              );
+            }
+          )}
 
-          {/* =================================================
-              UPGRADED FEATURES
-              ================================================= */}
+          {/* UPGRADED FEATURES */}
 
           <div
             className="navFeatureBlock"
@@ -945,42 +1024,45 @@ export default function Header() {
               aria-hidden="true"
             />
 
-            {FEATURE_LINKS.map((item) => {
-              const active = isActive(item.href);
+            {FEATURE_LINKS.map(
+              (item) => {
+                const active =
+                  isActive(item.href);
 
-              return (
-                <Link
-                  href={item.href}
-                  key={item.href}
-                  aria-current={
-                    active ? "page" : undefined
-                  }
-                  className={`navFeatureItem ${
-                    item.className
-                  } ${
-                    active
-                      ? "navFeatureActive"
-                      : ""
-                  }`}
-                >
-                  <span
-                    className="navFeatureIcon"
-                    aria-hidden="true"
+                return (
+                  <Link
+                    href={item.href}
+                    key={item.href}
+                    aria-current={
+                      active
+                        ? "page"
+                        : undefined
+                    }
+                    className={`navFeatureItem ${
+                      item.className
+                    } ${
+                      active
+                        ? "navFeatureActive"
+                        : ""
+                    }`}
                   >
-                    {item.icon}
-                  </span>
+                    <span
+                      className="navFeatureIcon"
+                      aria-hidden="true"
+                    >
+                      {item.icon}
+                    </span>
 
-                  <span className="navFeatureText">
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            })}
+                    <span className="navFeatureText">
+                      {item.label}
+                    </span>
+                  </Link>
+                );
+              }
+            )}
           </div>
 
-          {/* =================================================
-              CART
-              ================================================= */}
+          {/* CART */}
 
           <button
             type="button"
@@ -1025,10 +1107,7 @@ export default function Header() {
           </button>
         </div>
 
-        {/* =================================================
-            MOBILE / TABLET INDEPENDENT TOOLS
-            Search remains outside the hamburger menu.
-            ================================================= */}
+        {/* MOBILE / TABLET TOOLS */}
 
         <div className="navMobileTools">
           <form
@@ -1069,19 +1148,24 @@ export default function Header() {
                   event.target.value;
 
                 setSearchQuery(value);
+
                 setSearchSuggestionsOpen(
                   value.trim().length > 0
                 );
               }}
               onFocus={() => {
                 if (searchQuery.trim()) {
-                  setSearchSuggestionsOpen(true);
+                  setSearchSuggestionsOpen(
+                    true
+                  );
                 }
               }}
               placeholder="Search products..."
               autoComplete="off"
               aria-label="Search products"
-              tabIndex={searchOpen ? 0 : -1}
+              tabIndex={
+                searchOpen ? 0 : -1
+              }
             />
 
             {searchOpen && (
@@ -1095,7 +1179,9 @@ export default function Header() {
                 }
                 onClick={() => {
                   if (searchQuery) {
-                    clearSearchAndReload();
+                    clearSearchAndReload(
+                      mobileSearchInputRef
+                    );
                     return;
                   }
 
@@ -1114,13 +1200,16 @@ export default function Header() {
                   role="listbox"
                   aria-label="Matching products"
                 >
-                  {matchingProducts.length > 0 ? (
+                  {matchingProducts.length >
+                  0 ? (
                     <>
                       <div className="navSearchSuggestionList">
                         {matchingProducts.map(
                           (product) => (
                             <Link
-                              key={product.id}
+                              key={
+                                product.id
+                              }
                               href={`/products/${product.id}`}
                               className="navSearchSuggestionItem"
                               onClick={() =>
@@ -1131,26 +1220,43 @@ export default function Header() {
                             >
                               <span className="navSearchSuggestionImage">
                                 <Image
-                                  src={product.image}
+                                  src={
+                                    product.image
+                                  }
                                   alt=""
-                                  width={56}
-                                  height={48}
+                                  width={
+                                    56
+                                  }
+                                  height={
+                                    48
+                                  }
                                 />
                               </span>
 
                               <span className="navSearchSuggestionInfo">
                                 <small>
-                                  {product.brandLabel}
-                                  {" · "}
-                                  {product.categoryLabel}
+                                  {
+                                    product.brandLabel
+                                  }
+                                  {
+                                    " · "
+                                  }
+                                  {
+                                    product.categoryLabel
+                                  }
                                 </small>
 
                                 <strong>
-                                  {product.name}
+                                  {
+                                    product.name
+                                  }
                                 </strong>
 
                                 <span>
-                                  {product.priceText}
+                                  {
+                                    product.priceText
+                                  }
+
                                   {product.power
                                     ? ` · ${product.power}`
                                     : ""}
@@ -1168,10 +1274,13 @@ export default function Header() {
                       <button
                         type="button"
                         className="navSearchViewAll"
-                        onClick={performSearch}
+                        onClick={
+                          performSearch
+                        }
                       >
                         <span>
-                          View all matching products
+                          View all matching
+                          products
                         </span>
 
                         <b aria-hidden="true">
@@ -1186,8 +1295,9 @@ export default function Header() {
                       </strong>
 
                       <span>
-                        Try a product name, brand,
-                        category or capacity.
+                        Try a product name,
+                        brand, category or
+                        capacity.
                       </span>
                     </div>
                   )}
@@ -1248,6 +1358,7 @@ export default function Header() {
             onClick={() => {
               setSearchOpen(false);
               setProductsMenuOpen(false);
+
               setMobileOpen(
                 (open) => !open
               );
@@ -1267,9 +1378,7 @@ export default function Header() {
         />
       )}
 
-      {/* ===================================================
-          MOBILE MENU
-          =================================================== */}
+      {/* MOBILE MENU */}
 
       <div
         id="mobileMenu"
@@ -1290,10 +1399,6 @@ export default function Header() {
         />
 
         <div className="mobileMenuInner">
-          {/* ===============================================
-              STANDARD MOBILE MENU
-              =============================================== */}
-
           <div className="mobilePrimaryLinks">
             <Link
               href="/products"
@@ -1318,40 +1423,41 @@ export default function Header() {
               <b>→</b>
             </Link>
 
-            {MAIN_NAV_LINKS.map((item) => {
-              const active = isActive(item.href);
+            {MAIN_NAV_LINKS.map(
+              (item) => {
+                const active =
+                  isActive(item.href);
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeMobileMenu}
-                  aria-current={
-                    active
-                      ? "page"
-                      : undefined
-                  }
-                  className={`mobilePrimaryLink ${
-                    active
-                      ? "mobilePrimaryActive"
-                      : ""
-                  }`}
-                >
-                  <span className="mobilePrimaryGlow" />
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={
+                      closeMobileMenu
+                    }
+                    aria-current={
+                      active
+                        ? "page"
+                        : undefined
+                    }
+                    className={`mobilePrimaryLink ${
+                      active
+                        ? "mobilePrimaryActive"
+                        : ""
+                    }`}
+                  >
+                    <span className="mobilePrimaryGlow" />
 
-                  <span className="mobilePrimaryText">
-                    {item.label}
-                  </span>
+                    <span className="mobilePrimaryText">
+                      {item.label}
+                    </span>
 
-                  <b>→</b>
-                </Link>
-              );
-            })}
+                    <b>→</b>
+                  </Link>
+                );
+              }
+            )}
           </div>
-
-          {/* ===============================================
-              UPGRADED FEATURES
-              =============================================== */}
 
           <div className="mobileFeatureGroup">
             <span
@@ -1368,43 +1474,48 @@ export default function Header() {
               Upgraded Solar Features
             </div>
 
-            {FEATURE_LINKS.map((item) => {
-              const active = isActive(item.href);
+            {FEATURE_LINKS.map(
+              (item) => {
+                const active =
+                  isActive(item.href);
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`mobileFeatureLink ${
-                    item.mobileClassName
-                  } ${
-                    active
-                      ? "mobileFeatureActive"
-                      : ""
-                  }`}
-                  aria-current={
-                    active
-                      ? "page"
-                      : undefined
-                  }
-                  onClick={closeMobileMenu}
-                >
-                  <span className="mobileFeatureLinkGlow" />
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`mobileFeatureLink ${
+                      item.mobileClassName
+                    } ${
+                      active
+                        ? "mobileFeatureActive"
+                        : ""
+                    }`}
+                    aria-current={
+                      active
+                        ? "page"
+                        : undefined
+                    }
+                    onClick={
+                      closeMobileMenu
+                    }
+                  >
+                    <span className="mobileFeatureLinkGlow" />
 
-                  <span>
-                    <i>
-                      {item.icon}
-                    </i>
+                    <span>
+                      <i>
+                        {item.icon}
+                      </i>
 
-                    <span className="mobileFeatureText">
-                      {item.label}
+                      <span className="mobileFeatureText">
+                        {item.label}
+                      </span>
                     </span>
-                  </span>
 
-                  <b>→</b>
-                </Link>
-              );
-            })}
+                    <b>→</b>
+                  </Link>
+                );
+              }
+            )}
           </div>
         </div>
       </div>
