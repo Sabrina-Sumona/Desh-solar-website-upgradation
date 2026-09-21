@@ -649,7 +649,7 @@ export default function Header() {
   return (
     <header className="siteHeader">
       <nav
-        className="nav"
+        className="nav navFullWidthLaptopSearch"
         aria-label="Primary navigation"
       >
         {/* BRAND */}
@@ -739,6 +739,24 @@ export default function Header() {
                 }}
               >
                 ×
+              </button>
+
+              <button
+                type="button"
+                className="navSearchExtensionSubmit"
+                aria-label={
+                  searchQuery.trim()
+                    ? "Search products"
+                    : "Close product search"
+                }
+                tabIndex={searchOpen ? 0 : -1}
+                onClick={() =>
+                  handleSearchIconClick(
+                    desktopSearchInputRef
+                  )
+                }
+              >
+                <SearchIcon />
               </button>
             </div>
 

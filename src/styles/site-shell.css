@@ -5547,6 +5547,11 @@ span:nth-child(3) {
     rgba(255, 255, 255, 0.05);
 }
 
+/* The separate field action is needed only for the laptop dropdown. */
+.navSearchExtensionSubmit {
+  display: none;
+}
+
 @media (max-width: 1023px) {
   .navSearchDock {
     display: none;
@@ -7160,9 +7165,94 @@ span:nth-child(3) {
     padding-inline: 8px;
   }
 
-  /* Keep the left-expanding search field inside the viewport. */
+  /* Keep the icon before Products; expand the field across the header. */
   .navSearchDock {
-    order: 1;
+    order: 0;
+  }
+
+  .navSearchDock.isOpen .navSearchDockToggle {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    margin: 0;
+  }
+
+  /* Anchor both panels to the full-width fixed nav, not the 44px dock. */
+  .navFullWidthLaptopSearch .navLinks,
+  .navFullWidthLaptopSearch .navSearchDock {
+    position: static;
+  }
+
+  .navFullWidthLaptopSearch .navSearchDock .navSearchExtension,
+  .navFullWidthLaptopSearch .navSearchDock.isOpen .navSearchExtension {
+    position: absolute;
+    z-index: 2520;
+    top: calc(100% + 8px);
+    left: 14px;
+    right: 14px;
+    width: calc(100% - 28px);
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+    grid-template-columns: minmax(0, 1fr) 32px 44px;
+    transform: translateY(-6px);
+    transform-origin: top left;
+  }
+
+  .navFullWidthLaptopSearch .navSearchDock.isOpen .navSearchExtension {
+    transform: none;
+  }
+
+  .navSearchExtensionSubmit {
+    display: inline-grid;
+    place-items: center;
+    justify-self: center;
+    width: 38px;
+    height: 38px;
+    margin-right: 3px;
+    padding: 0;
+    border: 1px solid rgba(145, 239, 91, 0.32);
+    border-radius: 50%;
+    color: #dfffc9;
+    background: rgba(7, 18, 24, 0.98);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      0 0 12px rgba(145, 239, 91, 0.035);
+    cursor: pointer;
+  }
+
+  .navSearchExtensionSubmit:hover,
+  .navSearchExtensionSubmit:focus-visible {
+    border-color: rgba(145, 239, 91, 0.5);
+    color: #efffde;
+    background: rgba(145, 239, 91, 0.07);
+  }
+
+  .navSearchDock .navSearchExtension:focus-within {
+    border-color: rgba(145, 239, 91, 0.3);
+  }
+
+  .navFullWidthLaptopSearch .navSearchSuggestionsDesktop {
+    /* Header bottom + 8px gap + 44px field + 9px suggestions gap. */
+    position: absolute;
+    top: calc(100% + 61px);
+    left: 14px;
+    right: 14px;
+    width: calc(100% - 28px);
+    min-width: 0;
+    max-width: none;
+    margin: 0;
+  }
+
+  .navSearchSuggestionsDesktop .navSearchSuggestionList {
+    max-height: min(350px, calc(100dvh - 222px));
+    overscroll-behavior: contain;
+  }
+
+  .mobileSearchLayoutSpacer {
+    display: block;
+    height: 60px;
+    pointer-events: none;
   }
 }
 
