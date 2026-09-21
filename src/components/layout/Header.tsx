@@ -87,6 +87,9 @@ const FEATURE_LINKS = [
 
 const CART_KEY = "deshSolarCartV1";
 
+// Keep this query aligned with the header media queries in site-shell.css.
+const MOBILE_NAV_QUERY = "(max-width: 1023px)";
+
 type HeaderCartItem = {
   id: string;
   name: string;
@@ -380,6 +383,29 @@ export default function Header() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const mobileViewport = window.matchMedia(MOBILE_NAV_QUERY);
+
+    const resetNavigationOnLayoutChange = () => {
+      setMobileOpen(false);
+      setProductsMenuOpen(false);
+      setSearchOpen(false);
+      setSearchSuggestionsOpen(false);
+    };
+
+    mobileViewport.addEventListener(
+      "change",
+      resetNavigationOnLayoutChange
+    );
+
+    return () => {
+      mobileViewport.removeEventListener(
+        "change",
+        resetNavigationOnLayoutChange
+      );
+    };
+  }, []);
+
   const closeMobileMenu = () => {
     setMobileOpen(false);
   };
@@ -506,7 +532,7 @@ export default function Header() {
 
     if (!query) {
       const input =
-        window.innerWidth <= 1280
+        window.matchMedia(MOBILE_NAV_QUERY).matches
           ? mobileSearchInputRef.current
           : desktopSearchInputRef.current;
 
