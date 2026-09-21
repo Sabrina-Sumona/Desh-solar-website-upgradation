@@ -369,7 +369,7 @@
 }
 
 .itemBottom button {
-  color: #7d8f97;
+  color: #ff6b6b;
   cursor: pointer;
 }
 
@@ -378,7 +378,7 @@
 }
 
 .itemBottom button:hover {
-  color: #e1e8ea;
+  color: #ff9696;
 }
 
 .summary {
