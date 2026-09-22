@@ -1,0 +1,377 @@
+/* =========================================================
+   ENGINEERING LAB — PROTOTYPE-MATCHED PRODUCTION PAGE
+   ========================================================= */
+
+.engineeringLabRoot {
+  --green2: #c8ff7d;
+  --demo-card: rgba(11, 23, 32, .74);
+  --demo-card-2: rgba(8, 19, 27, .88);
+  --demo-border: rgba(255, 255, 255, .09);
+  --demo-glow: rgba(145, 239, 91, .16);
+  --energy-green: #baff63;
+  --energy-blue: #50c8ff;
+  --energy-cyan: #65f1d1;
+  --energy-yellow: #ffd56a;
+  --refine-blue: #68c9f5;
+  --refine-green: #b8f66a;
+  --refine-yellow: #f4cd69;
+  background: #05090d;
+  color: #f7fafb;
+}
+
+.engineeringLabRoot .demoPage {
+  padding-top: 76px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 10%, rgba(89, 189, 255, .06), transparent 26%),
+    radial-gradient(circle at 15% 30%, rgba(145, 239, 91, .055), transparent 26%),
+    #05090d;
+}
+
+.engineeringLabRoot .demoEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: #83bfdc;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.engineeringLabRoot .demoEyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--refine-green);
+}
+
+.engineeringLabRoot .demoActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.engineeringLabRoot .demoBtn {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid rgba(184, 246, 106, .34);
+  border-radius: 999px;
+  background: rgba(184, 246, 106, .055);
+  color: #f4fbef;
+  font-size: 13px;
+  font-weight: 800;
+  transition: .25s ease;
+}
+
+.engineeringLabRoot .demoBtn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -70px;
+  width: 45px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .14), transparent);
+  transform: skewX(-18deg);
+  transition: left .45s ease;
+}
+
+.engineeringLabRoot .demoBtn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(184, 246, 106, .65);
+  background: rgba(184, 246, 106, .095);
+}
+
+.engineeringLabRoot .demoBtn:hover::before { left: 115%; }
+
+.engineeringLabRoot .demoBtn.secondary {
+  border-color: rgba(255, 255, 255, .10);
+  background: rgba(255, 255, 255, .018);
+  color: #c9d6dc;
+}
+
+.engineeringLabRoot .demoBtn.secondary:hover {
+  border-color: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, .04);
+}
+
+.engineeringLabRoot .ctaBand {
+  margin: 0 6vw 10vh;
+  padding: 42px;
+  border: 1px solid rgba(145, 239, 91, .18);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 85% 25%, rgba(145, 239, 91, .13), transparent 27%),
+    linear-gradient(135deg, #0c2028, #071117);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.engineeringLabRoot .ctaBand h3 {
+  margin: 0;
+  font-size: clamp(27px, 3.3vw, 45px);
+  letter-spacing: -.035em;
+}
+
+.engineeringLabRoot .ctaBand p {
+  margin: 9px 0 0;
+  color: #8fa3ad;
+}
+
+.engineeringLabRoot .demoReveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+
+.engineeringLabRoot .demoReveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.engineeringLabRoot .futureBand {
+  position: relative;
+  margin: 0 6vw 10vh;
+  padding: 55px 30px;
+  border: 1px solid rgba(255, 255, 255, .065);
+  border-radius: 30px;
+  overflow: hidden;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 80%, rgba(145, 239, 91, .09), transparent 30%),
+    linear-gradient(145deg, #07151d, #040b0f);
+}
+
+.engineeringLabRoot .futureBand::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 50%;
+  height: 1px;
+  opacity: .55;
+  background: linear-gradient(90deg, transparent, var(--energy-blue), var(--energy-green), var(--energy-blue), transparent);
+  box-shadow: 0 0 24px rgba(145, 239, 91, .28);
+}
+
+.engineeringLabRoot .futureBand .countryMark {
+  position: relative;
+  z-index: 2;
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 25px;
+  border: 1px solid rgba(104, 201, 245, .13);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(104, 201, 245, .06), transparent 68%);
+  color: var(--green2);
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.engineeringLabRoot .futureBand small {
+  position: relative;
+  z-index: 2;
+  display: block;
+  color: var(--green2);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.engineeringLabRoot .futureBand h2 {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 12px auto 0;
+  font-size: clamp(42px, 6vw, 82px);
+  letter-spacing: -.055em;
+  line-height: .92;
+}
+
+.engineeringLabRoot button { cursor: pointer; }
+
+.engineeringLabRoot .techLabPage{padding-top:76px}
+.engineeringLabRoot .techIntro{margin:14px 4vw 10px;padding:18px 20px;border:1px solid rgba(255,255,255,.075);border-radius:20px;background:radial-gradient(circle at 90% 0%,rgba(145,239,91,.055),transparent 36%),linear-gradient(180deg,#0a161e,#071118);display:flex;align-items:center;justify-content:space-between;gap:22px}
+.engineeringLabRoot .techIntro h1{margin:4px 0 5px;font-size:clamp(32px,3.6vw,52px);line-height:.95;letter-spacing:-.052em}
+.engineeringLabRoot .techIntro h1 span{color:#b7f98a}
+.engineeringLabRoot .techIntro p{max-width:800px;margin:0;color:#839aa4;font-size:10px;line-height:1.5}
+.engineeringLabRoot .techIntroActions{display:flex;gap:8px;flex:0 0 auto}
+.engineeringLabRoot .techSection{padding:4.8vh 4vw}
+.engineeringLabRoot .altLab{background:rgba(255,255,255,.012)}
+.engineeringLabRoot .techHead{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:16px}
+.engineeringLabRoot .techHead h2{margin:5px 0 7px;font-size:clamp(34px,4vw,58px);line-height:.98;letter-spacing:-.05em}
+.engineeringLabRoot .techHead p{max-width:790px;margin:0;color:#8198a3;font-size:11px;line-height:1.58}
+.engineeringLabRoot .planningPill,.engineeringLabRoot .timeBadge{flex:0 0 auto;padding:9px 12px;border-radius:999px;border:1px solid rgba(104,201,245,.13);background:rgba(104,201,245,.025);color:#8bb0bf;font-size:7px;font-weight:850}
+.engineeringLabRoot .timeBadge small{display:block;font-size:6px}
+.engineeringLabRoot .timeBadge b{display:block;margin-top:3px;color:#b8f58f;font-size:15px}
+.engineeringLabRoot .toolTabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:7px;margin-bottom:10px}
+.engineeringLabRoot .toolTab{min-height:88px;padding:11px;border-radius:15px;border:1px solid rgba(255,255,255,.07);background:#08171f;color:#dbe6ea;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;cursor:pointer}
+.engineeringLabRoot .toolTab span{font-size:19px;color:#8ff160}
+.engineeringLabRoot .toolTab b{margin-top:5px;font-size:9px}
+.engineeringLabRoot .toolTab small{margin-top:3px;color:#6f8590;font-size:7px}
+.engineeringLabRoot .toolTab.active,.engineeringLabRoot .toolTab:hover{border-color:rgba(145,239,91,.3);background:linear-gradient(180deg,rgba(17,37,30,.9),#08171f)}
+.engineeringLabRoot .toolWorkspace{border:1px solid rgba(255,255,255,.07);border-radius:21px;overflow:hidden;background:#07141b}
+.engineeringLabRoot .toolPanel{display:none;grid-template-columns:minmax(0,1.12fr) minmax(320px,.88fr);min-height:405px}
+.engineeringLabRoot .toolPanel.active{display:grid}
+.engineeringLabRoot .toolForm{padding:24px;border-right:1px solid rgba(255,255,255,.06)}
+.engineeringLabRoot .toolForm h3{margin:6px 0 16px;font-size:26px;letter-spacing:-.035em}
+.engineeringLabRoot .labFields,.engineeringLabRoot .quickLoads{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.engineeringLabRoot .labFields label,.engineeringLabRoot .quickLoads label,.engineeringLabRoot .simFields label{display:grid;gap:6px;color:#78909a;font-size:8px}
+.engineeringLabRoot .labFields input,.engineeringLabRoot .labFields select,.engineeringLabRoot .quickLoads input,.engineeringLabRoot .simFields input{width:100%;min-height:42px;padding:0 11px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#06131a;color:#e7eef1;font:inherit;font-size:10px;outline:none}
+.engineeringLabRoot .toolDisclaimer,.engineeringLabRoot .simNote,.engineeringLabRoot .safetyBox{margin:12px 0 0;padding:10px 11px;border-radius:11px;border:1px solid rgba(104,201,245,.08);background:rgba(104,201,245,.02);color:#718d99;font-size:8px;line-height:1.5}
+.engineeringLabRoot .toolResult{padding:24px;background:radial-gradient(circle at 80% 8%,rgba(145,239,91,.06),transparent 32%),#08171f;display:flex;flex-direction:column;justify-content:center}
+.engineeringLabRoot .toolResult>small{color:#8ff160;font-size:7px;letter-spacing:.08em}
+.engineeringLabRoot .toolResult>strong{display:block;margin-top:7px;font-size:clamp(44px,5vw,70px);line-height:.95;letter-spacing:-.06em}
+.engineeringLabRoot .toolResult>span{margin-top:5px;color:#7d939d;font-size:8px}
+.engineeringLabRoot .resultTiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:17px}
+.engineeringLabRoot .resultTiles>div{padding:9px;border-radius:10px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.012)}
+.engineeringLabRoot .resultTiles small{display:block;color:#6c838e;font-size:6px}
+.engineeringLabRoot .resultTiles b{display:block;margin-top:4px;font-size:9px}
+.engineeringLabRoot .miniBars{height:70px;display:flex;align-items:end;gap:4px;margin-top:16px;border-bottom:1px solid rgba(255,255,255,.06)}
+.engineeringLabRoot .miniBars i{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(#8ff160,#2e6d38)}
+.engineeringLabRoot .modeButtons{display:flex;gap:6px;margin-bottom:11px}
+.engineeringLabRoot .modeButtons button{min-height:33px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.07);background:#06131a;color:#78909a;font-size:8px;font-weight:850}
+.engineeringLabRoot .modeButtons button.active{border-color:rgba(145,239,91,.3);color:#dfffca}
+.engineeringLabRoot .batteryMeter{position:relative;width:150px;height:60px;margin-top:17px;border:2px solid rgba(255,255,255,.18);border-radius:9px;padding:4px}
+.engineeringLabRoot .batteryMeter i{display:block;height:100%;width:60%;border-radius:5px;background:linear-gradient(90deg,#48a743,#99f06a)}
+.engineeringLabRoot .batteryMeter span{position:absolute;inset:0;display:grid;place-items:center;color:#07130b;font-size:7px;font-weight:900}
+.engineeringLabRoot .panelField{display:grid;grid-template-columns:repeat(8,1fr);gap:3px;max-width:320px;margin-top:16px}
+.engineeringLabRoot .panelField span{aspect-ratio:1.5;border-radius:3px;background:linear-gradient(145deg,#173b51,#0a1d29);border:1px solid rgba(104,201,245,.25)}
+.engineeringLabRoot .inlineLabLink{display:inline-block;margin-top:12px;color:#b8f58f;font-size:8px;font-weight:900}
+.engineeringLabRoot .compatRows{display:grid;gap:7px;margin-top:15px}
+.engineeringLabRoot .compatRows div{padding:9px;border-radius:10px;border:1px solid rgba(255,255,255,.055);background:rgba(255,255,255,.012)}
+.engineeringLabRoot .compatRows small{display:block;color:#6e858f;font-size:6px}
+.engineeringLabRoot .compatRows b{display:block;margin-top:3px;font-size:9px}
+.engineeringLabRoot .energyLab{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,.55fr);gap:12px}
+.engineeringLabRoot .energyNodes{min-height:285px;padding:20px;border-radius:20px;border:1px solid rgba(255,255,255,.065);background:#07141b;display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:7px}
+.engineeringLabRoot .energyNodes>i{font-style:normal;color:#8ff160}
+.engineeringLabRoot .energyNodeLab{min-height:120px;border-radius:16px;border:1px solid rgba(255,255,255,.07);background:#08171f;color:#dfe8ec;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+.engineeringLabRoot .energyNodeLab span{font-size:24px;color:#8ff160}
+.engineeringLabRoot .energyNodeLab b{margin-top:7px;font-size:10px}
+.engineeringLabRoot .energyNodeLab small{color:#6f8590;font-size:7px}
+.engineeringLabRoot .energyNodeLab.active{border-color:rgba(145,239,91,.42);background:linear-gradient(180deg,rgba(17,38,30,.95),#08171f)}
+.engineeringLabRoot .energyInspector{padding:20px;border-radius:20px;border:1px solid rgba(145,239,91,.1);background:linear-gradient(180deg,rgba(12,27,23,.72),#07141b)}
+.engineeringLabRoot .energyInspector>small{color:#8ff160;font-size:7px}
+.engineeringLabRoot .energyInspector h3{margin:6px 0 8px;font-size:24px}
+.engineeringLabRoot .energyInspector>p{color:#8197a1;font-size:10px;line-height:1.55}
+.engineeringLabRoot .energyInspector>a{display:inline-block;margin-top:13px;color:#c9ffa4;font-size:8px;font-weight:900}
+.engineeringLabRoot .energyChecks{display:grid;gap:7px;margin-top:12px}
+.engineeringLabRoot .energyChecks div{padding:8px;border-radius:9px;border:1px solid rgba(255,255,255,.055)}
+.engineeringLabRoot .energyChecks small{display:block;color:#6f858f;font-size:6px}
+.engineeringLabRoot .energyChecks b{display:block;margin-top:3px;font-size:9px}
+.engineeringLabRoot .simGrid{display:grid;grid-template-columns:minmax(300px,.46fr) minmax(0,1.54fr);gap:12px}
+.engineeringLabRoot .simControls,.engineeringLabRoot .monitorLab{padding:20px;border-radius:20px;border:1px solid rgba(255,255,255,.065);background:#07141b}
+.engineeringLabRoot .simControls>label{display:grid;gap:9px;color:#78909a;font-size:8px}
+.engineeringLabRoot .simControls input[type=range]{width:100%;accent-color:#8ff160}
+.engineeringLabRoot .tickRow{display:flex;justify-content:space-between;color:#607985;font-size:6px}
+.engineeringLabRoot .simFields{display:grid;gap:8px;margin-top:15px}
+.engineeringLabRoot .monitorLab{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.engineeringLabRoot .monitorHeader{grid-column:1/-1;display:flex;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.055);padding-bottom:10px;color:#78909a;font-size:7px}
+.engineeringLabRoot .monitorHeader b{color:#b8f58f}
+.engineeringLabRoot .monitorLab article{padding:12px;border-radius:13px;border:1px solid rgba(255,255,255,.055);background:#08171f}
+.engineeringLabRoot .monitorLab article small{display:block;color:#6e858f;font-size:7px}
+.engineeringLabRoot .monitorLab article strong{display:block;margin:6px 0;font-size:20px}
+.engineeringLabRoot .monitorLab article div{height:5px;border-radius:99px;background:#0b222d;overflow:hidden}
+.engineeringLabRoot .monitorLab article i{display:block;height:100%;width:50%;background:#8ff160}
+.engineeringLabRoot .monitorLab article:nth-of-type(2) i{background:#68c9f5}
+.engineeringLabRoot .monitorLab article:nth-of-type(3) i{background:#a8f06f}
+.engineeringLabRoot .monitorLab article:nth-of-type(4) i{background:#ffc56b}
+.engineeringLabRoot .simFlow{grid-column:1/-1;min-height:130px;border-radius:15px;border:1px solid rgba(255,255,255,.05);background:#06131a;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;align-items:center;text-align:center;position:relative}
+.engineeringLabRoot .simFlow div{font-size:22px;color:#8ff160}
+.engineeringLabRoot .simFlow b{display:block;color:#e7eef1;font-size:9px}
+.engineeringLabRoot .simFlow>i{font-style:normal;color:#8ff160}
+.engineeringLabRoot .simFlow small{position:absolute;left:12px;bottom:9px;color:#718791;font-size:7px}
+.engineeringLabRoot .topicTabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+.engineeringLabRoot .topicTabs button{min-height:36px;padding:0 11px;border-radius:999px;border:1px solid rgba(255,255,255,.07);background:#07141b;color:#8198a2;font-size:8px;font-weight:900}
+.engineeringLabRoot .topicTabs button.active{border-color:rgba(145,239,91,.3);color:#dfffca;background:rgba(145,239,91,.05)}
+.engineeringLabRoot .topicWorkspace{display:grid;grid-template-columns:minmax(300px,.55fr) minmax(0,1.45fr);border:1px solid rgba(255,255,255,.065);border-radius:21px;overflow:hidden;background:#07141b}
+.engineeringLabRoot .topicImage{position:relative;min-height:410px;background:#eef1f1}
+.engineeringLabRoot .topicImage img{width:100%;height:100%;object-fit:contain;padding:24px}
+.engineeringLabRoot .topicImage span{position:absolute;left:11px;bottom:11px;padding:7px 9px;border-radius:999px;background:rgba(5,17,23,.82);color:#dce8ec;font-size:7px}
+.engineeringLabRoot .topicCopy{padding:24px}
+.engineeringLabRoot .topicCopy h3{margin:6px 0 9px;font-size:32px}
+.engineeringLabRoot .topicCopy>p{color:#8197a1;font-size:11px;line-height:1.6}
+.engineeringLabRoot .topicChecks{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:15px 0}
+.engineeringLabRoot .topicChecks article{padding:11px;border-radius:11px;border:1px solid rgba(255,255,255,.055);background:#08171f}
+.engineeringLabRoot .topicChecks small{color:#8ff160;font-size:6px}
+.engineeringLabRoot .topicChecks b{display:block;margin-top:4px;font-size:9px}
+.engineeringLabRoot .topicChecks p{margin:4px 0 0;color:#718791;font-size:8px;line-height:1.4}
+.engineeringLabRoot .archCards{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.engineeringLabRoot .archCards article{padding:20px;border-radius:19px;border:1px solid rgba(255,255,255,.065);background:#08171f}
+.engineeringLabRoot .archCards article.featured{border-color:rgba(145,239,91,.22);background:linear-gradient(180deg,rgba(14,31,25,.82),#07141b)}
+.engineeringLabRoot .archCards span{display:inline-flex;padding:5px 7px;border-radius:999px;border:1px solid rgba(145,239,91,.14);color:#b1ef89;font-size:7px;font-weight:900}
+.engineeringLabRoot .archCards h3{margin:10px 0 8px;font-size:24px}
+.engineeringLabRoot .archCards article>div{padding:11px;border-radius:10px;background:#06131a;color:#b9f395;text-align:center;font-size:12px}
+.engineeringLabRoot .archCards ul{padding-left:18px;color:#8097a1;font-size:9px;line-height:1.7}
+.engineeringLabRoot .protectFlow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr auto 1fr;gap:7px;align-items:center}
+.engineeringLabRoot .protectFlow div{min-height:110px;border-radius:16px;border:1px solid rgba(255,255,255,.065);background:#08171f;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#8ff160;font-size:22px}
+.engineeringLabRoot .protectFlow b{margin-top:6px;color:#e2ecef;font-size:10px}
+.engineeringLabRoot .protectFlow>i{font-style:normal;color:#8ff160}
+.engineeringLabRoot .safetyBox{border-color:rgba(255,193,87,.1);background:rgba(255,193,87,.025);color:#9c907a}
+.engineeringLabRoot .productBridge{display:grid;grid-template-columns:minmax(250px,.38fr) minmax(0,1.62fr);gap:18px}
+.engineeringLabRoot .bridgeIntro h2{margin:5px 0 7px;font-size:35px}
+.engineeringLabRoot .bridgeIntro p{color:#8198a3;font-size:10px;line-height:1.55}
+.engineeringLabRoot .bridgeGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.engineeringLabRoot .bridgeGrid a{overflow:hidden;border-radius:15px;border:1px solid rgba(255,255,255,.065);background:#08171f}
+.engineeringLabRoot .bridgeGrid img{width:100%;height:140px;object-fit:contain;background:#eef1f1;padding:8px}
+.engineeringLabRoot .bridgeGrid small,.engineeringLabRoot .bridgeGrid b{display:block;padding:0 10px}
+.engineeringLabRoot .bridgeGrid small{margin-top:8px;color:#8ff160;font-size:6px}
+.engineeringLabRoot .bridgeGrid b{margin-top:3px;padding-bottom:11px;font-size:8px;line-height:1.3}
+.engineeringLabRoot .techCta{margin:2vh 4vw 7vh}
+@media(max-width:1150px){.engineeringLabRoot .toolTabs{grid-template-columns:repeat(3,1fr)}
+.engineeringLabRoot .energyLab,.engineeringLabRoot .simGrid,.engineeringLabRoot .topicWorkspace,.engineeringLabRoot .productBridge{grid-template-columns:1fr}
+.engineeringLabRoot .energyNodes{grid-template-columns:1fr}
+.engineeringLabRoot .energyNodes>i{transform:rotate(90deg);text-align:center}
+.engineeringLabRoot .topicImage{min-height:340px}
+.engineeringLabRoot .bridgeGrid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){.engineeringLabRoot .toolPanel{grid-template-columns:1fr}
+.engineeringLabRoot .toolForm{border-right:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.engineeringLabRoot .monitorLab{grid-template-columns:1fr 1fr}
+.engineeringLabRoot .archCards{grid-template-columns:1fr}
+.engineeringLabRoot .protectFlow{grid-template-columns:1fr}
+.engineeringLabRoot .protectFlow>i{transform:rotate(90deg);text-align:center}
+.engineeringLabRoot .bridgeGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:720px){.engineeringLabRoot .techIntro{margin:9px 4vw 7px;padding:14px;display:block}
+.engineeringLabRoot .techIntro h1{font-size:34px}
+.engineeringLabRoot .techIntroActions{display:grid;margin-top:11px}
+.engineeringLabRoot .techSection{padding:4.3vh 4vw}
+.engineeringLabRoot .techHead{display:block}
+.engineeringLabRoot .planningPill,.engineeringLabRoot .timeBadge{display:inline-block;margin-top:9px}
+.engineeringLabRoot .toolTabs{display:flex;overflow-x:auto}
+.engineeringLabRoot .toolTab{flex:0 0 145px}
+.engineeringLabRoot .labFields,.engineeringLabRoot .quickLoads{grid-template-columns:1fr}
+.engineeringLabRoot .toolForm,.engineeringLabRoot .toolResult{padding:16px}
+.engineeringLabRoot .resultTiles{grid-template-columns:1fr 1fr}
+.engineeringLabRoot .monitorLab{grid-template-columns:1fr 1fr}
+.engineeringLabRoot .simFlow{grid-template-columns:1fr}
+.engineeringLabRoot .simFlow>i{transform:rotate(90deg)}
+.engineeringLabRoot .topicChecks{grid-template-columns:1fr}
+.engineeringLabRoot .topicImage{min-height:285px}
+.engineeringLabRoot .bridgeGrid{grid-template-columns:1fr 1fr}
+.engineeringLabRoot .bridgeGrid img{height:115px}}
+@media (max-width: 720px) {
+  .engineeringLabRoot .demoPage { padding-top: 68px; }
+  .engineeringLabRoot .ctaBand {
+    margin: 0 7vw 8vh;
+    padding: 30px 24px;
+    display: block;
+  }
+  .engineeringLabRoot .ctaBand .demoActions { margin-top: 22px; }
+  .engineeringLabRoot .futureBand {
+    margin: 0 6vw 7vh;
+    padding: 43px 16px;
+  }
+}
