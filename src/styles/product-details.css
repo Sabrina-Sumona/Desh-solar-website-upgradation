@@ -260,10 +260,22 @@
 }
 
 .pdAvailability b {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   margin-top: 6px;
-  color: #aed9ea;
+  color: #c8ff7d;
   font-size: 10px;
+}
+
+.pdAvailability b::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px rgba(145, 239, 91, 0.45);
 }
 
 .pdPurchaseControls {
