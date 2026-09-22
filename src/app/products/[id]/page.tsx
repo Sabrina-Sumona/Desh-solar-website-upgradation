@@ -475,7 +475,7 @@ export default async function ProductDetailsPage({
 
                 <div className="pdAvailability">
                   <small>AVAILABILITY</small>
-                  <b>Check current stock</b>
+                  <b>In Stock</b>
                 </div>
               </div>
 

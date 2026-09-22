@@ -418,22 +418,34 @@ function ProductCard({
         </h3>
 
         <div className="realProductPrice">
-          <div>
+          <div className="realProductPriceMain">
             <span className="plPriceLabel">
               CURRENT PRICE
             </span>
 
-            <strong>
-              {product.priceText}
-            </strong>
+            <div className="realProductPriceValue">
+              <strong>
+                {product.priceText}
+              </strong>
 
-            {product.oldPriceText && (
-              <del>
-                {
-                  product.oldPriceText
-                }
-              </del>
-            )}
+              {product.oldPriceText && (
+                <del>
+                  {
+                    product.oldPriceText
+                  }
+                </del>
+              )}
+
+              {catalogMode === "products" && (
+                <div
+                  className="piProductStock piProductStock--inline"
+                  aria-label="Availability: In Stock"
+                >
+                  <span aria-hidden="true" />
+                  <strong>In Stock</strong>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 

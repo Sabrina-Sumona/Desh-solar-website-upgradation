@@ -417,14 +417,61 @@
   color: var(--green2);
 }
 
+
+.piProductStock {
+  width: fit-content;
+  margin: 0 0 8px;
+  padding: 5px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(145, 239, 91, 0.2);
+  border-radius: 999px;
+  background: rgba(145, 239, 91, 0.055);
+  color: var(--green2);
+}
+
+.piProductStock--inline {
+  margin: 0;
+  align-self: center;
+  flex-shrink: 0;
+}
+
+.piProductStock span {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px rgba(145, 239, 91, 0.45);
+}
+
+.piProductStock strong {
+  color: inherit;
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .realProductPrice {
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.realProductPrice > div {
+.realProductPriceRow {
   min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.realProductPriceMain {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .plPriceLabel {
@@ -436,16 +483,34 @@
   letter-spacing: 0.11em;
 }
 
-.realProductPrice strong {
+.realProductPriceValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.realProductPriceValue > strong {
   color: #f3f8fa;
   font-size: 21px;
   line-height: 1;
 }
 
 .realProductPrice del {
-  margin-left: 5px;
+  margin-left: 0;
   color: #8fa3ac;
   font-size: 9px;
+}
+
+
+@media (max-width: 1199px) {
+  .realProductPriceRow {
+    gap: 8px;
+  }
+
+  .piProductStock--inline {
+    padding: 5px 7px;
+  }
 }
 
 .piCardActionGrid {
@@ -800,7 +865,7 @@
     min-width: 50px;
   }
 
-  .realProductPrice strong {
+  .realProductPriceValue > strong {
     font-size: 18px;
   }
 
@@ -971,6 +1036,31 @@
   font-weight: 900;
   line-height: 1;
   letter-spacing: -0.035em;
+}
+
+.pqvdAvailability {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0 0 10px;
+  color: #b8f66a;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+}
+
+.pqvdAvailability span {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border-radius: 999px;
+  background: #b8f66a;
+  box-shadow: 0 0 12px rgba(184, 246, 106, 0.38);
+}
+
+.pqvdAvailability strong {
+  color: inherit;
+  font: inherit;
 }
 
 .pqvdLead {

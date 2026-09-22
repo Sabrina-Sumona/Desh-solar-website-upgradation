@@ -111,6 +111,14 @@ export default function ProductQuickView({
 
           <h2 id="pqvd-title">{product.name}</h2>
 
+          <div
+            className="pqvdAvailability"
+            aria-label="Availability: In Stock"
+          >
+            <span aria-hidden="true" />
+            <strong>In Stock</strong>
+          </div>
+
           <p className="pqvdLead">{profile.why}</p>
 
           <div className="pqvdTags">
