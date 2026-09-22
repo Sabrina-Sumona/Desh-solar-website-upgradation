@@ -1,0 +1,1758 @@
+/* =========================================================
+   DESH SOLAR — ABOUT PAGE
+   Production adaptation of the approved HTML prototype.
+   ========================================================= */
+
+.aboutPage {
+  --about-surface: #08171f;
+  --about-surface-2: #0a1b24;
+  --about-border: rgba(255, 255, 255, 0.07);
+  --about-border-strong: rgba(145, 239, 91, 0.18);
+  --about-green: var(--green, #91ef5b);
+  --about-green-2: var(--green-2, #c8ff7d);
+  --about-muted: #8298a2;
+
+  padding-top: 76px;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(145, 239, 91, 0.045), transparent 26%),
+    #05090d;
+  color: #f7fafb;
+  overflow: hidden;
+}
+
+.aboutPage * {
+  box-sizing: border-box;
+}
+
+.aboutPage section[id] {
+  scroll-margin-top: 102px;
+}
+
+.aboutEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--about-green-2);
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.aboutEyebrow::before {
+  content: "";
+  width: 21px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 12px rgba(200, 255, 125, 0.4);
+}
+
+.aboutActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.aboutButton {
+  min-height: 42px;
+  padding: 0 15px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  transition:
+    transform 0.22s ease,
+    border-color 0.22s ease,
+    background 0.22s ease,
+    color 0.22s ease;
+}
+
+.aboutButton:hover {
+  transform: translateY(-2px);
+}
+
+.aboutButtonPrimary {
+  color: #071007;
+  border-color: rgba(145, 239, 91, 0.75);
+  background: linear-gradient(135deg, #c8ff7d, #91ef5b);
+  box-shadow: 0 12px 30px rgba(145, 239, 91, 0.1);
+}
+
+.aboutButtonPrimary:hover {
+  border-color: #d8ffac;
+  background: linear-gradient(135deg, #d8ffac, #a5f77b);
+}
+
+.aboutButtonSecondary {
+  color: #e6eef1;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.aboutButtonSecondary:hover {
+  color: #fff;
+  border-color: rgba(145, 239, 91, 0.35);
+  background: rgba(145, 239, 91, 0.055);
+}
+
+.aboutInlineLink {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #bdf88f;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.aboutInlineLink:hover {
+  color: #e2ffc8;
+  transform: translateX(2px);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.aboutHero {
+  position: relative;
+  min-height: 520px;
+  margin: 16px 4vw 10px;
+  padding: clamp(30px, 5vw, 74px);
+  border: 1px solid var(--about-border);
+  border-radius: 28px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
+  gap: clamp(28px, 5vw, 76px);
+  align-items: center;
+  background:
+    linear-gradient(90deg, rgba(4, 13, 18, 0.98), rgba(7, 22, 29, 0.94)),
+    #07131a;
+  isolation: isolate;
+}
+
+.aboutHero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(to right, #000, transparent 72%);
+}
+
+.aboutHeroGlow {
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.aboutHeroGlowOne {
+  width: 420px;
+  height: 420px;
+  right: -90px;
+  top: -170px;
+  background: radial-gradient(circle, rgba(145, 239, 91, 0.13), transparent 68%);
+}
+
+.aboutHeroGlowTwo {
+  width: 360px;
+  height: 360px;
+  left: 34%;
+  bottom: -270px;
+  background: radial-gradient(circle, rgba(89, 189, 255, 0.08), transparent 68%);
+}
+
+.aboutHeroCopy {
+  position: relative;
+  z-index: 2;
+}
+
+.aboutHeroCopy h1 {
+  max-width: 850px;
+  margin: 13px 0 16px;
+  font-size: clamp(52px, 6.3vw, 100px);
+  font-weight: 900;
+  line-height: 0.91;
+  letter-spacing: -0.06em;
+}
+
+.aboutHeroCopy h1 span {
+  color: #b8f88b;
+}
+
+.aboutHeroCopy > p {
+  max-width: 710px;
+  margin: 0 0 25px;
+  color: #91a6af;
+  font-size: clamp(13px, 1.2vw, 17px);
+  line-height: 1.66;
+}
+
+.aboutHeroMark {
+  position: relative;
+  min-height: 310px;
+  display: grid;
+  place-items: center;
+}
+
+.aboutHeroMark::before,
+.aboutHeroMark::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(145, 239, 91, 0.09);
+}
+
+.aboutHeroMark::before {
+  width: 290px;
+  height: 290px;
+}
+
+.aboutHeroMark::after {
+  width: 390px;
+  height: 390px;
+  border-color: rgba(255, 255, 255, 0.045);
+}
+
+.aboutHeroMarkInner {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 390px);
+  min-height: 220px;
+  padding: 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(145, 239, 91, 0.13);
+  background:
+    radial-gradient(circle at 50% 25%, rgba(145, 239, 91, 0.07), transparent 45%),
+    rgba(6, 19, 25, 0.88);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.aboutHeroMarkInner img {
+  width: min(290px, 90%);
+  height: auto;
+  object-fit: contain;
+}
+
+.aboutHeroMarkInner small {
+  margin-top: 15px;
+  color: #718993;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.11em;
+}
+
+.aboutHeroSignal {
+  width: 100%;
+  margin-top: 19px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aboutHeroSignal span {
+  height: 2px;
+  flex: 1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.aboutHeroSignal span:nth-child(1) {
+  background: linear-gradient(90deg, transparent, rgba(255, 193, 87, 0.75));
+}
+
+.aboutHeroSignal span:nth-child(2) {
+  background: linear-gradient(90deg, rgba(255, 193, 87, 0.4), rgba(89, 189, 255, 0.85));
+}
+
+.aboutHeroSignal span:nth-child(3) {
+  background: linear-gradient(90deg, rgba(89, 189, 255, 0.5), rgba(145, 239, 91, 0.8));
+}
+
+/* =========================================================
+   PILLARS
+   ========================================================= */
+
+.aboutPillars {
+  padding: 0 4vw 18px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.aboutPillarCard {
+  position: relative;
+  min-height: 126px;
+  padding: 17px;
+  border-radius: 17px;
+  border: 1px solid var(--about-border);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+}
+
+.aboutPillarCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145, 239, 91, 0.25);
+  background: #0a1b23;
+}
+
+.aboutPillarCard > span {
+  color: var(--about-green);
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.aboutPillarCard b {
+  margin-top: 8px;
+  color: #edf5f7;
+  font-size: 13px;
+}
+
+.aboutPillarCard small {
+  max-width: 220px;
+  margin-top: 5px;
+  color: #708690;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.aboutPillarCard i {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  color: #4d636d;
+  font-size: 12px;
+  font-style: normal;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.aboutPillarCard:hover i {
+  color: var(--about-green-2);
+  transform: translate(2px, -2px);
+}
+
+/* =========================================================
+   SHARED SECTION
+   ========================================================= */
+
+.aboutSection {
+  width: 100%;
+  padding: clamp(62px, 8vw, 112px) 4vw;
+  border-top: 1px solid rgba(255, 255, 255, 0.035);
+}
+
+.aboutSectionHead {
+  margin-bottom: 28px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.aboutSectionHead > div {
+  max-width: 880px;
+}
+
+.aboutSectionHead h2,
+.aboutWhoCopy h2,
+.aboutPhilosophyCopy h2,
+.aboutEngineeringCopy h2,
+.aboutAccessCopy h2,
+.aboutFinalCta h2 {
+  margin: 10px 0 0;
+  color: #f3f8fa;
+  font-size: clamp(36px, 4.5vw, 68px);
+  font-weight: 900;
+  line-height: 0.98;
+  letter-spacing: -0.052em;
+}
+
+.aboutSectionHead p,
+.aboutWhoCopy > p,
+.aboutPhilosophyCopy > p,
+.aboutEngineeringCopy > p,
+.aboutAccessCopy > p,
+.aboutFinalCta p {
+  max-width: 760px;
+  margin: 12px 0 0;
+  color: #8298a2;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.aboutSectionHeadCentered {
+  justify-content: center;
+  text-align: center;
+}
+
+.aboutSectionHeadCentered > div {
+  margin: 0 auto;
+}
+
+.aboutSectionHeadCentered .aboutEyebrow {
+  justify-content: center;
+}
+
+/* =========================================================
+   WHO WE ARE
+   ========================================================= */
+
+.aboutWho {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(36px, 6vw, 92px);
+  align-items: center;
+}
+
+.aboutWhoVisual {
+  position: relative;
+  min-height: 520px;
+  border-radius: 28px;
+  border: 1px solid var(--about-border);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(145, 239, 91, 0.06), transparent 30%),
+    linear-gradient(180deg, #07151d, #061117);
+}
+
+.aboutWhoGrid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.aboutEnergyPath {
+  position: absolute;
+  left: 13%;
+  right: 13%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,193,87,0.3), rgba(89,189,255,0.7), rgba(145,239,91,0.5));
+  box-shadow: 0 0 18px rgba(89, 189, 255, 0.2);
+}
+
+.aboutSystemCard {
+  position: absolute;
+  z-index: 2;
+  width: 170px;
+  min-height: 205px;
+  padding: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(8, 24, 32, 0.94);
+  box-shadow: 0 22px 46px rgba(0,0,0,0.28);
+}
+
+.aboutSystemCard::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -30px;
+  width: 1px;
+  height: 30px;
+  background: rgba(145, 239, 91, 0.23);
+}
+
+.aboutSystemImage {
+  position: relative;
+  height: 145px;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #eef1f1;
+}
+
+.aboutSystemImage img {
+  object-fit: contain;
+  padding: 8px;
+}
+
+.aboutSystemCard > small {
+  display: block;
+  margin-top: 10px;
+  color: var(--about-green);
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.aboutSystemCard > b {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+}
+
+.aboutSystemPanel {
+  left: 8%;
+  top: 12%;
+  transform: rotate(-4deg);
+}
+
+.aboutSystemInverter {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.aboutSystemBattery {
+  right: 8%;
+  bottom: 12%;
+  transform: rotate(4deg);
+}
+
+.aboutWhoCopy > p {
+  font-size: 13px;
+}
+
+.aboutWhoFlow {
+  margin: 24px 0 22px;
+  padding: 13px 14px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  background: rgba(255,255,255,0.018);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.aboutWhoFlow div {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.aboutWhoFlow span {
+  color: #b5c6cd;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+}
+
+.aboutWhoFlow i {
+  color: var(--about-green);
+  font-size: 9px;
+  font-style: normal;
+}
+
+/* =========================================================
+   CAPABILITIES
+   ========================================================= */
+
+.aboutCapabilities {
+  background: rgba(255,255,255,0.012);
+}
+
+.aboutCapabilityWorkspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  gap: 14px;
+}
+
+.aboutCapabilityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.aboutCapabilityCard {
+  min-height: 145px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.065);
+  border-radius: 17px;
+  background: #08171f;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.aboutCapabilityCard:hover,
+.aboutCapabilityCard.isActive {
+  transform: translateY(-2px);
+  border-color: rgba(145, 239, 91, 0.3);
+  background: linear-gradient(180deg, rgba(145,239,91,0.045), #08171f);
+}
+
+.aboutCapabilityCard span {
+  margin-bottom: auto;
+  color: var(--about-green);
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.aboutCapabilityCard b {
+  font-size: 11px;
+}
+
+.aboutCapabilityCard small {
+  margin-top: 4px;
+  color: #6f858f;
+  font-size: 7px;
+}
+
+.aboutCapabilityInspector {
+  min-height: 296px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(145,239,91,0.12);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(145,239,91,0.06), transparent 34%),
+    #07151c;
+}
+
+.aboutCapabilityInspector > small {
+  color: var(--about-green);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.aboutCapabilityInspector h3 {
+  max-width: 540px;
+  margin: 9px 0 0;
+  font-size: clamp(24px, 2.6vw, 39px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.aboutCapabilityInspector > p {
+  margin: 11px 0 0;
+  color: #80959e;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.aboutCapabilityChecks {
+  margin: 20px 0 19px;
+  display: grid;
+  gap: 7px;
+}
+
+.aboutCapabilityChecks div {
+  padding: 11px 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 11px;
+  background: rgba(255,255,255,0.018);
+}
+
+.aboutCapabilityChecks small,
+.aboutCapabilityChecks b {
+  display: block;
+}
+
+.aboutCapabilityChecks small {
+  color: #617781;
+  font-size: 6px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.aboutCapabilityChecks b {
+  margin-top: 4px;
+  color: #b9c8ce;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.aboutCapabilityInspector > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--about-green-2);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+/* =========================================================
+   SYSTEM FLOW
+   ========================================================= */
+
+.aboutSystemFlow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.aboutSystemFlow > i {
+  color: var(--about-green);
+  font-size: 15px;
+  font-style: normal;
+  text-align: center;
+}
+
+.aboutFlowNode {
+  min-height: 138px;
+  padding: 13px;
+  border: 1px solid rgba(255,255,255,0.065);
+  border-radius: 17px;
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.aboutFlowNode:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.28);
+}
+
+.aboutFlowNode > span {
+  color: var(--about-green);
+  font-size: 25px;
+  line-height: 1;
+}
+
+.aboutFlowNode b {
+  margin-top: 10px;
+  font-size: 10px;
+}
+
+.aboutFlowNode small {
+  margin-top: 3px;
+  color: #6d838d;
+  font-size: 7px;
+}
+
+.aboutFlowNodeFinal {
+  border-color: rgba(145,239,91,0.22);
+  background: linear-gradient(180deg, rgba(145,239,91,0.05), #08171f);
+}
+
+.aboutPrinciples {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.aboutPrinciples article {
+  padding: 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.055);
+  background: rgba(255,255,255,0.015);
+}
+
+.aboutPrinciples small,
+.aboutPrinciples b {
+  display: block;
+}
+
+.aboutPrinciples small {
+  color: var(--about-green);
+  font-size: 6px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.aboutPrinciples b {
+  margin-top: 5px;
+  font-size: 10px;
+}
+
+.aboutPrinciples p {
+  margin: 5px 0 0;
+  color: #6e848e;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   WHO WE SERVE
+   ========================================================= */
+
+.aboutServe {
+  background: rgba(255,255,255,0.012);
+}
+
+.aboutServeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.aboutServeGrid a {
+  position: relative;
+  min-height: 190px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.aboutServeGrid a:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.25);
+}
+
+.aboutServeGrid a > span {
+  margin-bottom: auto;
+  color: var(--about-green);
+  font-size: 27px;
+}
+
+.aboutServeGrid small {
+  color: #6f858f;
+  font-size: 7px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.aboutServeGrid b {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+.aboutServeGrid p {
+  max-width: 300px;
+  margin: 6px 0 0;
+  color: #748a94;
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.aboutServeGrid i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  color: #536a74;
+  font-style: normal;
+}
+
+/* =========================================================
+   PHILOSOPHY
+   ========================================================= */
+
+.aboutPhilosophy {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.62fr) minmax(0, 1.38fr);
+  gap: 38px;
+  align-items: center;
+}
+
+.aboutPhilosophyCopy .aboutButton,
+.aboutEngineeringCopy .aboutButton {
+  margin-top: 22px;
+}
+
+.aboutPhilosophyFlow {
+  display: grid;
+  gap: 6px;
+}
+
+.aboutPhilosophyStep {
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  align-items: center;
+  gap: 10px;
+}
+
+.aboutPhilosophyStep:last-child {
+  grid-template-columns: 1fr;
+}
+
+.aboutPhilosophyStep > div {
+  min-height: 74px;
+  padding: 13px 15px;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  background: #08171f;
+  display: grid;
+  grid-template-columns: 46px 120px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+.aboutPhilosophyStep span {
+  color: var(--about-green);
+  font-size: 17px;
+  font-weight: 900;
+}
+
+.aboutPhilosophyStep b {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+}
+
+.aboutPhilosophyStep small {
+  color: #728892;
+  font-size: 8px;
+}
+
+.aboutPhilosophyStep i {
+  color: var(--about-green);
+  font-style: normal;
+  text-align: center;
+}
+
+/* =========================================================
+   ECOSYSTEM
+   ========================================================= */
+
+.aboutEcosystemSection {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(145,239,91,0.035), transparent 30%),
+    rgba(255,255,255,0.009);
+}
+
+.aboutEcosystem {
+  position: relative;
+  height: 590px;
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.aboutEcoRing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid rgba(145,239,91,0.075);
+}
+
+.aboutEcoRingOne {
+  width: 560px;
+  height: 400px;
+}
+
+.aboutEcoRingTwo {
+  width: 820px;
+  height: 540px;
+}
+
+.aboutEcoCore {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 1px solid rgba(145,239,91,0.24);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 0 80px rgba(145,239,91,0.055);
+}
+
+.aboutEcoCore img {
+  width: 150px;
+  height: auto;
+}
+
+.aboutEcoCore b {
+  margin-top: 8px;
+  font-size: 11px;
+}
+
+.aboutEcoCore small {
+  margin-top: 3px;
+  color: #708792;
+  font-size: 7px;
+}
+
+.aboutEcoNode {
+  position: absolute;
+  z-index: 5;
+  width: 150px;
+  height: 100px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.07);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.aboutEcoNode:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.3);
+}
+
+.aboutEcoNode span {
+  color: var(--about-green);
+  font-size: 20px;
+}
+
+.aboutEcoNode b {
+  margin-top: 5px;
+  font-size: 9px;
+}
+
+.aboutEcoNode small {
+  color: #6f858f;
+  font-size: 6px;
+}
+
+.aboutEcoNode1 { left: 6%; top: 10%; }
+.aboutEcoNode2 { right: 6%; top: 10%; }
+.aboutEcoNode3 { left: 0; top: 42%; }
+.aboutEcoNode4 { right: 0; top: 42%; }
+.aboutEcoNode5 { left: 14%; bottom: 6%; }
+.aboutEcoNode6 { right: 14%; bottom: 6%; }
+
+/* =========================================================
+   WHY / TECHNOLOGY
+   ========================================================= */
+
+.aboutWhyGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.aboutWhyGrid article {
+  min-height: 155px;
+  padding: 18px;
+  border-radius: 17px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #08171f;
+}
+
+.aboutWhyGrid span {
+  color: var(--about-green);
+  font-size: 21px;
+  font-weight: 900;
+}
+
+.aboutWhyGrid b {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.aboutWhyGrid p {
+  margin: 6px 0 0;
+  color: #778d97;
+  font-size: 8px;
+  line-height: 1.55;
+}
+
+.aboutTechnology {
+  background: rgba(255,255,255,0.012);
+}
+
+.aboutTechnologyGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.aboutTechnologyGrid > a {
+  overflow: hidden;
+  border-radius: 17px;
+  border: 1px solid rgba(255,255,255,0.065);
+  background: #08171f;
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.aboutTechnologyGrid > a:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.26);
+}
+
+.aboutTechnologyGrid > a > div {
+  position: relative;
+  height: 210px;
+  background: #eef1f1;
+}
+
+.aboutTechnologyGrid img {
+  object-fit: contain;
+  padding: 12px;
+}
+
+.aboutTechnologyGrid small,
+.aboutTechnologyGrid b,
+.aboutTechnologyGrid > a > span {
+  display: block;
+  padding-inline: 13px;
+}
+
+.aboutTechnologyGrid small {
+  margin-top: 11px;
+  color: var(--about-green);
+  font-size: 7px;
+  font-weight: 800;
+}
+
+.aboutTechnologyGrid b {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.aboutTechnologyGrid > a > span {
+  padding-bottom: 14px;
+  margin-top: 5px;
+  color: #7f949d;
+  font-size: 7px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   JOURNEY / ACCESS
+   ========================================================= */
+
+.aboutJourneyTrack {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.aboutJourneyStep {
+  position: relative;
+}
+
+.aboutJourneyStep > a {
+  min-height: 128px;
+  padding: 13px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.aboutJourneyStep > a:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.25);
+}
+
+.aboutJourneyStep span {
+  color: var(--about-green);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.aboutJourneyStep b {
+  margin-top: 7px;
+  font-size: 8px;
+  letter-spacing: 0.05em;
+}
+
+.aboutJourneyStep small {
+  margin-top: 4px;
+  color: #6f858f;
+  font-size: 6px;
+}
+
+.aboutJourneyStep > i {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -9px;
+  transform: translate(50%, -50%);
+  color: var(--about-green);
+  font-size: 9px;
+  font-style: normal;
+}
+
+.aboutAccess {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 30px;
+  align-items: center;
+  background: linear-gradient(180deg, rgba(12,28,23,0.35), rgba(255,255,255,0.01));
+}
+
+.aboutAccessFacts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 19px;
+}
+
+.aboutAccessFacts div {
+  padding: 14px;
+  border-radius: 13px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: #08171f;
+}
+
+.aboutAccessFacts small,
+.aboutAccessFacts b,
+.aboutAccessFacts span {
+  display: block;
+}
+
+.aboutAccessFacts small {
+  color: #6d838d;
+  font-size: 6px;
+  text-transform: uppercase;
+}
+
+.aboutAccessFacts b {
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.aboutAccessFacts span {
+  margin-top: 3px;
+  color: #77909a;
+  font-size: 7px;
+}
+
+.aboutAccessActions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+/* =========================================================
+   PROJECTS / ENGINEERING
+   ========================================================= */
+
+.aboutProjects {
+  background: rgba(255,255,255,0.012);
+}
+
+.aboutProjectGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.aboutProjectGrid > a {
+  position: relative;
+  height: 320px;
+  border-radius: 19px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+.aboutProjectGrid img {
+  object-fit: cover;
+  transition: transform 0.45s ease;
+}
+
+.aboutProjectGrid > a:hover img {
+  transform: scale(1.045);
+}
+
+.aboutProjectGrid > a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 35%, rgba(3,13,18,0.92));
+}
+
+.aboutProjectGrid > a > div {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 55px 16px 16px;
+}
+
+.aboutProjectGrid small {
+  color: #b9f78c;
+  font-size: 7px;
+  font-weight: 900;
+}
+
+.aboutProjectGrid b {
+  display: block;
+  margin-top: 4px;
+  font-size: 17px;
+}
+
+.aboutProjectGrid span {
+  display: block;
+  margin-top: 7px;
+  color: #b9f78c;
+  font-size: 8px;
+  font-weight: 900;
+}
+
+.aboutEngineeringTeaser {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.6fr) minmax(0, 1.4fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.aboutEngineeringTools {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.aboutEngineeringTools a {
+  min-height: 160px;
+  border-radius: 17px;
+  border: 1px solid rgba(255,255,255,0.065);
+  background: #08171f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.aboutEngineeringTools a:hover {
+  transform: translateY(-3px);
+  border-color: rgba(145,239,91,0.26);
+}
+
+.aboutEngineeringTools span {
+  color: var(--about-green);
+  font-size: 24px;
+}
+
+.aboutEngineeringTools b {
+  margin-top: 8px;
+  font-size: 10px;
+}
+
+.aboutEngineeringTools small {
+  margin-top: 3px;
+  color: #708792;
+  font-size: 7px;
+}
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+
+.aboutFinalCta {
+  margin: 8px 4vw clamp(55px, 7vw, 95px);
+  padding: clamp(28px, 4vw, 54px);
+  border: 1px solid rgba(145,239,91,0.14);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 90% 10%, rgba(145,239,91,0.08), transparent 30%),
+    linear-gradient(135deg, #091a20, #07131a);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 36px;
+}
+
+.aboutFinalCta > div:first-child {
+  max-width: 820px;
+}
+
+.aboutFinalCta h2 {
+  font-size: clamp(33px, 4.3vw, 62px);
+}
+
+.aboutFinalCta .aboutActions {
+  justify-content: flex-end;
+  flex: 0 0 auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .aboutHero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+  }
+
+  .aboutWho,
+  .aboutPhilosophy,
+  .aboutAccess,
+  .aboutEngineeringTeaser {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutWhoVisual {
+    min-height: 480px;
+  }
+
+  .aboutCapabilityWorkspace {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutPrinciples,
+  .aboutTechnologyGrid,
+  .aboutEngineeringTools {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aboutSystemFlow {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .aboutSystemFlow > i {
+    display: none;
+  }
+
+  .aboutJourneyTrack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .aboutJourneyStep > i {
+    display: none;
+  }
+
+  .aboutEcosystem {
+    height: 650px;
+  }
+
+  .aboutEcoRing {
+    display: none;
+  }
+
+  .aboutEcoNode1 { left: 4%; top: 8%; }
+  .aboutEcoNode2 { right: 4%; top: 8%; }
+  .aboutEcoNode3 { left: 2%; top: 42%; }
+  .aboutEcoNode4 { right: 2%; top: 42%; }
+  .aboutEcoNode5 { left: 8%; bottom: 5%; }
+  .aboutEcoNode6 { right: 8%; bottom: 5%; }
+
+  .aboutFinalCta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aboutFinalCta .aboutActions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 900px) {
+  .aboutHero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .aboutHeroMark {
+    min-height: 250px;
+  }
+
+  .aboutHeroMark::after {
+    width: 320px;
+    height: 320px;
+  }
+
+  .aboutPillars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aboutCapabilityGrid,
+  .aboutServeGrid,
+  .aboutWhyGrid,
+  .aboutProjectGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aboutSystemFlow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .aboutPhilosophyStep > div {
+    grid-template-columns: 44px 110px 1fr;
+  }
+
+  .aboutProjectGrid > a:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .aboutPage {
+    padding-top: 68px;
+  }
+
+  .aboutHero {
+    margin: 10px 4vw 8px;
+    padding: 24px 18px;
+    border-radius: 21px;
+    gap: 18px;
+  }
+
+  .aboutHeroCopy h1 {
+    font-size: clamp(42px, 13vw, 62px);
+  }
+
+  .aboutHeroCopy > p {
+    font-size: 11px;
+  }
+
+  .aboutHeroMark {
+    min-height: 200px;
+  }
+
+  .aboutHeroMarkInner {
+    min-height: 180px;
+    padding: 22px;
+  }
+
+  .aboutHeroMark::before {
+    width: 230px;
+    height: 230px;
+  }
+
+  .aboutHeroMark::after {
+    display: none;
+  }
+
+  .aboutActions {
+    width: 100%;
+  }
+
+  .aboutButton {
+    min-height: 44px;
+    flex: 1 1 180px;
+  }
+
+  .aboutPillars {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .aboutPillarCard {
+    min-height: 118px;
+    padding: 14px;
+  }
+
+  .aboutSection {
+    padding: 58px 4vw;
+  }
+
+  .aboutSectionHead {
+    display: block;
+  }
+
+  .aboutSectionHead .aboutInlineLink {
+    margin-top: 14px;
+  }
+
+  .aboutWho {
+    gap: 32px;
+  }
+
+  .aboutWhoVisual {
+    min-height: 380px;
+  }
+
+  .aboutSystemCard {
+    width: 145px;
+    min-height: 176px;
+  }
+
+  .aboutSystemImage {
+    height: 118px;
+  }
+
+  .aboutCapabilityGrid,
+  .aboutServeGrid,
+  .aboutWhyGrid,
+  .aboutTechnologyGrid,
+  .aboutProjectGrid,
+  .aboutEngineeringTools,
+  .aboutPrinciples,
+  .aboutAccessFacts {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutCapabilityCard {
+    min-height: 112px;
+  }
+
+  .aboutSystemFlow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aboutFlowNode {
+    min-height: 120px;
+  }
+
+  .aboutServeGrid a {
+    min-height: 160px;
+  }
+
+  .aboutPhilosophyStep {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutPhilosophyStep > i {
+    display: none;
+  }
+
+  .aboutPhilosophyStep > div {
+    min-height: 70px;
+    grid-template-columns: 42px 1fr;
+  }
+
+  .aboutPhilosophyStep small {
+    grid-column: 2;
+  }
+
+  .aboutEcosystem {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .aboutEcoCore,
+  .aboutEcoNode {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: auto;
+    height: 120px;
+  }
+
+  .aboutEcoCore {
+    grid-column: 1 / -1;
+    border-radius: 20px;
+  }
+
+  .aboutJourneyTrack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aboutTechnologyGrid > a > div {
+    height: 230px;
+  }
+
+  .aboutProjectGrid > a,
+  .aboutProjectGrid > a:last-child {
+    grid-column: auto;
+    height: 245px;
+  }
+
+  .aboutFinalCta {
+    margin-inline: 4vw;
+    padding: 24px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutPillars,
+  .aboutSystemFlow,
+  .aboutEcosystem,
+  .aboutJourneyTrack {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutHeroCopy h1 {
+    font-size: 43px;
+  }
+
+  .aboutWhoVisual {
+    min-height: 470px;
+  }
+
+  .aboutEnergyPath {
+    left: 50%;
+    right: auto;
+    top: 11%;
+    bottom: 11%;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(255,193,87,0.3), rgba(89,189,255,0.7), rgba(145,239,91,0.5));
+  }
+
+  .aboutSystemCard {
+    width: 138px;
+  }
+
+  .aboutSystemPanel {
+    left: 8%;
+    top: 5%;
+  }
+
+  .aboutSystemInverter {
+    left: auto;
+    right: 8%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .aboutSystemBattery {
+    right: auto;
+    left: 8%;
+    bottom: 5%;
+  }
+
+  .aboutWhoFlow {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .aboutWhoFlow div {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .aboutWhoFlow i {
+    transform: rotate(90deg);
+  }
+
+  .aboutEcoCore,
+  .aboutEcoNode {
+    grid-column: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aboutPage *,
+  .aboutPage *::before,
+  .aboutPage *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
