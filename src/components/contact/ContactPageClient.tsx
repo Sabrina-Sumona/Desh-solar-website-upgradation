@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useMemo, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 type ContactRoute = "project" | "product" | "support" | "visit";
 type PrepareKey = "residential" | "commercial" | "industrial" | "agriculture";
@@ -13,50 +19,50 @@ type LeadResponse = {
 };
 
 type RouteMeta = {
-  number: string;
   title: string;
-  caption: string;
   intro: string;
   summary: string;
   next: string;
+  link: string;
+  linkLabel: string;
 };
 
 const routeMeta: Record<ContactRoute, RouteMeta> = {
   project: {
-    number: "01",
     title: "Plan a Solar System",
-    caption: "Residential, commercial, industrial, agriculture or custom.",
     intro:
-      "Share the property and energy requirement. We will use it as the starting point for a solar-system consultation.",
+      "Share the basic property and energy requirement. You can provide more technical details later.",
     summary: "Solar Project Consultation",
-    next: "Add the core project details so the consultation can start with useful context.",
+    next: "Complete the project details and send the request.",
+    link: "/build-your-system",
+    linkLabel: "Need more planning first? Build Your System →",
   },
   product: {
-    number: "02",
     title: "Product Inquiry",
-    caption: "Panel, inverter, battery, pump or complete system.",
-    intro:
-      "Tell us which product category or model you are considering and what you need to know about it.",
+    intro: "Tell Desh Solar which product category or model you are considering.",
     summary: "Product Inquiry",
-    next: "Add the product or model if known, then send the inquiry.",
+    next: "Add the product/model if known, then send the inquiry.",
+    link: "/products",
+    linkLabel: "Browse Products first →",
   },
   support: {
-    number: "03",
     title: "Existing System / Support",
-    caption: "Warranty, technical, installation, order or delivery assistance.",
     intro:
-      "Existing-customer issues should go through the guided Customer Support Center so the request reaches the correct support path.",
+      "Existing-customer issues should use the guided Customer Support Center.",
     summary: "Existing Customer Support",
-    next: "Open Customer Support for product, system, installation, warranty or order assistance.",
+    next:
+      "Use Customer Support for warranty, installation, product, order or system assistance.",
+    link: "/customer-support",
+    linkLabel: "Open Customer Support →",
   },
   visit: {
-    number: "04",
     title: "Visit Desh Solar",
-    caption: "Request a showroom or display-center consultation.",
-    intro:
-      "Choose a preferred date and consultation window. The visit remains a request until Desh Solar confirms it.",
+    intro: "Request a preferred showroom consultation date and time window.",
     summary: "Showroom Consultation Request",
-    next: "Add a preferred visit date and purpose, then send the request.",
+    next:
+      "Choose a preferred visit window. This remains unconfirmed until Desh Solar responds.",
+    link: "#showroom",
+    linkLabel: "View Showroom Details →",
   },
 };
 
@@ -80,33 +86,49 @@ const prepareData: Record<PrepareKey, Array<[string, string]>> = {
     ["Roof / site area", "Usable installation area and operating schedule."],
   ],
   agriculture: [
-    ["Pump horsepower", "Motor or pump rating is the starting technical input."],
+    ["Pump horsepower", "Motor/pump rating is the starting technical input."],
     ["Operating hours", "How many hours per day pumping is required."],
-    ["Water requirement", "Daily or seasonal irrigation need if known."],
+    ["Water requirement", "Daily/seasonal irrigation need if known."],
     ["Field conditions", "Array area, shading, cable route and equipment location."],
   ],
 };
 
 const projectTypes = [
   {
-    name: "Residential",
-    caption: "Home solar & backup",
+    id: "residential",
+    label: "RESIDENTIAL",
+    name: "Home Solar + Backup",
     image: "/assets/projects-real/residential.webp",
   },
   {
-    name: "Commercial",
-    caption: "Business energy",
+    id: "commercial",
+    label: "COMMERCIAL",
+    name: "Office / Business Solar",
     image: "/assets/projects-real/commercial.webp",
   },
   {
-    name: "Industrial",
-    caption: "Factory & three-phase",
+    id: "industrial",
+    label: "INDUSTRIAL",
+    name: "Factory Rooftop Solar",
     image: "/assets/projects-real/industrial.webp",
   },
   {
-    name: "Agriculture",
-    caption: "Irrigation & farm energy",
+    id: "agriculture",
+    label: "AGRICULTURE",
+    name: "Solar Irrigation",
     image: "/assets/projects-real/agriculture.webp",
+  },
+  {
+    id: "filling",
+    label: "FILLING STATION",
+    name: "Operational Solar + Backup",
+    image: "/assets/projects-real/filling.webp",
+  },
+  {
+    id: "offgrid",
+    label: "OFF-GRID",
+    name: "Remote Energy System",
+    image: "/assets/projects-real/offgrid.webp",
   },
 ] as const;
 
@@ -117,11 +139,14 @@ function cleanText(value: string) {
 export default function ContactPageClient() {
   const [route, setRoute] = useState<ContactRoute>("project");
   const [prepareKey, setPrepareKey] = useState<PrepareKey>("residential");
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [fileNames, setFileNames] = useState<string[]>([]);
 
   const [projectProperty, setProjectProperty] = useState("Residential");
   const [projectGoal, setProjectGoal] = useState("Solar + Backup");
@@ -141,8 +166,27 @@ export default function ContactPageClient() {
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
+  const [reference, setReference] = useState("");
+  const [serviceOpen, setServiceOpen] = useState<boolean | null>(null);
 
   const activeMeta = routeMeta[route];
+
+  useEffect(() => {
+    try {
+      const parts = new Intl.DateTimeFormat("en-GB", {
+        timeZone: "Asia/Dhaka",
+        hour: "2-digit",
+        minute: "2-digit",
+        hourCycle: "h23",
+      }).formatToParts(new Date());
+      const hour = Number(parts.find((part) => part.type === "hour")?.value ?? "0");
+      const minute = Number(parts.find((part) => part.type === "minute")?.value ?? "0");
+      const totalMinutes = hour * 60 + minute;
+      setServiceOpen(totalMinutes >= 600 && totalMinutes < 1380);
+    } catch {
+      setServiceOpen(null);
+    }
+  }, []);
 
   const detail = useMemo(() => {
     if (route === "project") {
@@ -159,9 +203,7 @@ export default function ContactPageClient() {
       return "Customer Support Center";
     }
 
-    return visitDate
-      ? `${visitPurpose} • ${visitDate}`
-      : visitPurpose;
+    return visitDate ? `${visitPurpose} • ${visitDate}` : visitPurpose;
   }, [
     productCategory,
     productModel,
@@ -172,15 +214,16 @@ export default function ContactPageClient() {
     visitPurpose,
   ]);
 
-  const selectRoute = (nextRoute: ContactRoute, scroll = true) => {
+  const selectRoute = (nextRoute: ContactRoute, scroll = false) => {
     setRoute(nextRoute);
     setStatus("idle");
     setStatusMessage("");
+    setReference("");
 
     if (scroll) {
       window.setTimeout(() => {
         document
-          .getElementById("contact-consultation")
+          .getElementById("consultation")
           ?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 30);
     }
@@ -215,19 +258,43 @@ export default function ContactPageClient() {
       parts.push(`Customer notes: ${cleanText(notes)}`);
     }
 
+    if (fileNames.length) {
+      parts.push(`Selected local files: ${fileNames.join(", ")} (not uploaded)`);
+    }
+
     return parts.join(" | ");
+  };
+
+  const createReference = () => {
+    const now = new Date();
+    const yy = String(now.getFullYear()).slice(-2);
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+    const code = Math.random().toString(36).slice(2, 6).toUpperCase();
+    return `DS-CONTACT-${yy}${mm}${dd}-${code}`;
+  };
+
+  const handleFiles = (event: ChangeEvent<HTMLInputElement>) => {
+    setFileNames(Array.from(event.target.files ?? []).map((file) => file.name));
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (route === "support") {
+      window.location.href = "/customer-support";
       return;
     }
 
-    if (!cleanText(name) || !cleanText(phone) || !cleanText(location)) {
+    if (!cleanText(name) || !cleanText(phone)) {
       setStatus("error");
-      setStatusMessage("Please add your name, phone number and district / city.");
+      setStatusMessage("Please add your name and phone number.");
+      return;
+    }
+
+    if (!consent) {
+      setStatus("error");
+      setStatusMessage("Please confirm that Desh Solar may use these details to follow up.");
       return;
     }
 
@@ -255,10 +322,16 @@ export default function ContactPageClient() {
         throw new Error(result.message || "We could not send the request right now.");
       }
 
+      const nextReference = createReference();
+      setReference(nextReference);
       setStatus("success");
-      setStatusMessage(
-        "Request sent successfully. Desh Solar can now follow up using the contact details you provided.",
-      );
+      setStatusMessage("Your request has been sent successfully.");
+
+      window.setTimeout(() => {
+        document
+          .getElementById("contactResultPanel")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 30);
     } catch (error) {
       setStatus("error");
       setStatusMessage(
@@ -270,584 +343,527 @@ export default function ContactPageClient() {
   };
 
   return (
-    <div className="contactPage">
-      <section className="contactHero" aria-labelledby="contact-page-title">
-        <div className="contactHeroGlow contactHeroGlowOne" aria-hidden="true" />
-        <div className="contactHeroGlow contactHeroGlowTwo" aria-hidden="true" />
-
-        <div className="contactHeroCopy">
-          <div className="contactEyebrow">Contact Desh Solar</div>
-          <h1 id="contact-page-title">
-            Tell us what you need. <span>We’ll route you to the right path.</span>
-          </h1>
-          <p>
-            Product inquiry, complete solar project, existing-system support or
-            showroom visit — start with the reason you are contacting Desh Solar.
-          </p>
-
+    <>
+      <div className="demoPage contactHubPage">
+        <section className="contactCompactHero">
+          <div>
+            <div className="demoEyebrow">Contact Desh Solar</div>
+            <h1>
+              Tell us what you need. <span>We’ll route you to the right path.</span>
+            </h1>
+            <p>
+              Product inquiry, complete solar project, existing-system support or showroom visit — start with the reason you’re contacting Desh Solar.
+            </p>
+          </div>
           <div className="contactHeroActions">
-            <a className="contactButton contactButtonPrimary" href="#contact-routes">
-              Choose Contact Route <span aria-hidden="true">→</span>
+            <a className="demoBtn" href="#contact-routes">
+              Choose Contact Route →
             </a>
-            <a className="contactButton contactButtonSecondary" href="tel:01754477488">
-              Call 01754-477488 <span aria-hidden="true">→</span>
+            <a className="demoBtn secondary" href="tel:01754477488">
+              Call 01754-477488 →
             </a>
           </div>
-        </div>
+        </section>
 
-        <div className="contactHeroPanel" aria-label="Desh Solar contact paths">
-          <div className="contactHeroLogo">
-            <Image
-              src="/assets/desh-solar-logo.png"
-              alt="Desh Solar"
-              width={360}
-              height={120}
-              priority
-            />
+        <section className="contactRouteSection" id="contact-routes">
+          <div className="contactRouteGrid">
+            <button
+              className={`contactRouteCard ${route === "project" ? "active" : ""}`}
+              type="button"
+              onClick={() => selectRoute("project", true)}
+            >
+              <span>01</span>
+              <b>Plan a Solar System</b>
+              <small>Residential, commercial, industrial, agriculture or custom.</small>
+            </button>
+            <button
+              className={`contactRouteCard ${route === "product" ? "active" : ""}`}
+              type="button"
+              onClick={() => selectRoute("product", true)}
+            >
+              <span>02</span>
+              <b>Product Inquiry</b>
+              <small>Ask about a panel, inverter, battery or complete system.</small>
+            </button>
+            <button
+              className={`contactRouteCard ${route === "support" ? "active" : ""}`}
+              type="button"
+              onClick={() => selectRoute("support", true)}
+            >
+              <span>03</span>
+              <b>Existing System / Support</b>
+              <small>Warranty, technical, installation or order assistance.</small>
+            </button>
+            <button
+              className={`contactRouteCard ${route === "visit" ? "active" : ""}`}
+              type="button"
+              onClick={() => selectRoute("visit", true)}
+            >
+              <span>04</span>
+              <b>Visit Desh Solar</b>
+              <small>Showroom / display-center consultation.</small>
+            </button>
           </div>
-          <div className="contactHeroPath">
-            <span>PROJECTS</span>
-            <i aria-hidden="true" />
-            <span>PRODUCTS</span>
-            <i aria-hidden="true" />
-            <span>SUPPORT</span>
-            <i aria-hidden="true" />
-            <span>VISITS</span>
-          </div>
-          <small>ONE CONTACT HUB • FOUR CLEAR STARTING POINTS</small>
-        </div>
-      </section>
+        </section>
 
-      <section className="contactRouteSection" id="contact-routes" aria-label="Choose a contact route">
-        <div className="contactRouteGrid">
-          {(Object.keys(routeMeta) as ContactRoute[]).map((key) => {
-            const item = routeMeta[key];
-            const active = key === route;
-
-            return (
-              <button
-                key={key}
-                type="button"
-                className={`contactRouteCard${active ? " isActive" : ""}`}
-                onClick={() => selectRoute(key)}
-                aria-pressed={active}
-              >
-                <span>{item.number}</span>
-                <b>{item.title}</b>
-                <small>{item.caption}</small>
-                <i aria-hidden="true">↗</i>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="contactConsultationSection" id="contact-consultation">
-        <div className="contactFormCard">
-          <div className="contactFormHead">
-            <div>
-              <div className="contactEyebrow">Contact & Consultation Request</div>
-              <h2>{activeMeta.title}</h2>
-              <p>{activeMeta.intro}</p>
-            </div>
-            <span className="contactSecureBadge">DESH SOLAR CONTACT</span>
-          </div>
-
-          {route === "support" ? (
-            <div className="contactSupportRedirect">
-              <span aria-hidden="true">?</span>
+        <section className="contactConsultationSection" id="consultation">
+          <div className="contactFormCard">
+            <div className="contactFormHead">
               <div>
-                <small>EXISTING CUSTOMER / SYSTEM SUPPORT</small>
-                <h3>Use the guided Customer Support Center.</h3>
-                <p>
-                  Warranty, installation, order or delivery, product support and
-                  system issues already have a dedicated support workflow.
-                </p>
-                <Link className="contactButton contactButtonPrimary" href="/customer-support">
-                  Open Customer Support <span aria-hidden="true">→</span>
-                </Link>
+                <div className="demoEyebrow">Contact &amp; Consultation Request</div>
+                <h2>{activeMeta.title}</h2>
+                <p>{activeMeta.intro}</p>
               </div>
+              <span className="contactDemoBadge">Website Request • Secure submission</span>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} noValidate>
+
+            <form id="advancedContactForm" noValidate onSubmit={handleSubmit}>
               <div className="contactFormGrid">
                 <label>
-                  Full Name <em>*</em>
+                  Full Name
                   <input
+                    name="name"
+                    placeholder="Your name"
+                    required
                     type="text"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
-                    placeholder="Your name"
-                    autoComplete="name"
                   />
                 </label>
                 <label>
-                  Phone <em>*</em>
+                  Phone
                   <input
+                    name="phone"
+                    placeholder="01XXXXXXXXX"
+                    required
                     type="tel"
                     value={phone}
                     onChange={(event) => setPhone(event.target.value)}
-                    placeholder="01XXXXXXXXX"
-                    autoComplete="tel"
                   />
                 </label>
                 <label>
                   Email
                   <input
+                    name="email"
+                    placeholder="Optional"
                     type="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    placeholder="Optional"
-                    autoComplete="email"
                   />
                 </label>
                 <label>
-                  District / City <em>*</em>
+                  District / City
                   <input
+                    name="location"
+                    placeholder="Dhaka, Chattogram, etc."
                     type="text"
                     value={location}
                     onChange={(event) => setLocation(event.target.value)}
-                    placeholder="Dhaka, Chattogram, etc."
-                    autoComplete="address-level2"
                   />
                 </label>
               </div>
 
-              {route === "project" && (
-                <div className="contactDynamicBlock">
-                  <div className="contactBlockTitle">
-                    <span>PROJECT DETAILS</span>
-                    <b>What are you planning?</b>
-                  </div>
-                  <div className="contactFormGrid">
-                    <label>
-                      Property Type
-                      <select value={projectProperty} onChange={(event) => setProjectProperty(event.target.value)}>
-                        <option>Residential</option>
-                        <option>Commercial / Office</option>
-                        <option>Factory / Industrial</option>
-                        <option>Agriculture / Irrigation</option>
-                        <option>Filling Station</option>
-                        <option>Other / Off-Grid</option>
-                      </select>
-                    </label>
-                    <label>
-                      Primary Goal
-                      <select value={projectGoal} onChange={(event) => setProjectGoal(event.target.value)}>
-                        <option>Solar + Backup</option>
-                        <option>Reduce Electricity Bill</option>
-                        <option>Backup Only</option>
-                        <option>Solar Pumping</option>
-                        <option>Complete Solar System</option>
-                        <option>Technical Consultation</option>
-                      </select>
-                    </label>
-                    <label>
-                      Approx. Monthly Electricity Bill (৳)
-                      <input
-                        type="number"
-                        min="0"
-                        value={projectBill}
-                        onChange={(event) => setProjectBill(event.target.value)}
-                        placeholder="Optional"
-                      />
-                    </label>
-                    <label>
-                      Desired Backup (hours)
-                      <input
-                        type="number"
-                        min="0"
-                        step="0.5"
-                        value={projectBackup}
-                        onChange={(event) => setProjectBackup(event.target.value)}
-                        placeholder="Optional"
-                      />
-                    </label>
-                    <label>
-                      Electrical Phase
-                      <select value={projectPhase} onChange={(event) => setProjectPhase(event.target.value)}>
-                        <option>Not sure</option>
-                        <option>Single phase</option>
-                        <option>Three phase</option>
-                      </select>
-                    </label>
-                    <label>
-                      Preferred Consultation
-                      <select
-                        value={projectConsultType}
-                        onChange={(event) => setProjectConsultType(event.target.value)}
-                      >
-                        <option>Phone consultation</option>
-                        <option>Showroom consultation</option>
-                        <option>Site discussion</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div className="contactBuilderBridge">
-                    <div>
-                      <small>NOT SURE WHAT SYSTEM YOU NEED?</small>
-                      <b>Build a preliminary load + backup + roof profile first.</b>
-                    </div>
-                    <Link href="/build-your-system">Open Build Your System →</Link>
-                  </div>
+              <div className={`contactDynamicBlock ${route === "project" ? "active" : ""}`}>
+                <div className="contactBlockTitle">
+                  <span>PROJECT DETAILS</span>
+                  <b>What are you planning?</b>
                 </div>
-              )}
+                <div className="contactFormGrid">
+                  <label>
+                    Property Type
+                    <select value={projectProperty} onChange={(event) => setProjectProperty(event.target.value)}>
+                      <option value="Residential">Residential</option>
+                      <option value="Commercial">Commercial / Office</option>
+                      <option value="Industrial">Factory / Industrial</option>
+                      <option value="Agriculture">Agriculture / Irrigation</option>
+                      <option value="Filling Station">Filling Station</option>
+                      <option value="Other">Other / Off-Grid</option>
+                    </select>
+                  </label>
+                  <label>
+                    Primary Goal
+                    <select value={projectGoal} onChange={(event) => setProjectGoal(event.target.value)}>
+                      <option value="Solar + Backup">Solar + Backup</option>
+                      <option value="Reduce Electricity Bill">Reduce Electricity Bill</option>
+                      <option value="Backup Only">Backup Only</option>
+                      <option value="Solar Pumping">Solar Pumping</option>
+                      <option value="Complete Solar System">Complete Solar System</option>
+                      <option value="Technical Consultation">Technical Consultation</option>
+                    </select>
+                  </label>
+                  <label>
+                    Approx. Monthly Electricity Bill (৳)
+                    <input min="0" placeholder="Optional" type="number" value={projectBill} onChange={(event) => setProjectBill(event.target.value)} />
+                  </label>
+                  <label>
+                    Desired Backup (hours)
+                    <input min="0" placeholder="Optional" step=".5" type="number" value={projectBackup} onChange={(event) => setProjectBackup(event.target.value)} />
+                  </label>
+                  <label>
+                    Electrical Phase
+                    <select value={projectPhase} onChange={(event) => setProjectPhase(event.target.value)}>
+                      <option value="Not sure">Not sure</option>
+                      <option value="Single phase">Single phase</option>
+                      <option value="Three phase">Three phase</option>
+                    </select>
+                  </label>
+                  <label>
+                    Preferred Consultation
+                    <select value={projectConsultType} onChange={(event) => setProjectConsultType(event.target.value)}>
+                      <option value="Phone consultation">Phone consultation</option>
+                      <option value="Showroom consultation">Showroom consultation</option>
+                      <option value="Site discussion">Site discussion</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="builderBridge">
+                  <div>
+                    <small>NOT SURE WHAT SYSTEM YOU NEED?</small>
+                    <b>Build a preliminary load + backup + roof profile first.</b>
+                  </div>
+                  <Link href="/build-your-system">Open Build Your System →</Link>
+                </div>
+              </div>
 
-              {route === "product" && (
-                <div className="contactDynamicBlock">
-                  <div className="contactBlockTitle">
-                    <span>PRODUCT INQUIRY</span>
-                    <b>Which product are you asking about?</b>
-                  </div>
-                  <div className="contactFormGrid">
-                    <label>
-                      Product Category
-                      <select
-                        value={productCategory}
-                        onChange={(event) => setProductCategory(event.target.value)}
-                      >
-                        <option>Solar Panel</option>
-                        <option>Inverter</option>
-                        <option>Lithium Battery</option>
-                        <option>Complete Solar System</option>
-                        <option>Solar Pump / Controller</option>
-                        <option>Accessories / Other</option>
-                      </select>
-                    </label>
-                    <label>
-                      Product / Model
-                      <input
-                        type="text"
-                        value={productModel}
-                        onChange={(event) => setProductModel(event.target.value)}
-                        placeholder="Model name if known"
-                      />
-                    </label>
-                    <label>
-                      Quantity
-                      <input
-                        type="number"
-                        min="1"
-                        value={productQty}
-                        onChange={(event) => setProductQty(event.target.value)}
-                      />
-                    </label>
-                    <label>
-                      Inquiry Type
-                      <select
-                        value={productInquiryType}
-                        onChange={(event) => setProductInquiryType(event.target.value)}
-                      >
-                        <option>Price / availability</option>
-                        <option>Compatibility</option>
-                        <option>Technical specification</option>
-                        <option>Bulk / project quantity</option>
-                      </select>
-                    </label>
-                  </div>
-                  <Link className="contactInlineLink" href="/products">
-                    Browse Products before sending an inquiry →
-                  </Link>
+              <div className={`contactDynamicBlock ${route === "product" ? "active" : ""}`}>
+                <div className="contactBlockTitle">
+                  <span>PRODUCT INQUIRY</span>
+                  <b>Which product are you asking about?</b>
                 </div>
-              )}
+                <div className="contactFormGrid">
+                  <label>
+                    Product Category
+                    <select value={productCategory} onChange={(event) => setProductCategory(event.target.value)}>
+                      <option value="Solar Panel">Solar Panel</option>
+                      <option value="Inverter">Inverter</option>
+                      <option value="Lithium Battery">Lithium Battery</option>
+                      <option value="Complete Solar System">Complete Solar System</option>
+                      <option value="Solar Pump / Controller">Solar Pump / Controller</option>
+                      <option value="Accessories / Other">Accessories / Other</option>
+                    </select>
+                  </label>
+                  <label>
+                    Product / Model
+                    <input placeholder="Model name if known" type="text" value={productModel} onChange={(event) => setProductModel(event.target.value)} />
+                  </label>
+                  <label>
+                    Quantity
+                    <input min="1" type="number" value={productQty} onChange={(event) => setProductQty(event.target.value)} />
+                  </label>
+                  <label>
+                    Inquiry Type
+                    <select value={productInquiryType} onChange={(event) => setProductInquiryType(event.target.value)}>
+                      <option value="Price / availability">Price / availability</option>
+                      <option value="Compatibility">Compatibility</option>
+                      <option value="Technical specification">Technical specification</option>
+                      <option value="Bulk / project quantity">Bulk / project quantity</option>
+                    </select>
+                  </label>
+                </div>
+                <Link className="contactInlineLink" href="/products">
+                  Browse Products before sending an inquiry →
+                </Link>
+              </div>
 
-              {route === "visit" && (
-                <div className="contactDynamicBlock">
-                  <div className="contactBlockTitle">
-                    <span>SHOWROOM VISIT</span>
-                    <b>Request a consultation window.</b>
-                  </div>
-                  <div className="contactFormGrid contactVisitGrid">
-                    <label>
-                      Preferred Date
-                      <input
-                        type="date"
-                        value={visitDate}
-                        onChange={(event) => setVisitDate(event.target.value)}
-                      />
-                    </label>
-                    <label>
-                      Preferred Time Window
-                      <select value={visitTime} onChange={(event) => setVisitTime(event.target.value)}>
-                        <option>10:00 AM – 1:00 PM</option>
-                        <option>1:00 PM – 4:00 PM</option>
-                        <option>4:00 PM – 7:00 PM</option>
-                        <option>7:00 PM – 10:00 PM</option>
-                      </select>
-                    </label>
-                    <label>
-                      Visit Purpose
-                      <select
-                        value={visitPurpose}
-                        onChange={(event) => setVisitPurpose(event.target.value)}
-                      >
-                        <option>Product consultation</option>
-                        <option>Complete system discussion</option>
-                        <option>Technical consultation</option>
-                        <option>Customer support</option>
-                      </select>
-                    </label>
-                  </div>
-                  <div className="contactVisitNote">
-                    This is a consultation request only. It is not a confirmed appointment until Desh Solar confirms it.
+              <div className={`contactDynamicBlock supportRedirectBlock ${route === "support" ? "active" : ""}`}>
+                <div className="supportRouteMessage">
+                  <span>?</span>
+                  <div>
+                    <small>EXISTING CUSTOMER / SYSTEM SUPPORT</small>
+                    <h3>Use the guided Customer Support Center.</h3>
+                    <p>
+                      Warranty, installation, order/delivery, product support and system issues already have a dedicated support workflow.
+                    </p>
+                    <Link className="demoBtn" href="/customer-support">
+                      Open Customer Support →
+                    </Link>
                   </div>
                 </div>
-              )}
+              </div>
+
+              <div className={`contactDynamicBlock ${route === "visit" ? "active" : ""}`}>
+                <div className="contactBlockTitle">
+                  <span>SHOWROOM VISIT</span>
+                  <b>Request a consultation window.</b>
+                </div>
+                <div className="contactFormGrid">
+                  <label>
+                    Preferred Date
+                    <input type="date" value={visitDate} onChange={(event) => setVisitDate(event.target.value)} />
+                  </label>
+                  <label>
+                    Preferred Time Window
+                    <select value={visitTime} onChange={(event) => setVisitTime(event.target.value)}>
+                      <option value="10:00 AM – 1:00 PM">10:00 AM – 1:00 PM</option>
+                      <option value="1:00 PM – 4:00 PM">1:00 PM – 4:00 PM</option>
+                      <option value="4:00 PM – 7:00 PM">4:00 PM – 7:00 PM</option>
+                      <option value="7:00 PM – 10:00 PM">7:00 PM – 10:00 PM</option>
+                    </select>
+                  </label>
+                  <label>
+                    Visit Purpose
+                    <select value={visitPurpose} onChange={(event) => setVisitPurpose(event.target.value)}>
+                      <option value="Product consultation">Product consultation</option>
+                      <option value="Complete system discussion">Complete system discussion</option>
+                      <option value="Technical consultation">Technical consultation</option>
+                      <option value="Customer support">Customer support</option>
+                    </select>
+                  </label>
+                </div>
+                <div className="visitNote">
+                  This is a consultation request only. It is not a confirmed appointment until Desh Solar confirms it.
+                </div>
+              </div>
+
+              <div className="contactUploadArea">
+                <div>
+                  <small>OPTIONAL PROJECT FILES / PHOTOS</small>
+                  <b>Roof photo, electricity bill, existing equipment photo or project note.</b>
+                  <span>Files stay on your device in this version and are not uploaded.</span>
+                </div>
+                <label className="contactUploadButton">
+                  Choose Files
+                  <input accept="image/*,.pdf" multiple type="file" onChange={handleFiles} />
+                </label>
+                <div className="contactFileNames">
+                  {fileNames.length ? fileNames.join(", ") : "No files selected."}
+                </div>
+              </div>
 
               <label className="contactNotesLabel">
                 Project / Product / Visit Notes
                 <textarea
+                  placeholder="Tell Desh Solar anything else that would help understand the request."
                   rows={5}
                   value={notes}
                   onChange={(event) => setNotes(event.target.value)}
-                  placeholder="Tell Desh Solar anything else that would help us understand the request."
                 />
               </label>
 
+              <div className="contactConsentRow">
+                <label>
+                  <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} />
+                  I agree that Desh Solar may use these details to respond to this request.
+                </label>
+              </div>
+
               <div className="contactSubmitRow">
-                <button
-                  className="contactButton contactButtonPrimary contactSubmitButton"
-                  type="submit"
-                  disabled={status === "submitting"}
-                >
-                  {status === "submitting" ? "Sending…" : "Send Contact Request →"}
-                </button>
-                <span
-                  className={`contactStatus${status === "success" ? " isSuccess" : ""}${
-                    status === "error" ? " isError" : ""
-                  }`}
-                  role="status"
-                >
-                  {statusMessage}
-                </span>
+                {route !== "support" && (
+                  <button className="demoBtn" type="submit" disabled={status === "submitting"}>
+                    {status === "submitting" ? "Sending Request…" : "Send Contact Request →"}
+                  </button>
+                )}
+                <span className={status === "success" ? "success" : ""}>{statusMessage}</span>
               </div>
             </form>
-          )}
-        </div>
-
-        <aside className="contactSummaryCard">
-          <div className="contactSummarySticky">
-            <small>LIVE REQUEST SUMMARY</small>
-            <h3>{activeMeta.summary}</h3>
-
-            <div className="contactSummaryRows">
-              <div>
-                <span>Name</span>
-                <b>{cleanText(name) || "Not provided"}</b>
-              </div>
-              <div>
-                <span>Phone</span>
-                <b>{cleanText(phone) || "Not provided"}</b>
-              </div>
-              <div>
-                <span>Location</span>
-                <b>{cleanText(location) || "Not provided"}</b>
-              </div>
-              <div>
-                <span>Route</span>
-                <b>{activeMeta.title}</b>
-              </div>
-              <div>
-                <span>Project / Product</span>
-                <b>{detail}</b>
-              </div>
-            </div>
-
-            <div className="contactSummaryNext">
-              <small>NEXT BEST STEP</small>
-              <b>{activeMeta.next}</b>
-            </div>
-
-            {route === "support" ? (
-              <Link href="/customer-support">Open Customer Support →</Link>
-            ) : route === "product" ? (
-              <Link href="/products">Browse Products first →</Link>
-            ) : route === "visit" ? (
-              <a href="#showroom">View Showroom Details →</a>
-            ) : (
-              <Link href="/build-your-system">Need more planning first? Build Your System →</Link>
-            )}
           </div>
-        </aside>
-      </section>
 
-      <section className="contactDirectSection">
-        <div className="contactDirectCard contactPhoneCard">
+          <aside className="contactSummaryCard">
+            <div className="contactSummarySticky">
+              <small>LIVE REQUEST SUMMARY</small>
+              <h3>{activeMeta.summary}</h3>
+              <div className="summaryRows">
+                <div><span>Name</span><b>{cleanText(name) || "Not provided"}</b></div>
+                <div><span>Phone</span><b>{cleanText(phone) || "Not provided"}</b></div>
+                <div><span>Location</span><b>{cleanText(location) || "Not provided"}</b></div>
+                <div><span>Route</span><b>{activeMeta.title}</b></div>
+                <div><span>Project / Product</span><b>{detail}</b></div>
+                <div><span>Status</span><b>{status === "success" ? "Sent" : "Draft"}</b></div>
+              </div>
+              <div className="summaryNextStep">
+                <small>NEXT BEST STEP</small>
+                <b>{activeMeta.next}</b>
+              </div>
+              {activeMeta.link.startsWith("#") ? (
+                <a href={activeMeta.link}>{activeMeta.linkLabel}</a>
+              ) : (
+                <Link href={activeMeta.link}>{activeMeta.linkLabel}</Link>
+              )}
+            </div>
+          </aside>
+        </section>
+
+        {status === "success" && (
+          <section className="contactResultPanel" id="contactResultPanel">
+            <div>
+              <div className="demoEyebrow">Request Sent</div>
+              <h2>Your contact request has been sent successfully.</h2>
+              <p>Desh Solar can follow up using the contact details you provided.</p>
+            </div>
+            <div className="contactResultRef">
+              <small>REQUEST REFERENCE</small>
+              <b>{reference}</b>
+              <span>{activeMeta.title} • {detail}</span>
+            </div>
+          </section>
+        )}
+
+        <section className="directContactSection">
+          <div className="directContactCard phoneCard">
+            <div>
+              <div className="demoEyebrow">Direct Contact</div>
+              <h2>Need to speak with someone?</h2>
+              <p>Call the published Desh Solar customer-support line during service hours.</p>
+            </div>
+            <div className="directPhone">
+              <small>CUSTOMER SUPPORT</small>
+              <a href="tel:01754477488">01754-477488</a>
+              <span>10:00 AM – 11:00 PM • 7 days/week</span>
+              <b className={serviceOpen === false ? "closed" : ""}>
+                <i />
+                <em>
+                  {serviceOpen === true
+                    ? "Open now • Dhaka time"
+                    : serviceOpen === false
+                      ? "Closed now • Opens at 10:00 AM Dhaka time"
+                      : "10:00 AM – 11:00 PM • Dhaka time"}
+                </em>
+              </b>
+            </div>
+          </div>
+          <div className="directContactCard routeCard">
+            <small>NOT SURE WHO TO CONTACT?</small>
+            <h3>Use the department router.</h3>
+            <p>Sales, project planning, technical support and warranty needs should not all follow the same path.</p>
+            <a href="#department-router">Choose Department →</a>
+          </div>
+        </section>
+
+        <section className="showroomSection" id="showroom">
+          <div className="showroomMap">
+            <iframe
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=Navana+Zohura+Square,+Ground+Floor,+Bangla+Motor,+Dhaka-1205,+Bangladesh&output=embed"
+              title="Desh Solar showroom location"
+            />
+          </div>
+          <div className="showroomCopy">
+            <div className="demoEyebrow">Visit Desh Solar</div>
+            <h2>Showroom / Display Center</h2>
+            <p>Visit for product consultation, product viewing, complete-system discussion or customer-support needs.</p>
+            <div className="showroomDetails">
+              <div><small>ADDRESS</small><b>Navana Zohura Square, Ground Floor</b><span>Bangla Motor, Dhaka-1205, Bangladesh</span></div>
+              <div><small>PHONE</small><b>01754-477488</b><span>Customer support line</span></div>
+              <div><small>SERVICE HOURS</small><b>10:00 AM – 11:00 PM</b><span>7 days/week</span></div>
+            </div>
+            <div className="demoActions">
+              <a className="demoBtn" href="tel:01754477488">Call Before Visiting →</a>
+              <button className="demoBtn secondary" type="button" onClick={() => selectRoute("visit", true)}>
+                Request Visit Consultation →
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section className="departmentRouter" id="department-router">
+          <div className="contactSectionHead">
+            <div>
+              <div className="demoEyebrow">Choose the Right Department</div>
+              <h2>Get to the right workflow faster.</h2>
+            </div>
+          </div>
+          <div className="departmentGrid">
+            <Link href="/products"><span>01</span><b>Sales &amp; Products</b><small>Browse products, product details and cart.</small></Link>
+            <button type="button" onClick={() => selectRoute("project", true)}><span>02</span><b>Solar Project Consultation</b><small>Residential, commercial, industrial or custom.</small></button>
+            <Link href="/tools-and-technology"><span>03</span><b>Technical Planning</b><small>Generation, battery, inverter, roof and compatibility tools.</small></Link>
+            <Link href="/customer-support"><span>04</span><b>Existing Customer Support</b><small>Product, system, installation, order or delivery.</small></Link>
+            <Link href="/customer-support"><span>05</span><b>Warranty Assistance</b><small>Dedicated warranty-support workflow.</small></Link>
+            <Link href="/customer-support"><span>06</span><b>Order &amp; Delivery</b><small>Delivery or order assistance.</small></Link>
+          </div>
+        </section>
+
+        <section className="prepareSection">
+          <div className="contactSectionHead">
+            <div>
+              <div className="demoEyebrow">Before You Contact Us</div>
+              <h2>A little preparation makes the consultation more useful.</h2>
+              <p>Select a project type to see the information that will help Desh Solar understand the requirement faster.</p>
+            </div>
+          </div>
+          <div className="prepareTabs">
+            {(["residential", "commercial", "industrial", "agriculture"] as PrepareKey[]).map((key) => (
+              <button
+                className={prepareKey === key ? "active" : ""}
+                key={key}
+                type="button"
+                onClick={() => setPrepareKey(key)}
+              >
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+              </button>
+            ))}
+          </div>
+          <div className="prepareContent">
+            <div className="prepareChecklist">
+              {prepareData[prepareKey].map(([title, body], index) => (
+                <article key={title}>
+                  <span>0{index + 1}</span>
+                  <div><b>{title}</b><p>{body}</p></div>
+                </article>
+              ))}
+            </div>
+            <div className="prepareAction">
+              <small>OPTIONAL</small>
+              <h3>Prepare the technical numbers first.</h3>
+              <p>Use the Engineering Lab or Build Your System to calculate a better preliminary profile before contacting Desh Solar.</p>
+              <div className="demoActions">
+                <Link className="demoBtn" href="/tools-and-technology">Engineering Lab →</Link>
+                <Link className="demoBtn secondary" href="/build-your-system">Build Your System →</Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="contactProjectTypes">
+          <div className="contactSectionHead">
+            <div>
+              <div className="demoEyebrow">Project Types</div>
+              <h2>See a similar application before starting your inquiry.</h2>
+            </div>
+          </div>
+          <div className="contactProjectGrid">
+            {projectTypes.map((item) => (
+              <Link href={`/projects?type=${item.id}`} key={item.id}>
+                <Image src={item.image} alt={`${item.label} solar project showcase`} width={900} height={650} />
+                <div><small>{item.label}</small><b>{item.name}</b><span>View Project →</span></div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        <section className="contactToolsBridge">
+          <div className="contactToolsCopy">
+            <div className="demoEyebrow">Talk to Us with Better Information</div>
+            <h2>Use the tools first if you want a stronger consultation.</h2>
+            <p>Estimate generation, battery runtime, inverter class, roof PV potential or a quick connected load before you send the inquiry.</p>
+            <Link className="demoBtn" href="/tools-and-technology">Open Engineering Lab →</Link>
+          </div>
+          <div className="contactToolCards">
+            <Link href="/tools-and-technology#engineering-tools"><span>☀</span><b>Generation</b><small>PV energy estimate</small></Link>
+            <Link href="/tools-and-technology#engineering-tools"><span>▣</span><b>Battery</b><small>Backup runtime</small></Link>
+            <Link href="/tools-and-technology#engineering-tools"><span>↯</span><b>Inverter</b><small>Running + surge</small></Link>
+            <Link href="/build-your-system"><span>⌂</span><b>Full System</b><small>Property-based builder</small></Link>
+          </div>
+        </section>
+
+        <div className="ctaBand contactFinalCta">
           <div>
-            <div className="contactEyebrow">Direct Contact</div>
-            <h2>Need to speak with someone?</h2>
-            <p>Call the Desh Solar customer contact line for direct assistance.</p>
+            <h3>Choose the path that matches what you need.</h3>
+            <p>Explore products, build a complete solar profile or use Customer Support for an existing system.</p>
           </div>
-          <a href="tel:01754477488">01754-477488 <span aria-hidden="true">↗</span></a>
-        </div>
-
-        <div className="contactDirectCard">
-          <div className="contactEyebrow">Right Department</div>
-          <h3>Use the route that matches the request.</h3>
-          <p>
-            Sales, project planning, technical support and warranty needs do not all require the same information.
-          </p>
-          <a href="#contact-routes">Choose a contact route →</a>
-        </div>
-      </section>
-
-      <section className="contactShowroomSection" id="showroom">
-        <div className="contactShowroomMap">
-          <iframe
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Navana+Zohura+Square,+Ground+Floor,+Bangla+Motor,+Dhaka-1205,+Bangladesh&output=embed"
-            title="Desh Solar showroom location"
-          />
-        </div>
-
-        <div className="contactShowroomCopy">
-          <div className="contactEyebrow">Visit Desh Solar</div>
-          <h2>Showroom / Display Center</h2>
-          <p>
-            Visit for product consultation, product viewing, complete-system discussion or customer-support needs.
-          </p>
-
-          <div className="contactShowroomFacts">
-            <div>
-              <small>ADDRESS</small>
-              <b>Navana Zohura Square, Ground Floor</b>
-              <span>Bangla Motor, Dhaka-1205, Bangladesh</span>
-            </div>
-            <div>
-              <small>PHONE</small>
-              <b>01754-477488</b>
-              <span>Customer contact line</span>
-            </div>
-          </div>
-
-          <div className="contactShowroomActions">
-            <button
-              className="contactButton contactButtonPrimary"
-              type="button"
-              onClick={() => selectRoute("visit")}
-            >
-              Request Visit Consultation →
-            </button>
-            <a className="contactButton contactButtonSecondary" href="tel:01754477488">
-              Call Desh Solar →
-            </a>
+          <div className="demoActions">
+            <Link className="demoBtn" href="/products">Explore Products →</Link>
+            <Link className="demoBtn secondary" href="/build-your-system">Build Your System →</Link>
+            <Link className="demoBtn secondary" href="/customer-support">Customer Support →</Link>
           </div>
         </div>
+      </div>
+
+      <section className="contactFutureBand">
+        <div className="countryMark">BD</div>
+        <small>Desh Solar • Bangladesh</small>
+        <h2>POWERING BANGLADESH FORWARD.</h2>
       </section>
-
-      <section className="contactPrepareSection">
-        <div className="contactSectionHead">
-          <div className="contactEyebrow">Prepare Before You Contact</div>
-          <h2>A little preparation makes the consultation more useful.</h2>
-          <p>
-            You do not need perfect technical data. A few practical numbers help Desh Solar understand the requirement much faster.
-          </p>
-        </div>
-
-        <div className="contactPrepareTabs" role="tablist" aria-label="Project preparation type">
-          {(["residential", "commercial", "industrial", "agriculture"] as PrepareKey[]).map((key) => (
-            <button
-              key={key}
-              type="button"
-              className={prepareKey === key ? "isActive" : ""}
-              onClick={() => setPrepareKey(key)}
-              role="tab"
-              aria-selected={prepareKey === key}
-            >
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        <div className="contactPrepareGrid">
-          {prepareData[prepareKey].map(([title, text], index) => (
-            <article key={title}>
-              <span>0{index + 1}</span>
-              <div>
-                <b>{title}</b>
-                <p>{text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="contactProjectTypes">
-        <div className="contactSectionHead">
-          <div className="contactEyebrow">Common Applications</div>
-          <h2>See the type of project you are planning.</h2>
-          <p>Choose a familiar application context before starting your inquiry.</p>
-        </div>
-
-        <div className="contactProjectGrid">
-          {projectTypes.map((project) => (
-            <Link key={project.name} href="/projects" className="contactProjectCard">
-              <Image
-                src={project.image}
-                alt={`${project.name} solar application`}
-                fill
-                sizes="(max-width: 720px) 92vw, (max-width: 1100px) 46vw, 23vw"
-              />
-              <div className="contactProjectShade" />
-              <div>
-                <small>{project.caption}</small>
-                <b>{project.name}</b>
-                <span>Explore Projects →</span>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="contactToolsBridge">
-        <div className="contactToolsCopy">
-          <div className="contactEyebrow">Prepare a Better Inquiry</div>
-          <h2>Use the tools first if you want a stronger consultation.</h2>
-          <p>
-            A preliminary load profile, backup target or engineering check can make your contact request much more specific.
-          </p>
-        </div>
-
-        <div className="contactToolCards">
-          <Link href="/build-your-system">
-            <span aria-hidden="true">⌁</span>
-            <b>Build Your System</b>
-            <small>Load + backup + preliminary system profile</small>
-          </Link>
-          <Link href="/engineering-lab">
-            <span aria-hidden="true">⚙</span>
-            <b>Engineering Lab</b>
-            <small>Technical planning and system checks</small>
-          </Link>
-          <Link href="/products">
-            <span aria-hidden="true">▦</span>
-            <b>Product Catalogue</b>
-            <small>Panels, inverters, batteries and systems</small>
-          </Link>
-          <Link href="/customer-support">
-            <span aria-hidden="true">?</span>
-            <b>Customer Support</b>
-            <small>Existing product, system and warranty help</small>
-          </Link>
-        </div>
-      </section>
-
-      <section className="contactFinalCta">
-        <div>
-          <div className="contactEyebrow">Ready to Start?</div>
-          <h2>Choose the path that matches what you need.</h2>
-          <p>Start a project request, ask about a product, visit the showroom or move directly to customer support.</p>
-        </div>
-        <div className="contactFinalActions">
-          <a className="contactButton contactButtonPrimary" href="#contact-routes">
-            Contact Desh Solar →
-          </a>
-          <Link className="contactButton contactButtonSecondary" href="/customer-support">
-            Customer Support →
-          </Link>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }
