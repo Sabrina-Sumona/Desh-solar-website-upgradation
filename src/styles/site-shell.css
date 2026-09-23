@@ -2826,7 +2826,7 @@ span:nth-child(3) {
     26px;
 
   padding:
-    20px 6vw 10px;
+    20px 4vw 10px;
 
   border-top:
     1px solid
@@ -3551,7 +3551,7 @@ span:nth-child(3) {
       24px 36px;
 
     padding:
-      28px 6vw 10px;
+      28px 4vw 10px;
   }
 
   .footerBrand {
@@ -3639,7 +3639,7 @@ span:nth-child(3) {
       22px;
 
     padding:
-      28px 6vw 10px;
+      28px 4vw 10px;
   }
 
   .footerBrand,
@@ -3794,10 +3794,10 @@ span:nth-child(3) {
 
   .footer {
     padding-left:
-      5vw;
+      4vw;
 
     padding-right:
-      5vw;
+      4vw;
   }
 
   .footerBrandFrame {

@@ -726,7 +726,7 @@
 /* Production page ending band — same prototype treatment. */
 .buildSystemPrototype .futureBand{
   position:relative;
-  margin:0 6vw 10vh;
+  margin:0 4vw 4vh;
   padding:55px 30px;
   border-radius:30px;
   border:1px solid rgba(255,255,255,.065);
@@ -760,7 +760,7 @@
 .bysRangeLabel{display:block;color:#8499a4;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:9px}
 
 @media(max-width:720px){
-  .buildSystemPrototype .futureBand{margin:0 6vw 7vh;padding:43px 16px}
+  .buildSystemPrototype .futureBand{margin:0 4vw 4vh;padding:43px 16px}
 }
 .bysPropertyLoadHeader{
   display:grid;

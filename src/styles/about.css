@@ -380,10 +380,10 @@
 }
 .aboutPrototype .ctaBand h3{margin:0;font-size:clamp(27px,3.3vw,45px);letter-spacing:-.035em}
 .aboutPrototype .ctaBand p{margin:9px 0 0;color:#8fa3ad}
-.aboutPrototype .aboutFinalCta{margin:2vh 4vw 7vh}
+.aboutPrototype .aboutFinalCta{margin:2vh 4vw 4vh}
 
 .aboutPrototype .futureBand{
-  position:relative;margin:0 6vw 10vh;padding:55px 30px;border-radius:30px;
+  position:relative;margin:0 4vw 4vh;padding:55px 30px;border-radius:30px;
   border:1px solid rgba(255,255,255,.065);overflow:hidden;text-align:center;
   background:radial-gradient(circle at 50% 80%,rgba(145,239,91,.09),transparent 30%),linear-gradient(145deg,#07151d,#040b0f)
 }
@@ -525,10 +525,10 @@
   .aboutPrototype .aboutProjectGrid a{height:240px}
   .aboutPrototype .demoActions{margin-top:22px}
   .aboutPrototype .demoBtn{min-height:43px;padding:0 16px}
-  .aboutPrototype .ctaBand{margin:0 7vw 8vh;padding:30px 24px;display:block}
+  .aboutPrototype .ctaBand{margin:0 4vw 4vh;padding:30px 24px;display:block}
   .aboutPrototype .ctaBand .demoActions{margin-top:22px}
-  .aboutPrototype .aboutFinalCta{margin:2vh 4vw 7vh}
-  .aboutPrototype .futureBand{margin:0 6vw 7vh;padding:43px 16px}
+  .aboutPrototype .aboutFinalCta{margin:2vh 4vw 4vh}
+  .aboutPrototype .futureBand{margin:0 4vw 4vh;padding:43px 16px}
 }
 
 @media(max-width:480px){

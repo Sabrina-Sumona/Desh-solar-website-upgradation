@@ -180,7 +180,7 @@ radial-gradient(circle at 72% 20%,rgba(104,201,245,.10),transparent 25%),linear-
 .customerSupportPrototype .supportFaqCard p{margin:7px 0 0;color:#70858f;font-size:9px;line-height:1.55}
 .customerSupportPrototype .supportMobileProgress{display:none}
 
-.customerSupportPrototype .supportFutureBand{position:relative;margin:0 6vw 10vh;padding:55px 30px;border-radius:30px;border:1px solid rgba(255,255,255,.065);overflow:hidden;text-align:center;background:radial-gradient(circle at 50% 80%,rgba(145,239,91,.09),transparent 30%),linear-gradient(145deg,#07151d,#040b0f)}
+.customerSupportPrototype .supportFutureBand{position:relative;margin:0 4vw 4vh;padding:55px 30px;border-radius:30px;border:1px solid rgba(255,255,255,.065);overflow:hidden;text-align:center;background:radial-gradient(circle at 50% 80%,rgba(145,239,91,.09),transparent 30%),linear-gradient(145deg,#07151d,#040b0f)}
 .customerSupportPrototype .supportFutureBand:before{content:"";position:absolute;left:10%;right:10%;top:50%;height:1px;background:linear-gradient(90deg,transparent,#59bdff,#91ef5b,#59bdff,transparent);box-shadow:0 0 24px rgba(145,239,91,.28);opacity:.55}
 .customerSupportPrototype .supportFutureBand .countryMark{width:92px;height:92px;border-radius:50%;margin:0 auto 25px;display:grid;place-items:center;border:1px solid rgba(104,201,245,.13);background:radial-gradient(circle,rgba(104,201,245,.06),transparent 68%);color:#c8ff7d;font-size:22px;font-weight:900;position:relative;z-index:2}
 .customerSupportPrototype .supportFutureBand small{display:block;color:#c8ff7d;font-size:9px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;position:relative;z-index:2}
@@ -229,5 +229,5 @@ radial-gradient(circle at 72% 20%,rgba(104,201,245,.10),transparent 25%),linear-
   .customerSupportPrototype .supportFaqGrid{grid-template-columns:1fr}
   .customerSupportPrototype .supportField.full{grid-column:auto}
   .customerSupportPrototype .ticketTimeline{grid-template-columns:1fr 1fr}
-  .customerSupportPrototype .supportFutureBand{margin:0 6vw 7vh;padding:43px 16px}
+  .customerSupportPrototype .supportFutureBand{margin:0 4vw 4vh;padding:43px 16px}
 }

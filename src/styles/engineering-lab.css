@@ -141,7 +141,7 @@
 
 .engineeringLabRoot .futureBand {
   position: relative;
-  margin: 0 6vw 10vh;
+  margin: 0 4vw 4vh;
   padding: 55px 30px;
   border: 1px solid rgba(255, 255, 255, .065);
   border-radius: 30px;
@@ -371,7 +371,7 @@
   }
   .engineeringLabRoot .ctaBand .demoActions { margin-top: 22px; }
   .engineeringLabRoot .futureBand {
-    margin: 0 6vw 7vh;
+    margin: 0 4vw 4vh;
     padding: 43px 16px;
   }
 }

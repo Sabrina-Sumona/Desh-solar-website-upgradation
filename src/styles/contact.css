@@ -1112,7 +1112,7 @@
   --energy-blue: #59bdff;
   --energy-green: #91ef5b;
   position: relative;
-  margin: 0 6vw 10vh;
+  margin: 0 4vw 4vh;
   padding: 55px 30px;
   border-radius: 30px;
   border: 1px solid rgba(255, 255, 255, 0.065);
@@ -1309,9 +1309,7 @@
   }
 
   .contactFutureBand {
-    margin-left: 4vw;
-    margin-right: 4vw;
-    padding-left: 18px;
-    padding-right: 18px;
+    margin: 0 4vw 4vh;
+    padding: 43px 18px;
   }
 }
