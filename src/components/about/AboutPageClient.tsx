@@ -335,9 +335,6 @@ export default function AboutPageClient() {
               A good solar decision begins with the site, loads, operating hours,
               backup target and energy goal—not with a product model.
             </p>
-            <Link className="demoBtn" href="/tools-and-technology">
-              Open Engineering Lab →
-            </Link>
           </div>
 
           <div className="philosophyFlow">
@@ -406,38 +403,6 @@ export default function AboutPageClient() {
           </div>
         </section>
 
-        <section className="aboutSection brandTechSection">
-          <div className="aboutSectionHead">
-            <div>
-              <div className="demoEyebrow">Technologies in the Catalogue</div>
-              <h2>Real equipment families already represented in the store.</h2>
-              <p>
-                This section shows brands/product families carried in the catalogue.
-                It does not claim partnership status unless separately verified.
-              </p>
-            </div>
-          </div>
-
-          <div className="brandTechGrid">
-            <Link href="/products/jinko590">
-              <Image alt="Jinko solar panel" src="/assets/products-real/jinko590.jpg" width={520} height={420}/>
-              <span>Solar Panels</span><b>Jinko</b>
-            </Link>
-            <Link href="/products/goodwe6">
-              <Image alt="GoodWe inverter" src="/assets/products-real/goodwe6.jpg" width={520} height={420}/>
-              <span>Inverters</span><b>GoodWe</b>
-            </Link>
-            <Link href="/products/hithium16">
-              <Image alt="HiTHIUM battery" src="/assets/products-real/hithium16.webp" width={520} height={420}/>
-              <span>Lithium Storage</span><b>HiTHIUM</b>
-            </Link>
-            <Link href="/products/lvt-g3-314">
-              <Image alt="LVTOPSUN battery" src="/assets/products-real/lvt-g3-314.jpg" width={520} height={420}/>
-              <span>Battery Systems</span><b>LVTOPSUN</b>
-            </Link>
-          </div>
-        </section>
-
         <section className="aboutSection customerJourney">
           <div className="aboutSectionHead">
             <div>
@@ -484,31 +449,6 @@ export default function AboutPageClient() {
           <div className="trustActions">
             <Link className="demoBtn" href="/customer-support">Open Customer Support →</Link>
             <Link className="demoBtn secondary" href="/contact">Contact Desh Solar →</Link>
-          </div>
-        </section>
-
-        <section className="aboutSection projectTeaser">
-          <div className="aboutSectionHead">
-            <div>
-              <div className="demoEyebrow">Systems in Context</div>
-              <h2>See how different project types change the solution.</h2>
-            </div>
-            <Link className="aboutInlineLink" href="/projects">Explore All Projects →</Link>
-          </div>
-
-          <div className="aboutProjectGrid">
-            <Link href="/projects">
-              <Image alt="Residential rooftop solar project showcase" src="/assets/projects-real/residential.webp" width={900} height={620}/>
-              <div><small>RESIDENTIAL</small><b>Residential Rooftop Hybrid</b><span>View Project →</span></div>
-            </Link>
-            <Link href="/projects">
-              <Image alt="Industrial rooftop solar project showcase" src="/assets/projects-real/industrial.webp" width={900} height={620}/>
-              <div><small>INDUSTRIAL</small><b>Industrial Factory Rooftop Solar</b><span>View Project →</span></div>
-            </Link>
-            <Link href="/projects">
-              <Image alt="Agriculture solar project showcase" src="/assets/projects-real/agriculture.webp" width={900} height={620}/>
-              <div><small>AGRICULTURE</small><b>Solar Irrigation &amp; Farm Energy</b><span>View Project →</span></div>
-            </Link>
           </div>
         </section>
 
