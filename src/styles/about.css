@@ -928,3 +928,26 @@
     right:1%;
   }
 }
+
+/* =========================================================
+   ABOUT — TIGHTEN HERO/PILLARS → WHO WE ARE TRANSITION
+   Removes the unnecessary vertical gap below the capability
+   pillars while preserving the rest of the section spacing.
+   ========================================================= */
+.aboutPrototype .aboutPillars{
+  padding-bottom:10px;
+}
+
+.aboutPrototype .whoWeAre{
+  padding-top:14px;
+}
+
+@media (max-width:720px){
+  .aboutPrototype .aboutPillars{
+    padding-bottom:8px;
+  }
+
+  .aboutPrototype .whoWeAre{
+    padding-top:10px;
+  }
+}

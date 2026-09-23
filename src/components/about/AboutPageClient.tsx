@@ -118,14 +118,6 @@ export default function AboutPageClient() {
               commissioning and customer support into one complete solar-energy
               journey.
             </p>
-            <div className="demoActions">
-              <a className="demoBtn" href="#who-we-are">
-                Discover Desh Solar →
-              </a>
-              <Link className="demoBtn secondary" href="/build-your-system">
-                Build Your System →
-              </Link>
-            </div>
           </div>
 
           <div className="aboutHeroMark">
