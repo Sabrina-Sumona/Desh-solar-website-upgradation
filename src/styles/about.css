@@ -127,20 +127,23 @@
   background:radial-gradient(circle at 50% 45%,rgba(145,239,91,.08),transparent 34%),#07141b;
   display:grid;place-items:center;overflow:hidden
 }
-.aboutPrototype .whoVisualScene{position:relative;width:88%;height:400px}
+.aboutPrototype .whoVisualScene{position:relative;width:88%;height:400px;isolation:isolate}
 .aboutPrototype .whoSystemCard{
   position:absolute;width:220px;height:210px;border-radius:18px;border:1px solid rgba(255,255,255,.07);
-  background:#eef1f1;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.18)
+  background:#eef1f1;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.18);z-index:1
 }
-.aboutPrototype .whoSystemCard img{width:100%;height:170px;object-fit:contain;padding:8px;box-sizing:border-box}
+.aboutPrototype .whoSystemCard img{display:block;width:100%;height:170px;object-fit:contain;padding:8px;box-sizing:border-box}
 .aboutPrototype .whoSystemCard span{
-  display:block;height:40px;padding:11px 13px;background:#08171f;color:#c8ffa2;font-size:8px;font-weight:900
+  position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;
+  height:40px;padding:0 13px;box-sizing:border-box;background:#08171f;color:#c8ffa2;
+  border-top:1px solid rgba(145,239,91,.14);font-size:8px;font-weight:900;
+  text-shadow:0 0 10px rgba(145,239,91,.16)
 }
-.aboutPrototype .whoSystemCard.panel{left:0;top:18px;transform:rotate(-4deg)}
-.aboutPrototype .whoSystemCard.inverter{right:0;top:78px;transform:rotate(4deg)}
-.aboutPrototype .whoSystemCard.battery{left:27%;bottom:8px;transform:rotate(-1deg)}
+.aboutPrototype .whoSystemCard.panel{left:0;top:18px;transform:rotate(-4deg);z-index:3}
+.aboutPrototype .whoSystemCard.inverter{right:0;top:78px;transform:rotate(4deg);z-index:3}
+.aboutPrototype .whoSystemCard.battery{left:27%;bottom:8px;transform:rotate(-1deg);z-index:2}
 .aboutPrototype .whoEnergyLine{
-  position:absolute;inset:45% 10% auto;height:2px;
+  position:absolute;inset:45% 10% auto;height:2px;z-index:0;pointer-events:none;
   background:linear-gradient(90deg,transparent,#8ff160,#68c9f5,transparent);
   box-shadow:0 0 22px rgba(145,239,91,.25)
 }
@@ -445,4 +448,253 @@
   .aboutPrototype .ecoCore{grid-column:auto}
   .aboutPrototype .whoSystemCard{width:150px}
   .aboutPrototype .whoSystemCard.battery{left:22%}
+}
+
+/* =========================================================
+   READABILITY PASS
+   Keeps the approved prototype layout/structure intact while
+   improving small text size, contrast and line-height.
+   ========================================================= */
+.aboutPrototype .demoEyebrow{
+  color:#b3c4cb;
+  font-size:12px;
+  line-height:1.45;
+}
+
+.aboutPrototype .aboutHeroCopy p{
+  color:#a8bac2;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.aboutPrototype .aboutHeroMark small{
+  color:#93a8b1;
+  font-size:10px;
+  line-height:1.45;
+}
+
+.aboutPrototype .aboutPillars b{
+  font-size:13px;
+  line-height:1.35;
+}
+.aboutPrototype .aboutPillars small{
+  color:#9cafb7;
+  font-size:10px;
+  line-height:1.55;
+}
+
+.aboutPrototype .aboutSectionHead p,
+.aboutPrototype .whoCopy>p,
+.aboutPrototype .philosophyCopy>p,
+.aboutPrototype .trustCopy>p,
+.aboutPrototype .engineeringTeaserCopy>p{
+  color:#a7b9c1;
+  font-size:14px;
+  line-height:1.72;
+}
+.aboutPrototype .aboutInlineLink{
+  font-size:11px;
+  line-height:1.4;
+}
+
+.aboutPrototype .whoSystemCard span{
+  font-size:10px;
+  line-height:1.35;
+}
+.aboutPrototype .whoFlow span{
+  color:#b0d99a;
+  font-size:10px;
+  line-height:1.35;
+}
+
+.aboutPrototype .capabilityCard b{
+  font-size:14px;
+  line-height:1.35;
+}
+.aboutPrototype .capabilityCard small{
+  color:#9aadb5;
+  font-size:10px;
+  line-height:1.45;
+}
+.aboutPrototype .capabilityInspector>small{
+  font-size:10px;
+  line-height:1.4;
+}
+.aboutPrototype .capabilityInspector>p{
+  color:#a7b9c1;
+  font-size:13px;
+  line-height:1.68;
+}
+.aboutPrototype .capabilityInspector>a{
+  font-size:11px;
+  line-height:1.4;
+}
+.aboutPrototype .capChecks small{
+  color:#97aab3;
+  font-size:9px;
+  line-height:1.4;
+}
+.aboutPrototype .capChecks b{
+  font-size:11px;
+  line-height:1.4;
+}
+
+.aboutPrototype .systemFlowNode b{
+  font-size:12px;
+  line-height:1.35;
+}
+.aboutPrototype .systemFlowNode small{
+  color:#9cafb7;
+  font-size:10px;
+  line-height:1.45;
+}
+.aboutPrototype .systemPrinciples small{
+  font-size:9px;
+  line-height:1.35;
+}
+.aboutPrototype .systemPrinciples b{
+  font-size:12px;
+  line-height:1.4;
+}
+.aboutPrototype .systemPrinciples p{
+  color:#9cafb7;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.aboutPrototype .serveGrid small{
+  color:#9eb2ba;
+  font-size:9px;
+  line-height:1.4;
+}
+.aboutPrototype .serveGrid b{
+  font-size:16px;
+  line-height:1.35;
+}
+.aboutPrototype .serveGrid p{
+  color:#9cafb7;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.aboutPrototype .philosophyFlow b{
+  font-size:11px;
+  line-height:1.35;
+}
+.aboutPrototype .philosophyFlow small{
+  color:#98abb4;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.aboutPrototype .ecoCore b{
+  font-size:13px;
+  line-height:1.35;
+}
+.aboutPrototype .ecoCore small{
+  color:#9aadb5;
+  font-size:10px;
+  line-height:1.45;
+}
+.aboutPrototype .ecoNode b{
+  font-size:11px;
+  line-height:1.35;
+}
+.aboutPrototype .ecoNode small{
+  color:#98abb4;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.aboutPrototype .whyGrid p{
+  color:#a0b2ba;
+  font-size:12px;
+  line-height:1.62;
+}
+
+.aboutPrototype .brandTechGrid span{
+  font-size:9px;
+  line-height:1.4;
+}
+.aboutPrototype .brandTechGrid b{
+  font-size:12px;
+  line-height:1.4;
+}
+
+.aboutPrototype .journeyTrack b{
+  font-size:11px;
+  line-height:1.4;
+}
+.aboutPrototype .journeyTrack small{
+  color:#99acb4;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.aboutPrototype .trustFacts small{
+  color:#98abb4;
+  font-size:9px;
+  line-height:1.4;
+}
+.aboutPrototype .trustFacts b{
+  font-size:13px;
+  line-height:1.4;
+}
+.aboutPrototype .trustFacts span{
+  color:#9fb2ba;
+  font-size:10px;
+  line-height:1.5;
+}
+
+.aboutPrototype .aboutProjectGrid small{
+  font-size:9px;
+  line-height:1.4;
+}
+.aboutPrototype .aboutProjectGrid b{
+  font-size:16px;
+  line-height:1.35;
+}
+.aboutPrototype .aboutProjectGrid span{
+  font-size:10px;
+  line-height:1.4;
+}
+
+.aboutPrototype .engineeringMiniTools b{
+  font-size:12px;
+  line-height:1.35;
+}
+.aboutPrototype .engineeringMiniTools small{
+  color:#9aadb5;
+  font-size:10px;
+  line-height:1.45;
+}
+
+.aboutPrototype .ctaBand p{
+  color:#a8bac2;
+  font-size:14px;
+  line-height:1.65;
+}
+.aboutPrototype .futureBand small{
+  font-size:10px;
+  line-height:1.45;
+}
+
+@media(max-width:720px){
+  .aboutPrototype .aboutHeroCopy p,
+  .aboutPrototype .aboutSectionHead p,
+  .aboutPrototype .whoCopy>p,
+  .aboutPrototype .philosophyCopy>p,
+  .aboutPrototype .trustCopy>p,
+  .aboutPrototype .engineeringTeaserCopy>p{
+    font-size:13px;
+  }
+
+  .aboutPrototype .aboutPillars small,
+  .aboutPrototype .capabilityCard small,
+  .aboutPrototype .systemFlowNode small,
+  .aboutPrototype .serveGrid p,
+  .aboutPrototype .whyGrid p,
+  .aboutPrototype .engineeringMiniTools small{
+    font-size:11px;
+  }
 }
