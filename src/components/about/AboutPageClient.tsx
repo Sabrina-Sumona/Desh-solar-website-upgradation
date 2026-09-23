@@ -196,7 +196,6 @@ export default function AboutPageClient() {
                 />
                 <span>Storage</span>
               </div>
-              <div className="whoEnergyLine" />
             </div>
           </div>
 

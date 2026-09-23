@@ -142,11 +142,6 @@
 .aboutPrototype .whoSystemCard.panel{left:0;top:18px;transform:rotate(-4deg);z-index:3}
 .aboutPrototype .whoSystemCard.inverter{right:0;top:78px;transform:rotate(4deg);z-index:3}
 .aboutPrototype .whoSystemCard.battery{left:27%;bottom:8px;transform:rotate(-1deg);z-index:2}
-.aboutPrototype .whoEnergyLine{
-  position:absolute;inset:45% 10% auto;height:2px;z-index:0;pointer-events:none;
-  background:linear-gradient(90deg,transparent,#8ff160,#68c9f5,transparent);
-  box-shadow:0 0 22px rgba(145,239,91,.25)
-}
 .aboutPrototype .whoFlow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:19px}
 .aboutPrototype .whoFlow span{
   padding:8px 10px;border-radius:999px;border:1px solid rgba(145,239,91,.1);
@@ -805,4 +800,131 @@
 }
 .aboutPrototype .trustFacts a:hover{
   color:var(--green2);
+}
+
+/* =========================================================
+   WHO WE ARE — RESPONSIVE COLLAGE ALIGNMENT
+   Keeps the three product cards visually balanced when the
+   two-column desktop section stacks on tablet/mobile.
+   ========================================================= */
+@media (max-width:1180px) and (min-width:721px){
+  .aboutPrototype .whoVisual{
+    min-height:420px;
+    padding:20px 0;
+  }
+
+  .aboutPrototype .whoVisualScene{
+    width:min(680px,94%);
+    height:360px;
+    margin:0 auto;
+  }
+
+  .aboutPrototype .whoSystemCard{
+    width:190px;
+    height:180px;
+    border-radius:16px;
+  }
+
+  .aboutPrototype .whoSystemCard img{
+    height:144px;
+  }
+
+  .aboutPrototype .whoSystemCard span{
+    height:36px;
+  }
+
+  .aboutPrototype .whoSystemCard.panel{
+    left:7%;
+    top:10px;
+    transform:rotate(-2deg);
+  }
+
+  .aboutPrototype .whoSystemCard.inverter{
+    right:7%;
+    top:10px;
+    transform:rotate(2deg);
+  }
+
+  .aboutPrototype .whoSystemCard.battery{
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+  }
+}
+
+@media (max-width:720px){
+  .aboutPrototype .whoVisual{
+    min-height:370px;
+    padding:16px 0;
+  }
+
+  .aboutPrototype .whoVisualScene{
+    width:min(560px,96%);
+    height:330px;
+    margin:0 auto;
+  }
+
+  .aboutPrototype .whoSystemCard{
+    width:160px;
+    height:165px;
+  }
+
+  .aboutPrototype .whoSystemCard img{
+    height:130px;
+  }
+
+  .aboutPrototype .whoSystemCard span{
+    height:35px;
+  }
+
+  .aboutPrototype .whoSystemCard.panel{
+    left:4%;
+    top:12px;
+    transform:rotate(-2deg);
+  }
+
+  .aboutPrototype .whoSystemCard.inverter{
+    right:4%;
+    top:12px;
+    transform:rotate(2deg);
+  }
+
+  .aboutPrototype .whoSystemCard.battery{
+    left:50%;
+    bottom:0;
+    transform:translateX(-50%);
+  }
+}
+
+@media (max-width:480px){
+  .aboutPrototype .whoVisual{
+    min-height:340px;
+  }
+
+  .aboutPrototype .whoVisualScene{
+    width:98%;
+    height:300px;
+  }
+
+  .aboutPrototype .whoSystemCard{
+    width:138px;
+    height:150px;
+  }
+
+  .aboutPrototype .whoSystemCard img{
+    height:116px;
+  }
+
+  .aboutPrototype .whoSystemCard span{
+    height:34px;
+    padding:0 10px;
+  }
+
+  .aboutPrototype .whoSystemCard.panel{
+    left:1%;
+  }
+
+  .aboutPrototype .whoSystemCard.inverter{
+    right:1%;
+  }
 }
