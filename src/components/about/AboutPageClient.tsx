@@ -475,8 +475,16 @@ export default function AboutPageClient() {
             </p>
             <div className="trustFacts">
               <div><small>Customer Service</small><b>10:00 AM – 11:00 PM</b><span>7 days a week</span></div>
-              <div><small>Phone</small><b>01754-477488</b><span>Customer support line</span></div>
-              <div><small>Display Center</small><b>Bangla Motor, Dhaka</b><span>Navana Zohura Square, Ground Floor</span></div>
+              <div>
+                <small>Phone</small>
+                <b><a href="tel:0255168220">0255-168220</a></b>
+                <span>Mobile: <a href="tel:01754477488">01754-477488</a></span>
+              </div>
+              <div>
+                <small>Head Office</small>
+                <b>28, Kazi Nazrul Islam Avenue</b>
+                <span>Navana Zohura Square, Abasik Gate, Ground Floor, Bangla Motor, Dhaka-1205</span>
+              </div>
               <div><small>Delivery</small><b>Across Bangladesh</b><span>Nationwide delivery information is published by Desh Solar</span></div>
             </div>
           </div>

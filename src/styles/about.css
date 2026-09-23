@@ -698,3 +698,12 @@
     font-size:11px;
   }
 }
+
+/* Customer access contact links */
+.aboutPrototype .trustFacts a{
+  color:inherit;
+  text-decoration:none;
+}
+.aboutPrototype .trustFacts a:hover{
+  color:var(--green2);
+}
