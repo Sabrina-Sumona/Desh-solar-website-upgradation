@@ -396,9 +396,7 @@ export default function BrandMarquee() {
     }
   };
 
-  const finishPointerInteraction = (
-    event: ReactPointerEvent<HTMLDivElement>
-  ) => {
+  const finishPointerInteraction = () => {
     const viewport =
       viewportRef.current;
 

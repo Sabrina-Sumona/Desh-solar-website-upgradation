@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   type FormEvent,
   type RefObject,
@@ -174,6 +174,7 @@ function CartIcon() {
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
 
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
@@ -572,8 +573,8 @@ export default function Header() {
       return;
     }
 
-    window.location.href = searchUrl;
-  }, [searchQuery]);
+    router.push(searchUrl);
+  }, [router, searchQuery]);
 
   const handleSearchIconClick = (
     inputRef: RefObject<HTMLInputElement | null>

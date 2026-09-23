@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ChangeEvent,
   FormEvent,
@@ -137,6 +138,7 @@ function cleanText(value: string) {
 }
 
 export default function ContactPageClient() {
+  const router = useRouter();
   const [route, setRoute] = useState<ContactRoute>("project");
   const [prepareKey, setPrepareKey] = useState<PrepareKey>("residential");
 
@@ -172,20 +174,30 @@ export default function ContactPageClient() {
   const activeMeta = routeMeta[route];
 
   useEffect(() => {
-    try {
-      const parts = new Intl.DateTimeFormat("en-GB", {
-        timeZone: "Asia/Dhaka",
-        hour: "2-digit",
-        minute: "2-digit",
-        hourCycle: "h23",
-      }).formatToParts(new Date());
-      const hour = Number(parts.find((part) => part.type === "hour")?.value ?? "0");
-      const minute = Number(parts.find((part) => part.type === "minute")?.value ?? "0");
-      const totalMinutes = hour * 60 + minute;
-      setServiceOpen(totalMinutes >= 600 && totalMinutes < 1380);
-    } catch {
-      setServiceOpen(null);
-    }
+    const updateServiceStatus = () => {
+      try {
+        const parts = new Intl.DateTimeFormat("en-GB", {
+          timeZone: "Asia/Dhaka",
+          hour: "2-digit",
+          minute: "2-digit",
+          hourCycle: "h23",
+        }).formatToParts(new Date());
+        const hour = Number(parts.find((part) => part.type === "hour")?.value ?? "0");
+        const minute = Number(parts.find((part) => part.type === "minute")?.value ?? "0");
+        const totalMinutes = hour * 60 + minute;
+        setServiceOpen(totalMinutes >= 600 && totalMinutes < 1380);
+      } catch {
+        setServiceOpen(null);
+      }
+    };
+
+    const initialTimer = window.setTimeout(updateServiceStatus, 0);
+    const interval = window.setInterval(updateServiceStatus, 60_000);
+
+    return () => {
+      window.clearTimeout(initialTimer);
+      window.clearInterval(interval);
+    };
   }, []);
 
   const detail = useMemo(() => {
@@ -282,7 +294,7 @@ export default function ContactPageClient() {
     event.preventDefault();
 
     if (route === "support") {
-      window.location.href = "/customer-support";
+      router.push("/customer-support");
       return;
     }
 

@@ -370,11 +370,12 @@ export default function FeaturedProjects() {
     resumeAtRef.current =
       Number.POSITIVE_INFINITY;
 
-    setIsDragging(true);
-
-    viewport.setPointerCapture(
-      event.pointerId
-    );
+    /*
+     * Do not capture the pointer yet. Capturing on pointer-down
+     * retargets a normal click to the viewport, which prevents
+     * the nested Next.js project links from receiving the click.
+     * We only capture after the movement becomes an actual drag.
+     */
   };
 
   const handlePointerMove = (
@@ -393,10 +394,26 @@ export default function FeaturedProjects() {
       dragStartXRef.current;
 
     if (
+      !didDragRef.current &&
       Math.abs(distance) >=
-      DRAG_THRESHOLD
+        DRAG_THRESHOLD
     ) {
       didDragRef.current = true;
+      setIsDragging(true);
+
+      const viewport =
+        viewportRef.current;
+
+      if (
+        viewport &&
+        !viewport.hasPointerCapture(
+          event.pointerId
+        )
+      ) {
+        viewport.setPointerCapture(
+          event.pointerId
+        );
+      }
     }
 
     if (!didDragRef.current) {
@@ -421,9 +438,7 @@ export default function FeaturedProjects() {
     }
   };
 
-  const finishPointerInteraction = (
-    event: ReactPointerEvent<HTMLDivElement>
-  ) => {
+  const finishPointerInteraction = () => {
     const viewport =
       viewportRef.current;
 

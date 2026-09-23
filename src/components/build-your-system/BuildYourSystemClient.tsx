@@ -403,27 +403,42 @@ export default function BuildYourSystemClient() {
     };
 
     const propertyParam = params.get("property");
-    if (propertyParam && propertyMap[propertyParam]) setProperty(propertyMap[propertyParam]);
+    const initialProperty =
+      propertyParam && propertyMap[propertyParam]
+        ? propertyMap[propertyParam]
+        : null;
+
     const goalParam = params.get("goal");
-    if (goalParam && goalMap[goalParam]) setGoal(goalMap[goalParam]);
+    const initialGoal =
+      goalParam && goalMap[goalParam]
+        ? goalMap[goalParam]
+        : null;
 
     const billParam = Number(params.get("bill"));
-    if (billParam > 0) setBill(billParam);
     const hoursParam = Number(params.get("hours"));
-    if (hoursParam > 0) {
-      setBackupHours(hoursParam);
-      setCustomBackup(String(hoursParam));
-    }
-
     const selectedName = params.get("selectedName");
-    if (selectedName) {
-      const rating = Number(params.get("selectedRating"));
-      setSelectedProduct({
-        name: selectedName,
-        type: params.get("productType") || "product",
-        rating: Number.isFinite(rating) && rating > 0 ? rating : null,
-      });
-    }
+    const rating = Number(params.get("selectedRating"));
+
+    const timer = window.setTimeout(() => {
+      if (initialProperty) setProperty(initialProperty);
+      if (initialGoal) setGoal(initialGoal);
+      if (billParam > 0) setBill(billParam);
+
+      if (hoursParam > 0) {
+        setBackupHours(hoursParam);
+        setCustomBackup(String(hoursParam));
+      }
+
+      if (selectedName) {
+        setSelectedProduct({
+          name: selectedName,
+          type: params.get("productType") || "product",
+          rating: Number.isFinite(rating) && rating > 0 ? rating : null,
+        });
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {
