@@ -473,21 +473,23 @@ export default function AboutPageClient() {
               Instead of decorative statistics, this section surfaces useful
               customer-facing information already used across the website.
             </p>
-            <div className="trustFacts">
-              <div><small>Customer Service</small><b>10:00 AM – 11:00 PM</b><span>7 days a week</span></div>
-              <div>
-                <small>Phone</small>
-                <b><a href="tel:0255168220">0255-168220</a></b>
-                <span>Mobile: <a href="tel:01754477488">01754-477488</a></span>
-              </div>
-              <div>
-                <small>Head Office</small>
-                <b>28, Kazi Nazrul Islam Avenue</b>
-                <span>Navana Zohura Square, Abasik Gate, Ground Floor, Bangla Motor, Dhaka-1205</span>
-              </div>
-              <div><small>Delivery</small><b>Across Bangladesh</b><span>Nationwide delivery information is published by Desh Solar</span></div>
-            </div>
           </div>
+
+          <div className="trustFacts">
+            <div><small>Customer Service</small><b>10:00 AM – 11:00 PM</b><span>7 days a week</span></div>
+            <div>
+              <small>Phone</small>
+              <b><a href="tel:0255168220">0255-168220</a></b>
+              <span>Mobile: <a href="tel:01754477488">01754-477488</a></span>
+            </div>
+            <div>
+              <small>Head Office</small>
+              <b>28, Kazi Nazrul Islam Avenue</b>
+              <span>Navana Zohura Square, Abasik Gate, Ground Floor, Bangla Motor, Dhaka-1205</span>
+            </div>
+            <div><small>Delivery</small><b>Across Bangladesh</b><span>Nationwide delivery information is published by Desh Solar</span></div>
+          </div>
+
           <div className="trustActions">
             <Link className="demoBtn" href="/customer-support">Open Customer Support →</Link>
             <Link className="demoBtn secondary" href="/contact">Contact Desh Solar →</Link>
