@@ -313,22 +313,58 @@ export default function EngineeringLabClient() {
       inverterClasses.find((item) => item >= value) ??
       Math.ceil(value / 10) * 10;
 
-    // Engineering tool tabs
+    // Engineering tool tabs + deep links
+    const toolKeys = new Set([
+      "generation",
+      "battery",
+      "inverter",
+      "roof",
+      "load",
+      "compat",
+    ]);
+
+    const activateTool = (key: string, scrollToTools = false) => {
+      if (!toolKeys.has(key)) return;
+
+      $$<HTMLButtonElement>(".toolTab").forEach((item) =>
+        item.classList.toggle("active", item.dataset.tool === key),
+      );
+      $$<HTMLElement>(".toolPanel").forEach((item) =>
+        item.classList.toggle("active", item.dataset.panel === key),
+      );
+
+      if (scrollToTools) {
+        window.requestAnimationFrame(() => {
+          $("#engineering-tools")?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        });
+      }
+    };
+
+    const setToolHash = (key: string) => {
+      const nextUrl = `${window.location.pathname}${window.location.search}#${key}`;
+      window.history.replaceState(null, "", nextUrl);
+    };
+
     $$<HTMLButtonElement>(".toolTab").forEach((button) => {
       button.onclick = () => {
-        $$<HTMLButtonElement>(".toolTab").forEach((item) =>
-          item.classList.remove("active"),
-        );
-        $$<HTMLElement>(".toolPanel").forEach((item) =>
-          item.classList.remove("active"),
-        );
-        button.classList.add("active");
         const key = button.dataset.tool;
-        if (key) {
-          $<HTMLElement>(`[data-panel="${key}"]`)?.classList.add("active");
-        }
+        if (!key) return;
+        activateTool(key);
+        setToolHash(key);
       };
     });
+
+    const activateToolFromHash = (scrollToTools = true) => {
+      const key = window.location.hash.replace(/^#/, "").toLowerCase();
+      if (toolKeys.has(key)) activateTool(key, scrollToTools);
+    };
+
+    const handleHashChange = () => activateToolFromHash(true);
+    window.addEventListener("hashchange", handleHashChange);
+    activateToolFromHash(true);
 
     // Solar generation calculator
     const generation = () => {
@@ -865,6 +901,10 @@ export default function EngineeringLabClient() {
       button.onclick = () => showTopic(button.dataset.topic ?? "panel");
     });
     showTopic("panel");
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
   }, []);
 
   return (

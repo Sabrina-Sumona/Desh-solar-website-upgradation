@@ -527,13 +527,13 @@ export default function AboutPageClient() {
               Use generation, battery, inverter, roof, load and compatibility tools
               before moving into full system planning.
             </p>
-            <Link className="demoBtn" href="/tools-and-technology">Open Engineering Lab →</Link>
+            <Link className="demoBtn" href="/engineering-lab">Open Engineering Lab →</Link>
           </div>
           <div className="engineeringMiniTools">
-            <Link href="/tools-and-technology#engineering-tools"><span>☀</span><b>Generation</b><small>PV energy estimate</small></Link>
-            <Link href="/tools-and-technology#engineering-tools"><span>▣</span><b>Battery</b><small>Runtime planning</small></Link>
-            <Link href="/tools-and-technology#engineering-tools"><span>↯</span><b>Inverter</b><small>Load + surge sizing</small></Link>
-            <Link href="/tools-and-technology#energy-simulator"><span>◇</span><b>Energy Flow</b><small>Day / night simulator</small></Link>
+            <Link href="/engineering-lab#generation"><span>☀</span><b>Generation</b><small>PV energy estimate</small></Link>
+            <Link href="/engineering-lab#battery"><span>▣</span><b>Battery</b><small>Runtime planning</small></Link>
+            <Link href="/engineering-lab#inverter"><span>↯</span><b>Inverter</b><small>Load + surge sizing</small></Link>
+            <Link href="/engineering-lab#energy-simulator"><span>◇</span><b>Energy Flow</b><small>Day / night simulator</small></Link>
           </div>
         </section>
 
