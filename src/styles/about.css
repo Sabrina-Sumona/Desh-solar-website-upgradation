@@ -439,7 +439,12 @@
   .aboutPrototype .serveGrid,
   .aboutPrototype .whyGrid{grid-template-columns:repeat(2,1fr)}
   .aboutPrototype .ecosystem{height:650px}
-  .aboutPrototype .ecoRing{display:none}
+  .aboutPrototype .ecoRing{
+    display:block;
+    border-color:rgba(145,239,91,.12);
+  }
+  .aboutPrototype .ecoRing.r1{width:62%;height:56%}
+  .aboutPrototype .ecoRing.r2{width:90%;height:84%}
   .aboutPrototype .ecoNode.n1{left:4%;top:8%}
   .aboutPrototype .ecoNode.n2{right:4%;top:8%}
   .aboutPrototype .ecoNode.n3{left:2%;top:42%}
@@ -469,13 +474,58 @@
   .aboutPrototype .trustFacts,
   .aboutPrototype .aboutProjectGrid,
   .aboutPrototype .engineeringMiniTools{grid-template-columns:1fr}
-  .aboutPrototype .ecosystem{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .aboutPrototype .ecoCore,
-  .aboutPrototype .ecoNode{
-    position:relative!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
-    transform:none!important;width:auto;height:120px
+  /* Keep the desktop-style Desh Solar ecosystem diagram on mobile. */
+  .aboutPrototype .ecosystem{
+    position:relative;
+    display:block;
+    width:100%;
+    max-width:560px;
+    height:clamp(470px,135vw,560px);
+    margin:0 auto;
   }
-  .aboutPrototype .ecoCore{grid-column:1/-1;border-radius:20px}
+  .aboutPrototype .ecoCore{
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:translate(-50%,-50%)!important;
+    width:clamp(126px,39vw,165px);
+    height:clamp(126px,39vw,165px);
+    border-radius:50%;
+    z-index:4;
+  }
+  .aboutPrototype .ecoCore img{width:clamp(92px,27vw,118px)}
+  .aboutPrototype .ecoCore b{margin-top:5px;font-size:10px}
+  .aboutPrototype .ecoCore small{max-width:110px;padding:0 7px;font-size:8px;line-height:1.3;text-align:center}
+  .aboutPrototype .ecoNode{
+    position:absolute!important;
+    width:clamp(92px,29vw,120px);
+    height:clamp(70px,21vw,86px);
+    border-radius:13px;
+    z-index:5;
+  }
+  .aboutPrototype .ecoNode span{font-size:17px}
+  .aboutPrototype .ecoNode b{margin-top:3px;font-size:9px}
+  .aboutPrototype .ecoNode small{font-size:7px}
+  .aboutPrototype .ecoNode.n1{left:0!important;right:auto!important;top:5%!important;bottom:auto!important}
+  .aboutPrototype .ecoNode.n2{left:auto!important;right:0!important;top:5%!important;bottom:auto!important}
+  .aboutPrototype .ecoNode.n3{left:0!important;right:auto!important;top:41%!important;bottom:auto!important}
+  .aboutPrototype .ecoNode.n4{left:auto!important;right:0!important;top:41%!important;bottom:auto!important}
+  .aboutPrototype .ecoNode.n5{left:7%!important;right:auto!important;top:auto!important;bottom:4%!important}
+  .aboutPrototype .ecoNode.n6{left:auto!important;right:7%!important;top:auto!important;bottom:4%!important}
+  .aboutPrototype .ecoRing{
+    display:block;
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    border-color:rgba(145,239,91,.14);
+    pointer-events:none;
+  }
+  .aboutPrototype .ecoRing.r1{width:66%;height:58%}
+  .aboutPrototype .ecoRing.r2{width:94%;height:88%}
   .aboutPrototype .trustActions{grid-template-columns:1fr}
   .aboutPrototype .aboutProjectGrid a{height:240px}
   .aboutPrototype .demoActions{margin-top:22px}
@@ -489,8 +539,12 @@
 @media(max-width:480px){
   .aboutPrototype .aboutPillars{grid-template-columns:1fr}
   .aboutPrototype .capabilityGrid{grid-template-columns:1fr}
-  .aboutPrototype .ecosystem{grid-template-columns:1fr}
-  .aboutPrototype .ecoCore{grid-column:auto}
+  .aboutPrototype .ecosystem{height:clamp(450px,142vw,505px)}
+  .aboutPrototype .ecoNode{width:clamp(86px,28vw,104px);height:72px}
+  .aboutPrototype .ecoCore{width:126px;height:126px}
+  .aboutPrototype .ecoCore img{width:90px}
+  .aboutPrototype .ecoRing.r1{width:64%;height:56%}
+  .aboutPrototype .ecoRing.r2{width:96%;height:88%}
   .aboutPrototype .whoSystemCard{width:150px}
   .aboutPrototype .whoSystemCard.battery{left:22%}
 }
