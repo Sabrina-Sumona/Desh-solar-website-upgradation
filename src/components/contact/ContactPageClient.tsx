@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -94,44 +93,6 @@ const prepareData: Record<PrepareKey, Array<[string, string]>> = {
   ],
 };
 
-const projectTypes = [
-  {
-    id: "residential",
-    label: "RESIDENTIAL",
-    name: "Home Solar + Backup",
-    image: "/assets/projects-real/residential.webp",
-  },
-  {
-    id: "commercial",
-    label: "COMMERCIAL",
-    name: "Office / Business Solar",
-    image: "/assets/projects-real/commercial.webp",
-  },
-  {
-    id: "industrial",
-    label: "INDUSTRIAL",
-    name: "Factory Rooftop Solar",
-    image: "/assets/projects-real/industrial.webp",
-  },
-  {
-    id: "agriculture",
-    label: "AGRICULTURE",
-    name: "Solar Irrigation",
-    image: "/assets/projects-real/agriculture.webp",
-  },
-  {
-    id: "filling",
-    label: "FILLING STATION",
-    name: "Operational Solar + Backup",
-    image: "/assets/projects-real/filling.webp",
-  },
-  {
-    id: "offgrid",
-    label: "OFF-GRID",
-    name: "Remote Energy System",
-    image: "/assets/projects-real/offgrid.webp",
-  },
-] as const;
 
 function cleanText(value: string) {
   return value.replace(/\s+/g, " ").trim();
@@ -826,22 +787,6 @@ export default function ContactPageClient() {
           </div>
         </section>
 
-        <section className="contactProjectTypes">
-          <div className="contactSectionHead">
-            <div>
-              <div className="demoEyebrow">Project Types</div>
-              <h2>See a similar application before starting your inquiry.</h2>
-            </div>
-          </div>
-          <div className="contactProjectGrid">
-            {projectTypes.map((item) => (
-              <Link href={`/projects?type=${item.id}`} key={item.id}>
-                <Image src={item.image} alt={`${item.label} solar project showcase`} width={900} height={650} />
-                <div><small>{item.label}</small><b>{item.name}</b><span>View Project →</span></div>
-              </Link>
-            ))}
-          </div>
-        </section>
 
         <section className="contactToolsBridge">
           <div className="contactToolsCopy">
