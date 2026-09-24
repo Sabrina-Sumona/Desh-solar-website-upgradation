@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -57,12 +58,12 @@ const routeMeta: Record<ContactRoute, RouteMeta> = {
   },
   visit: {
     title: "Visit Desh Solar",
-    intro: "Request a preferred showroom consultation date and time window.",
-    summary: "Showroom Consultation Request",
+    intro: "Request a preferred Head Office consultation date and time window.",
+    summary: "Head Office Consultation Request",
     next:
       "Choose a preferred visit window. This remains unconfirmed until Desh Solar responds.",
     link: "#showroom",
-    linkLabel: "View Showroom Details →",
+    linkLabel: "View Head Office Details →",
   },
 };
 
@@ -325,7 +326,7 @@ export default function ContactPageClient() {
               Tell us what you need. <span>We’ll route you to the right path.</span>
             </h1>
             <p>
-              Product inquiry, complete solar project, existing-system support or showroom visit — start with the reason you’re contacting Desh Solar.
+              Product inquiry, complete solar project, existing-system support or Head Office visit — start with the reason you’re contacting Desh Solar.
             </p>
           </div>
           <div className="contactHeroActions">
@@ -374,7 +375,7 @@ export default function ContactPageClient() {
             >
               <span>04</span>
               <b>Visit Desh Solar</b>
-              <small>Showroom / display-center consultation.</small>
+              <small>Head Office consultation and in-person discussion.</small>
             </button>
           </div>
         </section>
@@ -484,7 +485,7 @@ export default function ContactPageClient() {
                     Preferred Consultation
                     <select value={projectConsultType} onChange={(event) => setProjectConsultType(event.target.value)}>
                       <option value="Phone consultation">Phone consultation</option>
-                      <option value="Showroom consultation">Showroom consultation</option>
+                      <option value="Head Office consultation">Head Office consultation</option>
                       <option value="Site discussion">Site discussion</option>
                     </select>
                   </label>
@@ -671,35 +672,122 @@ export default function ContactPageClient() {
           </section>
         )}
 
-        <section className="directContactSection">
-          <div className="directContactCard phoneCard">
+        <section className="contactReachGrid">
+          <div className="contactPhonePanel">
             <div>
               <div className="demoEyebrow">Direct Contact</div>
               <h2>Need to speak with someone?</h2>
-              <p>Call the published Desh Solar customer-support line during service hours.</p>
+              <p>Call Desh Solar directly during service hours using either contact number.</p>
             </div>
             <div className="directPhone">
-              <small>CUSTOMER SUPPORT</small>
-              <a href="tel:01754477488">01754-477488</a>
-              <span>10:00 AM – 11:00 PM • 7 days/week</span>
-              <b className={serviceOpen === false ? "closed" : ""}>
-                <i />
-                <em>
-                  {serviceOpen === true
-                    ? "Open now • Dhaka time"
-                    : serviceOpen === false
-                      ? "Closed now • Opens at 10:00 AM Dhaka time"
-                      : "10:00 AM – 11:00 PM • Dhaka time"}
-                </em>
-              </b>
+              <small>DESH SOLAR CONTACT</small>
+              <div className="directPhoneNumbers">
+                <a href="tel:0255168220">0255168220</a>
+                <a href="tel:01754477488">01754-477488</a>
+              </div>
             </div>
           </div>
-          <div className="directContactCard routeCard">
-            <small>NOT SURE WHO TO CONTACT?</small>
-            <h3>Use the department router.</h3>
-            <p>Sales, project planning, technical support and warranty needs should not all follow the same path.</p>
-            <a href="#department-router">Choose Department →</a>
-          </div>
+
+          <aside className="contactSocialPanel">
+            <div className="directContactSocials">
+              <small>EMAIL &amp; SOCIAL MEDIA</small>
+              <div
+                className="socialLinks footerContactSocials contactOfficeSocials"
+                aria-label="Desh Solar social media and messaging"
+              >
+                <a
+                  href="https://mail.google.com/mail/?view=cm&fs=1&to=info.deshsolar@gmail.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Open Gmail to email Desh Solar at info.deshsolar@gmail.com"
+                  title="Email info.deshsolar@gmail.com"
+                  className="socialGmail"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="socialGmailIcon"
+                  >
+                    <path d="M3.5 6.4 12 12.6l8.5-6.2" fill="none" stroke="#EA4335" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M3.5 6.4V18h3.2V8.75" fill="none" stroke="#4285F4" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M20.5 6.4V18h-3.2V8.75" fill="none" stroke="#34A853" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M3.5 6.4 12 12.6" fill="none" stroke="#FBBC04" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M12 12.6 20.5 6.4" fill="none" stroke="#EA4335" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://www.facebook.com/deshsolar71"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Desh Solar on Facebook"
+                  title="Facebook"
+                  className="socialFacebook"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.5 22v-9h3l.5-3.5h-3.5V7.25c0-1 .28-1.75 1.8-1.75H17V2.38c-.3-.04-1.35-.13-2.58-.13-2.55 0-4.3 1.55-4.3 4.42V9.5H7.25V13h2.87v9h3.38Z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/deshsolar71"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Desh Solar on LinkedIn"
+                  title="LinkedIn"
+                  className="socialLinkedin"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M5.34 7.31A2.31 2.31 0 1 0 5.34 2.7a2.31 2.31 0 0 0 0 4.62ZM3.35 21h3.98V9H3.35v12Zm6.46 0h3.98v-6.69c0-1.76.33-3.47 2.52-3.47 2.16 0 2.19 2.02 2.19 3.58V21h3.98v-7.42c0-3.65-.79-6.46-5.05-6.46-2.05 0-3.42 1.12-3.98 2.18h-.05V9H9.81v12Z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://www.youtube.com/@DeshSolar71"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Desh Solar on YouTube"
+                  title="YouTube"
+                  className="socialYoutube"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M23.5 6.19a3.02 3.02 0 0 0-2.13-2.14C19.49 3.54 12 3.54 12 3.54s-7.49 0-9.37.51A3.02 3.02 0 0 0 .5 6.19 31.46 31.46 0 0 0 0 12a31.46 31.46 0 0 0 .5 5.81 3.02 3.02 0 0 0 2.13 2.14c1.88.51 9.37.51 9.37.51s7.49 0 9.37-.51a3.02 3.02 0 0 0 2.13-2.14A31.46 31.46 0 0 0 24 12a31.46 31.46 0 0 0-.5-5.81ZM9.6 15.62V8.38L15.82 12 9.6 15.62Z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://wa.me/8801754477488"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Chat with Desh Solar on WhatsApp"
+                  title="WhatsApp: 01754-477488"
+                  className="socialWhatsapp"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.52 3.48A11.82 11.82 0 0 0 12.08 0C5.5 0 .15 5.35.15 11.93c0 2.1.55 4.15 1.59 5.95L.05 24l6.28-1.65a11.9 11.9 0 0 0 5.74 1.46h.01c6.58 0 11.93-5.35 11.93-11.93 0-3.19-1.24-6.18-3.49-8.4ZM12.08 21.8h-.01a9.88 9.88 0 0 1-5.03-1.38l-.36-.21-3.73.98 1-3.64-.23-.37a9.88 9.88 0 0 1-1.52-5.25c0-5.46 4.44-9.9 9.9-9.9a9.82 9.82 0 0 1 7 2.9 9.83 9.83 0 0 1 2.9 7c-.01 5.45-4.45 9.87-9.92 9.87Zm5.43-7.41c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47a8.92 8.92 0 0 1-1.65-2.05c-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.22 3.08.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.69.25-1.28.17-1.41-.07-.12-.27-.2-.57-.35Z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://imo.im/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Contact Desh Solar on imo at 01754-477488"
+                  title="imo: 01754-477488"
+                  className="socialImo"
+                >
+                  <Image
+                    src="/assets/imo-icon.png"
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="socialImoLogo"
+                    aria-hidden="true"
+                  />
+                </a>
+              </div>
+            </div>
+          </aside>
         </section>
 
         <section className="showroomSection" id="showroom">
@@ -707,42 +795,39 @@ export default function ContactPageClient() {
             <iframe
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps?q=Navana+Zohura+Square,+Ground+Floor,+Bangla+Motor,+Dhaka-1205,+Bangladesh&output=embed"
-              title="Desh Solar showroom location"
+              src="https://www.google.com/maps?q=Navana%20Zohura%20Square%2C%20Bangla%20Motor%2C%20Dhaka%2C%20Bangladesh&output=embed"
+              title="Desh Solar Head Office location"
             />
           </div>
           <div className="showroomCopy">
             <div className="demoEyebrow">Visit Desh Solar</div>
-            <h2>Showroom / Display Center</h2>
-            <p>Visit for product consultation, product viewing, complete-system discussion or customer-support needs.</p>
+            <h2>Head Office</h2>
+            <p>Visit our head office for product consultation, complete-system discussion, project planning or customer-support needs.</p>
             <div className="showroomDetails">
-              <div><small>ADDRESS</small><b>Navana Zohura Square, Ground Floor</b><span>Bangla Motor, Dhaka-1205, Bangladesh</span></div>
-              <div><small>PHONE</small><b>01754-477488</b><span>Customer support line</span></div>
-              <div><small>SERVICE HOURS</small><b>10:00 AM – 11:00 PM</b><span>7 days/week</span></div>
+              <div className="showroomAddress">
+                <small>ADDRESS</small>
+                <b>28, Kazi Nazrul Islam Avenue</b>
+                <span>Navana Zohura Square, Abasik Gate, Ground Floor, Bangla Motor, Dhaka-1205</span>
+              </div>
+              <div className="showroomHours">
+                <small>SERVICE HOURS</small>
+                <b>10:00 AM – 11:00 PM</b>
+                <span>7 days/week • Dhaka time</span>
+                <strong className={`showroomHoursStatus${serviceOpen === false ? " closed" : ""}`}>
+                  <i aria-hidden="true" />
+                  {serviceOpen === true
+                    ? "Open now"
+                    : serviceOpen === false
+                      ? "Closed now • Opens at 10:00 AM"
+                      : "Service hours"}
+                </strong>
+              </div>
             </div>
             <div className="demoActions">
-              <a className="demoBtn" href="tel:01754477488">Call Before Visiting →</a>
-              <button className="demoBtn secondary" type="button" onClick={() => selectRoute("visit", true)}>
+              <button className="demoBtn" type="button" onClick={() => selectRoute("visit", true)}>
                 Request Visit Consultation →
               </button>
             </div>
-          </div>
-        </section>
-
-        <section className="departmentRouter" id="department-router">
-          <div className="contactSectionHead">
-            <div>
-              <div className="demoEyebrow">Choose the Right Department</div>
-              <h2>Get to the right workflow faster.</h2>
-            </div>
-          </div>
-          <div className="departmentGrid">
-            <Link href="/products"><span>01</span><b>Sales &amp; Products</b><small>Browse products, product details and cart.</small></Link>
-            <button type="button" onClick={() => selectRoute("project", true)}><span>02</span><b>Solar Project Consultation</b><small>Residential, commercial, industrial or custom.</small></button>
-            <Link href="/engineering-lab#engineering-tools"><span>03</span><b>Technical Planning</b><small>Generation, battery, inverter, roof and compatibility tools.</small></Link>
-            <Link href="/customer-support"><span>04</span><b>Existing Customer Support</b><small>Product, system, installation, order or delivery.</small></Link>
-            <Link href="/customer-support"><span>05</span><b>Warranty Assistance</b><small>Dedicated warranty-support workflow.</small></Link>
-            <Link href="/customer-support"><span>06</span><b>Order &amp; Delivery</b><small>Delivery or order assistance.</small></Link>
           </div>
         </section>
 

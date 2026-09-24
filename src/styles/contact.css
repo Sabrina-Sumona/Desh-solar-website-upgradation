@@ -626,7 +626,7 @@
 .directContactSection {
   padding: 5vh 4vw;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.34fr);
   gap: 10px;
   background: rgba(255, 255, 255, 0.012);
 }
@@ -643,6 +643,17 @@
   justify-content: space-between;
   gap: 22px;
   align-items: center;
+}
+
+.socialContactCard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.socialContactCard .directContactSocials {
+  margin-top: 0;
 }
 
 .phoneCard h2 {
@@ -668,12 +679,24 @@
   font-size: 6px;
 }
 
-.directPhone > a {
-  display: block;
+.directPhoneNumbers {
   margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.directPhoneNumbers a {
   color: #c9ffa4;
-  font-size: 26px;
+  font-size: 23px;
   font-weight: 900;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+.directPhoneNumbers a:hover {
+  color: #8ff160;
 }
 
 .directPhone > span {
@@ -798,6 +821,62 @@
   margin-top: 2px;
   color: #718791;
   font-size: 7px;
+}
+
+
+.showroomHoursStatus {
+  width: fit-content;
+  margin-top: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #c9ffa4;
+  font-size: 7px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.showroomHoursStatus i {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: #8ff160;
+  box-shadow: 0 0 8px rgba(143, 241, 96, 0.45);
+}
+
+.showroomHoursStatus.closed {
+  color: #9dafb7;
+}
+
+.showroomHoursStatus.closed i {
+  background: #81939b;
+  box-shadow: none;
+}
+
+.directContactSocials {
+  margin-top: 10px;
+}
+
+.directContactSocials > small {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--contact-copy-dim);
+  font-size: 8px;
+}
+
+.directContactSocials .contactOfficeSocials {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  justify-content: center;
+}
+
+.directContactSocials .contactOfficeSocials a {
+  padding: 0;
 }
 
 .departmentRouter,
@@ -1225,6 +1304,25 @@
     margin-top: 16px;
   }
 
+  .socialContactCard {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .directContactSocials .contactOfficeSocials {
+    margin-left: 0;
+    justify-content: flex-start;
+  }
+
+  .directPhoneNumbers {
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .directPhoneNumbers a {
+    font-size: 20px;
+  }
+
   .departmentGrid,
   .prepareChecklist,
   .contactToolCards {
@@ -1344,6 +1442,11 @@
   line-height: 1.4;
 }
 
+.showroomHoursStatus {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
 .builderBridge a,
 .contactInlineLink,
 .contactUploadButton,
@@ -1450,5 +1553,118 @@
   .contactNotesLabel,
   .summaryRows > div {
     font-size: 10px;
+  }
+}
+
+
+/* Contact reach panels: compact phone and social cards. */
+.contactReachGrid {
+  padding: 2.6vh 4vw;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 300px);
+  gap: 10px;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.012);
+}
+
+.contactPhonePanel,
+.contactSocialPanel {
+  min-width: 0;
+  min-height: 126px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.065);
+  background: #08171f;
+}
+
+.contactPhonePanel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.contactPhonePanel .demoEyebrow {
+  margin-bottom: 10px;
+}
+
+.contactPhonePanel h2 {
+  margin: 2px 0 5px;
+  font-size: 28px;
+  line-height: 1.05;
+}
+
+.contactPhonePanel p {
+  margin: 0;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.contactPhonePanel .directPhoneNumbers a {
+  font-size: 21px;
+}
+
+.contactSocialPanel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.contactSocialPanel .directContactSocials {
+  margin-top: 0;
+}
+
+.contactSocialPanel .directContactSocials > small {
+  margin-bottom: 6px;
+}
+
+.contactSocialPanel .contactOfficeSocials {
+  margin-inline: auto;
+}
+
+@media (max-width: 1100px) {
+  .contactReachGrid {
+    grid-template-columns: 1fr;
+    padding-block: 2.4vh;
+  }
+
+  .contactPhonePanel,
+  .contactSocialPanel {
+    min-height: 0;
+  }
+
+  .contactSocialPanel {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .contactSocialPanel .contactOfficeSocials {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .contactReachGrid {
+    padding: 2.2vh 4vw;
+    gap: 8px;
+  }
+
+  .contactPhonePanel,
+  .contactSocialPanel {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .contactPhonePanel {
+    display: block;
+  }
+
+  .contactPhonePanel .directPhone {
+    margin-top: 12px;
+  }
+
+  .contactPhonePanel h2 {
+    font-size: 25px;
   }
 }
