@@ -739,7 +739,7 @@ export default function ContactPageClient() {
           <div className="departmentGrid">
             <Link href="/products"><span>01</span><b>Sales &amp; Products</b><small>Browse products, product details and cart.</small></Link>
             <button type="button" onClick={() => selectRoute("project", true)}><span>02</span><b>Solar Project Consultation</b><small>Residential, commercial, industrial or custom.</small></button>
-            <Link href="/tools-and-technology"><span>03</span><b>Technical Planning</b><small>Generation, battery, inverter, roof and compatibility tools.</small></Link>
+            <Link href="/engineering-lab#engineering-tools"><span>03</span><b>Technical Planning</b><small>Generation, battery, inverter, roof and compatibility tools.</small></Link>
             <Link href="/customer-support"><span>04</span><b>Existing Customer Support</b><small>Product, system, installation, order or delivery.</small></Link>
             <Link href="/customer-support"><span>05</span><b>Warranty Assistance</b><small>Dedicated warranty-support workflow.</small></Link>
             <Link href="/customer-support"><span>06</span><b>Order &amp; Delivery</b><small>Delivery or order assistance.</small></Link>
