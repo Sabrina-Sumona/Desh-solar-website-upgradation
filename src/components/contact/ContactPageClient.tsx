@@ -788,32 +788,6 @@ export default function ContactPageClient() {
         </section>
 
 
-        <section className="contactToolsBridge">
-          <div className="contactToolsCopy">
-            <div className="demoEyebrow">Talk to Us with Better Information</div>
-            <h2>Use the tools first if you want a stronger consultation.</h2>
-            <p>Estimate generation, battery runtime, inverter class, roof PV potential or a quick connected load before you send the inquiry.</p>
-            <Link className="demoBtn" href="/tools-and-technology">Open Engineering Lab →</Link>
-          </div>
-          <div className="contactToolCards">
-            <Link href="/tools-and-technology#engineering-tools"><span>☀</span><b>Generation</b><small>PV energy estimate</small></Link>
-            <Link href="/tools-and-technology#engineering-tools"><span>▣</span><b>Battery</b><small>Backup runtime</small></Link>
-            <Link href="/tools-and-technology#engineering-tools"><span>↯</span><b>Inverter</b><small>Running + surge</small></Link>
-            <Link href="/build-your-system"><span>⌂</span><b>Full System</b><small>Property-based builder</small></Link>
-          </div>
-        </section>
-
-        <div className="ctaBand contactFinalCta">
-          <div>
-            <h3>Choose the path that matches what you need.</h3>
-            <p>Explore products, build a complete solar profile or use Customer Support for an existing system.</p>
-          </div>
-          <div className="demoActions">
-            <Link className="demoBtn" href="/products">Explore Products →</Link>
-            <Link className="demoBtn secondary" href="/build-your-system">Build Your System →</Link>
-            <Link className="demoBtn secondary" href="/customer-support">Customer Support →</Link>
-          </div>
-        </div>
       </div>
 
       <section className="contactFutureBand">
