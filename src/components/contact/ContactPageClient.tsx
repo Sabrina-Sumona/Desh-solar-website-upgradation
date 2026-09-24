@@ -99,6 +99,127 @@ function cleanText(value: string) {
   return value.replace(/\s+/g, " ").trim();
 }
 
+const WHATSAPP_NUMBER = "8801754477488";
+
+function whatsappField(label: string, value: string) {
+  return `*${label}:* ${value}`;
+}
+
+type ContactWhatsAppData = {
+  route: ContactRoute;
+  reference: string;
+  activeTitle: string;
+  summary: string;
+  name: string;
+  phone: string;
+  email: string;
+  location: string;
+  notes: string;
+  fileNames: string[];
+  projectProperty: string;
+  projectGoal: string;
+  projectBill: string;
+  projectBackup: string;
+  projectPhase: string;
+  projectConsultType: string;
+  productCategory: string;
+  productModel: string;
+  productQty: string;
+  productInquiryType: string;
+  visitDate: string;
+  visitTime: string;
+  visitPurpose: string;
+};
+
+function buildContactWhatsAppMessage(data: ContactWhatsAppData) {
+  const lines: Array<string | null> = [
+    "*DESH SOLAR*",
+    "*CONTACT / CONSULTATION REQUEST*",
+    "--------------------------------",
+    "",
+    "*REQUEST SUMMARY*",
+    whatsappField("Reference", data.reference),
+    whatsappField("Route", data.activeTitle),
+    whatsappField("Request Type", data.summary),
+    "",
+    "*CUSTOMER DETAILS*",
+    whatsappField("Name", cleanText(data.name)),
+    whatsappField("Phone", cleanText(data.phone)),
+    cleanText(data.email) ? whatsappField("Email", cleanText(data.email)) : null,
+    cleanText(data.location)
+      ? whatsappField("District / City", cleanText(data.location))
+      : null,
+  ];
+
+  if (data.route === "project") {
+    lines.push(
+      "",
+      "*PROJECT DETAILS*",
+      whatsappField("Property Type", data.projectProperty),
+      whatsappField("Primary Goal", data.projectGoal),
+      cleanText(data.projectBill)
+        ? whatsappField("Monthly Electricity Bill", `BDT ${cleanText(data.projectBill)}`)
+        : null,
+      cleanText(data.projectBackup)
+        ? whatsappField("Desired Backup", `${cleanText(data.projectBackup)} hours`)
+        : null,
+      whatsappField("Electrical Phase", data.projectPhase),
+      whatsappField("Preferred Consultation", data.projectConsultType),
+    );
+  }
+
+  if (data.route === "product") {
+    lines.push(
+      "",
+      "*PRODUCT INQUIRY*",
+      whatsappField("Category", data.productCategory),
+      cleanText(data.productModel)
+        ? whatsappField("Product / Model", cleanText(data.productModel))
+        : null,
+      whatsappField("Quantity", cleanText(data.productQty) || "1"),
+      whatsappField("Inquiry Type", data.productInquiryType),
+    );
+  }
+
+  if (data.route === "visit") {
+    lines.push(
+      "",
+      "*HEAD OFFICE VISIT REQUEST*",
+      cleanText(data.visitDate)
+        ? whatsappField("Preferred Date", data.visitDate)
+        : null,
+      whatsappField("Preferred Time", data.visitTime),
+      whatsappField("Visit Purpose", data.visitPurpose),
+      "Note: This is a consultation request and remains unconfirmed until Desh Solar responds.",
+    );
+  }
+
+  if (cleanText(data.notes)) {
+    lines.push("", "*CUSTOMER NOTES*", cleanText(data.notes));
+  }
+
+  if (data.fileNames.length) {
+    lines.push(
+      "",
+      "*SELECTED FILES*",
+      `${data.fileNames.join(", ")} (share separately after opening WhatsApp)`,
+    );
+  }
+
+  lines.push(
+    "",
+    "*FOLLOW-UP REQUEST*",
+    "Please review this request and contact me with the next steps.",
+    "",
+    "Thank you,",
+    `*${cleanText(data.name)}*`,
+  );
+
+  return lines
+    .filter((line): line is string => line !== null)
+    .join("\n");
+}
+
 export default function ContactPageClient() {
   const router = useRouter();
   const [route, setRoute] = useState<ContactRoute>("project");
@@ -111,6 +232,7 @@ export default function ContactPageClient() {
   const [notes, setNotes] = useState("");
   const [consent, setConsent] = useState(false);
   const [fileNames, setFileNames] = useState<string[]>([]);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const [projectProperty, setProjectProperty] = useState("Residential");
   const [projectGoal, setProjectGoal] = useState("Solar + Backup");
@@ -131,6 +253,7 @@ export default function ContactPageClient() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("");
   const [reference, setReference] = useState("");
+  const [whatsAppFallbackUrl, setWhatsAppFallbackUrl] = useState("");
   const [serviceOpen, setServiceOpen] = useState<boolean | null>(null);
 
   const activeMeta = routeMeta[route];
@@ -193,6 +316,7 @@ export default function ContactPageClient() {
     setStatus("idle");
     setStatusMessage("");
     setReference("");
+    setWhatsAppFallbackUrl("");
 
     if (scroll) {
       window.setTimeout(() => {
@@ -203,8 +327,12 @@ export default function ContactPageClient() {
     }
   };
 
-  const buildAdditionalNotes = () => {
+  const buildAdditionalNotes = (requestReference?: string) => {
     const parts = [`Contact route: ${activeMeta.title}`];
+
+    if (requestReference) {
+      parts.push(`Request reference: ${requestReference}`);
+    }
 
     if (route === "project") {
       parts.push(`Property: ${projectProperty}`);
@@ -233,7 +361,7 @@ export default function ContactPageClient() {
     }
 
     if (fileNames.length) {
-      parts.push(`Selected local files: ${fileNames.join(", ")} (not uploaded)`);
+      parts.push(`Selected files: ${fileNames.join(", ")} (shared separately through the device share sheet)`);
     }
 
     return parts.join(" | ");
@@ -249,7 +377,53 @@ export default function ContactPageClient() {
   };
 
   const handleFiles = (event: ChangeEvent<HTMLInputElement>) => {
-    setFileNames(Array.from(event.target.files ?? []).map((file) => file.name));
+    const files = Array.from(event.target.files ?? []);
+    setSelectedFiles(files);
+    setFileNames(files.map((file) => file.name));
+  };
+
+  const shareSelectedFiles = async () => {
+    if (!selectedFiles.length) {
+      setStatusMessage("No files are selected to share.");
+      return;
+    }
+
+    if (!("share" in navigator) || !("canShare" in navigator)) {
+      setStatusMessage(
+        "This browser cannot share files directly. Open WhatsApp and attach the selected images manually.",
+      );
+      return;
+    }
+
+    const shareData: ShareData = {
+      files: selectedFiles,
+      title: `Desh Solar request ${reference || ""}`.trim(),
+      text: reference
+        ? `Desh Solar contact request ${reference}`
+        : "Desh Solar contact request",
+    };
+
+    if (!navigator.canShare(shareData)) {
+      setStatusMessage(
+        "These files cannot be shared directly from this browser. Open WhatsApp and attach them manually.",
+      );
+      return;
+    }
+
+    try {
+      await navigator.share(shareData);
+      setStatusMessage(
+        "File share opened. Choose WhatsApp and select the Desh Solar conversation to send the images/files.",
+      );
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      setStatusMessage(
+        "Could not open file sharing. Open WhatsApp and attach the selected images manually.",
+      );
+    }
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -273,7 +447,48 @@ export default function ContactPageClient() {
     }
 
     setStatus("submitting");
-    setStatusMessage("Sending your request…");
+    setStatusMessage("Saving your request and preparing WhatsApp…");
+    setWhatsAppFallbackUrl("");
+
+    const nextReference = createReference();
+    const whatsappMessage = buildContactWhatsAppMessage({
+      route,
+      reference: nextReference,
+      activeTitle: activeMeta.title,
+      summary: activeMeta.summary,
+      name,
+      phone,
+      email,
+      location,
+      notes,
+      fileNames,
+      projectProperty,
+      projectGoal,
+      projectBill,
+      projectBackup,
+      projectPhase,
+      projectConsultType,
+      productCategory,
+      productModel,
+      productQty,
+      productInquiryType,
+      visitDate,
+      visitTime,
+      visitPurpose,
+    });
+
+    const whatsappUrl =
+      `https://wa.me/${WHATSAPP_NUMBER}` +
+      `?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Open the tab immediately from the submit gesture so browsers do not
+    // block it while the lead is being saved. We only navigate it to
+    // WhatsApp after the API request succeeds.
+    const whatsappWindow = window.open("", "_blank");
+
+    if (whatsappWindow) {
+      whatsappWindow.opener = null;
+    }
 
     try {
       const response = await fetch("/api/customer-leads", {
@@ -285,7 +500,7 @@ export default function ContactPageClient() {
           email: cleanText(email),
           address: cleanText(location),
           fullAddress: cleanText(location),
-          additionalNotes: buildAdditionalNotes(),
+          additionalNotes: buildAdditionalNotes(nextReference),
           website: "",
         }),
       });
@@ -296,10 +511,20 @@ export default function ContactPageClient() {
         throw new Error(result.message || "We could not send the request right now.");
       }
 
-      const nextReference = createReference();
       setReference(nextReference);
       setStatus("success");
-      setStatusMessage("Your request has been sent successfully.");
+
+      if (whatsappWindow) {
+        whatsappWindow.location.href = whatsappUrl;
+        setStatusMessage(
+          "Request saved. WhatsApp opened with your structured message — review it and tap Send.",
+        );
+      } else {
+        setWhatsAppFallbackUrl(whatsappUrl);
+        setStatusMessage(
+          "Request saved. Your browser blocked WhatsApp; use the Open WhatsApp button below.",
+        );
+      }
 
       window.setTimeout(() => {
         document
@@ -307,6 +532,11 @@ export default function ContactPageClient() {
           ?.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 30);
     } catch (error) {
+      if (whatsappWindow) {
+        whatsappWindow.close();
+      }
+
+      setWhatsAppFallbackUrl("");
       setStatus("error");
       setStatusMessage(
         error instanceof Error
@@ -593,7 +823,7 @@ export default function ContactPageClient() {
                 <div>
                   <small>OPTIONAL PROJECT FILES / PHOTOS</small>
                   <b>Roof photo, electricity bill, existing equipment photo or project note.</b>
-                  <span>Files stay on your device in this version and are not uploaded.</span>
+                  <span>After the request is saved, use the file-share button to send these images/files through WhatsApp.</span>
                 </div>
                 <label className="contactUploadButton">
                   Choose Files
@@ -624,7 +854,7 @@ export default function ContactPageClient() {
               <div className="contactSubmitRow">
                 {route !== "support" && (
                   <button className="demoBtn" type="submit" disabled={status === "submitting"}>
-                    {status === "submitting" ? "Sending Request…" : "Send Contact Request →"}
+                    {status === "submitting" ? "Preparing WhatsApp…" : "Send Request via WhatsApp →"}
                   </button>
                 )}
                 <span className={status === "success" ? "success" : ""}>{statusMessage}</span>
@@ -660,9 +890,32 @@ export default function ContactPageClient() {
         {status === "success" && (
           <section className="contactResultPanel" id="contactResultPanel">
             <div>
-              <div className="demoEyebrow">Request Sent</div>
-              <h2>Your contact request has been sent successfully.</h2>
-              <p>Desh Solar can follow up using the contact details you provided.</p>
+              <div className="demoEyebrow">Request Saved</div>
+              <h2>Your structured WhatsApp request is ready.</h2>
+              <p>
+                Your contact details were saved first. Review the prepared WhatsApp message and tap Send. If you selected images or files, share them from the button below as a second step.
+              </p>
+              <div className="contactResultActions">
+                {whatsAppFallbackUrl && (
+                  <a
+                    className="demoBtn"
+                    href={whatsAppFallbackUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open WhatsApp →
+                  </a>
+                )}
+                {selectedFiles.length > 0 && (
+                  <button
+                    className="demoBtn secondary"
+                    type="button"
+                    onClick={shareSelectedFiles}
+                  >
+                    Share Selected Files →
+                  </button>
+                )}
+              </div>
             </div>
             <div className="contactResultRef">
               <small>REQUEST REFERENCE</small>

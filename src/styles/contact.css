@@ -595,6 +595,17 @@
   font-size: 9px;
 }
 
+.contactResultActions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contactResultActions .demoBtn {
+  margin: 0;
+}
+
 .contactResultRef {
   padding: 12px 15px;
   border-radius: 12px;
