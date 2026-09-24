@@ -1257,3 +1257,198 @@
     padding: 43px 18px;
   }
 }
+
+/* =========================================================
+   READABILITY PASS — preserve approved layout, improve text
+   legibility and muted-copy contrast across Contact Us.
+   ========================================================= */
+
+.contactHubPage {
+  --contact-copy: #a9bdc6;
+  --contact-copy-soft: #91a8b3;
+  --contact-copy-dim: #7f98a3;
+}
+
+.contactHubPage .demoEyebrow {
+  color: #b2c5cd;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.contactCompactHero p,
+.contactFormHead p,
+.supportRouteMessage p,
+.showroomCopy > p,
+.contactSectionHead p,
+.prepareAction p,
+.contactToolsCopy p {
+  color: var(--contact-copy);
+  font-size: 12px;
+  line-height: 1.62;
+}
+
+.contactRouteCard b {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.contactRouteCard small {
+  color: var(--contact-copy-soft);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.contactDemoBadge {
+  color: #9fc3d2;
+  font-size: 9px;
+}
+
+.contactFormGrid label,
+.contactNotesLabel {
+  color: #9db2bc;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.contactFormGrid input,
+.contactFormGrid select,
+.contactNotesLabel textarea {
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.contactBlockTitle span,
+.supportRouteMessage small,
+.contactSummarySticky > small,
+.routeCard > small,
+.prepareAction small {
+  font-size: 9px;
+}
+
+.contactBlockTitle b {
+  font-size: 17px;
+}
+
+.builderBridge small,
+.contactUploadArea small,
+.showroomDetails small {
+  color: var(--contact-copy-dim);
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.builderBridge b,
+.contactUploadArea b,
+.showroomDetails b {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.builderBridge a,
+.contactInlineLink,
+.contactUploadButton,
+.routeCard a {
+  font-size: 10px;
+}
+
+.contactUploadArea span,
+.contactFileNames,
+.contactConsentRow,
+.showroomDetails span {
+  color: var(--contact-copy-soft);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.visitNote,
+.contactSubmitRow span {
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.summaryRows > div {
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.summaryRows span {
+  color: #91a7b1;
+}
+
+.directPhone > small {
+  color: var(--contact-copy-dim);
+  font-size: 8px;
+}
+
+.directPhone > span,
+.directPhone > b {
+  color: var(--contact-copy-soft);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.departmentGrid b {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.departmentGrid small {
+  color: var(--contact-copy-soft);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.prepareTabs button {
+  color: #9eb2bc;
+  font-size: 10px;
+}
+
+.prepareChecklist b {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.prepareChecklist p {
+  color: var(--contact-copy-soft);
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+.contactToolCards b {
+  font-size: 12px;
+}
+
+.contactToolCards small {
+  color: var(--contact-copy-soft);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.contactFutureBand small {
+  font-size: 10px;
+}
+
+@media (max-width: 720px) {
+  .contactCompactHero p,
+  .contactFormHead p,
+  .supportRouteMessage p,
+  .showroomCopy > p,
+  .contactSectionHead p,
+  .prepareAction p,
+  .contactToolsCopy p {
+    font-size: 12px;
+  }
+
+  .contactRouteCard small,
+  .departmentGrid small,
+  .prepareChecklist p,
+  .contactToolCards small {
+    font-size: 10px;
+  }
+
+  .contactFormGrid label,
+  .contactNotesLabel,
+  .summaryRows > div {
+    font-size: 10px;
+  }
+}
