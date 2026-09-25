@@ -327,46 +327,6 @@ export default function ContactPageClient() {
     }
   };
 
-  const buildAdditionalNotes = (requestReference?: string) => {
-    const parts = [`Contact route: ${activeMeta.title}`];
-
-    if (requestReference) {
-      parts.push(`Request reference: ${requestReference}`);
-    }
-
-    if (route === "project") {
-      parts.push(`Property: ${projectProperty}`);
-      parts.push(`Primary goal: ${projectGoal}`);
-      if (projectBill) parts.push(`Monthly electricity bill: BDT ${projectBill}`);
-      if (projectBackup) parts.push(`Desired backup: ${projectBackup} hours`);
-      parts.push(`Electrical phase: ${projectPhase}`);
-      parts.push(`Preferred consultation: ${projectConsultType}`);
-    }
-
-    if (route === "product") {
-      parts.push(`Product category: ${productCategory}`);
-      if (productModel) parts.push(`Product / model: ${productModel}`);
-      parts.push(`Quantity: ${productQty || "1"}`);
-      parts.push(`Inquiry type: ${productInquiryType}`);
-    }
-
-    if (route === "visit") {
-      if (visitDate) parts.push(`Preferred visit date: ${visitDate}`);
-      parts.push(`Preferred time: ${visitTime}`);
-      parts.push(`Visit purpose: ${visitPurpose}`);
-    }
-
-    if (cleanText(notes)) {
-      parts.push(`Customer notes: ${cleanText(notes)}`);
-    }
-
-    if (fileNames.length) {
-      parts.push(`Selected files: ${fileNames.join(", ")} (shared separately through the device share sheet)`);
-    }
-
-    return parts.join(" | ");
-  };
-
   const createReference = () => {
     const now = new Date();
     const yy = String(now.getFullYear()).slice(-2);
@@ -377,7 +337,7 @@ export default function ContactPageClient() {
   };
 
   const handleFiles = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(event.target.files ?? []);
+    const files: File[] = Array.from(event.target.files ?? []);
     setSelectedFiles(files);
     setFileNames(files.map((file) => file.name));
   };
@@ -495,12 +455,31 @@ export default function ContactPageClient() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          recordType: "contact_request",
+          reference: nextReference,
+          requestType: activeMeta.summary,
+          contactRoute: route,
           name: cleanText(name),
           phone: cleanText(phone),
           email: cleanText(email),
-          address: cleanText(location),
-          fullAddress: cleanText(location),
-          additionalNotes: buildAdditionalNotes(nextReference),
+          districtCity: cleanText(location),
+          projectProperty: route === "project" ? projectProperty : "",
+          projectGoal: route === "project" ? projectGoal : "",
+          monthlyElectricityBill: route === "project" ? cleanText(projectBill) : "",
+          backupHours: route === "project" ? cleanText(projectBackup) : "",
+          electricalPhase: route === "project" ? projectPhase : "",
+          preferredConsultation: route === "project" ? projectConsultType : "",
+          productCategory: route === "product" ? productCategory : "",
+          productModel: route === "product" ? cleanText(productModel) : "",
+          quantity: route === "product" ? cleanText(productQty) || "1" : "",
+          inquiryType: route === "product" ? productInquiryType : "",
+          preferredDate: route === "visit" ? cleanText(visitDate) : "",
+          preferredTime: route === "visit" ? visitTime : "",
+          visitPurpose: route === "visit" ? visitPurpose : "",
+          messageNotes: cleanText(notes),
+          attachmentNames: fileNames.join(", "),
+          whatsappNumber: "01754-477488",
+          additionalNotes: cleanText(notes),
           website: "",
         }),
       });

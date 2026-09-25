@@ -6,7 +6,8 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-type CustomerLeadPayload = {
+type CheckoutLeadPayload = {
+  recordType: "checkout_lead";
   name: string;
   phone: string;
   email: string;
@@ -14,6 +15,38 @@ type CustomerLeadPayload = {
   fullAddress: string;
   additionalNotes: string;
 };
+
+type ContactRequestPayload = {
+  recordType: "contact_request";
+  reference: string;
+  requestType: string;
+  contactRoute: string;
+  name: string;
+  phone: string;
+  email: string;
+  districtCity: string;
+  projectProperty: string;
+  projectGoal: string;
+  monthlyElectricityBill: string;
+  backupHours: string;
+  electricalPhase: string;
+  preferredConsultation: string;
+  productCategory: string;
+  productModel: string;
+  quantity: string;
+  inquiryType: string;
+  preferredDate: string;
+  preferredTime: string;
+  visitPurpose: string;
+  messageNotes: string;
+  attachmentNames: string;
+  whatsappNumber: string;
+  additionalNotes: string;
+};
+
+type GoogleSheetPayload =
+  | CheckoutLeadPayload
+  | ContactRequestPayload;
 
 type GoogleSheetResponse = {
   success?: boolean;
@@ -93,19 +126,9 @@ function normalizeOptionalEmail(
   return email;
 }
 
-function parseLead(
-  body: unknown
-): CustomerLeadPayload | null {
-  if (
-    !body ||
-    typeof body !== "object"
-  ) {
-    return null;
-  }
-
-  const record =
-    body as Record<string, unknown>;
-
+function parseCheckoutLead(
+  record: Record<string, unknown>
+): CheckoutLeadPayload | null {
   const phone =
     normalizeBangladeshPhone(
       record.phone
@@ -120,7 +143,8 @@ function parseLead(
     return null;
   }
 
-  const lead: CustomerLeadPayload = {
+  const lead: CheckoutLeadPayload = {
+    recordType: "checkout_lead",
     name: cleanText(
       record.name,
       120
@@ -152,6 +176,164 @@ function parseLead(
   return lead;
 }
 
+function parseContactRequest(
+  record: Record<string, unknown>
+): ContactRequestPayload | null {
+  const phone =
+    normalizeBangladeshPhone(
+      record.phone
+    );
+
+  const email =
+    normalizeOptionalEmail(
+      record.email
+    );
+
+  if (email === null) {
+    return null;
+  }
+
+  const request: ContactRequestPayload = {
+    recordType: "contact_request",
+    reference: cleanText(
+      record.reference,
+      80
+    ),
+    requestType: cleanText(
+      record.requestType,
+      120
+    ),
+    contactRoute: cleanText(
+      record.contactRoute,
+      40
+    ),
+    name: cleanText(
+      record.name,
+      120
+    ),
+    phone: phone || "",
+    email,
+    districtCity: cleanText(
+      record.districtCity,
+      160
+    ),
+    projectProperty: cleanText(
+      record.projectProperty,
+      100
+    ),
+    projectGoal: cleanText(
+      record.projectGoal,
+      120
+    ),
+    monthlyElectricityBill: cleanText(
+      record.monthlyElectricityBill,
+      80
+    ),
+    backupHours: cleanText(
+      record.backupHours,
+      80
+    ),
+    electricalPhase: cleanText(
+      record.electricalPhase,
+      80
+    ),
+    preferredConsultation: cleanText(
+      record.preferredConsultation,
+      120
+    ),
+    productCategory: cleanText(
+      record.productCategory,
+      100
+    ),
+    productModel: cleanText(
+      record.productModel,
+      160
+    ),
+    quantity: cleanText(
+      record.quantity,
+      40
+    ),
+    inquiryType: cleanText(
+      record.inquiryType,
+      120
+    ),
+    preferredDate: cleanText(
+      record.preferredDate,
+      40
+    ),
+    preferredTime: cleanText(
+      record.preferredTime,
+      80
+    ),
+    visitPurpose: cleanText(
+      record.visitPurpose,
+      160
+    ),
+    messageNotes: cleanText(
+      record.messageNotes,
+      1500
+    ),
+    attachmentNames: cleanText(
+      record.attachmentNames,
+      1000
+    ),
+    whatsappNumber: cleanText(
+      record.whatsappNumber,
+      40
+    ),
+    additionalNotes: cleanText(
+      record.additionalNotes,
+      2000
+    ),
+  };
+
+  if (
+    !request.reference ||
+    !request.requestType ||
+    !request.name ||
+    !request.phone
+  ) {
+    return null;
+  }
+
+  return request;
+}
+
+function parsePayload(
+  body: unknown
+): GoogleSheetPayload | null {
+  if (
+    !body ||
+    typeof body !== "object"
+  ) {
+    return null;
+  }
+
+  const record =
+    body as Record<string, unknown>;
+
+  const recordType = cleanText(
+    record.recordType,
+    40
+  ).toLowerCase();
+
+  if (
+    recordType ===
+    "contact_request"
+  ) {
+    return parseContactRequest(
+      record
+    );
+  }
+
+  // Backwards compatibility: the existing checkout page does not need
+  // to send recordType. Any non-contact payload follows the original
+  // checkout/customer-lead validation and goes to the existing sheet.
+  return parseCheckoutLead(
+    record
+  );
+}
+
 function hasHoneypotValue(
   body: unknown
 ) {
@@ -173,8 +355,26 @@ function hasHoneypotValue(
   );
 }
 
-async function saveLeadToGoogleSheet(
-  lead: CustomerLeadPayload
+function toCustomerDirectoryPayload(
+  payload: GoogleSheetPayload
+): CheckoutLeadPayload {
+  if (payload.recordType === "contact_request") {
+    return {
+      recordType: "checkout_lead",
+      name: payload.name,
+      phone: payload.phone,
+      email: payload.email,
+      address: payload.districtCity,
+      fullAddress: "",
+      additionalNotes: payload.messageNotes,
+    };
+  }
+
+  return payload;
+}
+
+async function saveToGoogleSheet(
+  payload: CheckoutLeadPayload
 ) {
   const webAppUrl =
     process.env
@@ -222,7 +422,7 @@ async function saveLeadToGoogleSheet(
             "development"
               ? "development"
               : "production",
-          ...lead,
+          ...payload,
         }),
         cache: "no-store",
         redirect: "follow",
@@ -256,8 +456,7 @@ async function saveLeadToGoogleSheet(
        * We only reach this block after an HTTP-success response.
        * In our integration the Sheet row is already written at
        * this point, so a non-JSON success response must not turn
-       * a successful order confirmation into a customer-facing
-       * error.
+       * a successful submission into a customer-facing error.
        */
       return {
         success: true,
@@ -281,10 +480,10 @@ export async function POST(
       });
     }
 
-    const lead =
-      parseLead(body);
+    const payload =
+      parsePayload(body);
 
-    if (!lead) {
+    if (!payload) {
       return NextResponse.json(
         {
           success: false,
@@ -299,9 +498,22 @@ export async function POST(
       );
     }
 
+    // Both Checkout and Contact requests are intentionally stored in the
+    // same existing Customer_Directory table. Contact requests are converted
+    // to the original checkout/customer payload before they reach Apps Script.
+    // This guarantees:
+    // - Address = District / City
+    // - Full Address = blank
+    // - Additional Notes = only the customer-written Project / Product / Visit Notes
+    // and prevents older Apps Script deployments from expanding contact metadata.
+    const sheetPayload =
+      toCustomerDirectoryPayload(
+        payload
+      );
+
     const result =
-      await saveLeadToGoogleSheet(
-        lead
+      await saveToGoogleSheet(
+        sheetPayload
       );
 
     if (!result.success) {
@@ -331,6 +543,9 @@ export async function POST(
 
     return NextResponse.json({
       success: true,
+      recordType:
+        payload.recordType,
+      destination: "Customer_Directory",
     });
   } catch (error) {
     if (
