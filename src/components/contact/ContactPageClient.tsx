@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 
-type ContactRoute = "project" | "product" | "support" | "visit";
+type ContactRoute = "project" | "product" | "support" | "visit" | "review";
 type PrepareKey = "residential" | "commercial" | "industrial" | "agriculture";
 
 type LeadResponse = {
@@ -64,6 +64,14 @@ const routeMeta: Record<ContactRoute, RouteMeta> = {
       "Choose a preferred visit window. This remains unconfirmed until Desh Solar responds.",
     link: "#showroom",
     linkLabel: "View Head Office Details →",
+  },
+  review: {
+    title: "Review Desh Solar",
+    intro: "Share your experience with Desh Solar directly through this website.",
+    summary: "Customer Review",
+    next: "Write your review and submit your feedback.",
+    link: "",
+    linkLabel: "",
   },
 };
 
@@ -230,6 +238,7 @@ export default function ContactPageClient() {
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
   const [notes, setNotes] = useState("");
+  const [reviewText, setReviewText] = useState("");
   const [consent, setConsent] = useState(false);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
@@ -300,6 +309,10 @@ export default function ContactPageClient() {
       return "Customer Support Center";
     }
 
+    if (route === "review") {
+      return cleanText(reviewText) ? "Review ready" : "Customer feedback";
+    }
+
     return visitDate ? `${visitPurpose} • ${visitDate}` : visitPurpose;
   }, [
     productCategory,
@@ -307,6 +320,7 @@ export default function ContactPageClient() {
     projectGoal,
     projectProperty,
     route,
+    reviewText,
     visitDate,
     visitPurpose,
   ]);
@@ -325,6 +339,50 @@ export default function ContactPageClient() {
           ?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 30);
     }
+  };
+
+  const buildAdditionalNotes = (requestReference?: string) => {
+    const parts = [`Contact route: ${activeMeta.title}`];
+
+    if (requestReference) {
+      parts.push(`Request reference: ${requestReference}`);
+    }
+
+    if (route === "project") {
+      parts.push(`Property: ${projectProperty}`);
+      parts.push(`Primary goal: ${projectGoal}`);
+      if (projectBill) parts.push(`Monthly electricity bill: BDT ${projectBill}`);
+      if (projectBackup) parts.push(`Desired backup: ${projectBackup} hours`);
+      parts.push(`Electrical phase: ${projectPhase}`);
+      parts.push(`Preferred consultation: ${projectConsultType}`);
+    }
+
+    if (route === "product") {
+      parts.push(`Product category: ${productCategory}`);
+      if (productModel) parts.push(`Product / model: ${productModel}`);
+      parts.push(`Quantity: ${productQty || "1"}`);
+      parts.push(`Inquiry type: ${productInquiryType}`);
+    }
+
+    if (route === "visit") {
+      if (visitDate) parts.push(`Preferred visit date: ${visitDate}`);
+      parts.push(`Preferred time: ${visitTime}`);
+      parts.push(`Visit purpose: ${visitPurpose}`);
+    }
+
+    if (route === "review" && cleanText(reviewText)) {
+      parts.push(`Customer review: ${cleanText(reviewText)}`);
+    }
+
+    if (cleanText(notes)) {
+      parts.push(`Customer notes: ${cleanText(notes)}`);
+    }
+
+    if (fileNames.length) {
+      parts.push(`Selected files: ${fileNames.join(", ")} (shared separately through the device share sheet)`);
+    }
+
+    return parts.join(" | ");
   };
 
   const createReference = () => {
@@ -400,9 +458,140 @@ export default function ContactPageClient() {
       return;
     }
 
+    if (route === "review" && !cleanText(reviewText)) {
+      setStatus("error");
+      setStatusMessage("Please write your review before submitting.");
+      return;
+    }
+
     if (!consent) {
       setStatus("error");
-      setStatusMessage("Please confirm that Desh Solar may use these details to follow up.");
+      setStatusMessage(
+        route === "review"
+          ? "Please confirm that Desh Solar may store this review and contact you if follow-up is needed."
+          : "Please confirm that Desh Solar may use these details to follow up.",
+      );
+      return;
+    }
+
+    if (route === "review") {
+      setStatus("submitting");
+      setStatusMessage("Saving your review and preparing WhatsApp…");
+      setWhatsAppFallbackUrl("");
+
+      const nextReference = createReference().replace("DS-CONTACT", "DS-REVIEW");
+
+      const reviewWhatsAppMessage = [
+        "*DESH SOLAR*",
+        "*CUSTOMER REVIEW*",
+        "--------------------------------",
+        "",
+        "*REVIEW SUMMARY*",
+        whatsappField("Reference", nextReference),
+        "",
+        "*CUSTOMER DETAILS*",
+        whatsappField("Name", cleanText(name)),
+        whatsappField("Phone", cleanText(phone)),
+        cleanText(email) ? whatsappField("Email", cleanText(email)) : null,
+        cleanText(location)
+          ? whatsappField("District / City", cleanText(location))
+          : null,
+        "",
+        "*CUSTOMER REVIEW*",
+        cleanText(reviewText),
+        "",
+        "Thank you.",
+        `*${cleanText(name)}*`,
+      ]
+        .filter((line): line is string => line !== null)
+        .join("\n");
+
+      const reviewWhatsAppUrl =
+        `https://wa.me/${WHATSAPP_NUMBER}` +
+        `?text=${encodeURIComponent(reviewWhatsAppMessage)}`;
+
+      // Open immediately from the submit gesture to avoid popup blocking.
+      // It is navigated to WhatsApp only after the review is saved.
+      const whatsappWindow = window.open("", "_blank");
+
+      if (whatsappWindow) {
+        whatsappWindow.opener = null;
+      }
+
+      try {
+        const response = await fetch("/api/customer-leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            recordType: "contact_request",
+            reference: nextReference,
+            requestType: "Customer Review",
+            contactRoute: "review",
+            name: cleanText(name),
+            phone: cleanText(phone),
+            email: cleanText(email),
+            districtCity: cleanText(location),
+            projectProperty: "",
+            projectGoal: "",
+            monthlyElectricityBill: "",
+            backupHours: "",
+            electricalPhase: "",
+            preferredConsultation: "",
+            productCategory: "",
+            productModel: "",
+            quantity: "",
+            inquiryType: "",
+            preferredDate: "",
+            preferredTime: "",
+            visitPurpose: "",
+            messageNotes: cleanText(reviewText),
+            attachmentNames: "",
+            whatsappNumber: "01754-477488",
+            additionalNotes: cleanText(reviewText),
+            website: "",
+          }),
+        });
+
+        const result = (await response.json().catch(() => ({}))) as LeadResponse;
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.message || "We could not submit your review right now.");
+        }
+
+        setReference(nextReference);
+        setStatus("success");
+
+        if (whatsappWindow) {
+          whatsappWindow.location.href = reviewWhatsAppUrl;
+          setStatusMessage(
+            "Review saved. WhatsApp opened with your review — check it and tap Send.",
+          );
+        } else {
+          setWhatsAppFallbackUrl(reviewWhatsAppUrl);
+          setStatusMessage(
+            "Review saved. Your browser blocked WhatsApp; use the Open WhatsApp button below.",
+          );
+        }
+
+        window.setTimeout(() => {
+          document
+            .getElementById("contactResultPanel")
+            ?.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 30);
+      } catch (error) {
+        if (whatsappWindow) {
+          whatsappWindow.close();
+        }
+
+        setWhatsAppFallbackUrl("");
+        setStatus("error");
+        setStatusMessage(
+          error instanceof Error
+            ? error.message
+            : "We could not submit your review right now. Please try again.",
+        );
+      }
+
       return;
     }
 
@@ -479,7 +668,7 @@ export default function ContactPageClient() {
           messageNotes: cleanText(notes),
           attachmentNames: fileNames.join(", "),
           whatsappNumber: "01754-477488",
-          additionalNotes: cleanText(notes),
+          additionalNotes: buildAdditionalNotes(nextReference),
           website: "",
         }),
       });
@@ -538,14 +727,6 @@ export default function ContactPageClient() {
               Product inquiry, complete solar project, existing-system support or Head Office visit — start with the reason you’re contacting Desh Solar.
             </p>
           </div>
-          <div className="contactHeroActions">
-            <a className="demoBtn" href="#contact-routes">
-              Choose Contact Route →
-            </a>
-            <a className="demoBtn secondary" href="tel:01754477488">
-              Call 01754-477488 →
-            </a>
-          </div>
         </section>
 
         <section className="contactRouteSection" id="contact-routes">
@@ -586,6 +767,15 @@ export default function ContactPageClient() {
               <b>Visit Desh Solar</b>
               <small>Head Office consultation and in-person discussion.</small>
             </button>
+            <button
+              className={`contactRouteCard ${route === "review" ? "active" : ""}`}
+              type="button"
+              onClick={() => selectRoute("review", true)}
+            >
+              <span>05</span>
+              <b>Review Desh Solar</b>
+              <small>Share your experience and feedback with Desh Solar.</small>
+            </button>
           </div>
         </section>
 
@@ -593,7 +783,7 @@ export default function ContactPageClient() {
           <div className="contactFormCard">
             <div className="contactFormHead">
               <div>
-                <div className="demoEyebrow">Contact &amp; Consultation Request</div>
+                <div className="demoEyebrow">{route === "review" ? "Customer Review" : "Contact & Consultation Request"}</div>
                 <h2>{activeMeta.title}</h2>
                 <p>{activeMeta.intro}</p>
               </div>
@@ -798,6 +988,26 @@ export default function ContactPageClient() {
                 </div>
               </div>
 
+              <div className={`contactDynamicBlock ${route === "review" ? "active" : ""}`}>
+                <div className="contactBlockTitle">
+                  <span>CUSTOMER REVIEW</span>
+                  <b>Tell us about your experience with Desh Solar.</b>
+                </div>
+                <div className="contactReviewForm">
+                  <label className="contactNotesLabel contactReviewTextLabel">
+                    Your Review
+                    <textarea
+                      placeholder="Write your review here..."
+                      rows={7}
+                      value={reviewText}
+                      onChange={(event) => setReviewText(event.target.value)}
+                    />
+                  </label>
+                </div>
+              </div>
+
+              {route !== "review" && (
+                <>
               <div className="contactUploadArea">
                 <div>
                   <small>OPTIONAL PROJECT FILES / PHOTOS</small>
@@ -822,18 +1032,26 @@ export default function ContactPageClient() {
                   onChange={(event) => setNotes(event.target.value)}
                 />
               </label>
+                </>
+              )}
 
               <div className="contactConsentRow">
                 <label>
                   <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} />
-                  I agree that Desh Solar may use these details to respond to this request.
+                  {route === "review"
+                    ? "I agree that Desh Solar may store this review and contact me if follow-up is needed."
+                    : "I agree that Desh Solar may use these details to respond to this request."}
                 </label>
               </div>
 
               <div className="contactSubmitRow">
                 {route !== "support" && (
                   <button className="demoBtn" type="submit" disabled={status === "submitting"}>
-                    {status === "submitting" ? "Preparing WhatsApp…" : "Send Request via WhatsApp →"}
+                    {status === "submitting"
+                      ? "Preparing WhatsApp…"
+                      : route === "review"
+                        ? "Submit Review via WhatsApp →"
+                        : "Send Request via WhatsApp →"}
                   </button>
                 )}
                 <span className={status === "success" ? "success" : ""}>{statusMessage}</span>
@@ -850,17 +1068,19 @@ export default function ContactPageClient() {
                 <div><span>Phone</span><b>{cleanText(phone) || "Not provided"}</b></div>
                 <div><span>Location</span><b>{cleanText(location) || "Not provided"}</b></div>
                 <div><span>Route</span><b>{activeMeta.title}</b></div>
-                <div><span>Project / Product</span><b>{detail}</b></div>
+                <div><span>{route === "review" ? "Review" : "Project / Product"}</span><b>{detail}</b></div>
                 <div><span>Status</span><b>{status === "success" ? "Sent" : "Draft"}</b></div>
               </div>
               <div className="summaryNextStep">
                 <small>NEXT BEST STEP</small>
                 <b>{activeMeta.next}</b>
               </div>
-              {activeMeta.link.startsWith("#") ? (
-                <a href={activeMeta.link}>{activeMeta.linkLabel}</a>
-              ) : (
-                <Link href={activeMeta.link}>{activeMeta.linkLabel}</Link>
+              {activeMeta.link && (
+                activeMeta.link.startsWith("#") ? (
+                  <a href={activeMeta.link}>{activeMeta.linkLabel}</a>
+                ) : (
+                  <Link href={activeMeta.link}>{activeMeta.linkLabel}</Link>
+                )
               )}
             </div>
           </aside>
@@ -870,9 +1090,15 @@ export default function ContactPageClient() {
           <section className="contactResultPanel" id="contactResultPanel">
             <div>
               <div className="demoEyebrow">Request Saved</div>
-              <h2>Your structured WhatsApp request is ready.</h2>
+              <h2>
+                {route === "review"
+                  ? "Your review is ready on WhatsApp."
+                  : "Your structured WhatsApp request is ready."}
+              </h2>
               <p>
-                Your contact details were saved first. Review the prepared WhatsApp message and tap Send. If you selected images or files, share them from the button below as a second step.
+                {route === "review"
+                  ? "Your review was saved first. Check the prepared WhatsApp message and tap Send to share it with Desh Solar."
+                  : "Your contact details were saved first. Review the prepared WhatsApp message and tap Send. If you selected images or files, share them from the button below as a second step."}
               </p>
               <div className="contactResultActions">
                 {whatsAppFallbackUrl && (
@@ -885,7 +1111,7 @@ export default function ContactPageClient() {
                     Open WhatsApp →
                   </a>
                 )}
-                {selectedFiles.length > 0 && (
+                {route !== "review" && selectedFiles.length > 0 && (
                   <button
                     className="demoBtn secondary"
                     type="button"
@@ -897,7 +1123,7 @@ export default function ContactPageClient() {
               </div>
             </div>
             <div className="contactResultRef">
-              <small>REQUEST REFERENCE</small>
+              <small>{route === "review" ? "REVIEW REFERENCE" : "REQUEST REFERENCE"}</small>
               <b>{reference}</b>
               <span>{activeMeta.title} • {detail}</span>
             </div>
