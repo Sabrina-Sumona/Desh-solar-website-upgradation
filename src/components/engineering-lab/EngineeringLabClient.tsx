@@ -237,20 +237,6 @@ const PAGE_HTML = String.raw`
 <div class="protectFlow"><div>▤<b>PV Array</b></div><i>→</i><div>⛨<b>DC Protection</b></div><i>→</i><div>↯<b>Inverter</b></div><i>→</i><div>⛨<b>AC Protection</b></div><i>→</i><div>⌂<b>Loads / Grid</b></div></div>
 <p class="safetyBox">Electrical protection and installation should be designed and carried out by qualified technical personnel. This page intentionally avoids DIY wiring instructions.</p>
 </section>
-<section class="techSection productBridge">
-<div class="bridgeIntro"><div class="demoEyebrow">Technology → Products → System</div><h2>Learn first. Then choose equipment.</h2><p>Move from technology education into the real catalogue or the full system builder.</p></div>
-<div class="bridgeGrid">
-<a href="/products/jinko590"><img alt="Jinko Tiger Neo 590W Solar Panel" src="/assets/products-real/jinko590.jpg"/><small>Solar Panel</small><b>Jinko Tiger Neo 590W Solar Panel</b></a>
-<a href="/products/goodwe6"><img alt="GoodWe 6kW Single Phase Off-Grid Hybrid Inverter" src="/assets/products-real/goodwe6.jpg"/><small>Inverter</small><b>GoodWe 6kW Single Phase Off-Grid Hybrid Inverter</b></a>
-<a href="/products/hithium16"><img alt="HiTHIUM HEROEE 16 LiFePO4 Lithium Battery" src="/assets/products-real/hithium16.webp"/><small>Battery</small><b>HiTHIUM HEROEE 16 LiFePO4 Lithium Battery</b></a>
-<a href="/products/sys6-51"><img alt="6kW 5.1kWh Single Phase Off-Grid Hybrid Solar System | 6.2kW PV | Double Utility Meter Distribution" src="/assets/products-real/sys6-51.jpg"/><small>Complete System</small><b>6kW 5.1kWh Single Phase Off-Grid Hybrid Solar System | 6.2kW PV | Double Utility Meter Distribution</b></a>
-</div>
-</section>
-<div class="ctaBand techCta">
-<div><h3>Ready to turn the tools into a system?</h3><p>Build a complete load, backup, roof and electricity profile.</p></div>
-<div class="demoActions"><a class="demoBtn" href="/build-your-system">Open Build Your System →</a><a class="demoBtn secondary" href="/contact">Technical Review →</a></div>
-</div>
-
 <section class="futureBand demoReveal in">
 <div class="countryMark">BD</div>
 <small>Desh Solar • Bangladesh</small>
