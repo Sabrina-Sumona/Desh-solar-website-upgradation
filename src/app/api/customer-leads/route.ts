@@ -29,7 +29,7 @@ function getContactSource(route: string) {
     case "product":
       return "Contact - Product Inquiry";
     case "support":
-      return "Contact - Existing System / Support";
+      return "Customer Support";
     case "visit":
       return "Contact - Head Office Visit";
     case "review":

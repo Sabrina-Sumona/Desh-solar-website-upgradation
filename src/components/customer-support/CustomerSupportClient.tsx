@@ -12,6 +12,21 @@ type SupportType =
 
 type Urgency = "Normal" | "Important" | "Critical";
 type ContextKey = "battery" | "inverter" | "solar" | "order" | "general";
+type EvidenceKey = "Product label" | "Error / display" | "Site / installation";
+type SubmitStatus = "idle" | "submitting" | "success" | "error";
+
+const WHATSAPP_NUMBER = "8801754477488";
+
+const cleanText = (value: string, max = 1200) =>
+  value.replace(/\s+/g, " ").trim().slice(0, max);
+
+const whatsappField = (label: string, value: string) =>
+  `*${label}:* ${value || "Not provided"}`;
+
+const createSupportReference = () => {
+  const date = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+  return `DS-SUP-${date}-${String(Date.now()).slice(-6)}`;
+};
 
 type FormState = {
   product: string;
@@ -233,7 +248,17 @@ export default function CustomerSupportClient() {
   const [form, setForm] = useState<FormState>(initialForm);
   const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const [evidence, setEvidence] = useState<Record<string, string>>({});
+  const [evidenceFiles, setEvidenceFiles] = useState<Partial<Record<EvidenceKey, File>>>({});
   const [ticketRef, setTicketRef] = useState("");
+
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerLocation, setCustomerLocation] = useState("");
+
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [whatsAppFallbackUrl, setWhatsAppFallbackUrl] = useState("");
 
   const contextKey = useMemo<ContextKey>(() => {
     const issueText = issue.toLowerCase();
@@ -280,6 +305,9 @@ export default function CustomerSupportClient() {
     setIssue("");
     setCheckedItems([]);
     setTicketRef("");
+    setSubmitStatus("idle");
+    setSubmitMessage("");
+    setWhatsAppFallbackUrl("");
     window.setTimeout(() => {
       wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 0);
@@ -289,6 +317,9 @@ export default function CustomerSupportClient() {
     setIssue(value);
     setCheckedItems([]);
     setTicketRef("");
+    setSubmitStatus("idle");
+    setSubmitMessage("");
+    setWhatsAppFallbackUrl("");
   };
 
   const goToStep = (value: number) => {
@@ -309,20 +340,202 @@ export default function CustomerSupportClient() {
   };
 
   const handleEvidence = (
-    key: "Product label" | "Error / display" | "Site / installation",
+    key: EvidenceKey,
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
+
     setEvidence((current) => {
       const next = { ...current };
       if (file) next[key] = file.name;
       else delete next[key];
       return next;
     });
+
+    setEvidenceFiles((current) => {
+      const next = { ...current };
+      if (file) next[key] = file;
+      else delete next[key];
+      return next;
+    });
   };
 
-  const createDemoTicket = () => {
-    setTicketRef(`DS-SUP-DEMO-${String(Date.now()).slice(-6)}`);
+  const shareEvidenceFiles = async () => {
+    const files = Object.values(evidenceFiles).filter(
+      (file): file is File => Boolean(file),
+    );
+
+    if (!files.length) return;
+
+    if (
+      typeof navigator === "undefined" ||
+      !navigator.share ||
+      !navigator.canShare ||
+      !navigator.canShare({ files })
+    ) {
+      setSubmitMessage(
+        "WhatsApp is ready. This browser cannot share the selected files automatically; attach them manually in WhatsApp.",
+      );
+      return;
+    }
+
+    try {
+      await navigator.share({
+        files,
+        title: `Desh Solar Support ${ticketRef}`,
+        text: `Evidence for support request ${ticketRef}`,
+      });
+    } catch {
+      // The user may cancel the native share sheet. Keep the support request intact.
+    }
+  };
+
+  const submitSupportRequest = async () => {
+    const name = cleanText(customerName, 120);
+    const phone = cleanText(customerPhone, 40);
+    const email = cleanText(customerEmail, 160);
+    const location = cleanText(customerLocation, 160);
+
+    if (!issue) {
+      setSubmitStatus("error");
+      setSubmitMessage("Please choose the support issue before submitting.");
+      return;
+    }
+
+    if (!name || !phone) {
+      setSubmitStatus("error");
+      setSubmitMessage("Full Name and Phone are required to submit a support request.");
+      return;
+    }
+
+    const nextReference = createSupportReference();
+    const completedChecks = checkedItems
+      .map((index) => activeChecks[index]?.[0])
+      .filter(Boolean);
+    const evidenceLines = Object.entries(evidence).map(
+      ([label, fileName]) => `${label}: ${fileName}`,
+    );
+
+    const messageLines = [
+      "*DESH SOLAR*",
+      "*CUSTOMER SUPPORT REQUEST*",
+      "--------------------------------",
+      "",
+      whatsappField("Reference", nextReference),
+      whatsappField("Support Type", supportType),
+      whatsappField("Issue", issue),
+      whatsappField("Urgency", urgency),
+      "",
+      "*CUSTOMER DETAILS*",
+      whatsappField("Name", name),
+      whatsappField("Phone", phone),
+      email ? whatsappField("Email", email) : null,
+      location ? whatsappField("District / City", location) : null,
+      "",
+      "*PRODUCT / SYSTEM*",
+      whatsappField("Product", form.product),
+      whatsappField("Brand", form.brand),
+      form.model.trim() ? whatsappField("Model", cleanText(form.model, 160)) : null,
+      form.serial.trim() ? whatsappField("Serial", cleanText(form.serial, 160)) : null,
+      form.systemSize.trim()
+        ? whatsappField("System Size", cleanText(form.systemSize, 120))
+        : null,
+      form.purchaseDate
+        ? whatsappField("Purchase Date", form.purchaseDate)
+        : null,
+      form.invoice.trim()
+        ? whatsappField("Invoice / Order", cleanText(form.invoice, 160))
+        : null,
+      "",
+      "*ISSUE DETAILS*",
+      form.errorCode.trim()
+        ? whatsappField("Error / Status Code", cleanText(form.errorCode, 120))
+        : null,
+      form.started.trim()
+        ? whatsappField("Started", cleanText(form.started, 160))
+        : null,
+      whatsappField(
+        "Description",
+        form.description.trim()
+          ? cleanText(form.description, 1200)
+          : "No description provided",
+      ),
+      "",
+      "*SAFE QUICK CHECKS*",
+      completedChecks.length
+        ? completedChecks.map((item) => `• ${item}`).join("\n")
+        : "None marked complete",
+      "",
+      "*EVIDENCE SELECTED*",
+      evidenceLines.length ? evidenceLines.join("\n") : "No files selected",
+    ].filter((line): line is string => line !== null);
+
+    const whatsappMessage = messageLines.join("\n");
+    const whatsappUrl =
+      `https://wa.me/${WHATSAPP_NUMBER}` +
+      `?text=${encodeURIComponent(whatsappMessage)}`;
+
+    setSubmitStatus("submitting");
+    setSubmitMessage("Saving your support request and preparing WhatsApp…");
+    setWhatsAppFallbackUrl("");
+
+    const whatsappWindow = window.open("", "_blank");
+    if (whatsappWindow) whatsappWindow.opener = null;
+
+    try {
+      const response = await fetch("/api/customer-leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          recordType: "contact_request",
+          contactRoute: "support",
+          name,
+          phone,
+          email,
+          districtCity: location,
+          website: "",
+        }),
+      });
+
+      const result = (await response.json().catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+      };
+
+      if (!response.ok || !result.success) {
+        throw new Error(
+          result.message || "We could not save the support request right now.",
+        );
+      }
+
+      setTicketRef(nextReference);
+      setSubmitStatus("success");
+
+      if (whatsappWindow) {
+        whatsappWindow.location.href = whatsappUrl;
+        setSubmitMessage(
+          evidenceLines.length
+            ? "Support request saved. WhatsApp opened with the structured message. After sending it, use Share Selected Evidence below if you want to send the selected files."
+            : "Support request saved. WhatsApp opened with the structured message — review it and tap Send.",
+        );
+      } else {
+        setWhatsAppFallbackUrl(whatsappUrl);
+        setSubmitMessage(
+          "Support request saved. Your browser blocked WhatsApp; use Open WhatsApp below.",
+        );
+      }
+    } catch (error) {
+      if (whatsappWindow) whatsappWindow.close();
+
+      setTicketRef("");
+      setWhatsAppFallbackUrl("");
+      setSubmitStatus("error");
+      setSubmitMessage(
+        error instanceof Error
+          ? error.message
+          : "We could not submit the support request right now.",
+      );
+    }
   };
 
   const modelDisplay = form.model.trim() || "—";
@@ -347,22 +560,25 @@ export default function CustomerSupportClient() {
               <a className="supportPrimary" href="#support-types">
                 Start Support Request →
               </a>
+              <a className="supportSecondary" href="tel:0255168220">
+                Call 0255-168220
+              </a>
               <a className="supportSecondary" href="tel:01754477488">
                 Call 01754-477488
               </a>
             </div>
             <div className="supportHours">
               <div className="supportHourCard">
-                <small>Customer Service</small>
-                <b>01754-477488</b>
-              </div>
-              <div className="supportHourCard">
-                <small>Published Hours</small>
+                <small>Service Hours</small>
                 <b>10:00 AM – 11:00 PM</b>
               </div>
               <div className="supportHourCard">
                 <small>Availability</small>
                 <b>7 days a week</b>
+              </div>
+              <div className="supportHourCard">
+                <small>Support Scope</small>
+                <b>Product • System • Warranty • Installation</b>
               </div>
             </div>
           </div>
@@ -694,7 +910,7 @@ export default function CustomerSupportClient() {
               <div className="supportStepHead">
                 <small>Step 05 • Evidence</small>
                 <h2>Add useful visual context.</h2>
-                <p>This demo keeps selected files in your browser only; nothing is uploaded.</p>
+                <p>Selected files stay on your device. After the request is prepared, you can share them through your device’s share sheet.</p>
               </div>
               <div className="evidenceGrid">
                 <label className={`evidenceBox ${evidence["Product label"] ? "hasFile" : ""}`}>
@@ -743,13 +959,14 @@ export default function CustomerSupportClient() {
 
             <section className={`supportStep ${step === 5 ? "active" : ""}`}>
               <div className="supportStepHead">
-                <small>Step 06 • Review</small>
-                <h2>Review the support case.</h2>
+                <small>Step 06 • Review & Contact</small>
+                <h2>Review and submit the support case.</h2>
                 <p>
-                  This is the structured summary a production support system could submit to
-                  Desh Solar.
+                  Confirm the support summary, add your contact details and send the
+                  structured request to Desh Solar through WhatsApp.
                 </p>
               </div>
+
               <div className="reviewGrid">
                 <div className="reviewCard"><small>Support Type</small><b>{supportType}</b></div>
                 <div className="reviewCard"><small>Issue</small><b>{issue || "Not selected"}</b></div>
@@ -760,23 +977,126 @@ export default function CustomerSupportClient() {
                 <div className="reviewCard"><small>Evidence</small><b>{evidenceCount} file{evidenceCount === 1 ? "" : "s"}</b></div>
                 <div className="reviewCard"><small>Quick Checks</small><b>{checkedItems.length} completed</b></div>
               </div>
+
               <div className="reviewDescription">
                 <small>Description</small>
                 <p>{descriptionDisplay}</p>
               </div>
-              <button className="submitDemoBtn" onClick={createDemoTicket} type="button">
-                Create Demo Support Request →
-              </button>
-              <div className={`ticketCreated ${ticketRef ? "show" : ""}`}>
-                <small>Demo support request created</small>
-                <h3>{ticketRef || "DS-SUP-DEMO-0001"}</h3>
-                <p>Front-end simulation only. No ticket has been transmitted to Desh Solar.</p>
-                <div className="ticketTimeline">
-                  <div className="ticketStage active">Received</div>
-                  <div className="ticketStage">Under Review</div>
-                  <div className="ticketStage">Technician Assigned</div>
-                  <div className="ticketStage">Resolved</div>
+
+              <div className="supportStepHead" style={{ marginTop: 24 }}>
+                <small>Customer Details</small>
+                <h2>How can Desh Solar contact you?</h2>
+              </div>
+
+              <div className="supportFormGrid">
+                <div className="supportField">
+                  <label htmlFor="supportCustomerName">Full Name</label>
+                  <input
+                    className="supportInput"
+                    id="supportCustomerName"
+                    onChange={(event) => setCustomerName(event.target.value)}
+                    placeholder="Your name"
+                    required
+                    value={customerName}
+                  />
                 </div>
+
+                <div className="supportField">
+                  <label htmlFor="supportCustomerPhone">Phone</label>
+                  <input
+                    className="supportInput"
+                    id="supportCustomerPhone"
+                    onChange={(event) => setCustomerPhone(event.target.value)}
+                    placeholder="01XXXXXXXXX"
+                    required
+                    type="tel"
+                    value={customerPhone}
+                  />
+                </div>
+
+                <div className="supportField">
+                  <label htmlFor="supportCustomerEmail">Email</label>
+                  <input
+                    className="supportInput"
+                    id="supportCustomerEmail"
+                    onChange={(event) => setCustomerEmail(event.target.value)}
+                    placeholder="Optional"
+                    type="email"
+                    value={customerEmail}
+                  />
+                </div>
+
+                <div className="supportField">
+                  <label htmlFor="supportCustomerLocation">District / City</label>
+                  <input
+                    className="supportInput"
+                    id="supportCustomerLocation"
+                    onChange={(event) => setCustomerLocation(event.target.value)}
+                    placeholder="Dhaka, Chattogram, etc."
+                    value={customerLocation}
+                  />
+                </div>
+              </div>
+
+              <button
+                className="submitDemoBtn"
+                disabled={submitStatus === "submitting"}
+                onClick={submitSupportRequest}
+                type="button"
+              >
+                {submitStatus === "submitting"
+                  ? "Preparing WhatsApp…"
+                  : "Submit Support Request →"}
+              </button>
+
+              <div
+                className={`ticketCreated ${
+                  submitStatus === "success" || submitStatus === "error" ? "show" : ""
+                }`}
+              >
+                {submitStatus === "success" ? (
+                  <>
+                    <small>Support request prepared</small>
+                    <h3>{ticketRef}</h3>
+                    <p>{submitMessage}</p>
+
+                    <div className="supportHeroActions">
+                      {whatsAppFallbackUrl && (
+                        <a
+                          className="supportPrimary"
+                          href={whatsAppFallbackUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Open WhatsApp →
+                        </a>
+                      )}
+
+                      {evidenceCount > 0 && (
+                        <button
+                          className="supportSecondary"
+                          onClick={shareEvidenceFiles}
+                          type="button"
+                        >
+                          Share Selected Evidence →
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="ticketTimeline">
+                      <div className="ticketStage active">Prepared</div>
+                      <div className="ticketStage">WhatsApp Sent</div>
+                      <div className="ticketStage">Under Review</div>
+                      <div className="ticketStage">Resolved</div>
+                    </div>
+                  </>
+                ) : submitStatus === "error" ? (
+                  <>
+                    <small>Support request not submitted</small>
+                    <h3>Please check the form</h3>
+                    <p>{submitMessage}</p>
+                  </>
+                ) : null}
               </div>
             </section>
 
