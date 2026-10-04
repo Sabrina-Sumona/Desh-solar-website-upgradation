@@ -72,11 +72,6 @@ export async function POST(request: NextRequest) {
         ? clean(body.districtCity, 160) || "N/A"
         : clean(body.address, 160),
 
-      // Contact entries intentionally keep Full Address blank.
-      fullAddress: isContact
-        ? ""
-        : clean(body.fullAddress, 500),
-
       source,
     };
 

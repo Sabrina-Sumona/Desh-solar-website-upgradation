@@ -231,3 +231,340 @@ radial-gradient(circle at 72% 20%,rgba(104,201,245,.10),transparent 25%),linear-
   .customerSupportPrototype .ticketTimeline{grid-template-columns:1fr 1fr}
   .customerSupportPrototype .supportFutureBand{margin:0 4vw 4vh;padding:43px 16px}
 }
+
+/* =========================================================
+   READABILITY PASS
+   Improves small text contrast/size while preserving layout.
+   ========================================================= */
+
+.customerSupportPrototype {
+  --support-muted: #afc0c8;
+}
+
+/* Hero / top cards */
+.customerSupportPrototype .supportEyebrow {
+  color: #b5d7e6;
+  font-size: 11px;
+}
+
+.customerSupportPrototype .supportPrimary,
+.customerSupportPrototype .supportSecondary {
+  font-size: 11px;
+}
+
+.customerSupportPrototype .supportHourCard small {
+  color: #91a7b1;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportHourCard b {
+  color: #f0f5f6;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Guided-flow visual */
+.customerSupportPrototype .supportFlowNode b {
+  font-size: 10px;
+}
+
+.customerSupportPrototype .supportFlowNode small {
+  color: #8da2ac;
+  font-size: 8px;
+}
+
+.customerSupportPrototype .supportHeroStatus span {
+  color: #8fa4ae;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportHeroStatus b {
+  font-size: 12px;
+}
+
+/* Section intro text */
+.customerSupportPrototype .supportSectionHead p {
+  color: #a8bbc4;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* Support type cards */
+.customerSupportPrototype .supportTypeCard b {
+  font-size: 16px;
+}
+
+.customerSupportPrototype .supportTypeCard small {
+  color: #9eb1ba;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Left navigation */
+.customerSupportPrototype .supportNavHead small {
+  color: #8ea3ad;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportNavHead b {
+  font-size: 15px;
+}
+
+.customerSupportPrototype .supportNavNum {
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportNavBtn b {
+  color: #dce7ea;
+  font-size: 10px;
+}
+
+.customerSupportPrototype .supportNavBtn small {
+  color: #879ba5;
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+/* Wizard headings */
+.customerSupportPrototype .supportStepHead small {
+  color: #9bc9dd;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportStepHead p {
+  color: #a6bac3;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* Issue cards */
+.customerSupportPrototype .issueCard b {
+  font-size: 13px;
+}
+
+.customerSupportPrototype .issueCard small {
+  color: #9cafb8;
+  font-size: 10px;
+  line-height: 1.55;
+}
+
+/* Form fields */
+.customerSupportPrototype .supportField label {
+  color: #a5b7bf;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportInput,
+.customerSupportPrototype .supportSelect,
+.customerSupportPrototype .supportTextarea {
+  color: #eef5f7;
+  font-size: 13px;
+}
+
+.customerSupportPrototype .supportInput::placeholder,
+.customerSupportPrototype .supportTextarea::placeholder {
+  color: #6f858f;
+  opacity: 1;
+}
+
+/* Urgency */
+.customerSupportPrototype .urgencyBtn b {
+  font-size: 12px;
+}
+
+.customerSupportPrototype .urgencyBtn small {
+  color: #94a8b1;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.customerSupportPrototype .safetyAlert {
+  color: #c3a7a7;
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+/* Quick checks */
+.customerSupportPrototype .quickCheck b {
+  font-size: 11px;
+}
+
+.customerSupportPrototype .quickCheck small {
+  color: #94a8b1;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+/* Evidence */
+.customerSupportPrototype .evidenceBox b {
+  font-size: 11px;
+}
+
+.customerSupportPrototype .evidenceBox small {
+  color: #8fa4ad;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .evidenceItem {
+  color: #9eb0b9;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+/* Review */
+.customerSupportPrototype .reviewCard small {
+  color: #90a5af;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .reviewCard b {
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.customerSupportPrototype .reviewDescription small {
+  color: #90a5af;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .reviewDescription p {
+  color: #a8bbc3;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.customerSupportPrototype .submitDemoBtn {
+  font-size: 11px;
+}
+
+/* Submitted request / progress */
+.customerSupportPrototype .ticketCreated small {
+  color: #8ca198;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .ticketCreated p {
+  color: #9fb2bb;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.customerSupportPrototype .ticketStage {
+  color: #879ba5;
+  font-size: 9px;
+}
+
+/* Wizard footer */
+.customerSupportPrototype .supportWizardFooter button {
+  font-size: 10px;
+}
+
+.customerSupportPrototype .supportStepCount {
+  color: #879aa4;
+  font-size: 9px;
+}
+
+/* Live summary */
+.customerSupportPrototype .summaryHead small {
+  color: #8da3ad;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .summaryHead h3 {
+  font-size: 20px;
+}
+
+.customerSupportPrototype .summaryStatus small {
+  color: #8da2ac;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .summaryStatus b {
+  font-size: 12px;
+}
+
+.customerSupportPrototype .summaryMetric span {
+  color: #91a5ae;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .summaryMetric b {
+  color: #e1eaed;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.customerSupportPrototype .summaryHelp small {
+  color: #90a49a;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .summaryHelp b {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* FAQ */
+.customerSupportPrototype .supportFaqCard small {
+  color: #92bacb;
+  font-size: 9px;
+}
+
+.customerSupportPrototype .supportFaqCard b {
+  font-size: 13px;
+}
+
+.customerSupportPrototype .supportFaqCard p {
+  color: #9eb1ba;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+/* Bottom brand band */
+.customerSupportPrototype .supportFutureBand small {
+  font-size: 10px;
+}
+
+/* Mobile readability */
+@media (max-width: 720px) {
+  .customerSupportPrototype .supportHero p {
+    color: #a9bbc4;
+    font-size: 15px;
+  }
+
+  .customerSupportPrototype .supportPrimary,
+  .customerSupportPrototype .supportSecondary {
+    font-size: 11px;
+  }
+
+  .customerSupportPrototype .supportHourCard small,
+  .customerSupportPrototype .supportStepHead small,
+  .customerSupportPrototype .supportField label,
+  .customerSupportPrototype .reviewCard small,
+  .customerSupportPrototype .summaryStatus small,
+  .customerSupportPrototype .summaryMetric span {
+    font-size: 9px;
+  }
+
+  .customerSupportPrototype .supportSectionHead p,
+  .customerSupportPrototype .supportStepHead p {
+    font-size: 13px;
+  }
+
+  .customerSupportPrototype .supportTypeCard small,
+  .customerSupportPrototype .issueCard small,
+  .customerSupportPrototype .quickCheck small,
+  .customerSupportPrototype .supportFaqCard p {
+    font-size: 10px;
+  }
+
+  .customerSupportPrototype .supportMobileProgressTop {
+    color: #9db0b9;
+    font-size: 9px;
+  }
+
+  .customerSupportPrototype .supportMobileProgressTop b {
+    font-size: 10px;
+  }
+}
+
