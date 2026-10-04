@@ -375,3 +375,249 @@
     padding: 43px 16px;
   }
 }
+
+/* =========================================================
+   READABILITY PASS
+   Increases small UI/body text without changing layout.
+   ========================================================= */
+
+.engineeringLabRoot .demoEyebrow {
+  color: #a9d7ed;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.engineeringLabRoot .techIntro p {
+  color: #abc0c9;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.engineeringLabRoot .techHead p {
+  color: #a9bdc6;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.engineeringLabRoot .planningPill,
+.engineeringLabRoot .timeBadge {
+  color: #a8c7d4;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.engineeringLabRoot .timeBadge small {
+  font-size: 8px;
+}
+
+.engineeringLabRoot .toolTab b {
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.engineeringLabRoot .toolTab small {
+  color: #a6bac3;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.engineeringLabRoot .labFields label,
+.engineeringLabRoot .quickLoads label,
+.engineeringLabRoot .simFields label,
+.engineeringLabRoot .simControls > label {
+  color: #a8bbc4;
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.engineeringLabRoot .labFields input,
+.engineeringLabRoot .labFields select,
+.engineeringLabRoot .quickLoads input,
+.engineeringLabRoot .simFields input {
+  color: #f1f6f8;
+  font-size: 12px;
+}
+
+.engineeringLabRoot .toolDisclaimer,
+.engineeringLabRoot .simNote,
+.engineeringLabRoot .safetyBox {
+  color: #aabcc4;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.engineeringLabRoot .toolResult > small {
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.engineeringLabRoot .toolResult > span {
+  color: #a7bac3;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.engineeringLabRoot .resultTiles small {
+  color: #9fb3bc;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.engineeringLabRoot .resultTiles b {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.engineeringLabRoot .modeButtons button {
+  color: #9fb3bc;
+  font-size: 10px;
+}
+
+.engineeringLabRoot .batteryMeter span {
+  font-size: 9px;
+}
+
+.engineeringLabRoot .inlineLabLink {
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.engineeringLabRoot .compatRows small {
+  color: #9fb3bc;
+  font-size: 8px;
+  line-height: 1.3;
+}
+
+.engineeringLabRoot .compatRows b {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.engineeringLabRoot .energyNodeLab b {
+  font-size: 12px;
+}
+
+.engineeringLabRoot .energyNodeLab small {
+  color: #a4b8c1;
+  font-size: 9px;
+}
+
+.engineeringLabRoot .energyInspector > small {
+  font-size: 9px;
+}
+
+.engineeringLabRoot .energyInspector > p {
+  color: #adbec6;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.engineeringLabRoot .energyInspector > a {
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.engineeringLabRoot .energyChecks small {
+  color: #9fb3bc;
+  font-size: 8px;
+}
+
+.engineeringLabRoot .energyChecks b {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.engineeringLabRoot .tickRow {
+  color: #91a8b2;
+  font-size: 8px;
+}
+
+.engineeringLabRoot .monitorHeader {
+  color: #9fb3bc;
+  font-size: 9px;
+}
+
+.engineeringLabRoot .monitorLab article small {
+  color: #9fb3bc;
+  font-size: 9px;
+}
+
+.engineeringLabRoot .simFlow b {
+  font-size: 11px;
+}
+
+.engineeringLabRoot .simFlow small {
+  color: #9fb3bc;
+  font-size: 9px;
+}
+
+.engineeringLabRoot .topicTabs button {
+  color: #a6bac3;
+  font-size: 10px;
+}
+
+.engineeringLabRoot .topicImage span {
+  font-size: 9px;
+}
+
+.engineeringLabRoot .topicCopy > p {
+  color: #adbec6;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.engineeringLabRoot .topicChecks small {
+  font-size: 8px;
+}
+
+.engineeringLabRoot .topicChecks b {
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.engineeringLabRoot .topicChecks p {
+  color: #a4b7c0;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.engineeringLabRoot .archCards span {
+  font-size: 9px;
+}
+
+.engineeringLabRoot .archCards ul {
+  color: #a9bbc3;
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+.engineeringLabRoot .protectFlow b {
+  font-size: 12px;
+}
+
+.engineeringLabRoot .futureBand small {
+  font-size: 10px;
+}
+
+@media (max-width: 720px) {
+  .engineeringLabRoot .techIntro p,
+  .engineeringLabRoot .techHead p,
+  .engineeringLabRoot .topicCopy > p {
+    font-size: 13px;
+  }
+
+  .engineeringLabRoot .toolTab b {
+    font-size: 12px;
+  }
+
+  .engineeringLabRoot .toolTab small,
+  .engineeringLabRoot .labFields label,
+  .engineeringLabRoot .quickLoads label,
+  .engineeringLabRoot .simFields label,
+  .engineeringLabRoot .toolDisclaimer,
+  .engineeringLabRoot .simNote,
+  .engineeringLabRoot .safetyBox {
+    font-size: 10px;
+  }
+}
+

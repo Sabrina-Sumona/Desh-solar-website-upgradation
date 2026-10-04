@@ -235,7 +235,6 @@ const PAGE_HTML = String.raw`
 <section class="techSection altLab">
 <div class="techHead"><div><div class="demoEyebrow">Protection &amp; System Engineering</div><h2>A solar system is more than three products.</h2><p>Safe engineering also includes protection, isolation, cabling, earthing, mounting and commissioning.</p></div></div>
 <div class="protectFlow"><div>▤<b>PV Array</b></div><i>→</i><div>⛨<b>DC Protection</b></div><i>→</i><div>↯<b>Inverter</b></div><i>→</i><div>⛨<b>AC Protection</b></div><i>→</i><div>⌂<b>Loads / Grid</b></div></div>
-<p class="safetyBox">Electrical protection and installation should be designed and carried out by qualified technical personnel. This page intentionally avoids DIY wiring instructions.</p>
 </section>
 <section class="futureBand demoReveal in">
 <div class="countryMark">BD</div>
