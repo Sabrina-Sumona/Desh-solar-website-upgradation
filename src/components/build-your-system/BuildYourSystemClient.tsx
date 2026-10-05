@@ -569,6 +569,7 @@ export default function BuildYourSystemClient() {
         saving: "Reduce Grid Use",
         both: "Solar + Backup",
         project: "Expert Advice",
+        independence: "Maximum Independence",
       };
 
     const propertyParam =

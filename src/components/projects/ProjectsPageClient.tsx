@@ -117,6 +117,57 @@ const SHOWCASES: ProjectShowcase[] = [
   },
 ];
 
+
+function getSimilarSystemHref(
+  project: ProjectShowcase,
+) {
+  const presets: Record<
+    ProjectShowcase["category"],
+    {
+      property: string;
+      goal: string;
+    }
+  > = {
+    residential: {
+      property: "home",
+      goal: "both",
+    },
+    commercial: {
+      property: "business",
+      goal: "project",
+    },
+    industrial: {
+      property: "factory",
+      goal: "project",
+    },
+    agriculture: {
+      property: "agriculture",
+      goal: "project",
+    },
+    "filling-station": {
+      property: "filling",
+      goal: "both",
+    },
+    "off-grid": {
+      property: "other",
+      goal: "independence",
+    },
+  };
+
+  const preset =
+    presets[project.category];
+
+  const params =
+    new URLSearchParams({
+      property: preset.property,
+      goal: preset.goal,
+      source: "project",
+      project: project.id,
+    });
+
+  return `/build-your-system?${params.toString()}`;
+}
+
 export default function ProjectsPageClient() {
   const [filter, setFilter] = useState<ProjectCategory>("all");
   const [modalProjectId, setModalProjectId] = useState<string | null>(null);
@@ -436,7 +487,10 @@ export default function ProjectsPageClient() {
               </div>
 
               <div className="projectModalActions">
-                <Link className="projectsBtn" href="/build-your-system">
+                <Link
+                  className="projectsBtn"
+                  href={getSimilarSystemHref(modalProject)}
+                >
                   Build a Similar System →
                 </Link>
                 <Link className="projectsBtn secondary" href="/engineering-lab">
