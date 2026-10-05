@@ -71,7 +71,7 @@ export default function EngineeringLabPreview() {
               detailed planning.
             </p>
 
-            <Link href="/tools-and-technology">
+            <Link href="/engineering-lab">
               Open Engineering Lab
 
               <span aria-hidden="true">
