@@ -48,10 +48,6 @@ const MAIN_NAV_LINKS = [
     href: "/projects",
   },
   {
-    label: "Tools & Technology",
-    href: "/tools-and-technology",
-  },
-  {
     label: "About Us",
     href: "/about",
   },
