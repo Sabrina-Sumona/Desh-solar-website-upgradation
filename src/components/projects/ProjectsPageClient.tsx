@@ -134,10 +134,78 @@ export default function ProjectsPageClient() {
       ? null
       : SHOWCASES.find((project) => project.id === modalProjectId) ?? null;
 
+  const updateProjectUrl = (projectId: string | null) => {
+    const url = new URL(window.location.href);
+
+    if (projectId) {
+      url.searchParams.set("project", projectId);
+    } else {
+      url.searchParams.delete("project");
+    }
+
+    window.history.replaceState(
+      window.history.state,
+      "",
+      `${url.pathname}${url.search}${url.hash}`,
+    );
+  };
+
+  const openProjectModal = (projectId: string) => {
+    const exists = SHOWCASES.some(
+      (project) => project.id === projectId,
+    );
+
+    if (!exists) return;
+
+    setModalProjectId(projectId);
+    updateProjectUrl(projectId);
+  };
+
+  const closeProjectModal = () => {
+    setModalProjectId(null);
+    updateProjectUrl(null);
+  };
+
   const chooseFilter = (key: ProjectCategory) => {
     setFilter(key);
-    setModalProjectId(null);
+    closeProjectModal();
   };
+
+  useEffect(() => {
+    const syncProjectFromUrl = () => {
+      const projectId =
+        new URLSearchParams(
+          window.location.search,
+        ).get("project");
+
+      const project =
+        projectId
+          ? SHOWCASES.find(
+              (item) => item.id === projectId,
+            ) ?? null
+          : null;
+
+      window.setTimeout(() => {
+        setModalProjectId(
+          project?.id ?? null,
+        );
+      }, 0);
+    };
+
+    syncProjectFromUrl();
+
+    window.addEventListener(
+      "popstate",
+      syncProjectFromUrl,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "popstate",
+        syncProjectFromUrl,
+      );
+    };
+  }, []);
 
   useEffect(() => {
     if (!modalProject) return;
@@ -148,7 +216,7 @@ export default function ProjectsPageClient() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setModalProjectId(null);
+        closeProjectModal();
       }
     };
 
@@ -219,7 +287,7 @@ export default function ProjectsPageClient() {
               <button
                 className="projectCardSelect"
                 type="button"
-                onClick={() => setModalProjectId(project.id)}
+                onClick={() => openProjectModal(project.id)}
                 aria-label={`View ${project.title} showcase details`}
               >
                 <div className="projectCardImage">
@@ -305,7 +373,7 @@ export default function ProjectsPageClient() {
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) {
-              setModalProjectId(null);
+              closeProjectModal();
             }
           }}
         >
@@ -318,7 +386,7 @@ export default function ProjectsPageClient() {
             <button
               className="projectModalClose"
               type="button"
-              onClick={() => setModalProjectId(null)}
+              onClick={closeProjectModal}
               aria-label="Close project details"
             >
               ×

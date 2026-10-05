@@ -26,7 +26,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Residential",
     image: "/assets/projects-real/residential.webp",
     text: "Solar solutions designed around household energy needs.",
-    href: "/projects?type=residential",
+    href: "/projects?project=residential-rooftop-hybrid",
   },
   {
     id: "02",
@@ -34,7 +34,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Commercial",
     image: "/assets/projects-real/commercial.webp",
     text: "Solar energy solutions for offices, businesses and commercial spaces.",
-    href: "/projects?type=commercial",
+    href: "/projects?project=commercial-rooftop",
   },
   {
     id: "03",
@@ -42,7 +42,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Industrial",
     image: "/assets/projects-real/industrial.webp",
     text: "Engineering-focused solar solutions for larger operational loads.",
-    href: "/projects?type=industrial",
+    href: "/projects?project=industrial-factory-rooftop",
   },
   {
     id: "04",
@@ -50,7 +50,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Agriculture",
     image: "/assets/projects-real/agriculture.webp",
     text: "Solar applications planned around agricultural and field energy requirements.",
-    href: "/projects?type=agriculture",
+    href: "/projects?project=solar-irrigation",
   },
   {
     id: "05",
@@ -58,7 +58,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Filling Station",
     image: "/assets/projects-real/filling.webp",
     text: "Solar solutions for filling-station and service-site energy requirements.",
-    href: "/projects?type=filling-station",
+    href: "/projects?project=filling-station-energy",
   },
   {
     id: "06",
@@ -66,7 +66,7 @@ const FEATURED_PROJECTS: ProjectItem[] = [
     category: "Off-Grid",
     image: "/assets/projects-real/offgrid.webp",
     text: "Independent solar energy solutions for locations requiring off-grid operation.",
-    href: "/projects?type=off-grid",
+    href: "/projects?project=custom-off-grid",
   },
 ];
 
@@ -183,12 +183,6 @@ export default function FeaturedProjects() {
       return;
     }
 
-    /*
-     * Three identical groups are rendered.
-     * Keep the visible position inside the middle loop range.
-     * Moving exactly one group width is visually identical,
-     * so this reset is seamless.
-     */
     while (
       translateRef.current <=
       -2 * width
@@ -257,10 +251,6 @@ export default function FeaturedProjects() {
         return;
       }
 
-      /*
-       * Keep approximately the same visual loop position
-       * after responsive resizing.
-       */
       const progress =
         -translateRef.current /
         previousWidth;
@@ -369,13 +359,6 @@ export default function FeaturedProjects() {
 
     resumeAtRef.current =
       Number.POSITIVE_INFINITY;
-
-    /*
-     * Do not capture the pointer yet. Capturing on pointer-down
-     * retargets a normal click to the viewport, which prevents
-     * the nested Next.js project links from receiving the click.
-     * We only capture after the movement becomes an actual drag.
-     */
   };
 
   const handlePointerMove = (
@@ -427,10 +410,6 @@ export default function FeaturedProjects() {
     normalizePosition(true);
     applyTransform();
 
-    /*
-     * touch-action: pan-y in CSS lets vertical page scrolling
-     * remain native while horizontal movement belongs here.
-     */
     if (
       event.pointerType !== "touch"
     ) {
@@ -469,11 +448,6 @@ export default function FeaturedProjects() {
 
     setIsDragging(false);
 
-    /*
-     * The browser can dispatch a click immediately after
-     * pointerup. Keep the drag flag alive just long enough
-     * to cancel that accidental click.
-     */
     window.setTimeout(() => {
       didDragRef.current = false;
     }, 0);
@@ -501,8 +475,6 @@ export default function FeaturedProjects() {
       <div className="featuredProjectsGlow featuredProjectsGlowTwo" />
 
       <div className="featuredProjectsInner">
-        {/* HEADER */}
-
         <div className="featuredProjectsHeader">
           <div>
             <div className="featuredProjectsEyebrow">
@@ -526,8 +498,6 @@ export default function FeaturedProjects() {
             </Link>
           </div>
         </div>
-
-        {/* AUTO-MOVING + DRAGGABLE PROJECT STRIP */}
 
         <div
           ref={viewportRef}
@@ -606,8 +576,6 @@ export default function FeaturedProjects() {
             </div>
           </div>
         </div>
-
-        {/* FOOTER NOTE */}
 
         <div className="featuredProjectsFooter">
           <div className="featuredProjectsDataNote">
