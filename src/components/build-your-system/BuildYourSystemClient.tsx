@@ -1,7 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal, flushSync } from "react-dom";
+import { products, type Product } from "@/data/products";
 
 type PropertyType =
   | "Home"
@@ -60,6 +63,22 @@ type BuilderState = {
   shade: number;
   solarOffset: number;
   qty: Record<string, number>;
+};
+
+type BuilderProductCategory = "panel" | "inverter" | "battery";
+
+type SystemBuilderSelection = {
+  panelId: string;
+  inverterId: string;
+  batteryId: string;
+  panelQty: number;
+  batteryQty: number;
+};
+
+type ProductCheck = {
+  state: "good" | "warn" | "review";
+  label: string;
+  detail: string;
 };
 
 const stdInverters = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50];
@@ -213,6 +232,69 @@ const round1 = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
 const clamp = (n: number, a: number, b: number) => Math.max(a, Math.min(b, n));
 const formatWatts = (w: number) => (w >= 1000 ? `${(w / 1000).toFixed(w % 1000 ? 1 : 0)} kW` : `${w} W`);
 
+
+const CART_KEY = "deshSolarCartV1";
+
+const numericPower = (value: string) => {
+  const match = value.match(/(\d+(?:\.\d+)?)/);
+  return match ? Number(match[1]) : null;
+};
+
+const panelPowerKW = (product: Product | null) => {
+  if (!product || product.category !== "panel") return null;
+
+  const value = numericPower(product.power);
+  if (!value) return null;
+
+  return /\bkw\b/i.test(product.power) ? value : value / 1000;
+};
+
+const inverterPowerKW = (product: Product | null) => {
+  if (!product || product.category !== "inverter") return null;
+
+  const value = numericPower(product.power);
+  return value && /\bkw\b/i.test(product.power) ? value : null;
+};
+
+const batteryCapacityKWh = (product: Product | null) => {
+  if (!product || product.category !== "battery") return null;
+
+  const direct = product.power.match(/(\d+(?:\.\d+)?)\s*kwh/i);
+  if (direct) return Number(direct[1]);
+
+  const voltage = product.power.match(/(\d+(?:\.\d+)?)\s*v/i);
+  const ampHours = product.power.match(/(\d+(?:\.\d+)?)\s*ah/i);
+
+  if (voltage && ampHours) {
+    return (Number(voltage[1]) * Number(ampHours[1])) / 1000;
+  }
+
+  return null;
+};
+
+const productLooksThreePhase = (product: Product | null) => {
+  if (!product) return false;
+  const haystack = `${product.name} ${product.search}`.toLowerCase();
+  return haystack.includes("three phase") || haystack.includes("3-phase");
+};
+
+const productLooksSinglePhase = (product: Product | null) => {
+  if (!product) return false;
+  const haystack = `${product.name} ${product.search}`.toLowerCase();
+  return haystack.includes("single phase");
+};
+
+const buildCartItem = (product: Product, qty: number) => ({
+  id: product.id,
+  name: product.name,
+  price: product.price ?? 0,
+  priceText: product.priceText,
+  image: product.image,
+  category: product.categoryLabel,
+  quoteOnly: product.price === null,
+  qty: Math.max(1, Math.min(99, Math.round(qty))),
+});
+
 function nextLowerInverter(v: number) {
   const idx = stdInverters.indexOf(v);
   return idx > 0 ? stdInverters[idx - 1] : v;
@@ -226,6 +308,7 @@ function nextHigherInverter(v: number) {
 export default function BuildYourSystemClient() {
   const wizardRef = useRef<HTMLElement | null>(null);
   const mobileProgressRef = useRef<HTMLDivElement | null>(null);
+  const systemBuilderRef = useRef<HTMLElement | null>(null);
 
   const [step, setStep] = useState(0);
   const [property, setProperty] = useState<PropertyType>("Home");
@@ -243,6 +326,27 @@ export default function BuildYourSystemClient() {
   const [solarOffset, setSolarOffset] = useState(70);
   const [qty, setQty] = useState<Record<string, number>>(emptyQty);
   const [selectedProduct, setSelectedProduct] = useState<{ name: string; type: string; rating: number | null } | null>(null);
+
+  const [systemBuilderOpen, setSystemBuilderOpen] = useState(false);
+  const [builderMounted, setBuilderMounted] = useState(false);
+  const [builderPicker, setBuilderPicker] = useState<BuilderProductCategory | null>(null);
+  const [builderMessage, setBuilderMessage] = useState("");
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+  const [builderCustomer, setBuilderCustomer] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    location: "",
+  });
+  const [builderContactError, setBuilderContactError] = useState("");
+  const [builderContactSubmitting, setBuilderContactSubmitting] = useState(false);
+  const [builderSelection, setBuilderSelection] = useState<SystemBuilderSelection>({
+    panelId: "",
+    inverterId: "",
+    batteryId: "",
+    panelQty: 1,
+    batteryQty: 1,
+  });
 
   const loadProfile = propertyLoadProfiles[property];
 
@@ -459,6 +563,935 @@ export default function BuildYourSystemClient() {
     return `Selected ${selectedProduct.type} • complete the wizard to review it against your planning profile.`;
   }, [calc.inverterClass, selectedProduct]);
 
+  const builderPanel = useMemo(
+    () => products.find((product) => product.id === builderSelection.panelId) ?? null,
+    [builderSelection.panelId],
+  );
+
+  const builderInverter = useMemo(
+    () => products.find((product) => product.id === builderSelection.inverterId) ?? null,
+    [builderSelection.inverterId],
+  );
+
+  const builderBattery = useMemo(
+    () => products.find((product) => product.id === builderSelection.batteryId) ?? null,
+    [builderSelection.batteryId],
+  );
+
+  const builderPanelKW = panelPowerKW(builderPanel);
+  const builderInverterKW = inverterPowerKW(builderInverter);
+  const builderBatteryKWh = batteryCapacityKWh(builderBattery);
+
+  const builderPVTotal =
+    builderPanelKW && builderSelection.panelQty
+      ? builderPanelKW * builderSelection.panelQty
+      : 0;
+
+  const builderBatteryTotal =
+    builderBatteryKWh && builderSelection.batteryQty
+      ? builderBatteryKWh * builderSelection.batteryQty
+      : 0;
+
+  const panelCheck: ProductCheck = useMemo(() => {
+    if (!builderPanel || !builderPanelKW) {
+      return {
+        state: "review",
+        label: "Panel selection needed",
+        detail: "Choose a catalogue solar panel to build the PV array.",
+      };
+    }
+
+    if (builderPanelKW < 0.3) {
+      return {
+        state: "warn",
+        label: "Small / portable panel",
+        detail:
+          "This product is below the typical primary-array size used by this planner. Review before using it as the main PV module.",
+      };
+    }
+
+    if (calc.actualPV <= 0) {
+      return {
+        state: "review",
+        label: "PV target not established",
+        detail: "Complete the planning inputs to compare array size.",
+      };
+    }
+
+    if (builderPVTotal + 0.01 >= calc.actualPV) {
+      return {
+        state: "good",
+        label: "PV capacity covered",
+        detail: `${round1(builderPVTotal)} kWp selected vs ${round1(calc.actualPV)} kWp planning target.`,
+      };
+    }
+
+    return {
+      state: "warn",
+      label: "PV array below target",
+      detail: `${round1(builderPVTotal)} kWp selected vs ${round1(calc.actualPV)} kWp planning target.`,
+    };
+  }, [builderPanel, builderPanelKW, builderPVTotal, calc.actualPV]);
+
+  const inverterCheck: ProductCheck = useMemo(() => {
+    if (!builderInverter || !builderInverterKW) {
+      return {
+        state: "review",
+        label: "Inverter selection needed",
+        detail: "Choose a catalogue inverter for the planned system.",
+      };
+    }
+
+    const needsThreePhase =
+      state.phase === "Three phase" || state.property === "Factory";
+
+    const phaseMismatch =
+      (needsThreePhase && productLooksSinglePhase(builderInverter)) ||
+      (!needsThreePhase &&
+        state.phase === "Single phase" &&
+        productLooksThreePhase(builderInverter));
+
+    if (phaseMismatch) {
+      return {
+        state: "warn",
+        label: "Electrical phase needs review",
+        detail: `${builderInverter.power} product selected for a ${state.phase.toLowerCase()} planning profile.`,
+      };
+    }
+
+    if (builderInverterKW + 0.01 >= calc.inverterClass) {
+      return {
+        state: "good",
+        label: "Inverter class covered",
+        detail: `${builderInverterKW} kW selected vs ${calc.inverterClass} kW planning class.`,
+      };
+    }
+
+    return {
+      state: "warn",
+      label: "Inverter below planning class",
+      detail: `${builderInverterKW} kW selected vs ${calc.inverterClass} kW planning class.`,
+    };
+  }, [
+    builderInverter,
+    builderInverterKW,
+    calc.inverterClass,
+    state.phase,
+    state.property,
+  ]);
+
+  const batteryCheck: ProductCheck = useMemo(() => {
+    if (!builderBattery) {
+      return {
+        state: "review",
+        label: "Battery selection needed",
+        detail: "Choose a catalogue battery to build the storage system.",
+      };
+    }
+
+    if (!builderBatteryKWh) {
+      return {
+        state: "review",
+        label: "Capacity needs technical review",
+        detail:
+          "The catalogue headline does not provide enough information for an automatic kWh check.",
+      };
+    }
+
+    if (calc.batteryKWh <= 0) {
+      return {
+        state: "review",
+        label: "Storage target not established",
+        detail: "Add loads and backup hours to calculate the storage target.",
+      };
+    }
+
+    if (builderBatteryTotal + 0.01 >= calc.batteryKWh) {
+      return {
+        state: "good",
+        label: "Storage target covered",
+        detail: `${round1(builderBatteryTotal)} kWh selected vs ${round1(calc.batteryKWh)} kWh planning target.`,
+      };
+    }
+
+    return {
+      state: "warn",
+      label: "Storage below target",
+      detail: `${round1(builderBatteryTotal)} kWh selected vs ${round1(calc.batteryKWh)} kWh planning target.`,
+    };
+  }, [
+    builderBattery,
+    builderBatteryKWh,
+    builderBatteryTotal,
+    calc.batteryKWh,
+  ]);
+
+  const builderChecks = [panelCheck, inverterCheck, batteryCheck];
+  const builderWarningCount = builderChecks.filter(
+    (check) => check.state === "warn",
+  ).length;
+  const builderGoodCount = builderChecks.filter(
+    (check) => check.state === "good",
+  ).length;
+
+  const builderSubtotal = useMemo(() => {
+    const panelTotal =
+      (builderPanel?.price ?? 0) * builderSelection.panelQty;
+    const inverterTotal = builderInverter?.price ?? 0;
+    const batteryTotal =
+      (builderBattery?.price ?? 0) * builderSelection.batteryQty;
+
+    return panelTotal + inverterTotal + batteryTotal;
+  }, [
+    builderBattery,
+    builderInverter,
+    builderPanel,
+    builderSelection.batteryQty,
+    builderSelection.panelQty,
+  ]);
+
+  const builderHasQuoteOnly =
+    Boolean(builderPanel && builderPanel.price === null) ||
+    Boolean(builderInverter && builderInverter.price === null) ||
+    Boolean(builderBattery && builderBattery.price === null);
+
+  const pickerProducts = useMemo(() => {
+    if (!builderPicker) return [];
+
+    const list = products.filter(
+      (product) => product.category === builderPicker,
+    );
+
+    if (builderPicker === "panel") {
+      return [...list].sort((a, b) => {
+        const aPower = panelPowerKW(a) ?? 0;
+        const bPower = panelPowerKW(b) ?? 0;
+
+        return (
+          Math.abs(aPower - 0.59) -
+            Math.abs(bPower - 0.59) ||
+          a.featuredOrder - b.featuredOrder
+        );
+      });
+    }
+
+    if (builderPicker === "inverter") {
+      return [...list].sort((a, b) => {
+        const aPower = inverterPowerKW(a) ?? 0;
+        const bPower = inverterPowerKW(b) ?? 0;
+
+        const aUnder =
+          aPower < calc.inverterClass ? 1 : 0;
+        const bUnder =
+          bPower < calc.inverterClass ? 1 : 0;
+
+        const aPhasePenalty =
+          state.phase === "Three phase" &&
+          productLooksSinglePhase(a)
+            ? 1
+            : 0;
+
+        const bPhasePenalty =
+          state.phase === "Three phase" &&
+          productLooksSinglePhase(b)
+            ? 1
+            : 0;
+
+        return (
+          aUnder - bUnder ||
+          aPhasePenalty - bPhasePenalty ||
+          Math.abs(aPower - calc.inverterClass) -
+            Math.abs(bPower - calc.inverterClass) ||
+          a.featuredOrder - b.featuredOrder
+        );
+      });
+    }
+
+    return [...list].sort((a, b) => {
+      const aCapacity = batteryCapacityKWh(a);
+      const bCapacity = batteryCapacityKWh(b);
+
+      if (!aCapacity && bCapacity) return 1;
+      if (aCapacity && !bCapacity) return -1;
+
+      if (!aCapacity || !bCapacity) {
+        return a.featuredOrder - b.featuredOrder;
+      }
+
+      const aQty = Math.max(
+        1,
+        Math.ceil(calc.batteryKWh / aCapacity),
+      );
+      const bQty = Math.max(
+        1,
+        Math.ceil(calc.batteryKWh / bCapacity),
+      );
+
+      const aScore =
+        Math.abs(aCapacity * aQty - calc.batteryKWh) +
+        Math.max(0, aQty - 1) * 0.8;
+
+      const bScore =
+        Math.abs(bCapacity * bQty - calc.batteryKWh) +
+        Math.max(0, bQty - 1) * 0.8;
+
+      return aScore - bScore || a.featuredOrder - b.featuredOrder;
+    });
+  }, [
+    builderPicker,
+    calc.batteryKWh,
+    calc.inverterClass,
+    state.phase,
+  ]);
+
+  useEffect(() => {
+    setBuilderMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!contactModalOpen) return;
+
+    const previousOverflow =
+      document.body.style.overflow;
+
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (
+      event: KeyboardEvent,
+    ) => {
+      if (event.key === "Escape") {
+        closeBuilderContactModal();
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleEscape,
+    );
+
+    return () => {
+      document.body.style.overflow =
+        previousOverflow;
+
+      window.removeEventListener(
+        "keydown",
+        handleEscape,
+      );
+    };
+  }, [contactModalOpen]);
+
+  useEffect(() => {
+    if (!builderPicker) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setBuilderPicker(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [builderPicker]);
+
+  const recommendedPanelProduct = () =>
+    products.find((product) => product.id === "jinko590") ??
+    products
+      .filter((product) => product.category === "panel")
+      .sort(
+        (a, b) =>
+          Math.abs((panelPowerKW(a) ?? 0) - 0.59) -
+          Math.abs((panelPowerKW(b) ?? 0) - 0.59),
+      )[0] ??
+    null;
+
+  const recommendedInverterProduct = () => {
+    const needsThreePhase =
+      state.phase === "Three phase" ||
+      state.property === "Factory";
+
+    const candidates = products
+      .filter((product) => product.category === "inverter")
+      .map((product) => ({
+        product,
+        rating: inverterPowerKW(product) ?? 0,
+      }))
+      .filter(({ rating }) => rating > 0)
+      .sort((a, b) => {
+        const aUnder =
+          a.rating < calc.inverterClass ? 1 : 0;
+        const bUnder =
+          b.rating < calc.inverterClass ? 1 : 0;
+
+        const aPhasePenalty =
+          needsThreePhase &&
+          productLooksSinglePhase(a.product)
+            ? 1
+            : 0;
+
+        const bPhasePenalty =
+          needsThreePhase &&
+          productLooksSinglePhase(b.product)
+            ? 1
+            : 0;
+
+        return (
+          aUnder - bUnder ||
+          aPhasePenalty - bPhasePenalty ||
+          Math.abs(a.rating - calc.inverterClass) -
+            Math.abs(b.rating - calc.inverterClass) ||
+          a.product.featuredOrder - b.product.featuredOrder
+        );
+      });
+
+    return candidates[0]?.product ?? null;
+  };
+
+  const recommendedBatteryProduct = () => {
+    const candidates = products
+      .filter((product) => product.category === "battery")
+      .map((product) => ({
+        product,
+        capacity: batteryCapacityKWh(product),
+      }))
+      .filter(
+        (
+          item,
+        ): item is {
+          product: Product;
+          capacity: number;
+        } => item.capacity !== null && item.capacity > 0,
+      )
+      .map((item) => {
+        const qtyNeeded = Math.max(
+          1,
+          Math.ceil(calc.batteryKWh / item.capacity),
+        );
+
+        const total = item.capacity * qtyNeeded;
+
+        return {
+          ...item,
+          qtyNeeded,
+          score:
+            Math.abs(total - calc.batteryKWh) +
+            Math.max(0, qtyNeeded - 1) * 0.8,
+        };
+      })
+      .sort(
+        (a, b) =>
+          a.score - b.score ||
+          a.product.featuredOrder - b.product.featuredOrder,
+      );
+
+    return candidates[0] ?? null;
+  };
+
+  const openSystemBuilder = () => {
+    const panel = recommendedPanelProduct();
+    const inverter = recommendedInverterProduct();
+    const battery = recommendedBatteryProduct();
+
+    const panelKW = panelPowerKW(panel);
+
+    const panelQty =
+      panelKW && calc.actualPV > 0
+        ? Math.max(1, Math.ceil(calc.actualPV / panelKW))
+        : 1;
+
+    setBuilderSelection({
+      panelId: panel?.id ?? "",
+      inverterId: inverter?.id ?? "",
+      batteryId: battery?.product.id ?? "",
+      panelQty,
+      batteryQty: battery?.qtyNeeded ?? 1,
+    });
+
+    setBuilderMessage("");
+    setSystemBuilderOpen(true);
+
+    window.requestAnimationFrame(() => {
+      systemBuilderRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  };
+
+  const openBuilderPicker = (
+    category: BuilderProductCategory,
+  ) => {
+    setBuilderMessage("");
+    setBuilderPicker(category);
+  };
+
+  const selectBuilderProduct = (product: Product) => {
+    const nextSelection: SystemBuilderSelection = {
+      ...builderSelection,
+    };
+
+    if (product.category === "panel") {
+      const rating = panelPowerKW(product);
+
+      nextSelection.panelId = product.id;
+      nextSelection.panelQty =
+        rating && calc.actualPV > 0
+          ? Math.max(1, Math.ceil(calc.actualPV / rating))
+          : Math.max(1, builderSelection.panelQty);
+    } else if (product.category === "inverter") {
+      nextSelection.inverterId = product.id;
+    } else if (product.category === "battery") {
+      const capacity = batteryCapacityKWh(product);
+
+      nextSelection.batteryId = product.id;
+      nextSelection.batteryQty =
+        capacity && calc.batteryKWh > 0
+          ? Math.max(1, Math.ceil(calc.batteryKWh / capacity))
+          : Math.max(1, builderSelection.batteryQty);
+    } else {
+      return;
+    }
+
+    flushSync(() => {
+      setBuilderSelection(nextSelection);
+      setBuilderMessage(
+        `${product.name} selected for the system design.`,
+      );
+    });
+
+    setBuilderPicker(null);
+  };
+
+  const addBuiltSystemToCart = () => {
+    const selected = [
+      builderPanel
+        ? buildCartItem(
+            builderPanel,
+            builderSelection.panelQty,
+          )
+        : null,
+      builderInverter
+        ? buildCartItem(builderInverter, 1)
+        : null,
+      builderBattery
+        ? buildCartItem(
+            builderBattery,
+            builderSelection.batteryQty,
+          )
+        : null,
+    ].filter(
+      (
+        item,
+      ): item is ReturnType<typeof buildCartItem> =>
+        item !== null,
+    );
+
+    if (!selected.length) {
+      setBuilderMessage(
+        "Choose at least one catalogue product first.",
+      );
+      return;
+    }
+
+    try {
+      const stored = JSON.parse(
+        window.localStorage.getItem(CART_KEY) || "[]",
+      );
+
+      const next = Array.isArray(stored)
+        ? [...stored]
+        : [];
+
+      selected.forEach((item) => {
+        const existingIndex = next.findIndex(
+          (cartItem) =>
+            String(cartItem?.id) === item.id,
+        );
+
+        if (existingIndex >= 0) {
+          next[existingIndex] = {
+            ...next[existingIndex],
+            ...item,
+            qty: Math.min(
+              99,
+              Math.max(
+                1,
+                Number(next[existingIndex]?.qty) || 0,
+              ) + item.qty,
+            ),
+          };
+        } else {
+          next.push(item);
+        }
+      });
+
+      window.localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(next),
+      );
+
+      window.dispatchEvent(
+        new CustomEvent("deshsolar:cartchange"),
+      );
+
+      setBuilderMessage(
+        `${selected.length} selected product type${
+          selected.length === 1 ? "" : "s"
+        } added to cart. Installation, protection and other site-specific items still require a project quotation.`,
+      );
+    } catch {
+      setBuilderMessage(
+        "The system could not be added to the cart in this browser.",
+      );
+    }
+  };
+
+  const makeSystemBuilderText = () => {
+    const productLine = (
+      label: string,
+      product: Product | null,
+      qtyValue: number,
+      technicalValue: string,
+    ) =>
+      `${label}: ${
+        product
+          ? `${qtyValue} × ${product.name} (${technicalValue}) — ${product.priceText}`
+          : "Not selected"
+      }`;
+
+    return [
+      makeProfileText(),
+      "",
+      "",
+      "DESH SOLAR — SELECTED CATALOGUE SYSTEM",
+      "======================================",
+      productLine(
+        "Solar panels",
+        builderPanel,
+        builderSelection.panelQty,
+        builderPVTotal
+          ? `${round1(builderPVTotal)} kWp array`
+          : builderPanel?.power ?? "",
+      ),
+      productLine(
+        "Inverter",
+        builderInverter,
+        builderInverter ? 1 : 0,
+        builderInverter?.power ?? "",
+      ),
+      productLine(
+        "Battery",
+        builderBattery,
+        builderSelection.batteryQty,
+        builderBatteryTotal
+          ? `${round1(builderBatteryTotal)} kWh nominal headline capacity`
+          : builderBattery?.power ?? "",
+      ),
+      "",
+      `Priced equipment subtotal: ৳ ${fmt(
+        builderSubtotal,
+      )}`,
+      builderHasQuoteOnly
+        ? "Some selected products require quotation and are not included in the priced subtotal."
+        : "",
+      "",
+      `PV check: ${panelCheck.label} — ${panelCheck.detail}`,
+      `Inverter check: ${inverterCheck.label} — ${inverterCheck.detail}`,
+      `Battery check: ${batteryCheck.label} — ${batteryCheck.detail}`,
+      "",
+      "NOT INCLUDED IN AUTOMATIC PRODUCT SUBTOTAL:",
+      "Mounting structure, DC/AC protection, isolators, cables, earthing, installation, commissioning and other site-specific balance-of-system items.",
+      "",
+      "IMPORTANT: Catalogue matching is a planning aid, not a final compatibility approval. Desh Solar technical review is required before purchase/installation.",
+    ]
+      .filter(Boolean)
+      .join("\n");
+  };
+
+  const downloadBuiltSystem = () => {
+    const blob = new Blob(
+      [makeSystemBuilderText()],
+      {
+        type: "text/plain;charset=utf-8",
+      },
+    );
+
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+
+    anchor.href = url;
+    anchor.download =
+      "desh-solar-selected-system-design.txt";
+    anchor.click();
+
+    window.setTimeout(
+      () => URL.revokeObjectURL(url),
+      500,
+    );
+  };
+
+  const openBuilderContactModal = () => {
+    setBuilderContactError("");
+    setContactModalOpen(true);
+  };
+
+  const closeBuilderContactModal = () => {
+    setBuilderContactError("");
+    setContactModalOpen(false);
+  };
+
+  const continueBuiltSystemToWhatsApp = async () => {
+    const name = builderCustomer.name.trim();
+    const phone = builderCustomer.phone.trim();
+    const email = builderCustomer.email.trim();
+    const location = builderCustomer.location.trim();
+
+    if (!name || !phone) {
+      setBuilderContactError(
+        "Full Name and Phone are required.",
+      );
+      return;
+    }
+
+    const customerText = [
+      "CUSTOMER DETAILS",
+      "================",
+      `Name: ${name}`,
+      `Phone: ${phone}`,
+      email ? `Email: ${email}` : "",
+      location
+        ? `District / City: ${location}`
+        : "",
+      "",
+    ]
+      .filter(Boolean)
+      .join("\n");
+
+    const message =
+      `${customerText}\n${makeSystemBuilderText()}`;
+
+    const whatsappUrl =
+      `https://wa.me/8801754477488?text=` +
+      encodeURIComponent(message);
+
+    setBuilderContactSubmitting(true);
+    setBuilderContactError("");
+
+    // Open immediately from the click gesture so browsers are less
+    // likely to block WhatsApp while the lead is being saved.
+    const whatsappWindow =
+      window.open("", "_blank");
+
+    if (whatsappWindow) {
+      whatsappWindow.opener = null;
+    }
+
+    try {
+      const response = await fetch(
+        "/api/customer-leads",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+          body: JSON.stringify({
+            recordType:
+              "contact_request",
+            contactRoute: "builder",
+            name,
+            phone,
+            email,
+            districtCity: location,
+            website: "",
+          }),
+        },
+      );
+
+      const result = (await response
+        .json()
+        .catch(() => ({}))) as {
+        success?: boolean;
+        message?: string;
+        source?: string;
+      };
+
+      if (
+        !response.ok ||
+        !result.success
+      ) {
+        throw new Error(
+          result.message ||
+            "Could not save your contact details.",
+        );
+      }
+
+      setBuilderMessage(
+        "Customer details saved to Desh Solar. WhatsApp is ready with your selected system design.",
+      );
+
+      setContactModalOpen(false);
+      setBuilderContactError("");
+
+      if (whatsappWindow) {
+        whatsappWindow.location.href =
+          whatsappUrl;
+      } else {
+        // Fallback when the browser blocks the new tab.
+        window.location.href =
+          whatsappUrl;
+      }
+    } catch (error) {
+      if (whatsappWindow) {
+        whatsappWindow.close();
+      }
+
+      setBuilderContactError(
+        error instanceof Error
+          ? error.message
+          : "Could not save your contact details. Please try again.",
+      );
+    } finally {
+      setBuilderContactSubmitting(false);
+    }
+  };
+
+  const printBuiltSystem = () => {
+    const printClass = "printSystemBuilder";
+
+    document.body.classList.add(printClass);
+
+    const cleanup = () => {
+      document.body.classList.remove(printClass);
+    };
+
+    window.addEventListener(
+      "afterprint",
+      cleanup,
+      { once: true },
+    );
+
+    window.print();
+
+    window.setTimeout(
+      cleanup,
+      1200,
+    );
+  };
+
+  const pickerCheck = (
+    product: Product,
+  ): ProductCheck => {
+    if (product.category === "panel") {
+      const rating = panelPowerKW(product);
+
+      if (!rating || rating < 0.3) {
+        return {
+          state: "review",
+          label: "Review",
+          detail: "Small / portable panel class.",
+        };
+      }
+
+      const quantity =
+        calc.actualPV > 0
+          ? Math.max(
+              1,
+              Math.ceil(calc.actualPV / rating),
+            )
+          : 1;
+
+      return {
+        state: "good",
+        label: "Array option",
+        detail: `${quantity} panel${
+          quantity === 1 ? "" : "s"
+        } ≈ ${round1(rating * quantity)} kWp.`,
+      };
+    }
+
+    if (product.category === "inverter") {
+      const rating = inverterPowerKW(product);
+
+      if (!rating) {
+        return {
+          state: "review",
+          label: "Review",
+          detail: "Inverter rating unavailable.",
+        };
+      }
+
+      const needsThreePhase =
+        state.phase === "Three phase" ||
+        state.property === "Factory";
+
+      if (
+        needsThreePhase &&
+        productLooksSinglePhase(product)
+      ) {
+        return {
+          state: "warn",
+          label: "Phase review",
+          detail:
+            "Single-phase product for a three-phase planning profile.",
+        };
+      }
+
+      if (rating >= calc.inverterClass) {
+        return {
+          state: "good",
+          label: "Fits planning class",
+          detail: `${rating} kW vs ${calc.inverterClass} kW required class.`,
+        };
+      }
+
+      return {
+        state: "warn",
+        label: "Below planning class",
+        detail: `${rating} kW vs ${calc.inverterClass} kW required class.`,
+      };
+    }
+
+    const capacity = batteryCapacityKWh(product);
+
+    if (!capacity) {
+      return {
+        state: "review",
+        label: "Technical review",
+        detail:
+          "Automatic kWh calculation unavailable from headline data.",
+      };
+    }
+
+    const quantity =
+      calc.batteryKWh > 0
+        ? Math.max(
+            1,
+            Math.ceil(calc.batteryKWh / capacity),
+          )
+        : 1;
+
+    return {
+      state:
+        capacity * quantity + 0.01 >=
+        calc.batteryKWh
+          ? "good"
+          : "warn",
+      label: "Storage option",
+      detail: `${quantity} unit${
+        quantity === 1 ? "" : "s"
+      } ≈ ${round1(
+        capacity * quantity,
+      )} kWh.`,
+    };
+  };
+
   const chooseProperty = (value: PropertyType) => {
     setProperty(value);
     setQty(emptyQty());
@@ -485,6 +1518,22 @@ export default function BuildYourSystemClient() {
     setQty(next);
   };
 
+  const visibleLoadKeys = loadProfile.groups.flatMap(
+    (group) => group.items,
+  );
+
+  const isPresetActive = (preset: LoadPreset) =>
+    visibleLoadKeys.every(
+      (key) =>
+        (qty[key] ?? 0) ===
+        (preset.qty[key] ?? 0),
+    );
+
+  const visibleLoadsCleared =
+    visibleLoadKeys.every(
+      (key) => (qty[key] ?? 0) === 0,
+    );
+
   const showStep = (nextStep: number, scroll = true) => {
     const next = clamp(nextStep, 0, 6);
     setStep(next);
@@ -507,6 +1556,9 @@ export default function BuildYourSystemClient() {
 
   const restart = () => {
     setStep(0);
+    setSystemBuilderOpen(false);
+    setBuilderPicker(null);
+    setBuilderMessage("");
     wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -657,10 +1709,59 @@ export default function BuildYourSystemClient() {
                 <div className="bysPresetPanel">
                   <span>Quick presets</span>
                   <div className="bysPresetButtons">
-                    {loadProfile.presets.map((preset) => (
-                      <button key={preset.name} className="bysPresetBtn" type="button" onClick={() => applyPreset(preset)}>{preset.name}</button>
-                    ))}
-                    <button className="bysPresetBtn clear" type="button" onClick={clearVisibleLoads}>Clear all</button>
+                    {loadProfile.presets.map((preset) => {
+                      const active =
+                        isPresetActive(preset);
+
+                      return (
+                        <button
+                          key={preset.name}
+                          className={`bysPresetBtn${
+                            active
+                              ? " active"
+                              : ""
+                          }`}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() =>
+                            applyPreset(preset)
+                          }
+                        >
+                          <span>{preset.name}</span>
+                          {active && (
+                            <b
+                              className="bysPresetSelected"
+                              aria-hidden="true"
+                            >
+                              ✓
+                            </b>
+                          )}
+                        </button>
+                      );
+                    })}
+
+                    <button
+                      className={`bysPresetBtn clear${
+                        visibleLoadsCleared
+                          ? " active"
+                          : ""
+                      }`}
+                      type="button"
+                      aria-pressed={
+                        visibleLoadsCleared
+                      }
+                      onClick={clearVisibleLoads}
+                    >
+                      <span>Clear all</span>
+                      {visibleLoadsCleared && (
+                        <b
+                          className="bysPresetSelected"
+                          aria-hidden="true"
+                        >
+                          ✓
+                        </b>
+                      )}
+                    </button>
                   </div>
                 </div>
               </div>
@@ -839,6 +1940,7 @@ export default function BuildYourSystemClient() {
                 </section>
 
                 <div className="bysResultActions">
+                  <button className="builder" type="button" onClick={openSystemBuilder}>Build This System →</button>
                   <button type="button" onClick={() => window.print()}>Save / Print PDF</button>
                   <button className="secondary" type="button" onClick={downloadProfile}>Download Profile</button>
                   <Link href="/contact?source=builder">Request Engineering Review →</Link>
@@ -871,6 +1973,832 @@ export default function BuildYourSystemClient() {
             <div className="bysLiveProfile"><small>Current planning path</small><b>{calc.path}</b></div>
           </aside>
         </section>
+
+        {systemBuilderOpen && (
+          <section
+            className="bysBuilderStage"
+            id="bysSystemBuilder"
+            ref={systemBuilderRef}
+          >
+            <div className="bysBuilderHead">
+              <div>
+                <div className="bysEyebrow">
+                  Part 02 • Interactive System Builder
+                </div>
+                <h2>
+                  Turn the planning result into an actual
+                  product system.
+                </h2>
+                <p>
+                  The 7-step planner established the target scale.
+                  Now choose real Desh Solar catalogue products,
+                  adjust quantities and review the compatibility
+                  signals before final engineering approval.
+                </p>
+              </div>
+
+              <div className="bysBuilderScore">
+                <small>Compatibility snapshot</small>
+                <strong>{builderGoodCount} / 3</strong>
+                <span>
+                  {builderWarningCount
+                    ? `${builderWarningCount} item${
+                        builderWarningCount === 1
+                          ? ""
+                          : "s"
+                      } need review`
+                    : "No automatic warnings"}
+                </span>
+              </div>
+            </div>
+
+            <div className="bysBuilderWorkspace">
+              <div className="bysBuilderLeftCompact">
+                <div className="bysBuilderRequirement">
+                  <div>
+                    <small>Planning PV</small>
+                    <b>{round1(calc.actualPV)} kWp</b>
+                  </div>
+                  <div>
+                    <small>Inverter Class</small>
+                    <b>{calc.inverterClass} kW</b>
+                  </div>
+                  <div>
+                    <small>Storage Target</small>
+                    <b>{round1(calc.batteryKWh)} kWh</b>
+                  </div>
+                  <div>
+                    <small>Electrical Phase</small>
+                    <b>{phase}</b>
+                  </div>
+                  <div>
+                    <small>Backup Target</small>
+                    <b>{round1(backupHours)} h</b>
+                  </div>
+                </div>
+
+                <div className="bysBuilderProducts">
+                <article className="bysBuilderProductCard">
+                  <div className="bysBuilderProductTop">
+                    <div>
+                      <span className="bysBuilderSlot">
+                        01 • PV ARRAY
+                      </span>
+                      <h3>Solar Panels</h3>
+                    </div>
+                    <span
+                      className={`bysBuilderCheck ${panelCheck.state}`}
+                    >
+                      {panelCheck.state === "good"
+                        ? "✓"
+                        : panelCheck.state === "warn"
+                          ? "!"
+                          : "?"}
+                    </span>
+                  </div>
+
+                  {builderPanel ? (
+                    <div className="bysBuilderSelectedProduct">
+                      <div className="bysBuilderProductImage">
+                        <Image
+                          alt={builderPanel.name}
+                          src={builderPanel.image}
+                          width={220}
+                          height={180}
+                        />
+                      </div>
+                      <div className="bysBuilderProductInfo">
+                        <small>
+                          {builderPanel.brandLabel} •{" "}
+                          {builderPanel.categoryLabel}
+                        </small>
+                        <b>{builderPanel.name}</b>
+                        <span>
+                          {builderPanel.power} •{" "}
+                          {builderPanel.priceText}
+                        </span>
+                        <Link
+                          href={`/products/${builderPanel.id}`}
+                        >
+                          View product →
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bysBuilderEmptyProduct">
+                      No panel selected.
+                    </div>
+                  )}
+
+                  <div className="bysBuilderQtyRow">
+                    <label htmlFor="builderPanelQty">
+                      Panel quantity
+                    </label>
+                    <input
+                      id="builderPanelQty"
+                      min={1}
+                      max={99}
+                      type="number"
+                      value={builderSelection.panelQty}
+                      onChange={(event) =>
+                        setBuilderSelection(
+                          (current) => ({
+                            ...current,
+                            panelQty: clamp(
+                              Number(
+                                event.target.value,
+                              ) || 1,
+                              1,
+                              99,
+                            ),
+                          }),
+                        )
+                      }
+                    />
+                    <b>
+                      {builderPVTotal
+                        ? `${round1(
+                            builderPVTotal,
+                          )} kWp`
+                        : "—"}
+                    </b>
+                  </div>
+
+                  <div
+                    className={`bysBuilderStatus ${panelCheck.state}`}
+                  >
+                    <b>{panelCheck.label}</b>
+                    <p>{panelCheck.detail}</p>
+                  </div>
+
+                  <button
+                    className="bysBuilderChange"
+                    type="button"
+                    onClick={() =>
+                      openBuilderPicker("panel")
+                    }
+                  >
+                    Change Solar Panel →
+                  </button>
+                </article>
+
+                <article className="bysBuilderProductCard">
+                  <div className="bysBuilderProductTop">
+                    <div>
+                      <span className="bysBuilderSlot">
+                        02 • CONTROL + CONVERSION
+                      </span>
+                      <h3>Inverter</h3>
+                    </div>
+                    <span
+                      className={`bysBuilderCheck ${inverterCheck.state}`}
+                    >
+                      {inverterCheck.state === "good"
+                        ? "✓"
+                        : inverterCheck.state === "warn"
+                          ? "!"
+                          : "?"}
+                    </span>
+                  </div>
+
+                  {builderInverter ? (
+                    <div className="bysBuilderSelectedProduct">
+                      <div className="bysBuilderProductImage">
+                        <Image
+                          alt={builderInverter.name}
+                          src={builderInverter.image}
+                          width={220}
+                          height={180}
+                        />
+                      </div>
+                      <div className="bysBuilderProductInfo">
+                        <small>
+                          {builderInverter.brandLabel} •{" "}
+                          {builderInverter.categoryLabel}
+                        </small>
+                        <b>{builderInverter.name}</b>
+                        <span>
+                          {builderInverter.power} •{" "}
+                          {builderInverter.priceText}
+                        </span>
+                        <Link
+                          href={`/products/${builderInverter.id}`}
+                        >
+                          View product →
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bysBuilderEmptyProduct">
+                      No inverter selected.
+                    </div>
+                  )}
+
+                  <div className="bysBuilderQtyRow fixed">
+                    <span>System quantity</span>
+                    <b>1 inverter</b>
+                  </div>
+
+                  <div
+                    className={`bysBuilderStatus ${inverterCheck.state}`}
+                  >
+                    <b>{inverterCheck.label}</b>
+                    <p>{inverterCheck.detail}</p>
+                  </div>
+
+                  <button
+                    className="bysBuilderChange"
+                    type="button"
+                    onClick={() =>
+                      openBuilderPicker("inverter")
+                    }
+                  >
+                    Change Inverter →
+                  </button>
+                </article>
+
+                <article className="bysBuilderProductCard">
+                  <div className="bysBuilderProductTop">
+                    <div>
+                      <span className="bysBuilderSlot">
+                        03 • STORAGE
+                      </span>
+                      <h3>Battery</h3>
+                    </div>
+                    <span
+                      className={`bysBuilderCheck ${batteryCheck.state}`}
+                    >
+                      {batteryCheck.state === "good"
+                        ? "✓"
+                        : batteryCheck.state === "warn"
+                          ? "!"
+                          : "?"}
+                    </span>
+                  </div>
+
+                  {builderBattery ? (
+                    <div className="bysBuilderSelectedProduct">
+                      <div className="bysBuilderProductImage">
+                        <Image
+                          alt={builderBattery.name}
+                          src={builderBattery.image}
+                          width={220}
+                          height={180}
+                        />
+                      </div>
+                      <div className="bysBuilderProductInfo">
+                        <small>
+                          {builderBattery.brandLabel} •{" "}
+                          {builderBattery.categoryLabel}
+                        </small>
+                        <b>{builderBattery.name}</b>
+                        <span>
+                          {builderBattery.power} •{" "}
+                          {builderBattery.priceText}
+                        </span>
+                        <Link
+                          href={`/products/${builderBattery.id}`}
+                        >
+                          View product →
+                        </Link>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bysBuilderEmptyProduct">
+                      No battery selected.
+                    </div>
+                  )}
+
+                  <div className="bysBuilderQtyRow">
+                    <label htmlFor="builderBatteryQty">
+                      Battery quantity
+                    </label>
+                    <input
+                      id="builderBatteryQty"
+                      min={1}
+                      max={20}
+                      type="number"
+                      value={
+                        builderSelection.batteryQty
+                      }
+                      onChange={(event) =>
+                        setBuilderSelection(
+                          (current) => ({
+                            ...current,
+                            batteryQty: clamp(
+                              Number(
+                                event.target.value,
+                              ) || 1,
+                              1,
+                              20,
+                            ),
+                          }),
+                        )
+                      }
+                    />
+                    <b>
+                      {builderBatteryTotal
+                        ? `${round1(
+                            builderBatteryTotal,
+                          )} kWh`
+                        : builderBattery?.power ??
+                          "—"}
+                    </b>
+                  </div>
+
+                  <div
+                    className={`bysBuilderStatus ${batteryCheck.state}`}
+                  >
+                    <b>{batteryCheck.label}</b>
+                    <p>{batteryCheck.detail}</p>
+                  </div>
+
+                  <button
+                    className="bysBuilderChange"
+                    type="button"
+                    onClick={() =>
+                      openBuilderPicker("battery")
+                    }
+                  >
+                    Change Battery →
+                  </button>
+                </article>
+                </div>
+              </div>
+
+              <aside className="bysBuilderSummary">
+                <div className="bysBuilderSummaryHead">
+                  <small>Selected System</small>
+                  <h3>{calc.profile}</h3>
+                </div>
+
+                <div className="bysBuilderSummaryFlow">
+                  <div>
+                    <span>☀</span>
+                    <b>PV</b>
+                    <small>
+                      {builderPVTotal
+                        ? `${round1(
+                            builderPVTotal,
+                          )} kWp`
+                        : "—"}
+                    </small>
+                  </div>
+                  <i>→</i>
+                  <div>
+                    <span>↯</span>
+                    <b>Inverter</b>
+                    <small>
+                      {builderInverter?.power ?? "—"}
+                    </small>
+                  </div>
+                  <i>→</i>
+                  <div>
+                    <span>▣</span>
+                    <b>Battery</b>
+                    <small>
+                      {builderBatteryTotal
+                        ? `${round1(
+                            builderBatteryTotal,
+                          )} kWh`
+                        : "—"}
+                    </small>
+                  </div>
+                  <i>→</i>
+                  <div>
+                    <span>⌂</span>
+                    <b>Loads</b>
+                    <small>
+                      {fmt(calc.running)} W
+                    </small>
+                  </div>
+                </div>
+
+                <div className="bysBuilderPrice">
+                  <span>
+                    {builderHasQuoteOnly
+                      ? "Priced equipment subtotal"
+                      : "Equipment subtotal"}
+                  </span>
+                  <b>
+                    ৳ {fmt(builderSubtotal)}
+                  </b>
+                  <small>
+                    Based only on the selected
+                    catalogue products above.
+                  </small>
+                </div>
+
+                <div className="bysBuilderActions">
+                  <button
+                    type="button"
+                    onClick={addBuiltSystemToCart}
+                  >
+                    Add Selected Products to Cart →
+                  </button>
+
+                  <button
+                    className="secondary"
+                    type="button"
+                    onClick={openBuilderContactModal}
+                  >
+                    Send System to WhatsApp
+                  </button>
+
+                  <button
+                    className="secondary"
+                    type="button"
+                    onClick={downloadBuiltSystem}
+                  >
+                    Download System Design
+                  </button>
+
+                  <button
+                    className="secondary"
+                    type="button"
+                    onClick={printBuiltSystem}
+                  >
+                    Print System Design
+                  </button>
+
+                  <Link href="/contact?source=builder">
+                    Request Engineering Review →
+                  </Link>
+                </div>
+
+                {builderMessage && (
+                  <div className="bysBuilderMessage">
+                    {builderMessage}
+                  </div>
+                )}
+
+              </aside>
+            </div>
+          </section>
+        )}
+
+        {builderMounted &&
+          contactModalOpen &&
+          createPortal(
+            <div
+              className="bysContactBackdrop"
+              role="presentation"
+              onMouseDown={(event) => {
+                if (
+                  event.target ===
+                  event.currentTarget
+                ) {
+                  closeBuilderContactModal();
+                }
+              }}
+            >
+              <section
+                aria-labelledby="bysContactTitle"
+                aria-modal="true"
+                className="bysContactModal"
+                role="dialog"
+                onMouseDown={(event) =>
+                  event.stopPropagation()
+                }
+              >
+                <div className="bysContactHead">
+                  <div>
+                    <small>
+                      Desh Solar • System Design
+                    </small>
+                    <h2 id="bysContactTitle">
+                      How to contact you
+                    </h2>
+                    <p>
+                      Add your contact details before
+                      continuing to WhatsApp with the
+                      selected system design.
+                    </p>
+                  </div>
+
+                  <button
+                    aria-label="Close contact form"
+                    type="button"
+                    onClick={
+                      closeBuilderContactModal
+                    }
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <div className="bysContactBody">
+                  <div className="bysContactGrid">
+                    <label>
+                      <span>Full Name *</span>
+                      <input
+                        autoComplete="name"
+                        placeholder="Your full name"
+                        value={
+                          builderCustomer.name
+                        }
+                        onChange={(event) =>
+                          setBuilderCustomer(
+                            (current) => ({
+                              ...current,
+                              name: event.target.value,
+                            }),
+                          )
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      <span>Phone *</span>
+                      <input
+                        autoComplete="tel"
+                        inputMode="tel"
+                        placeholder="01XXXXXXXXX"
+                        value={
+                          builderCustomer.phone
+                        }
+                        onChange={(event) =>
+                          setBuilderCustomer(
+                            (current) => ({
+                              ...current,
+                              phone:
+                                event.target.value,
+                            }),
+                          )
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      <span>Email</span>
+                      <input
+                        autoComplete="email"
+                        placeholder="Optional"
+                        type="email"
+                        value={
+                          builderCustomer.email
+                        }
+                        onChange={(event) =>
+                          setBuilderCustomer(
+                            (current) => ({
+                              ...current,
+                              email:
+                                event.target.value,
+                            }),
+                          )
+                        }
+                      />
+                    </label>
+
+                    <label>
+                      <span>District / City</span>
+                      <input
+                        autoComplete="address-level2"
+                        placeholder="Dhaka, Chattogram..."
+                        value={
+                          builderCustomer.location
+                        }
+                        onChange={(event) =>
+                          setBuilderCustomer(
+                            (current) => ({
+                              ...current,
+                              location:
+                                event.target.value,
+                            }),
+                          )
+                        }
+                      />
+                    </label>
+                  </div>
+
+                  {builderContactError && (
+                    <div className="bysContactError">
+                      {builderContactError}
+                    </div>
+                  )}
+
+                  <div className="bysContactActions">
+                    <button
+                      className="secondary"
+                      type="button"
+                      onClick={
+                        closeBuilderContactModal
+                      }
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      disabled={
+                        builderContactSubmitting
+                      }
+                      type="button"
+                      onClick={
+                        continueBuiltSystemToWhatsApp
+                      }
+                    >
+                      {builderContactSubmitting
+                        ? "Saving customer details…"
+                        : "Continue to WhatsApp →"}
+                    </button>
+                  </div>
+
+                  <p className="bysContactNote">
+                    Your details are saved to the
+                    Desh Solar customer table and
+                    added to the WhatsApp message
+                    for this system design.
+                  </p>
+                </div>
+              </section>
+            </div>,
+            document.body,
+          )}
+
+        {builderMounted && builderPicker && createPortal(
+          <div
+            className="bysPickerBackdrop"
+            role="presentation"
+            onClick={() => {
+              setBuilderPicker(null);
+            }}
+          >
+            <section
+              aria-label={`Choose ${builderPicker}`}
+              aria-modal="true"
+              className="bysPickerModal"
+              role="dialog"
+              onClick={(event) => {
+                event.stopPropagation();
+              }}
+            >
+              <div className="bysPickerHead">
+                <div>
+                  <small>
+                    Desh Solar Catalogue
+                  </small>
+                  <h2>
+                    Choose{" "}
+                    {builderPicker === "panel"
+                      ? "a solar panel"
+                      : builderPicker ===
+                          "inverter"
+                        ? "an inverter"
+                        : "a battery"}
+                  </h2>
+                  <p>
+                    Recommended and
+                    compatible-looking options are
+                    shown first. Final technical
+                    compatibility still requires
+                    engineering review.
+                  </p>
+                </div>
+
+                <button
+                  aria-label="Close product selector"
+                  type="button"
+                  onClick={() =>
+                    setBuilderPicker(null)
+                  }
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="bysPickerRequirement">
+                {builderPicker === "panel" && (
+                  <>
+                    <span>Planning target</span>
+                    <b>
+                      {round1(calc.actualPV)} kWp PV
+                    </b>
+                  </>
+                )}
+
+                {builderPicker === "inverter" && (
+                  <>
+                    <span>Planning target</span>
+                    <b>
+                      {calc.inverterClass} kW •{" "}
+                      {phase}
+                    </b>
+                  </>
+                )}
+
+                {builderPicker === "battery" && (
+                  <>
+                    <span>Planning target</span>
+                    <b>
+                      {round1(
+                        calc.batteryKWh,
+                      )}{" "}
+                      kWh storage
+                    </b>
+                  </>
+                )}
+              </div>
+
+              <div className="bysPickerGrid">
+                {pickerProducts.map((product) => {
+                  const check =
+                    pickerCheck(product);
+
+                  const isSelected =
+                    product.id ===
+                      builderSelection.panelId ||
+                    product.id ===
+                      builderSelection.inverterId ||
+                    product.id ===
+                      builderSelection.batteryId;
+
+                  return (
+                    <article
+                      className={`bysPickerProduct${
+                        isSelected
+                          ? " selected"
+                          : ""
+                      }`}
+                      key={product.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => {
+                        selectBuilderProduct(product);
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter" || event.key === " ") {
+                          event.preventDefault();
+                          selectBuilderProduct(product);
+                        }
+                      }}
+                    >
+                      <div className="bysPickerImage">
+                        <Image
+                          alt={product.name}
+                          src={product.image}
+                          width={260}
+                          height={210}
+                        />
+                      </div>
+
+                      <div className="bysPickerProductBody">
+                        <small>
+                          {product.brandLabel} •{" "}
+                          {product.categoryLabel}
+                        </small>
+
+                        <h3>{product.name}</h3>
+
+                        <div className="bysPickerProductMeta">
+                          <b>{product.power}</b>
+                          <span>
+                            {product.priceText}
+                          </span>
+                        </div>
+
+                        <div
+                          className={`bysPickerCheck ${check.state}`}
+                        >
+                          <b>{check.label}</b>
+                          <span>
+                            {check.detail}
+                          </span>
+                        </div>
+
+                        <div className="bysPickerActions">
+                          <button
+                            type="button"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              selectBuilderProduct(product);
+                            }}
+                          >
+                            {isSelected
+                              ? "Selected"
+                              : "Use This Product →"}
+                          </button>
+
+                          <Link
+                            href={`/products/${product.id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                            }}
+                          >
+                            Details
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </section>
+          </div>
+          ,
+          document.body,
+        )}
       </div>
 
       <section className="futureBand">

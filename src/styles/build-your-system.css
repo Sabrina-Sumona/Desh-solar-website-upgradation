@@ -886,3 +886,4676 @@
   .bysApplianceGroup{padding:12px}
 }
 
+/* =========================================================
+   PART 02 — INTERACTIVE SYSTEM BUILDER
+   ========================================================= */
+
+.bysResultActions .builder{
+  border-color:rgba(104,201,245,.32);
+  background:linear-gradient(135deg,rgba(104,201,245,.10),rgba(184,246,106,.07));
+  color:#eef8f9;
+  box-shadow:0 10px 26px rgba(0,0,0,.14);
+}
+.bysResultActions .builder:hover{
+  border-color:rgba(184,246,106,.36);
+  transform:translateY(-1px);
+}
+
+.bysBuilderStage{
+  width:min(1500px,calc(100% - 12vw));
+  margin:0 auto 10vh;
+  scroll-margin-top:96px;
+}
+.bysBuilderHead{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 190px;
+  gap:28px;
+  align-items:end;
+  margin-bottom:22px;
+}
+.bysBuilderHead h2{
+  max-width:940px;
+  margin:6px 0 10px;
+  font-size:clamp(38px,4.8vw,70px);
+  line-height:.96;
+  letter-spacing:-.052em;
+}
+.bysBuilderHead p{
+  max-width:800px;
+  margin:0;
+  color:#8ba1ab;
+  font-size:12px;
+  line-height:1.68;
+}
+.bysBuilderScore{
+  min-height:132px;
+  padding:18px;
+  border:1px solid rgba(184,246,106,.14);
+  border-radius:20px;
+  background:radial-gradient(circle at 85% 15%,rgba(184,246,106,.07),transparent 35%),rgba(255,255,255,.012);
+}
+.bysBuilderScore small{
+  display:block;
+  color:#778e98;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.bysBuilderScore strong{
+  display:block;
+  margin-top:8px;
+  color:#c8ff9a;
+  font-size:34px;
+  line-height:1;
+}
+.bysBuilderScore span{
+  display:block;
+  margin-top:8px;
+  color:#8398a1;
+  font-size:9px;
+  line-height:1.45;
+}
+
+.bysBuilderRequirement{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:14px;
+}
+.bysBuilderRequirement>div{
+  min-height:78px;
+  padding:14px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:15px;
+  background:rgba(255,255,255,.012);
+}
+.bysBuilderRequirement small{
+  display:block;
+  color:#728892;
+  font-size:8px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.bysBuilderRequirement b{
+  display:block;
+  margin-top:7px;
+  font-size:15px;
+}
+
+.bysBuilderWorkspace{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 370px;
+  gap:16px;
+  align-items:start;
+}
+.bysBuilderProducts{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:11px;
+}
+.bysBuilderProductCard{
+  min-width:0;
+  padding:17px;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  background:radial-gradient(circle at 90% 4%,rgba(104,201,245,.045),transparent 24%),rgba(255,255,255,.013);
+}
+.bysBuilderProductTop{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+}
+.bysBuilderSlot{
+  color:#7996a3;
+  font-size:7px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+.bysBuilderProductTop h3{
+  margin:6px 0 0;
+  font-size:19px;
+}
+.bysBuilderCheck{
+  width:31px;
+  height:31px;
+  flex:0 0 31px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.09);
+  font-size:12px;
+  font-weight:950;
+}
+.bysBuilderCheck.good{
+  color:#b8f66a;
+  border-color:rgba(184,246,106,.25);
+  background:rgba(184,246,106,.04);
+}
+.bysBuilderCheck.warn{
+  color:#ffcf75;
+  border-color:rgba(255,207,117,.24);
+  background:rgba(255,207,117,.04);
+}
+.bysBuilderCheck.review{
+  color:#8fc9e2;
+  border-color:rgba(104,201,245,.2);
+  background:rgba(104,201,245,.035);
+}
+
+.bysBuilderSelectedProduct{
+  margin-top:15px;
+  display:grid;
+  grid-template-columns:96px minmax(0,1fr);
+  gap:12px;
+  align-items:center;
+  min-height:118px;
+}
+.bysBuilderProductImage{
+  height:96px;
+  overflow:hidden;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.07);
+  background:#fff;
+}
+.bysBuilderProductImage img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  padding:7px;
+}
+.bysBuilderProductInfo{
+  min-width:0;
+}
+.bysBuilderProductInfo small{
+  display:block;
+  color:#718792;
+  font-size:7px;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+.bysBuilderProductInfo b{
+  display:block;
+  margin-top:5px;
+  font-size:11px;
+  line-height:1.38;
+}
+.bysBuilderProductInfo span{
+  display:block;
+  margin-top:6px;
+  color:#9fc3d2;
+  font-size:9px;
+}
+.bysBuilderProductInfo a{
+  display:inline-flex;
+  margin-top:7px;
+  color:#b8f66a;
+  font-size:8px;
+  font-weight:900;
+}
+.bysBuilderEmptyProduct{
+  min-height:118px;
+  margin-top:15px;
+  display:grid;
+  place-items:center;
+  border:1px dashed rgba(255,255,255,.08);
+  border-radius:15px;
+  color:#6f838d;
+  font-size:9px;
+}
+
+.bysBuilderQtyRow{
+  min-height:51px;
+  margin-top:13px;
+  padding:8px 10px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 68px auto;
+  gap:8px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:13px;
+  background:rgba(255,255,255,.012);
+}
+.bysBuilderQtyRow.fixed{
+  grid-template-columns:minmax(0,1fr) auto;
+}
+.bysBuilderQtyRow label,
+.bysBuilderQtyRow span{
+  color:#758b95;
+  font-size:8px;
+  font-weight:800;
+}
+.bysBuilderQtyRow input{
+  width:68px;
+  height:34px;
+  padding:0 8px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:9px;
+  outline:none;
+  background:#06131a;
+  color:#edf5f7;
+  text-align:center;
+  font:inherit;
+  font-size:10px;
+  font-weight:900;
+}
+.bysBuilderQtyRow input:focus{
+  border-color:rgba(184,246,106,.32);
+}
+.bysBuilderQtyRow b{
+  text-align:right;
+  font-size:10px;
+}
+
+.bysBuilderStatus{
+  margin-top:10px;
+  padding:11px 12px;
+  border-radius:13px;
+  border:1px solid rgba(255,255,255,.06);
+}
+.bysBuilderStatus.good{
+  border-color:rgba(184,246,106,.12);
+  background:rgba(184,246,106,.025);
+}
+.bysBuilderStatus.warn{
+  border-color:rgba(255,207,117,.13);
+  background:rgba(255,207,117,.025);
+}
+.bysBuilderStatus.review{
+  border-color:rgba(104,201,245,.11);
+  background:rgba(104,201,245,.022);
+}
+.bysBuilderStatus b{
+  display:block;
+  font-size:9px;
+}
+.bysBuilderStatus.good b{color:#b8f66a}
+.bysBuilderStatus.warn b{color:#ffcf75}
+.bysBuilderStatus.review b{color:#91cce5}
+.bysBuilderStatus p{
+  margin:5px 0 0;
+  color:#718792;
+  font-size:8px;
+  line-height:1.5;
+}
+
+.bysBuilderChange{
+  width:100%;
+  min-height:39px;
+  margin-top:11px;
+  border:1px solid rgba(104,201,245,.14);
+  border-radius:999px;
+  background:rgba(104,201,245,.03);
+  color:#a9d6e9;
+  font:inherit;
+  font-size:9px;
+  font-weight:900;
+  cursor:pointer;
+}
+.bysBuilderChange:hover{
+  border-color:rgba(184,246,106,.25);
+  color:#caffaa;
+}
+
+.bysBuilderSummary{
+  position:sticky;
+  top:94px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:23px;
+  background:radial-gradient(circle at 90% 3%,rgba(145,239,91,.065),transparent 25%),#061016;
+}
+.bysBuilderSummaryHead{
+  padding:19px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.bysBuilderSummaryHead small{
+  color:#718792;
+  font-size:8px;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+}
+.bysBuilderSummaryHead h3{
+  margin:7px 0 0;
+  font-size:19px;
+  line-height:1.08;
+}
+.bysBuilderSummaryFlow{
+  padding:15px 12px;
+  display:grid;
+  grid-template-columns:repeat(7,auto);
+  gap:4px;
+  align-items:center;
+  justify-content:center;
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+.bysBuilderSummaryFlow>div{
+  width:58px;
+  min-height:64px;
+  padding:7px 4px;
+  border:1px solid rgba(255,255,255,.065);
+  border-radius:11px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.bysBuilderSummaryFlow span{
+  color:#b8f66a;
+  font-size:15px;
+}
+.bysBuilderSummaryFlow b{
+  margin-top:3px;
+  font-size:7px;
+}
+.bysBuilderSummaryFlow small{
+  margin-top:3px;
+  color:#718792;
+  font-size:6px;
+}
+.bysBuilderSummaryFlow i{
+  color:#80c9e7;
+  font-size:10px;
+  font-style:normal;
+}
+
+.bysBuilderChecks{
+  padding:8px 18px;
+}
+.bysBuilderCheckRow{
+  padding:10px 0;
+  display:grid;
+  grid-template-columns:26px 1fr;
+  gap:9px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.bysBuilderCheckRow:last-child{
+  border-bottom:0;
+}
+.bysBuilderCheckRow>span{
+  width:25px;
+  height:25px;
+  border-radius:8px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.08);
+  font-size:9px;
+  font-weight:950;
+}
+.bysBuilderCheckRow.good>span{
+  color:#b8f66a;
+  border-color:rgba(184,246,106,.18);
+}
+.bysBuilderCheckRow.warn>span{
+  color:#ffcf75;
+  border-color:rgba(255,207,117,.2);
+}
+.bysBuilderCheckRow.review>span{
+  color:#8fc9e2;
+  border-color:rgba(104,201,245,.18);
+}
+.bysBuilderCheckRow b{
+  display:block;
+  font-size:9px;
+}
+.bysBuilderCheckRow small{
+  display:block;
+  margin-top:3px;
+  color:#6f8590;
+  font-size:7px;
+  line-height:1.45;
+}
+
+.bysBuilderBos{
+  margin:0 16px 14px;
+  padding:13px;
+  border:1px solid rgba(255,188,93,.11);
+  border-radius:13px;
+  background:rgba(255,188,93,.025);
+}
+.bysBuilderBos small{
+  display:block;
+  color:#9a8b72;
+  font-size:7px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.bysBuilderBos b{
+  display:block;
+  margin-top:5px;
+  font-size:10px;
+}
+.bysBuilderBos p{
+  margin:6px 0 0;
+  color:#817866;
+  font-size:8px;
+  line-height:1.48;
+}
+
+.bysBuilderPrice{
+  padding:16px 18px;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.bysBuilderPrice span{
+  display:block;
+  color:#728892;
+  font-size:8px;
+  text-transform:uppercase;
+}
+.bysBuilderPrice b{
+  display:block;
+  margin-top:5px;
+  color:#c8ff9a;
+  font-size:25px;
+}
+.bysBuilderPrice small{
+  display:block;
+  margin-top:4px;
+  color:#617781;
+  font-size:7px;
+}
+
+.bysBuilderActions{
+  padding:15px 18px;
+  display:grid;
+  gap:7px;
+}
+.bysBuilderActions button,
+.bysBuilderActions a{
+  min-height:42px;
+  padding:0 13px;
+  border:1px solid rgba(184,246,106,.26);
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(184,246,106,.05);
+  color:#edf8e9;
+  font:inherit;
+  font-size:9px;
+  font-weight:900;
+  text-align:center;
+  cursor:pointer;
+}
+.bysBuilderActions .secondary{
+  border-color:rgba(255,255,255,.08);
+  background:rgba(255,255,255,.015);
+  color:#9eb1ba;
+}
+.bysBuilderMessage{
+  margin:0 18px 14px;
+  padding:11px 12px;
+  border:1px solid rgba(104,201,245,.12);
+  border-radius:12px;
+  background:rgba(104,201,245,.025);
+  color:#9fc9da;
+  font-size:8px;
+  line-height:1.5;
+}
+.bysBuilderDisclaimer{
+  padding:0 18px 18px;
+  color:#5f737c;
+  font-size:7px;
+  line-height:1.55;
+}
+
+/* Product selector modal */
+.bysPickerBackdrop{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  padding:4vh 4vw;
+  display:grid;
+  place-items:center;
+  background:rgba(1,6,9,.78);
+  backdrop-filter:blur(12px);
+}
+.bysPickerModal{
+  width:min(1180px,100%);
+  max-height:92vh;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:26px;
+  background:radial-gradient(circle at 90% 0%,rgba(104,201,245,.06),transparent 25%),#071219;
+  box-shadow:0 35px 100px rgba(0,0,0,.42);
+}
+.bysPickerHead{
+  padding:20px 22px;
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.bysPickerHead small{
+  color:#7ba3b4;
+  font-size:8px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+}
+.bysPickerHead h2{
+  margin:5px 0 5px;
+  font-size:clamp(27px,3.5vw,45px);
+  letter-spacing:-.04em;
+}
+.bysPickerHead p{
+  max-width:710px;
+  margin:0;
+  color:#718792;
+  font-size:9px;
+  line-height:1.55;
+}
+.bysPickerHead>button{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:50%;
+  background:rgba(255,255,255,.018);
+  color:#aabdc5;
+  font:inherit;
+  font-size:21px;
+  cursor:pointer;
+}
+
+.bysPickerRequirement{
+  min-height:48px;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid rgba(255,255,255,.055);
+}
+.bysPickerRequirement span{
+  color:#6f8590;
+  font-size:8px;
+  text-transform:uppercase;
+}
+.bysPickerRequirement b{
+  color:#b8f66a;
+  font-size:10px;
+}
+
+.bysPickerGrid{
+  padding:16px;
+  overflow-y:auto;
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.bysPickerProduct{
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.075);
+  border-radius:18px;
+  background:rgba(255,255,255,.012);
+}
+.bysPickerProduct.selected{
+  border-color:rgba(184,246,106,.30);
+  box-shadow:inset 0 0 0 1px rgba(184,246,106,.04);
+}
+.bysPickerImage{
+  height:150px;
+  background:#fff;
+}
+.bysPickerImage img{
+  width:100%;
+  height:100%;
+  padding:10px;
+  object-fit:contain;
+}
+.bysPickerProductBody{
+  padding:14px;
+}
+.bysPickerProductBody>small{
+  color:#718792;
+  font-size:7px;
+  text-transform:uppercase;
+}
+.bysPickerProductBody h3{
+  min-height:38px;
+  margin:5px 0 9px;
+  font-size:12px;
+  line-height:1.35;
+}
+.bysPickerProductMeta{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  font-size:9px;
+}
+.bysPickerProductMeta span{
+  color:#b8f66a;
+  font-weight:900;
+}
+.bysPickerCheck{
+  min-height:52px;
+  margin-top:10px;
+  padding:9px 10px;
+  border:1px solid rgba(255,255,255,.055);
+  border-radius:11px;
+}
+.bysPickerCheck.good{
+  border-color:rgba(184,246,106,.11);
+  background:rgba(184,246,106,.022);
+}
+.bysPickerCheck.warn{
+  border-color:rgba(255,207,117,.12);
+  background:rgba(255,207,117,.022);
+}
+.bysPickerCheck.review{
+  border-color:rgba(104,201,245,.10);
+  background:rgba(104,201,245,.02);
+}
+.bysPickerCheck b{
+  display:block;
+  font-size:8px;
+}
+.bysPickerCheck.good b{color:#b8f66a}
+.bysPickerCheck.warn b{color:#ffcf75}
+.bysPickerCheck.review b{color:#8fc9e2}
+.bysPickerCheck span{
+  display:block;
+  margin-top:3px;
+  color:#6f8590;
+  font-size:7px;
+  line-height:1.4;
+}
+.bysPickerActions{
+  margin-top:11px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:7px;
+}
+.bysPickerActions button,
+.bysPickerActions a{
+  min-height:36px;
+  padding:0 11px;
+  border:1px solid rgba(184,246,106,.20);
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(184,246,106,.04);
+  color:#dff3d5;
+  font:inherit;
+  font-size:8px;
+  font-weight:900;
+  cursor:pointer;
+}
+.bysPickerActions a{
+  border-color:rgba(255,255,255,.07);
+  background:rgba(255,255,255,.012);
+  color:#91a6af;
+}
+
+@media(max-width:1260px){
+  .bysBuilderWorkspace{
+    grid-template-columns:1fr;
+  }
+  .bysBuilderSummary{
+    position:relative;
+    top:auto;
+  }
+  .bysBuilderProducts{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:980px){
+  .bysBuilderHead{
+    grid-template-columns:1fr;
+  }
+  .bysBuilderScore{
+    max-width:260px;
+  }
+  .bysBuilderRequirement{
+    grid-template-columns:repeat(3,1fr);
+  }
+  .bysBuilderProducts{
+    grid-template-columns:1fr;
+  }
+  .bysBuilderSelectedProduct{
+    grid-template-columns:110px 1fr;
+  }
+  .bysPickerGrid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:720px){
+  .bysBuilderStage{
+    width:calc(100% - 8vw);
+    margin:7vh auto 8vh;
+    scroll-margin-top:126px;
+  }
+  .bysBuilderHead h2{
+    font-size:38px;
+  }
+  .bysBuilderRequirement{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .bysBuilderRequirement>div:last-child{
+    grid-column:1/-1;
+  }
+  .bysBuilderSelectedProduct{
+    grid-template-columns:86px minmax(0,1fr);
+  }
+  .bysBuilderProductImage{
+    height:86px;
+  }
+  .bysBuilderSummaryFlow{
+    overflow-x:auto;
+    justify-content:flex-start;
+  }
+  .bysBuilderQtyRow{
+    grid-template-columns:minmax(0,1fr) 62px auto;
+  }
+
+  .bysPickerBackdrop{
+    padding:0;
+    align-items:end;
+  }
+  .bysPickerModal{
+    width:100%;
+    max-height:94vh;
+    border-radius:24px 24px 0 0;
+  }
+  .bysPickerGrid{
+    grid-template-columns:1fr;
+    padding:12px;
+  }
+  .bysPickerImage{
+    height:160px;
+  }
+}
+
+@media(max-width:440px){
+  .bysBuilderRequirement{
+    grid-template-columns:1fr;
+  }
+  .bysBuilderRequirement>div:last-child{
+    grid-column:auto;
+  }
+  .bysBuilderSelectedProduct{
+    grid-template-columns:1fr;
+  }
+  .bysBuilderProductImage{
+    height:140px;
+  }
+}
+
+/* =========================================================
+   SYSTEM BUILDER — CLEAN TWO-COLUMN COMPOSITION
+   Three product cards remain on the left.
+   Compact selected-system summary remains on the right.
+   ========================================================= */
+
+.bysBuilderWorkspace{
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:16px;
+  align-items:start;
+}
+
+.bysBuilderProducts{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+
+.bysBuilderSummary{
+  position:sticky;
+  top:94px;
+}
+
+/* Keep the right summary compact so it stays visually close
+   to the height of the product cards. */
+
+.bysBuilderSummaryHead{
+  padding:17px 17px 14px;
+}
+
+.bysBuilderSummaryHead h3{
+  font-size:17px;
+}
+
+.bysBuilderSummaryFlow{
+  padding:13px 10px;
+}
+
+.bysBuilderSummaryFlow>div{
+  width:52px;
+  min-height:58px;
+}
+
+.bysBuilderSummary .bysBuilderChecks,
+.bysBuilderSummary .bysBuilderBos,
+.bysBuilderSummary .bysBuilderDisclaimer{
+  display:none;
+}
+
+.bysBuilderPrice{
+  padding:15px 17px;
+}
+
+.bysBuilderPrice b{
+  font-size:23px;
+}
+
+.bysBuilderActions{
+  padding:13px 16px 16px;
+  gap:7px;
+}
+
+.bysBuilderActions button,
+.bysBuilderActions a{
+  min-height:39px;
+  font-size:8px;
+}
+
+.bysBuilderMessage{
+  margin:0 16px 16px;
+}
+
+/* When space becomes limited, stack naturally. */
+
+@media(max-width:1180px){
+  .bysBuilderWorkspace{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderSummary{
+    position:relative;
+    top:auto;
+  }
+}
+
+@media(max-width:980px){
+  .bysBuilderProducts{
+    grid-template-columns:1fr;
+  }
+}
+
+/* =========================================================
+   SYSTEM BUILDER — COMPACT PLANNING + FULL RIGHT SUMMARY
+   Planning metrics now live in the left column so the
+   Selected System panel can occupy the right side from top.
+   ========================================================= */
+
+.bysBuilderWorkspace{
+  grid-template-columns:minmax(0,1fr) 330px;
+  gap:16px;
+  align-items:start;
+}
+
+.bysBuilderLeftCompact{
+  min-width:0;
+  display:grid;
+  gap:12px;
+}
+
+/* Compact planning metrics */
+.bysBuilderLeftCompact .bysBuilderRequirement{
+  margin:0;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:7px;
+}
+
+.bysBuilderLeftCompact .bysBuilderRequirement>div{
+  min-height:62px;
+  padding:11px 12px;
+  border-radius:13px;
+}
+
+.bysBuilderLeftCompact .bysBuilderRequirement small{
+  font-size:7px;
+  letter-spacing:.07em;
+}
+
+.bysBuilderLeftCompact .bysBuilderRequirement b{
+  margin-top:5px;
+  font-size:13px;
+  line-height:1.2;
+}
+
+/* Product row remains directly under the planning metrics. */
+.bysBuilderLeftCompact .bysBuilderProducts{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+
+/* Selected system now begins at the same top line as planning metrics. */
+.bysBuilderSummary{
+  position:sticky;
+  top:94px;
+  align-self:start;
+}
+
+/* Slightly tighter summary so it visually matches the left column. */
+.bysBuilderSummaryHead{
+  padding:16px 17px 13px;
+}
+
+.bysBuilderSummaryFlow{
+  padding:12px 10px;
+}
+
+.bysBuilderSummaryFlow>div{
+  width:50px;
+  min-height:56px;
+}
+
+.bysBuilderPrice{
+  padding:14px 17px;
+}
+
+.bysBuilderPrice b{
+  font-size:22px;
+}
+
+.bysBuilderActions{
+  padding:12px 16px 15px;
+}
+
+/* Medium width: keep the same relationship a little longer. */
+@media(max-width:1180px){
+  .bysBuilderWorkspace{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderSummary{
+    position:relative;
+    top:auto;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:repeat(3,1fr);
+  }
+}
+
+@media(max-width:980px){
+  .bysBuilderLeftCompact .bysBuilderProducts{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:720px){
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement>div:last-child{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:440px){
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement>div:last-child{
+    grid-column:auto;
+  }
+}
+
+/* =========================================================
+   PRINT — SELECTED PRODUCT SYSTEM
+   Triggered only by the "Print System Design" action.
+   ========================================================= */
+
+@media print{
+  body.printSystemBuilder *{
+    visibility:hidden !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder,
+  body.printSystemBuilder #bysSystemBuilder *{
+    visibility:visible !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder{
+    position:absolute !important;
+    left:0 !important;
+    top:0 !important;
+
+    width:100% !important;
+    max-width:none !important;
+
+    margin:0 !important;
+    padding:24px !important;
+
+    background:#fff !important;
+    color:#111 !important;
+
+    scroll-margin-top:0 !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderHead{
+    display:block !important;
+    margin-bottom:18px !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderScore{
+    display:none !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderWorkspace{
+    display:block !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderLeftCompact{
+    display:block !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderRequirement{
+    display:grid !important;
+    grid-template-columns:repeat(5,1fr) !important;
+    gap:8px !important;
+    margin-bottom:14px !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderProducts{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:10px !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderSummary{
+    position:relative !important;
+    top:auto !important;
+
+    margin-top:14px !important;
+
+    background:#fff !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderProductCard,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderRequirement>div,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderSummary,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderSelectedProduct,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderQtyRow,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderStatus,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderPrice{
+    background:#fff !important;
+    color:#111 !important;
+    border-color:#d8dde0 !important;
+    box-shadow:none !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder *{
+    color:#111 !important;
+    text-shadow:none !important;
+    box-shadow:none !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderProductImage{
+    background:#fff !important;
+    border-color:#d8dde0 !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderChange,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderActions,
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderMessage{
+    display:none !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderSummaryFlow{
+    border-color:#d8dde0 !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder .bysBuilderPrice b{
+    font-size:24px !important;
+  }
+
+  body.printSystemBuilder #bysSystemBuilder a{
+    text-decoration:none !important;
+  }
+
+  @page{
+    margin:12mm;
+  }
+}
+
+/* =========================================================
+   SYSTEM BUILDER — EQUAL BOTTOM ALIGNMENT
+   On desktop, the planning/product column and Selected System
+   column finish on the same horizontal line.
+   ========================================================= */
+
+@media (min-width: 1181px) {
+  .bysBuilderWorkspace {
+    align-items: stretch;
+  }
+
+  .bysBuilderLeftCompact {
+    align-self: stretch;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .bysBuilderLeftCompact .bysBuilderProducts {
+    height: 100%;
+    align-items: stretch;
+  }
+
+  .bysBuilderProductCard {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bysBuilderProductCard .bysBuilderSelectedProduct,
+  .bysBuilderProductCard .bysBuilderEmptyProduct {
+    flex: 0 0 auto;
+  }
+
+  .bysBuilderProductCard .bysBuilderQtyRow {
+    margin-top: auto;
+  }
+
+  .bysBuilderProductCard .bysBuilderChange {
+    margin-top: 11px;
+  }
+
+  .bysBuilderSummary {
+    align-self: stretch;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bysBuilderSummary .bysBuilderActions {
+    margin-top: auto;
+  }
+}
+
+/* =========================================================
+   PRODUCT PICKER — INTERACTION / STACKING FIX
+   ========================================================= */
+
+.bysBuilderProductCard{
+  position:relative;
+  isolation:isolate;
+}
+
+.bysBuilderChange{
+  position:relative;
+  z-index:5;
+  pointer-events:auto;
+  touch-action:manipulation;
+}
+
+.bysPickerBackdrop{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:99999 !important;
+
+  width:100vw;
+  height:100dvh;
+
+  pointer-events:auto !important;
+}
+
+.bysPickerModal{
+  position:relative;
+  z-index:100000;
+
+  pointer-events:auto !important;
+}
+
+.bysPickerModal button,
+.bysPickerModal a{
+  pointer-events:auto !important;
+  touch-action:manipulation;
+}
+
+.bysPickerGrid{
+  overscroll-behavior:contain;
+}
+
+body:has(.bysPickerBackdrop){
+  overflow:hidden;
+}
+
+
+/* =========================================================
+   PRODUCT PICKER — SELECTION FIX
+   Entire option card is selectable; action controls remain
+   explicit and independent.
+   ========================================================= */
+
+.bysPickerProduct{
+  cursor:pointer;
+  transition:
+    border-color .18s ease,
+    background .18s ease,
+    transform .18s ease;
+}
+
+.bysPickerProduct:hover{
+  border-color:rgba(104,201,245,.20);
+  background:rgba(104,201,245,.018);
+}
+
+.bysPickerProduct:focus-visible{
+  outline:2px solid rgba(104,201,245,.32);
+  outline-offset:2px;
+}
+
+.bysPickerProduct.selected{
+  border-color:rgba(184,246,106,.34);
+  background:rgba(184,246,106,.025);
+}
+
+.bysPickerActions{
+  position:relative;
+  z-index:3;
+}
+
+.bysPickerActions button,
+.bysPickerActions a{
+  position:relative;
+  z-index:4;
+}
+
+/* =========================================================
+   PRODUCT PICKER — ALWAYS SHOW PRODUCT DETAILS
+   Explicit two-part card:
+   image on top, product information/actions underneath.
+   ========================================================= */
+
+.bysPickerGrid{
+  align-items:start;
+  grid-auto-rows:auto;
+}
+
+.bysPickerProduct{
+  display:grid !important;
+  grid-template-rows:140px auto !important;
+
+  height:auto !important;
+  min-height:330px !important;
+
+  overflow:hidden !important;
+
+  background:#071219 !important;
+  color:#eef5f7 !important;
+}
+
+.bysPickerImage{
+  width:100% !important;
+  height:140px !important;
+  min-height:140px !important;
+
+  overflow:hidden !important;
+
+  background:#fff !important;
+}
+
+.bysPickerImage img{
+  display:block !important;
+
+  width:100% !important;
+  height:100% !important;
+
+  padding:10px !important;
+
+  object-fit:contain !important;
+}
+
+.bysPickerProductBody{
+  display:flex !important;
+  flex-direction:column !important;
+
+  min-width:0 !important;
+  min-height:190px !important;
+
+  padding:14px !important;
+
+  visibility:visible !important;
+  opacity:1 !important;
+
+  background:#071219 !important;
+  color:#eef5f7 !important;
+}
+
+.bysPickerProductBody>small{
+  display:block !important;
+
+  color:#76909b !important;
+
+  font-size:7px !important;
+  font-weight:800 !important;
+
+  letter-spacing:.08em !important;
+  text-transform:uppercase !important;
+}
+
+.bysPickerProductBody h3{
+  display:block !important;
+
+  min-height:34px !important;
+
+  margin:6px 0 9px !important;
+
+  color:#eef5f7 !important;
+
+  font-size:12px !important;
+  line-height:1.4 !important;
+}
+
+.bysPickerProductMeta{
+  display:flex !important;
+
+  justify-content:space-between !important;
+  gap:10px !important;
+
+  margin-top:1px !important;
+
+  color:#c4d1d6 !important;
+
+  font-size:9px !important;
+}
+
+.bysPickerProductMeta b{
+  color:#d9e6ea !important;
+}
+
+.bysPickerProductMeta span{
+  color:#b8f66a !important;
+  font-weight:900 !important;
+}
+
+.bysPickerCheck{
+  display:block !important;
+
+  min-height:52px !important;
+
+  margin-top:10px !important;
+}
+
+.bysPickerActions{
+  display:grid !important;
+  grid-template-columns:minmax(0,1fr) auto !important;
+
+  gap:7px !important;
+
+  margin-top:auto !important;
+  padding-top:11px !important;
+}
+
+.bysPickerActions button,
+.bysPickerActions a{
+  display:flex !important;
+
+  align-items:center !important;
+  justify-content:center !important;
+
+  min-height:36px !important;
+
+  visibility:visible !important;
+  opacity:1 !important;
+}
+
+/* Selected option stays visibly distinct. */
+.bysPickerProduct.selected{
+  border-color:rgba(184,246,106,.34) !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(184,246,106,.025),
+      #071219 32%
+    ) !important;
+}
+
+/* Tablet */
+@media(max-width:980px){
+  .bysPickerProduct{
+    grid-template-rows:150px auto !important;
+    min-height:340px !important;
+  }
+
+  .bysPickerImage{
+    height:150px !important;
+    min-height:150px !important;
+  }
+}
+
+/* Mobile */
+@media(max-width:720px){
+  .bysPickerProduct{
+    grid-template-rows:160px auto !important;
+    min-height:350px !important;
+  }
+
+  .bysPickerImage{
+    height:160px !important;
+    min-height:160px !important;
+  }
+
+  .bysPickerProductBody h3{
+    font-size:13px !important;
+  }
+}
+
+/* =========================================================
+   SYSTEM BUILDER — "HOW TO CONTACT YOU" MODAL
+   Shown before WhatsApp handoff.
+   ========================================================= */
+
+.bysContactBackdrop{
+  position:fixed;
+  inset:0;
+  z-index:100100;
+
+  width:100vw;
+  height:100dvh;
+
+  padding:24px;
+
+  display:grid;
+  place-items:center;
+
+  background:rgba(1,6,9,.78);
+  backdrop-filter:blur(12px);
+}
+
+.bysContactModal{
+  width:min(620px,100%);
+  overflow:hidden;
+
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:24px;
+
+  background:
+    radial-gradient(
+      circle at 92% 5%,
+      rgba(104,201,245,.06),
+      transparent 26%
+    ),
+    #071219;
+
+  box-shadow:
+    0 35px 100px rgba(0,0,0,.42);
+}
+
+.bysContactHead{
+  padding:20px 22px;
+
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.06);
+}
+
+.bysContactHead small{
+  display:block;
+
+  color:#7ba3b4;
+
+  font-size:8px;
+  font-weight:900;
+
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+
+.bysContactHead h2{
+  margin:6px 0 7px;
+
+  font-size:
+    clamp(
+      28px,
+      4vw,
+      42px
+    );
+
+  line-height:1;
+  letter-spacing:-.04em;
+}
+
+.bysContactHead p{
+  max-width:470px;
+
+  margin:0;
+
+  color:#7f949e;
+
+  font-size:9px;
+  line-height:1.55;
+}
+
+.bysContactHead>button{
+  width:38px;
+  height:38px;
+  flex:0 0 38px;
+
+  display:grid;
+  place-items:center;
+
+  border:
+    1px solid rgba(255,255,255,.09);
+  border-radius:50%;
+
+  background:
+    rgba(255,255,255,.018);
+
+  color:#aabdc5;
+
+  font:inherit;
+  font-size:21px;
+
+  cursor:pointer;
+}
+
+.bysContactBody{
+  padding:20px 22px 22px;
+}
+
+.bysContactGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+
+.bysContactGrid label{
+  display:grid;
+  gap:7px;
+}
+
+.bysContactGrid label>span{
+  color:#8399a3;
+
+  font-size:8px;
+  font-weight:900;
+
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+.bysContactGrid input{
+  width:100%;
+  min-width:0;
+  height:45px;
+
+  padding:0 13px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+
+  outline:0;
+
+  background:#061016;
+  color:#edf5f7;
+
+  font:inherit;
+  font-size:10px;
+
+  transition:
+    border-color .18s ease,
+    background .18s ease;
+}
+
+.bysContactGrid input::placeholder{
+  color:#617781;
+  opacity:1;
+}
+
+.bysContactGrid input:focus{
+  border-color:
+    rgba(104,201,245,.28);
+
+  background:#07151c;
+}
+
+.bysContactError{
+  margin-top:12px;
+  padding:10px 12px;
+
+  border:
+    1px solid rgba(255,150,120,.18);
+  border-radius:11px;
+
+  background:
+    rgba(255,120,95,.035);
+
+  color:#ffb19d;
+
+  font-size:9px;
+}
+
+.bysContactActions{
+  margin-top:17px;
+
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:8px;
+}
+
+.bysContactActions button{
+  min-height:43px;
+
+  padding:0 16px;
+
+  border:
+    1px solid rgba(184,246,106,.25);
+  border-radius:999px;
+
+  background:
+    rgba(184,246,106,.05);
+
+  color:#e9f7e4;
+
+  font:inherit;
+  font-size:9px;
+  font-weight:900;
+
+  cursor:pointer;
+}
+
+.bysContactActions .secondary{
+  min-width:105px;
+
+  border-color:
+    rgba(255,255,255,.08);
+
+  background:
+    rgba(255,255,255,.015);
+
+  color:#93a6ae;
+}
+
+.bysContactNote{
+  margin:11px 2px 0;
+
+  color:#607680;
+
+  font-size:7px;
+  line-height:1.5;
+}
+
+@media(max-width:620px){
+  .bysContactBackdrop{
+    padding:0;
+    align-items:end;
+  }
+
+  .bysContactModal{
+    width:100%;
+
+    border-radius:
+      24px 24px 0 0;
+  }
+
+  .bysContactGrid{
+    grid-template-columns:1fr;
+  }
+
+  .bysContactActions{
+    grid-template-columns:1fr;
+  }
+
+  .bysContactActions .secondary{
+    order:2;
+  }
+}
+
+/* =========================================================
+   STEP 07 — RESULT ACTION BUTTONS
+   Primary builder action mirrors the premium gold feature
+   treatment used by the header's Build Your System control.
+   Other actions share the previous blue/green builder look.
+   ========================================================= */
+
+.bysResultActions{
+  gap:10px;
+  align-items:center;
+}
+
+/* Shared premium button structure */
+.bysResultActions button,
+.bysResultActions a{
+  position:relative;
+  isolation:isolate;
+
+  min-height:44px;
+  padding:0 17px;
+
+  overflow:hidden;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+
+  border:1px solid rgba(104,201,245,.20);
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.07),
+      rgba(184,246,106,.035)
+    );
+
+  color:#eaf4f7;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.035),
+    0 8px 22px rgba(0,0,0,.12);
+
+  font-size:10px;
+  font-weight:900;
+  text-decoration:none;
+
+  cursor:pointer;
+
+  transition:
+    color .22s ease,
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease,
+    transform .22s ease;
+}
+
+/* Soft ambient glow shared by all result actions */
+.bysResultActions button::after,
+.bysResultActions a::after{
+  content:"";
+
+  position:absolute;
+  z-index:-1;
+
+  left:15%;
+  right:15%;
+  bottom:-18px;
+
+  height:30px;
+
+  opacity:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(104,201,245,.18);
+
+  filter:blur(14px);
+
+  pointer-events:none;
+
+  transition:
+    opacity .22s ease,
+    transform .22s ease;
+}
+
+/* All secondary/result actions — same family as old Build This System */
+.bysResultActions button:not(.builder),
+.bysResultActions a{
+  border-color:
+    rgba(104,201,245,.20);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.065),
+      rgba(184,246,106,.028)
+    );
+
+  color:#dcebf0;
+}
+
+/* Override old .secondary flat/grey style */
+.bysResultActions .secondary{
+  border-color:
+    rgba(104,201,245,.20);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.065),
+      rgba(184,246,106,.028)
+    );
+
+  color:#dcebf0;
+}
+
+/* Shared hover */
+.bysResultActions button:not(.builder):hover,
+.bysResultActions a:hover{
+  color:#ffffff;
+
+  border-color:
+    rgba(104,201,245,.40);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.12),
+      rgba(184,246,106,.055)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.055),
+    inset 0 0 16px rgba(104,201,245,.055),
+    0 0 10px rgba(104,201,245,.10),
+    0 10px 24px rgba(0,0,0,.16);
+
+  transform:
+    translateY(-2px)
+    scale(1.015);
+}
+
+.bysResultActions button:not(.builder):hover::after,
+.bysResultActions a:hover::after{
+  opacity:.8;
+  transform:scale(1.08);
+}
+
+/* =========================================================
+   BUILD THIS SYSTEM — HEADER-INSPIRED GOLD FEATURE BUTTON
+   ========================================================= */
+
+.bysResultActions .builder{
+  --bys-builder-gold:#ffc157;
+
+  padding-left:16px;
+  padding-right:19px;
+
+  border-color:
+    rgba(255,193,87,.34);
+
+  background:
+    rgba(255,193,87,.07);
+
+  color:#ffffff;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.05),
+    inset 0 0 14px rgba(255,193,87,.075),
+    0 0 10px rgba(255,193,87,.08),
+    0 8px 22px rgba(0,0,0,.14);
+
+  transform:none;
+}
+
+/* Header-style feature icon without changing JSX */
+.bysResultActions .builder::before{
+  content:"✦";
+
+  position:relative;
+  z-index:2;
+
+  color:var(--bys-builder-gold);
+
+  font-size:11px;
+  line-height:1;
+
+  text-shadow:
+    0 0 8px rgba(255,193,87,.30);
+
+  transition:
+    transform .22s ease,
+    text-shadow .22s ease;
+}
+
+/* Gold ambient glow */
+.bysResultActions .builder::after{
+  left:8%;
+  right:8%;
+  bottom:-17px;
+
+  height:34px;
+
+  background:
+    rgba(255,193,87,.25);
+
+  filter:blur(15px);
+
+  opacity:.28;
+}
+
+/* Gold hover mirrors the header feature interaction */
+.bysResultActions .builder:hover{
+  color:#ffffff;
+
+  border-color:
+    rgba(255,193,87,.56);
+
+  background:
+    rgba(255,193,87,.11);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.065),
+    inset 0 0 17px rgba(255,193,87,.20),
+    0 0 8px rgba(255,193,87,.18),
+    0 0 19px rgba(255,193,87,.12),
+    0 10px 25px rgba(0,0,0,.18);
+
+  transform:
+    translateY(-2px)
+    scale(1.018);
+}
+
+.bysResultActions .builder:hover::before{
+  transform:scale(1.18);
+
+  text-shadow:
+    0 0 5px #ffc157,
+    0 0 11px #ffc157,
+    0 0 17px rgba(255,193,87,.30);
+}
+
+.bysResultActions .builder:hover::after{
+  opacity:.95;
+  transform:scale(1.12);
+}
+
+/* Keyboard focus */
+.bysResultActions button:focus-visible,
+.bysResultActions a:focus-visible{
+  outline:none;
+
+  box-shadow:
+    0 0 0 2px #061016,
+    0 0 0 4px rgba(104,201,245,.42);
+}
+
+.bysResultActions .builder:focus-visible{
+  box-shadow:
+    0 0 0 2px #061016,
+    0 0 0 4px rgba(255,193,87,.45),
+    0 0 18px rgba(255,193,87,.14);
+}
+
+/* Press feedback */
+.bysResultActions button:active,
+.bysResultActions a:active{
+  transform:
+    translateY(0)
+    scale(.99);
+}
+
+/* Mobile: keep actions comfortable and consistent */
+@media(max-width:720px){
+  .bysResultActions{
+    display:grid;
+    grid-template-columns:1fr;
+    width:100%;
+  }
+
+  .bysResultActions button,
+  .bysResultActions a{
+    width:100%;
+    min-height:45px;
+  }
+}
+
+/* =========================================================
+   PART 02 — SELECTED SYSTEM ACTION BUTTONS
+   Consistent dark blue/green builder-style family.
+   ========================================================= */
+
+.bysBuilderActions{
+  gap:8px;
+}
+
+/* Base style for all Selected System actions */
+.bysBuilderActions button,
+.bysBuilderActions a{
+  position:relative;
+  isolation:isolate;
+
+  min-height:41px;
+  padding:0 14px;
+
+  overflow:hidden;
+
+  border:
+    1px solid
+    rgba(104,201,245,.18);
+
+  border-radius:999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.055),
+      rgba(184,246,106,.025)
+    );
+
+  color:#dcebf0;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.03),
+    0 7px 18px
+    rgba(0,0,0,.11);
+
+  font-size:8px;
+  font-weight:900;
+
+  transition:
+    color .22s ease,
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease,
+    transform .22s ease;
+}
+
+/* Soft blue ambient glow */
+.bysBuilderActions button::after,
+.bysBuilderActions a::after{
+  content:"";
+
+  position:absolute;
+  z-index:-1;
+
+  left:15%;
+  right:15%;
+  bottom:-16px;
+
+  height:28px;
+
+  opacity:0;
+
+  border-radius:50%;
+
+  background:
+    rgba(104,201,245,.18);
+
+  filter:blur(13px);
+
+  pointer-events:none;
+
+  transition:
+    opacity .22s ease,
+    transform .22s ease;
+}
+
+/* Override previous flat secondary style */
+.bysBuilderActions .secondary{
+  border-color:
+    rgba(104,201,245,.18);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.055),
+      rgba(184,246,106,.025)
+    );
+
+  color:#dcebf0;
+}
+
+/* Shared hover */
+.bysBuilderActions button:hover,
+.bysBuilderActions a:hover{
+  color:#ffffff;
+
+  border-color:
+    rgba(104,201,245,.40);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(104,201,245,.115),
+      rgba(184,246,106,.052)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.05),
+    inset 0 0 15px
+    rgba(104,201,245,.05),
+    0 0 9px
+    rgba(104,201,245,.10),
+    0 9px 21px
+    rgba(0,0,0,.15);
+
+  transform:
+    translateY(-2px)
+    scale(1.012);
+}
+
+.bysBuilderActions button:hover::after,
+.bysBuilderActions a:hover::after{
+  opacity:.8;
+  transform:scale(1.08);
+}
+
+/* Primary commercial action: subtle green emphasis */
+.bysBuilderActions button:first-child{
+  border-color:
+    rgba(184,246,106,.28);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.055),
+      rgba(104,201,245,.035)
+    );
+
+  color:#e8f6e3;
+}
+
+.bysBuilderActions button:first-child::after{
+  background:
+    rgba(184,246,106,.20);
+}
+
+.bysBuilderActions button:first-child:hover{
+  border-color:
+    rgba(184,246,106,.46);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.105),
+      rgba(104,201,245,.06)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.055),
+    inset 0 0 15px
+    rgba(184,246,106,.055),
+    0 0 10px
+    rgba(184,246,106,.10),
+    0 9px 21px
+    rgba(0,0,0,.15);
+}
+
+/* Engineering review link: same family, slightly stronger green finish */
+.bysBuilderActions a:last-child{
+  border-color:
+    rgba(184,246,106,.26);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.05),
+      rgba(104,201,245,.028)
+    );
+
+  color:#e8f6e3;
+}
+
+.bysBuilderActions a:last-child::after{
+  background:
+    rgba(184,246,106,.18);
+}
+
+.bysBuilderActions a:last-child:hover{
+  border-color:
+    rgba(184,246,106,.44);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.10),
+      rgba(104,201,245,.055)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.05),
+    inset 0 0 15px
+    rgba(184,246,106,.05),
+    0 0 10px
+    rgba(184,246,106,.095),
+    0 9px 21px
+    rgba(0,0,0,.15);
+}
+
+/* Keyboard focus */
+.bysBuilderActions button:focus-visible,
+.bysBuilderActions a:focus-visible{
+  outline:none;
+
+  box-shadow:
+    0 0 0 2px #061016,
+    0 0 0 4px
+    rgba(104,201,245,.40);
+}
+
+.bysBuilderActions button:first-child:focus-visible,
+.bysBuilderActions a:last-child:focus-visible{
+  box-shadow:
+    0 0 0 2px #061016,
+    0 0 0 4px
+    rgba(184,246,106,.38);
+}
+
+/* Press feedback */
+.bysBuilderActions button:active,
+.bysBuilderActions a:active{
+  transform:
+    translateY(0)
+    scale(.99);
+}
+
+/* =========================================================
+   BUILD YOUR SYSTEM — RESPONSIVE PASS
+   Tablet + mobile improvements. Appended last intentionally
+   so these rules safely override older overlapping queries.
+   ========================================================= */
+
+.buildSystemPrototype,
+.buildSystemPrototype *{
+  box-sizing:border-box;
+}
+
+.buildSystemPrototype{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+
+.bysPage{
+  width:100%;
+  max-width:100%;
+  overflow-x:clip;
+}
+
+/* ---------------------------------------------------------
+   TABLET / SMALL LAPTOP
+   --------------------------------------------------------- */
+
+@media(max-width:1024px){
+  .bysIntro{
+    grid-template-columns:1fr;
+    gap:34px;
+    min-height:auto;
+    padding:7vh 5vw 6vh;
+  }
+
+  .bysIntroCopy{
+    max-width:820px;
+  }
+
+  .bysIntroVisual{
+    width:min(100%,760px);
+    justify-self:center;
+  }
+
+  .bysSystemPreview{
+    min-height:410px;
+  }
+
+  .bysWizardShell{
+    width:min(920px,calc(100% - 8vw));
+    grid-template-columns:205px minmax(0,1fr);
+    gap:14px;
+  }
+
+  .bysLivePanel{
+    grid-column:2;
+    position:relative;
+    top:auto;
+    width:100%;
+  }
+
+  .bysBuilderStage{
+    width:calc(100% - 8vw);
+  }
+
+  .bysBuilderWorkspace{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderSummary{
+    position:relative;
+    top:auto;
+    width:100%;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+
+  .bysBuilderLeftCompact .bysBuilderProducts{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderProductCard{
+    min-width:0;
+  }
+
+  .bysBuilderSelectedProduct{
+    grid-template-columns:110px minmax(0,1fr);
+  }
+}
+
+/* ---------------------------------------------------------
+   MOBILE WIZARD MODE
+   --------------------------------------------------------- */
+
+@media(max-width:860px){
+  .bysPage{
+    padding-top:68px;
+  }
+
+  .bysIntro{
+    padding:5.5vh 5vw 5vh;
+    gap:28px;
+  }
+
+  .bysIntro h1{
+    max-width:680px;
+    font-size:clamp(46px,10vw,72px);
+    line-height:.94;
+  }
+
+  .bysIntro p{
+    margin-top:18px;
+    font-size:14px;
+    line-height:1.65;
+  }
+
+  .bysIntroActions{
+    margin-top:22px;
+  }
+
+  .bysPrimary,
+  .bysSecondary{
+    min-height:46px;
+    padding:0 17px;
+  }
+
+  .bysSystemPreview{
+    width:100%;
+    min-height:360px;
+    border-radius:24px;
+  }
+
+  .bysMobileProgress{
+    display:block;
+    top:68px;
+    z-index:70;
+    padding:10px 5vw;
+  }
+
+  .bysWizardShell{
+    width:100%;
+    margin:0 0 8vh;
+    display:block;
+  }
+
+  .bysStepsNav,
+  .bysLivePanel{
+    display:none;
+  }
+
+  .bysWizardMain{
+    width:100%;
+    border-left:0;
+    border-right:0;
+    border-radius:0;
+    overflow:visible;
+  }
+
+  .bysStep{
+    min-width:0;
+    min-height:auto;
+    padding:24px 5vw 100px;
+  }
+
+  .bysStep > *,
+  .bysResultSection,
+  .bysResultPrimary,
+  .bysResultDiagram{
+    min-width:0;
+    max-width:100%;
+  }
+
+  .bysFooterNav{
+    position:sticky;
+    bottom:0;
+    z-index:65;
+
+    width:100%;
+    padding:11px 5vw calc(11px + env(safe-area-inset-bottom));
+
+    display:flex;
+    gap:8px;
+
+    background:rgba(4,12,17,.965);
+    backdrop-filter:blur(16px);
+
+    border-top:1px solid rgba(255,255,255,.07);
+  }
+
+  .bysFooterNav button{
+    flex:1;
+    min-width:0;
+    min-height:46px;
+  }
+
+  /* Step content */
+  .bysChoiceGrid,
+  .bysFormGrid,
+  .bysBatteryViz,
+  .bysRoofLayout,
+  .bysResultHero,
+  .bysEnergyGrid,
+  .bysProductMatches,
+  .bysAlternatives{
+    grid-template-columns:1fr;
+  }
+
+  .bysField.full{
+    grid-column:auto;
+  }
+
+  .bysApplianceGrid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .bysBackupOptions{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .bysResultMetrics{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .bysBillSplit{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .bysResultSection{
+    padding:18px;
+    border-radius:19px;
+  }
+
+  .bysResultSectionHead{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:7px;
+  }
+
+  .bysResultSectionHead h3{
+    font-size:20px;
+  }
+
+  /* Keep the final energy path available instead of clipping it. */
+  .bysFinalFlow{
+    width:100%;
+    max-width:100%;
+    overflow-x:auto;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+
+    display:grid;
+    grid-template-columns:repeat(9,max-content);
+    justify-content:flex-start;
+
+    padding:4px 2px 9px;
+  }
+
+  .bysFinalFlow::-webkit-scrollbar{
+    display:none;
+  }
+
+  .bysFinalFlow .bysFinalNode:nth-child(7),
+  .bysFinalFlow .bysFinalNode:nth-child(9){
+    display:flex;
+  }
+
+  .bysFinalFlow .bysFinalArrow:nth-child(6),
+  .bysFinalFlow .bysFinalArrow:nth-child(8){
+    display:block;
+  }
+
+  .bysResultActions{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+    width:100%;
+  }
+
+  .bysResultActions button,
+  .bysResultActions a{
+    width:100%;
+    min-width:0;
+    min-height:46px;
+    padding:0 12px;
+    white-space:normal;
+    text-align:center;
+  }
+
+  .bysResultActions .builder{
+    grid-column:1/-1;
+  }
+
+  /* Part 02 */
+  .bysBuilderStage{
+    width:calc(100% - 10vw);
+    margin:7vh auto 8vh;
+    scroll-margin-top:124px;
+  }
+
+  .bysBuilderHead{
+    grid-template-columns:1fr;
+    gap:16px;
+    margin-bottom:18px;
+  }
+
+  .bysBuilderHead h2{
+    margin-top:5px;
+    font-size:clamp(38px,8vw,56px);
+  }
+
+  .bysBuilderHead p{
+    font-size:11px;
+  }
+
+  .bysBuilderScore{
+    width:100%;
+    max-width:none;
+    min-height:96px;
+
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    align-items:center;
+    column-gap:14px;
+  }
+
+  .bysBuilderScore strong{
+    grid-row:1/3;
+    grid-column:2;
+    margin:0;
+    font-size:30px;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement>div{
+    min-height:60px;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderProducts{
+    grid-template-columns:1fr;
+    gap:10px;
+  }
+
+  .bysBuilderProductCard{
+    height:auto;
+    padding:16px;
+    border-radius:20px;
+  }
+
+  .bysBuilderSelectedProduct{
+    grid-template-columns:100px minmax(0,1fr);
+    gap:12px;
+  }
+
+  .bysBuilderProductImage{
+    height:100px;
+  }
+
+  .bysBuilderQtyRow{
+    grid-template-columns:minmax(0,1fr) 70px auto;
+  }
+
+  .bysBuilderSummary{
+    margin-top:0;
+    border-radius:20px;
+  }
+
+  .bysBuilderSummaryFlow{
+    width:100%;
+    overflow-x:auto;
+    justify-content:flex-start;
+    scrollbar-width:none;
+    overscroll-behavior-inline:contain;
+  }
+
+  .bysBuilderSummaryFlow::-webkit-scrollbar{
+    display:none;
+  }
+
+  .bysBuilderSummaryFlow > div{
+    flex:0 0 58px;
+    width:58px;
+  }
+
+  .bysBuilderActions{
+    padding:13px 15px 16px;
+  }
+
+  .bysBuilderActions button,
+  .bysBuilderActions a{
+    min-height:45px;
+    font-size:9px;
+  }
+
+  /* Picker: full-screen style on phones/tablets */
+  .bysPickerBackdrop{
+    padding:0;
+    align-items:stretch;
+  }
+
+  .bysPickerModal{
+    width:100%;
+    max-width:none;
+    height:100dvh;
+    max-height:100dvh;
+
+    border-radius:0;
+    border-left:0;
+    border-right:0;
+
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+
+  .bysPickerHead{
+    flex:0 0 auto;
+    padding:17px 5vw 14px;
+  }
+
+  .bysPickerHead h2{
+    font-size:clamp(30px,7vw,42px);
+  }
+
+  .bysPickerHead p{
+    font-size:9px;
+  }
+
+  .bysPickerRequirement{
+    flex:0 0 auto;
+    min-height:46px;
+    padding:0 5vw;
+  }
+
+  .bysPickerGrid{
+    min-height:0;
+    flex:1 1 auto;
+    overflow-y:auto;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:10px;
+
+    padding:12px 5vw 24px;
+  }
+
+  .bysPickerProduct{
+    min-width:0 !important;
+  }
+
+  /* Contact modal */
+  .bysContactBackdrop{
+    padding:0;
+    align-items:end;
+  }
+
+  .bysContactModal{
+    width:100%;
+    max-height:94dvh;
+    overflow-y:auto;
+
+    border-radius:24px 24px 0 0;
+
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+
+  .bysContactHead{
+    padding:18px 5vw 15px;
+  }
+
+  .bysContactBody{
+    padding:18px 5vw 22px;
+  }
+}
+
+/* ---------------------------------------------------------
+   PHONE
+   --------------------------------------------------------- */
+
+@media(max-width:720px){
+  .bysIntro{
+    padding:4.5vh 5vw 4.5vh;
+  }
+
+  .bysIntro h1{
+    font-size:clamp(42px,12vw,58px);
+    letter-spacing:-.05em;
+  }
+
+  .bysIntro p{
+    font-size:13px;
+  }
+
+  .bysIntroActions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .bysPrimary,
+  .bysSecondary{
+    width:100%;
+  }
+
+  .bysSystemPreview{
+    min-height:320px;
+  }
+
+  .bysFlowInner{
+    width:calc(100% - 28px);
+    grid-template-columns:repeat(3,auto);
+    gap:6px;
+  }
+
+  .bysFlowNode{
+    width:68px;
+    height:78px;
+    border-radius:15px;
+  }
+
+  .bysFlowNode i{
+    font-size:20px;
+    margin-bottom:5px;
+  }
+
+  .bysFlowNode b{
+    font-size:9px;
+  }
+
+  .bysFlowNode small{
+    font-size:7px;
+  }
+
+  .bysFlowLine{
+    width:22px;
+  }
+
+  .bysPreviewStats{
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+  }
+
+  .bysStep{
+    padding:20px 5vw 96px;
+  }
+
+  .bysApplianceGrid{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .bysBackupOptions{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .bysResultMetrics{
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .bysBillSplit{
+    grid-template-columns:1fr;
+  }
+
+  .bysBarChart{
+    min-height:190px;
+    padding-inline:3px;
+    gap:4px;
+  }
+
+  .bysResultActions{
+    grid-template-columns:1fr;
+  }
+
+  .bysResultActions .builder{
+    grid-column:auto;
+  }
+
+  /* Prevent iOS focus zoom and improve touch targets */
+  .bysField input,
+  .bysField select,
+  .bysField textarea,
+  .bysQtyInput,
+  .bysBuilderQtyRow input,
+  .bysContactGrid input{
+    font-size:16px;
+  }
+
+  .bysChoice,
+  .bysBackupOption,
+  .bysFooterNav button,
+  .bysResultActions button,
+  .bysResultActions a,
+  .bysBuilderChange,
+  .bysBuilderActions button,
+  .bysBuilderActions a{
+    min-height:46px;
+  }
+
+  /* Part 02 */
+  .bysBuilderStage{
+    width:calc(100% - 8vw);
+    margin-top:6vh;
+  }
+
+  .bysBuilderHead h2{
+    font-size:clamp(35px,10vw,48px);
+    line-height:.98;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement>div:last-child{
+    grid-column:1/-1;
+  }
+
+  .bysBuilderSelectedProduct{
+    grid-template-columns:88px minmax(0,1fr);
+  }
+
+  .bysBuilderProductImage{
+    height:88px;
+  }
+
+  .bysBuilderProductInfo b{
+    font-size:12px;
+  }
+
+  .bysBuilderProductInfo span{
+    font-size:9px;
+  }
+
+  .bysBuilderQtyRow{
+    grid-template-columns:minmax(0,1fr) 66px;
+  }
+
+  .bysBuilderQtyRow > b{
+    grid-column:1/-1;
+    text-align:left;
+  }
+
+  .bysBuilderQtyRow.fixed{
+    grid-template-columns:1fr auto;
+  }
+
+  .bysBuilderQtyRow.fixed > b{
+    grid-column:auto;
+    text-align:right;
+  }
+
+  .bysBuilderSummaryHead h3{
+    font-size:18px;
+  }
+
+  .bysBuilderPrice b{
+    font-size:25px;
+  }
+
+  .bysBuilderActions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  /* Picker cards */
+  .bysPickerGrid{
+    grid-template-columns:1fr;
+    gap:11px;
+  }
+
+  .bysPickerProduct{
+    grid-template-rows:132px auto !important;
+    min-height:0 !important;
+  }
+
+  .bysPickerImage{
+    height:132px !important;
+    min-height:132px !important;
+  }
+
+  .bysPickerProductBody{
+    min-height:0 !important;
+    padding:13px !important;
+  }
+
+  .bysPickerProductBody h3{
+    min-height:0 !important;
+    font-size:13px !important;
+  }
+
+  .bysPickerActions{
+    grid-template-columns:minmax(0,1fr) auto !important;
+  }
+
+  .bysPickerActions button,
+  .bysPickerActions a{
+    min-height:42px !important;
+  }
+
+  /* Contact */
+  .bysContactGrid{
+    grid-template-columns:1fr;
+  }
+
+  .bysContactActions{
+    grid-template-columns:1fr;
+  }
+
+  .bysContactActions button{
+    min-height:46px;
+  }
+
+  .bysContactActions .secondary{
+    order:2;
+  }
+
+  .buildSystemPrototype .futureBand{
+    margin:0 4vw 4vh;
+    padding:42px 16px;
+    border-radius:24px;
+  }
+
+  .buildSystemPrototype .futureBand .countryMark{
+    width:78px;
+    height:78px;
+    margin-bottom:20px;
+  }
+
+  .buildSystemPrototype .futureBand h2{
+    font-size:clamp(38px,11vw,58px);
+  }
+}
+
+/* ---------------------------------------------------------
+   SMALL PHONE
+   --------------------------------------------------------- */
+
+@media(max-width:480px){
+  .bysPage{
+    padding-top:64px;
+  }
+
+  .bysMobileProgress{
+    top:64px;
+    padding-inline:4vw;
+  }
+
+  .bysIntro{
+    padding-inline:4vw;
+  }
+
+  .bysIntro h1{
+    font-size:clamp(38px,12vw,50px);
+  }
+
+  .bysSystemPreview{
+    min-height:290px;
+    border-radius:20px;
+  }
+
+  .bysFlowNode{
+    width:62px;
+    height:72px;
+  }
+
+  .bysFlowLine{
+    width:16px;
+  }
+
+  .bysPreviewStats{
+    grid-template-columns:1fr;
+  }
+
+  .bysPreviewStat:last-child{
+    grid-column:auto;
+  }
+
+  .bysStep{
+    padding-inline:4vw;
+  }
+
+  .bysApplianceGrid,
+  .bysBackupOptions,
+  .bysResultMetrics{
+    grid-template-columns:1fr;
+  }
+
+  .bysResultSection{
+    padding:15px;
+  }
+
+  .bysResultSectionHead h3{
+    font-size:18px;
+  }
+
+  .bysFinalNode{
+    width:58px;
+    height:66px;
+  }
+
+  .bysBuilderStage{
+    width:calc(100% - 8vw);
+  }
+
+  .bysBuilderHead h2{
+    font-size:34px;
+  }
+
+  .bysBuilderScore{
+    grid-template-columns:1fr auto;
+    padding:15px;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderLeftCompact .bysBuilderRequirement>div:last-child{
+    grid-column:auto;
+  }
+
+  .bysBuilderSelectedProduct{
+    grid-template-columns:1fr;
+  }
+
+  .bysBuilderProductImage{
+    height:150px;
+  }
+
+  .bysBuilderQtyRow,
+  .bysBuilderQtyRow.fixed{
+    grid-template-columns:1fr 74px;
+  }
+
+  .bysBuilderQtyRow > b,
+  .bysBuilderQtyRow.fixed > b{
+    grid-column:1/-1;
+    text-align:left;
+  }
+
+  .bysPickerHead{
+    padding-inline:4vw;
+  }
+
+  .bysPickerHead h2{
+    font-size:30px;
+  }
+
+  .bysPickerRequirement{
+    padding-inline:4vw;
+  }
+
+  .bysPickerGrid{
+    padding-inline:4vw;
+  }
+
+  .bysPickerActions{
+    grid-template-columns:1fr !important;
+  }
+
+  .bysPickerActions a{
+    width:100%;
+  }
+
+  .bysContactHead,
+  .bysContactBody{
+    padding-left:4vw;
+    padding-right:4vw;
+  }
+
+  .bysContactHead h2{
+    font-size:30px;
+  }
+}
+
+/* =========================================================
+   MOBILE HERO SYSTEM PREVIEW — NO OVERLAP
+   Flow diagram stays above; planning stats stay below in
+   normal document flow instead of covering the diagram.
+   ========================================================= */
+
+@media(max-width:720px){
+  .bysSystemPreview{
+    min-height:0;
+    height:auto;
+
+    padding:18px 14px 14px;
+
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+
+    overflow:hidden;
+  }
+
+  .bysSystemPreview .grid{
+    position:absolute;
+    inset:0;
+  }
+
+  .bysFlow{
+    position:relative;
+    inset:auto;
+
+    z-index:1;
+
+    width:100%;
+    min-height:150px;
+
+    display:grid;
+    place-items:center;
+
+    padding:6px 0 2px;
+  }
+
+  .bysFlowInner{
+    width:100%;
+    max-width:360px;
+
+    grid-template-columns:repeat(5,auto);
+
+    gap:6px;
+  }
+
+  .bysPreviewStats{
+    position:relative;
+    z-index:2;
+
+    left:auto;
+    right:auto;
+    bottom:auto;
+
+    width:100%;
+
+    margin:0;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+
+  .bysPreviewStat{
+    min-width:0;
+
+    padding:11px 12px;
+
+    border-radius:13px;
+
+    background:rgba(5,14,19,.90);
+  }
+
+  .bysPreviewStat:last-child{
+    grid-column:1/-1;
+  }
+}
+
+@media(max-width:480px){
+  .bysSystemPreview{
+    padding:15px 12px 12px;
+    gap:10px;
+  }
+
+  .bysFlow{
+    min-height:138px;
+  }
+
+  .bysFlowInner{
+    max-width:330px;
+    gap:4px;
+  }
+
+  .bysFlowNode{
+    width:60px;
+    height:70px;
+  }
+
+  .bysFlowLine{
+    width:15px;
+  }
+
+  .bysPreviewStats{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+  }
+
+  .bysPreviewStat:last-child{
+    grid-column:1/-1;
+  }
+
+  .bysPreviewStat{
+    padding:10px 11px;
+  }
+
+  .bysPreviewStat small{
+    font-size:7px;
+  }
+
+  .bysPreviewStat b{
+    font-size:12px;
+  }
+}
+
+@media(max-width:360px){
+  .bysPreviewStats{
+    grid-template-columns:1fr;
+  }
+
+  .bysPreviewStat:last-child{
+    grid-column:auto;
+  }
+}
+
+/* =========================================================
+   STEP 07 FINAL SYSTEM FLOW — COMPACT MOBILE FIT
+   Fits Sun → Panels → Inverter → Battery → Loads
+   inside the viewport without horizontal scrolling.
+   ========================================================= */
+
+@media(max-width:720px){
+  .bysFinalFlow{
+    width:100%;
+    max-width:100%;
+
+    overflow:visible;
+
+    display:grid;
+    grid-template-columns:
+      minmax(48px,1fr)
+      12px
+      minmax(48px,1fr)
+      12px
+      minmax(48px,1fr)
+      12px
+      minmax(48px,1fr)
+      12px
+      minmax(48px,1fr);
+
+    gap:3px;
+
+    align-items:center;
+    justify-content:stretch;
+
+    padding:6px 0;
+
+    scrollbar-width:none;
+  }
+
+  .bysFinalFlow .bysFinalNode{
+    width:100%;
+    min-width:0;
+    max-width:62px;
+
+    height:64px;
+
+    padding:5px 3px;
+
+    border-radius:12px;
+
+    justify-self:center;
+  }
+
+  .bysFinalFlow .bysFinalNode i{
+    margin-bottom:3px;
+
+    font-size:17px;
+    line-height:1;
+  }
+
+  .bysFinalFlow .bysFinalNode b{
+    max-width:100%;
+
+    overflow:hidden;
+
+    font-size:7px;
+    line-height:1.15;
+
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .bysFinalFlow .bysFinalNode small{
+    margin-top:2px;
+
+    max-width:100%;
+
+    overflow:hidden;
+
+    font-size:6px;
+    line-height:1.1;
+
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .bysFinalFlow .bysFinalArrow{
+    width:12px;
+    min-width:12px;
+
+    text-align:center;
+
+    font-size:10px;
+    line-height:1;
+
+    justify-self:center;
+  }
+
+  .bysFinalFlow .bysFinalNode:nth-child(7),
+  .bysFinalFlow .bysFinalNode:nth-child(9){
+    display:flex;
+  }
+
+  .bysFinalFlow .bysFinalArrow:nth-child(6),
+  .bysFinalFlow .bysFinalArrow:nth-child(8){
+    display:block;
+  }
+}
+
+@media(max-width:480px){
+  .bysFinalFlow{
+    grid-template-columns:
+      minmax(42px,1fr)
+      10px
+      minmax(42px,1fr)
+      10px
+      minmax(42px,1fr)
+      10px
+      minmax(42px,1fr)
+      10px
+      minmax(42px,1fr);
+
+    gap:2px;
+  }
+
+  .bysFinalFlow .bysFinalNode{
+    max-width:56px;
+    height:60px;
+
+    padding:4px 2px;
+
+    border-radius:11px;
+  }
+
+  .bysFinalFlow .bysFinalNode i{
+    font-size:16px;
+  }
+
+  .bysFinalFlow .bysFinalNode b{
+    font-size:6.5px;
+  }
+
+  .bysFinalFlow .bysFinalNode small{
+    font-size:5.5px;
+  }
+
+  .bysFinalFlow .bysFinalArrow{
+    width:10px;
+    min-width:10px;
+
+    font-size:9px;
+  }
+}
+
+@media(max-width:380px){
+  .bysFinalFlow{
+    grid-template-columns:
+      minmax(38px,1fr)
+      8px
+      minmax(38px,1fr)
+      8px
+      minmax(38px,1fr)
+      8px
+      minmax(38px,1fr)
+      8px
+      minmax(38px,1fr);
+  }
+
+  .bysFinalFlow .bysFinalNode{
+    max-width:50px;
+    height:56px;
+  }
+
+  .bysFinalFlow .bysFinalNode i{
+    font-size:15px;
+  }
+
+  .bysFinalFlow .bysFinalNode b{
+    font-size:6px;
+  }
+
+  .bysFinalFlow .bysFinalNode small{
+    font-size:5px;
+  }
+
+  .bysFinalFlow .bysFinalArrow{
+    width:8px;
+    min-width:8px;
+
+    font-size:8px;
+  }
+}
+
+/* =========================================================
+   MOBILE PRODUCT PICKER — CARD STACK / OVERLAP FIX
+   Each product becomes a self-contained vertical card:
+   image → info → compatibility → actions.
+   ========================================================= */
+
+@media(max-width:860px){
+  .bysPickerGrid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-auto-rows:auto !important;
+    align-items:start !important;
+
+    gap:12px !important;
+
+    padding:
+      14px 5vw
+      calc(26px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .bysPickerProduct{
+    position:relative !important;
+
+    display:block !important;
+
+    width:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:auto !important;
+
+    overflow:hidden !important;
+
+    border-radius:18px !important;
+
+    background:#071219 !important;
+  }
+
+  .bysPickerImage{
+    position:relative !important;
+
+    width:100% !important;
+    height:180px !important;
+    min-height:180px !important;
+
+    overflow:hidden !important;
+
+    border-radius:0 !important;
+
+    background:#ffffff !important;
+  }
+
+  .bysPickerImage img{
+    position:relative !important;
+
+    display:block !important;
+
+    width:100% !important;
+    height:100% !important;
+
+    max-width:100% !important;
+    max-height:100% !important;
+
+    padding:14px !important;
+
+    object-fit:contain !important;
+
+    transform:none !important;
+  }
+
+  .bysPickerProductBody{
+    position:relative !important;
+
+    display:flex !important;
+    flex-direction:column !important;
+
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+
+    padding:15px !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    background:#071219 !important;
+  }
+
+  .bysPickerProductBody>small{
+    display:block !important;
+
+    margin:0 !important;
+
+    color:#76909b !important;
+
+    font-size:8px !important;
+    line-height:1.3 !important;
+  }
+
+  .bysPickerProductBody h3{
+    display:block !important;
+
+    min-height:0 !important;
+
+    margin:6px 0 10px !important;
+
+    color:#eef5f7 !important;
+
+    font-size:14px !important;
+    line-height:1.35 !important;
+
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+  }
+
+  .bysPickerProductMeta{
+    display:flex !important;
+    flex-wrap:wrap !important;
+
+    justify-content:space-between !important;
+    align-items:center !important;
+
+    gap:8px 12px !important;
+
+    margin:0 !important;
+
+    font-size:10px !important;
+  }
+
+  .bysPickerCheck{
+    display:block !important;
+
+    min-height:0 !important;
+
+    margin-top:11px !important;
+    padding:10px 11px !important;
+  }
+
+  .bysPickerCheck b{
+    font-size:9px !important;
+  }
+
+  .bysPickerCheck span{
+    margin-top:4px !important;
+
+    font-size:8px !important;
+    line-height:1.45 !important;
+  }
+
+  .bysPickerActions{
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+
+    gap:8px !important;
+
+    margin-top:12px !important;
+    padding-top:0 !important;
+  }
+
+  .bysPickerActions button,
+  .bysPickerActions a{
+    min-height:42px !important;
+
+    padding:0 14px !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    font-size:9px !important;
+  }
+
+  .bysPickerProduct.selected{
+    border-color:
+      rgba(184,246,106,.38) !important;
+
+    box-shadow:
+      0 0 0 1px
+      rgba(184,246,106,.05),
+      0 10px 28px
+      rgba(0,0,0,.18) !important;
+  }
+}
+
+@media(max-width:480px){
+  .bysPickerHead{
+    padding:
+      16px 4vw
+      13px !important;
+  }
+
+  .bysPickerHead h2{
+    font-size:30px !important;
+    line-height:1.02 !important;
+  }
+
+  .bysPickerRequirement{
+    padding:0 4vw !important;
+  }
+
+  .bysPickerGrid{
+    gap:10px !important;
+
+    padding:
+      12px 4vw
+      calc(24px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .bysPickerProduct{
+    border-radius:16px !important;
+  }
+
+  .bysPickerImage{
+    height:160px !important;
+    min-height:160px !important;
+  }
+
+  .bysPickerImage img{
+    padding:12px !important;
+  }
+
+  .bysPickerProductBody{
+    padding:13px !important;
+  }
+
+  .bysPickerProductBody h3{
+    font-size:13px !important;
+  }
+
+  .bysPickerActions{
+    grid-template-columns:1fr !important;
+  }
+
+  .bysPickerActions button,
+  .bysPickerActions a{
+    width:100% !important;
+  }
+}
+
+/* =========================================================
+   MOBILE PRODUCT PICKER — HARD FLEX-STACK FIX
+   Removes CSS-grid row sizing from the mobile picker entirely.
+   Every product card owns its full natural height.
+   ========================================================= */
+
+@media(max-width:860px){
+  .bysPickerGrid{
+    display:flex !important;
+    flex-direction:column !important;
+
+    width:100% !important;
+    min-height:0 !important;
+
+    gap:12px !important;
+
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+
+    padding:
+      14px 5vw
+      calc(28px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct{
+    position:relative !important;
+
+    flex:0 0 auto !important;
+
+    display:flex !important;
+    flex-direction:column !important;
+
+    width:100% !important;
+    max-width:none !important;
+
+    min-width:0 !important;
+    min-height:0 !important;
+
+    height:auto !important;
+    max-height:none !important;
+
+    margin:0 !important;
+
+    overflow:hidden !important;
+
+    border-radius:18px !important;
+
+    background:#071219 !important;
+
+    contain:none !important;
+    transform:none !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerImage{
+    position:relative !important;
+
+    flex:0 0 170px !important;
+
+    display:block !important;
+
+    width:100% !important;
+
+    height:170px !important;
+    min-height:170px !important;
+    max-height:170px !important;
+
+    margin:0 !important;
+    padding:0 !important;
+
+    overflow:hidden !important;
+
+    background:#ffffff !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerImage img{
+    position:static !important;
+
+    display:block !important;
+
+    width:100% !important;
+    height:100% !important;
+
+    min-width:0 !important;
+    min-height:0 !important;
+
+    max-width:100% !important;
+    max-height:100% !important;
+
+    margin:0 !important;
+    padding:14px !important;
+
+    object-fit:contain !important;
+    object-position:center !important;
+
+    transform:none !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerProductBody{
+    position:static !important;
+
+    z-index:auto !important;
+
+    flex:0 0 auto !important;
+
+    display:flex !important;
+    flex-direction:column !important;
+
+    width:100% !important;
+
+    min-width:0 !important;
+    min-height:0 !important;
+
+    height:auto !important;
+    max-height:none !important;
+
+    margin:0 !important;
+    padding:15px !important;
+
+    overflow:visible !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    background:#071219 !important;
+    color:#eef5f7 !important;
+
+    transform:none !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerProductBody > small{
+    display:block !important;
+
+    margin:0 !important;
+
+    color:#76909b !important;
+
+    font-size:8px !important;
+    font-weight:800 !important;
+    line-height:1.3 !important;
+
+    letter-spacing:.08em !important;
+    text-transform:uppercase !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerProductBody > h3{
+    display:block !important;
+
+    width:100% !important;
+    min-height:0 !important;
+
+    margin:6px 0 9px !important;
+
+    overflow:visible !important;
+
+    color:#eef5f7 !important;
+
+    font-size:14px !important;
+    line-height:1.35 !important;
+
+    white-space:normal !important;
+    text-overflow:clip !important;
+  }
+
+  .bysPickerGrid .bysPickerProductMeta{
+    display:flex !important;
+    flex-wrap:wrap !important;
+
+    align-items:center !important;
+    justify-content:space-between !important;
+
+    gap:7px 12px !important;
+
+    margin:0 !important;
+
+    font-size:10px !important;
+  }
+
+  .bysPickerGrid .bysPickerCheck{
+    position:static !important;
+
+    display:block !important;
+
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+
+    margin:11px 0 0 !important;
+    padding:10px 11px !important;
+
+    overflow:visible !important;
+  }
+
+  .bysPickerGrid .bysPickerActions{
+    position:static !important;
+
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+
+    width:100% !important;
+
+    gap:8px !important;
+
+    margin:12px 0 0 !important;
+    padding:0 !important;
+  }
+
+  .bysPickerGrid .bysPickerActions button,
+  .bysPickerGrid .bysPickerActions a{
+    position:relative !important;
+
+    width:auto !important;
+    min-width:0 !important;
+    min-height:42px !important;
+
+    margin:0 !important;
+    padding:0 14px !important;
+
+    visibility:visible !important;
+    opacity:1 !important;
+
+    font-size:9px !important;
+
+    transform:none;
+  }
+}
+
+@media(max-width:480px){
+  .bysPickerGrid{
+    gap:10px !important;
+
+    padding:
+      12px 4vw
+      calc(26px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct{
+    border-radius:16px !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerImage{
+    flex-basis:145px !important;
+
+    height:145px !important;
+    min-height:145px !important;
+    max-height:145px !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerImage img{
+    padding:12px !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerProductBody{
+    padding:13px !important;
+  }
+
+  .bysPickerGrid > .bysPickerProduct > .bysPickerProductBody > h3{
+    font-size:13px !important;
+  }
+
+  .bysPickerGrid .bysPickerActions{
+    grid-template-columns:1fr !important;
+  }
+
+  .bysPickerGrid .bysPickerActions button,
+  .bysPickerGrid .bysPickerActions a{
+    width:100% !important;
+  }
+}
+
+/* =========================================================
+   BUILD YOUR SYSTEM — GLOBAL READABILITY PASS
+   Improves small labels, supporting copy and technical text
+   without changing the approved page structure.
+   ========================================================= */
+
+/* Shared supporting-text contrast */
+.buildSystemPrototype{
+  --bys-readable-muted:#8ea6b0;
+  --bys-readable-soft:#a8bac2;
+  --bys-readable-blue:#9ed5ec;
+  --bys-readable-green:#c8ff92;
+}
+
+/* ---------------------------------------------------------
+   INTRO / HERO
+   --------------------------------------------------------- */
+
+.bysEyebrow{
+  font-size:10px !important;
+  line-height:1.35 !important;
+  letter-spacing:.13em !important;
+}
+
+.bysIntro p{
+  color:#9eb5bf !important;
+  font-size:14px !important;
+  line-height:1.68 !important;
+}
+
+.bysIntro small{
+  color:#8098a3 !important;
+  line-height:1.5 !important;
+}
+
+/* Preview */
+.bysFlowNode b{
+  font-size:10px !important;
+  line-height:1.25 !important;
+}
+
+.bysFlowNode small{
+  color:#859ca6 !important;
+  font-size:8px !important;
+  line-height:1.3 !important;
+}
+
+.bysPreviewStat small{
+  color:#849da8 !important;
+  font-size:8px !important;
+  line-height:1.3 !important;
+}
+
+.bysPreviewStat b{
+  font-size:14px !important;
+  line-height:1.3 !important;
+}
+
+/* ---------------------------------------------------------
+   STEP NAVIGATION
+   --------------------------------------------------------- */
+
+.bysNavHead small{
+  color:#8098a3 !important;
+  font-size:9px !important;
+}
+
+.bysNavHead b{
+  font-size:16px !important;
+}
+
+.bysStepNav b{
+  font-size:10px !important;
+  line-height:1.3 !important;
+}
+
+.bysStepNav small{
+  color:#78909a !important;
+  font-size:8px !important;
+  line-height:1.35 !important;
+}
+
+.bysStepNumber{
+  font-size:10px !important;
+}
+
+/* ---------------------------------------------------------
+   STEP CONTENT / INPUTS
+   --------------------------------------------------------- */
+
+.bysStepHead small,
+.bysStepHead .bysEyebrow{
+  color:#8bc8e0 !important;
+  font-size:9px !important;
+}
+
+.bysStepHead h2{
+  line-height:1.04 !important;
+}
+
+.bysStepHead p{
+  color:#91aab5 !important;
+  font-size:12px !important;
+  line-height:1.62 !important;
+}
+
+.bysChoice b,
+.bysBackupOption b{
+  font-size:11px !important;
+  line-height:1.35 !important;
+}
+
+.bysChoice small,
+.bysBackupOption small{
+  color:#7f98a3 !important;
+  font-size:9px !important;
+  line-height:1.45 !important;
+}
+
+.bysField label,
+.bysField > span,
+.bysQtyLabel{
+  color:#8ba3ad !important;
+  font-size:9px !important;
+  line-height:1.35 !important;
+}
+
+.bysField small{
+  color:#768f9a !important;
+  font-size:8px !important;
+  line-height:1.45 !important;
+}
+
+.bysField input,
+.bysField select,
+.bysField textarea,
+.bysQtyInput{
+  color:#eef7f9 !important;
+}
+
+.bysApplianceCard b{
+  font-size:10px !important;
+}
+
+.bysApplianceCard small{
+  color:#7e98a3 !important;
+  font-size:8px !important;
+  line-height:1.4 !important;
+}
+
+/* explanatory / warning / note text */
+.bysWhy b,
+.bysWhy strong{
+  font-size:10px !important;
+  line-height:1.35 !important;
+}
+
+.bysWhy p,
+.bysWhy span,
+.bysWhy small{
+  color:#86a1ac !important;
+  font-size:9px !important;
+  line-height:1.55 !important;
+}
+
+.bysDisclaimer{
+  color:#a29172 !important;
+  font-size:9px !important;
+  line-height:1.65 !important;
+}
+
+/* ---------------------------------------------------------
+   LIVE PREVIEW / SUMMARY
+   --------------------------------------------------------- */
+
+.bysLivePanel small,
+.bysLivePanel dt{
+  color:#8097a1 !important;
+  font-size:8px !important;
+  line-height:1.35 !important;
+}
+
+.bysLivePanel b,
+.bysLivePanel dd{
+  line-height:1.35 !important;
+}
+
+/* ---------------------------------------------------------
+   STEP 07 RESULT
+   --------------------------------------------------------- */
+
+.bysResultSectionHead small{
+  color:#819ba6 !important;
+  font-size:8px !important;
+}
+
+.bysResultSectionHead p{
+  color:#8ca5af !important;
+  font-size:10px !important;
+  line-height:1.55 !important;
+}
+
+.bysResultMetric small{
+  color:#8099a4 !important;
+  font-size:8px !important;
+  line-height:1.3 !important;
+}
+
+.bysResultMetric b{
+  font-size:15px !important;
+  line-height:1.3 !important;
+}
+
+.bysEnergyNumber small,
+.bysBillCard small{
+  color:#829ba6 !important;
+  font-size:8px !important;
+}
+
+.bysEnergyNumber span,
+.bysBillCard span{
+  color:#8fa7b1 !important;
+  font-size:9px !important;
+  line-height:1.45 !important;
+}
+
+.bysProductMatch small,
+.bysAlternative small{
+  color:#829ca7 !important;
+  font-size:8px !important;
+  line-height:1.4 !important;
+}
+
+.bysProductMatch b,
+.bysAlternative b{
+  font-size:11px !important;
+  line-height:1.4 !important;
+}
+
+.bysProductMatch p,
+.bysAlternative p{
+  color:#87a0ab !important;
+  font-size:9px !important;
+  line-height:1.55 !important;
+}
+
+.bysFinalNode b{
+  font-weight:900 !important;
+}
+
+.bysFinalNode small{
+  color:#849ca6 !important;
+}
+
+/* ---------------------------------------------------------
+   PART 02 — SYSTEM BUILDER
+   --------------------------------------------------------- */
+
+.bysBuilderHead p{
+  color:#91aab5 !important;
+  font-size:12px !important;
+  line-height:1.65 !important;
+}
+
+.bysBuilderScore small{
+  color:#849ca7 !important;
+  font-size:8px !important;
+}
+
+.bysBuilderScore span{
+  color:#8ea5af !important;
+  font-size:9px !important;
+  line-height:1.45 !important;
+}
+
+.bysBuilderRequirement small{
+  color:#819aa5 !important;
+  font-size:8px !important;
+  line-height:1.3 !important;
+}
+
+.bysBuilderRequirement b{
+  font-size:14px !important;
+}
+
+.bysBuilderSlot{
+  color:#81a1af !important;
+  font-size:8px !important;
+}
+
+.bysBuilderProductTop h3{
+  font-size:20px !important;
+}
+
+.bysBuilderProductInfo small{
+  color:#8299a4 !important;
+  font-size:8px !important;
+  line-height:1.35 !important;
+}
+
+.bysBuilderProductInfo b{
+  font-size:12px !important;
+  line-height:1.45 !important;
+}
+
+.bysBuilderProductInfo span{
+  color:#a1cddd !important;
+  font-size:9px !important;
+  line-height:1.4 !important;
+}
+
+.bysBuilderProductInfo a{
+  font-size:9px !important;
+}
+
+.bysBuilderQtyRow label,
+.bysBuilderQtyRow span{
+  color:#859da7 !important;
+  font-size:9px !important;
+}
+
+.bysBuilderQtyRow b{
+  font-size:10px !important;
+}
+
+.bysBuilderStatus b{
+  font-size:10px !important;
+}
+
+.bysBuilderStatus p{
+  color:#829ba6 !important;
+  font-size:8px !important;
+  line-height:1.55 !important;
+}
+
+.bysBuilderChange{
+  font-size:9px !important;
+}
+
+.bysBuilderSummaryHead small{
+  color:#849ca7 !important;
+  font-size:8px !important;
+}
+
+.bysBuilderSummaryHead h3{
+  font-size:18px !important;
+  line-height:1.2 !important;
+}
+
+.bysBuilderSummaryFlow b{
+  font-size:7px !important;
+}
+
+.bysBuilderSummaryFlow small{
+  color:#829aa5 !important;
+  font-size:6px !important;
+}
+
+.bysBuilderPrice span{
+  color:#829ba6 !important;
+  font-size:8px !important;
+}
+
+.bysBuilderPrice small{
+  color:#78909a !important;
+  font-size:7px !important;
+  line-height:1.4 !important;
+}
+
+.bysBuilderMessage{
+  color:#a7d2e2 !important;
+  font-size:9px !important;
+  line-height:1.55 !important;
+}
+
+.bysBuilderDisclaimer{
+  color:#728b95 !important;
+  font-size:8px !important;
+  line-height:1.6 !important;
+}
+
+/* ---------------------------------------------------------
+   PRODUCT PICKER MODAL
+   --------------------------------------------------------- */
+
+.bysPickerHead small{
+  color:#86a5b2 !important;
+  font-size:8px !important;
+}
+
+.bysPickerHead p{
+  color:#869fa9 !important;
+  font-size:9px !important;
+  line-height:1.6 !important;
+}
+
+.bysPickerRequirement span{
+  color:#829aa5 !important;
+  font-size:8px !important;
+}
+
+.bysPickerRequirement b{
+  font-size:10px !important;
+}
+
+.bysPickerProductBody>small{
+  color:#829ca7 !important;
+  font-size:8px !important;
+}
+
+.bysPickerProductBody h3{
+  color:#f0f7f9 !important;
+  font-size:13px !important;
+  line-height:1.4 !important;
+}
+
+.bysPickerProductMeta{
+  font-size:10px !important;
+}
+
+.bysPickerCheck b{
+  font-size:9px !important;
+}
+
+.bysPickerCheck span{
+  color:#8099a4 !important;
+  font-size:8px !important;
+  line-height:1.5 !important;
+}
+
+.bysPickerActions button,
+.bysPickerActions a{
+  font-size:9px !important;
+}
+
+/* ---------------------------------------------------------
+   CONTACT MODAL
+   --------------------------------------------------------- */
+
+.bysContactHead small{
+  color:#85a4b1 !important;
+  font-size:8px !important;
+}
+
+.bysContactHead p{
+  color:#8ba4ae !important;
+  font-size:10px !important;
+  line-height:1.6 !important;
+}
+
+.bysContactGrid label>span{
+  color:#8ca4ae !important;
+  font-size:8px !important;
+}
+
+.bysContactGrid input{
+  font-size:11px;
+}
+
+.bysContactError{
+  font-size:9px !important;
+  line-height:1.5 !important;
+}
+
+.bysContactNote{
+  color:#78909a !important;
+  font-size:8px !important;
+  line-height:1.55 !important;
+}
+
+/* ---------------------------------------------------------
+   MOBILE READABILITY
+   --------------------------------------------------------- */
+
+@media(max-width:720px){
+  .bysEyebrow{
+    font-size:9px !important;
+  }
+
+  .bysStepHead p,
+  .bysBuilderHead p{
+    font-size:12px !important;
+  }
+
+  .bysChoice small,
+  .bysBackupOption small{
+    font-size:9px !important;
+  }
+
+  .bysPreviewStat small,
+  .bysBuilderRequirement small{
+    font-size:8px !important;
+  }
+
+  .bysPreviewStat b,
+  .bysBuilderRequirement b{
+    font-size:13px !important;
+  }
+
+  .bysResultMetric small{
+    font-size:8px !important;
+  }
+
+  .bysResultMetric b{
+    font-size:14px !important;
+  }
+
+  .bysBuilderProductInfo b{
+    font-size:13px !important;
+  }
+
+  .bysBuilderProductInfo span{
+    font-size:9px !important;
+  }
+
+  .bysBuilderStatus p,
+  .bysBuilderPrice small{
+    font-size:8px !important;
+  }
+
+  .bysBuilderActions button,
+  .bysBuilderActions a,
+  .bysResultActions button,
+  .bysResultActions a{
+    font-size:9px !important;
+  }
+
+  .bysPickerProductBody h3{
+    font-size:14px !important;
+  }
+
+  .bysPickerCheck span{
+    font-size:8px !important;
+  }
+}
+
+/* =========================================================
+   QUICK PRESETS — SELECTED / ACTIVE STATE
+   ========================================================= */
+
+.bysPresetBtn{
+  position:relative;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+
+  transition:
+    color .2s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease,
+    transform .2s ease;
+}
+
+.bysPresetBtn span{
+  position:relative;
+  z-index:1;
+}
+
+/* Selected preset */
+.bysPresetBtn.active{
+  color:#dfffc2;
+
+  border-color:
+    rgba(184,246,106,.45);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.13),
+      rgba(104,201,245,.055)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.055),
+    inset 0 0 14px
+    rgba(184,246,106,.045),
+    0 0 10px
+    rgba(184,246,106,.09);
+}
+
+.bysPresetSelected{
+  width:17px;
+  height:17px;
+
+  flex:0 0 17px;
+
+  display:grid;
+  place-items:center;
+
+  border:
+    1px solid
+    rgba(184,246,106,.38);
+
+  border-radius:50%;
+
+  background:
+    rgba(184,246,106,.10);
+
+  color:#b8f66a;
+
+  font-size:9px;
+  line-height:1;
+  font-weight:950;
+
+  box-shadow:
+    0 0 8px
+    rgba(184,246,106,.11);
+}
+
+.bysPresetBtn.active:hover{
+  color:#ffffff;
+
+  border-color:
+    rgba(184,246,106,.62);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(184,246,106,.18),
+      rgba(104,201,245,.075)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.065),
+    inset 0 0 16px
+    rgba(184,246,106,.065),
+    0 0 13px
+    rgba(184,246,106,.13);
+
+  transform:translateY(-1px);
+}
+
+/* Clear-all uses the same selected language but slightly warmer */
+.bysPresetBtn.clear.active{
+  color:#ffe3b3;
+
+  border-color:
+    rgba(255,188,93,.38);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,188,93,.09),
+      rgba(104,201,245,.035)
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,.045),
+    0 0 9px
+    rgba(255,188,93,.07);
+}
+
+.bysPresetBtn.clear.active
+.bysPresetSelected{
+  color:#ffcf78;
+
+  border-color:
+    rgba(255,188,93,.34);
+
+  background:
+    rgba(255,188,93,.08);
+}
+
+/* Keyboard access */
+.bysPresetBtn:focus-visible{
+  outline:none;
+
+  box-shadow:
+    0 0 0 2px #071219,
+    0 0 0 4px
+    rgba(104,201,245,.34);
+}
+
+.bysPresetBtn.active:focus-visible{
+  box-shadow:
+    0 0 0 2px #071219,
+    0 0 0 4px
+    rgba(184,246,106,.38);
+}
+
+/* Mobile remains compact while the selected mark stays visible */
+@media(max-width:620px){
+  .bysPresetBtn{
+    min-height:38px;
+    padding:0 12px;
+  }
+
+  .bysPresetSelected{
+    width:16px;
+    height:16px;
+    flex-basis:16px;
+
+    font-size:8px;
+  }
+}
+
