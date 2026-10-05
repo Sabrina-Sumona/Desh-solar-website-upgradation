@@ -81,6 +81,12 @@ type ProductCheck = {
   detail: string;
 };
 
+type StoredSystemBuildProduct = {
+  id: string;
+  category?: Product["category"];
+  addedAt?: string;
+};
+
 const stdInverters = [1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 20, 25, 30, 40, 50];
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const monthFactors = [0.78, 0.84, 0.94, 1.04, 1.08, 0.94, 0.79, 0.82, 0.89, 0.98, 1, 0.85];
@@ -235,6 +241,53 @@ const formatWatts = (w: number) => (w >= 1000 ? `${(w / 1000).toFixed(w % 1000 ?
 
 const CART_KEY = "deshSolarCartV1";
 
+const SYSTEM_BUILD_KEY =
+  "deshSolarSystemBuildV1";
+
+const readStoredSystemBuild = () => {
+  if (typeof window === "undefined") {
+    return [] as StoredSystemBuildProduct[];
+  }
+
+  try {
+    const parsed = JSON.parse(
+      window.localStorage.getItem(
+        SYSTEM_BUILD_KEY,
+      ) || "[]",
+    );
+
+    return Array.isArray(parsed)
+      ? parsed.filter(
+          (
+            item,
+          ): item is StoredSystemBuildProduct =>
+            Boolean(
+              item &&
+                typeof item.id ===
+                  "string",
+            ),
+        )
+      : [];
+  } catch {
+    return [];
+  }
+};
+
+const resolveStoredSystemProducts = () =>
+  readStoredSystemBuild()
+    .map((stored) =>
+      products.find(
+        (product) =>
+          product.id === stored.id,
+      ),
+    )
+    .filter(
+      (
+        product,
+      ): product is Product =>
+        Boolean(product),
+    );
+
 const numericPower = (value: string) => {
   const match = value.match(/(\d+(?:\.\d+)?)/);
   return match ? Number(match[1]) : null;
@@ -326,6 +379,11 @@ export default function BuildYourSystemClient() {
   const [solarOffset, setSolarOffset] = useState(70);
   const [qty, setQty] = useState<Record<string, number>>(emptyQty);
   const [selectedProduct, setSelectedProduct] = useState<{ name: string; type: string; rating: number | null } | null>(null);
+
+  const [
+    catalogSystemProducts,
+    setCatalogSystemProducts,
+  ] = useState<Product[]>([]);
 
   const [systemBuilderOpen, setSystemBuilderOpen] = useState(false);
   const [builderMounted, setBuilderMounted] = useState(false);
@@ -490,59 +548,195 @@ export default function BuildYourSystemClient() {
   }, [calc, state]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const propertyMap: Record<string, PropertyType> = {
-      home: "Home",
-      business: "Business",
-      factory: "Factory",
-      agriculture: "Agriculture",
-      filling: "Filling Station",
-      other: "Other",
-    };
-    const goalMap: Record<string, GoalType> = {
-      backup: "Backup",
-      saving: "Reduce Grid Use",
-      both: "Solar + Backup",
-      project: "Expert Advice",
-    };
+    const params =
+      new URLSearchParams(
+        window.location.search,
+      );
 
-    const propertyParam = params.get("property");
+    const propertyMap:
+      Record<string, PropertyType> = {
+        home: "Home",
+        business: "Business",
+        factory: "Factory",
+        agriculture: "Agriculture",
+        filling: "Filling Station",
+        other: "Other",
+      };
+
+    const goalMap:
+      Record<string, GoalType> = {
+        backup: "Backup",
+        saving: "Reduce Grid Use",
+        both: "Solar + Backup",
+        project: "Expert Advice",
+      };
+
+    const propertyParam =
+      params.get("property");
+
     const initialProperty =
-      propertyParam && propertyMap[propertyParam]
+      propertyParam &&
+      propertyMap[propertyParam]
         ? propertyMap[propertyParam]
         : null;
 
-    const goalParam = params.get("goal");
+    const goalParam =
+      params.get("goal");
+
     const initialGoal =
-      goalParam && goalMap[goalParam]
+      goalParam &&
+      goalMap[goalParam]
         ? goalMap[goalParam]
         : null;
 
-    const billParam = Number(params.get("bill"));
-    const hoursParam = Number(params.get("hours"));
-    const selectedName = params.get("selectedName");
-    const rating = Number(params.get("selectedRating"));
+    const billParam =
+      Number(params.get("bill"));
 
-    const timer = window.setTimeout(() => {
-      if (initialProperty) setProperty(initialProperty);
-      if (initialGoal) setGoal(initialGoal);
-      if (billParam > 0) setBill(billParam);
+    const hoursParam =
+      Number(params.get("hours"));
 
-      if (hoursParam > 0) {
-        setBackupHours(hoursParam);
-        setCustomBackup(String(hoursParam));
+    const selectedName =
+      params.get("selectedName");
+
+    const selectedType =
+      params.get("productType") ||
+      "product";
+
+    const selectedRatingText =
+      params.get("selectedRating") ||
+      "";
+
+    const selectedRating =
+      numericPower(
+        selectedRatingText,
+      );
+
+    const syncCatalogueSelections =
+      () => {
+        const resolved =
+          resolveStoredSystemProducts();
+
+        setCatalogSystemProducts(
+          resolved,
+        );
+
+        /*
+         * When the page was opened from a product card,
+         * show the most recently saved catalogue product
+         * in the existing "Selected from Products" banner.
+         * URL-based selection is still supported and wins.
+         */
+        if (
+          !selectedName &&
+          resolved.length > 0
+        ) {
+          const latest =
+            resolved[
+              resolved.length - 1
+            ];
+
+          setSelectedProduct({
+            name: latest.name,
+            type: latest.category,
+            rating:
+              latest.category ===
+              "inverter"
+                ? inverterPowerKW(
+                    latest,
+                  )
+                : null,
+          });
+        }
+
+        if (
+          !selectedName &&
+          resolved.length === 0
+        ) {
+          setSelectedProduct(null);
+        }
+      };
+
+    syncCatalogueSelections();
+
+    const timer =
+      window.setTimeout(() => {
+        if (initialProperty) {
+          setProperty(
+            initialProperty,
+          );
+        }
+
+        if (initialGoal) {
+          setGoal(initialGoal);
+        }
+
+        if (billParam > 0) {
+          setBill(billParam);
+        }
+
+        if (hoursParam > 0) {
+          setBackupHours(
+            hoursParam,
+          );
+
+          setCustomBackup(
+            String(hoursParam),
+          );
+        }
+
+        if (selectedName) {
+          setSelectedProduct({
+            name: selectedName,
+            type: selectedType,
+            rating:
+              selectedRating &&
+              selectedRating > 0
+                ? selectedRating
+                : null,
+          });
+        }
+      }, 0);
+
+    const handleSystemBuildChange =
+      () => {
+        syncCatalogueSelections();
+      };
+
+    const handleStorage = (
+      event: StorageEvent,
+    ) => {
+      if (
+        !event.key ||
+        event.key ===
+          SYSTEM_BUILD_KEY
+      ) {
+        syncCatalogueSelections();
       }
+    };
 
-      if (selectedName) {
-        setSelectedProduct({
-          name: selectedName,
-          type: params.get("productType") || "product",
-          rating: Number.isFinite(rating) && rating > 0 ? rating : null,
-        });
-      }
-    }, 0);
+    window.addEventListener(
+      "deshsolar:systembuildchange",
+      handleSystemBuildChange,
+    );
 
-    return () => window.clearTimeout(timer);
+    window.addEventListener(
+      "storage",
+      handleStorage,
+    );
+
+    return () => {
+      window.clearTimeout(timer);
+
+      window.removeEventListener(
+        "deshsolar:systembuildchange",
+        handleSystemBuildChange,
+      );
+
+      window.removeEventListener(
+        "storage",
+        handleStorage,
+      );
+    };
   }, []);
 
   useEffect(() => {
@@ -994,34 +1188,133 @@ export default function BuildYourSystemClient() {
   };
 
   const openSystemBuilder = () => {
-    const panel = recommendedPanelProduct();
-    const inverter = recommendedInverterProduct();
-    const battery = recommendedBatteryProduct();
+    /*
+     * Prefer catalogue products explicitly chosen through
+     * "Use in My System". Any missing category still receives
+     * the normal automatic recommendation.
+     */
+    const savedPanel =
+      [...catalogSystemProducts]
+        .reverse()
+        .find(
+          (product) =>
+            product.category ===
+            "panel",
+        ) ?? null;
 
-    const panelKW = panelPowerKW(panel);
+    const savedInverter =
+      [...catalogSystemProducts]
+        .reverse()
+        .find(
+          (product) =>
+            product.category ===
+            "inverter",
+        ) ?? null;
+
+    const savedBattery =
+      [...catalogSystemProducts]
+        .reverse()
+        .find(
+          (product) =>
+            product.category ===
+            "battery",
+        ) ?? null;
+
+    const panel =
+      savedPanel ??
+      recommendedPanelProduct();
+
+    const inverter =
+      savedInverter ??
+      recommendedInverterProduct();
+
+    const recommendedBattery =
+      recommendedBatteryProduct();
+
+    const batteryProduct =
+      savedBattery ??
+      recommendedBattery?.product ??
+      null;
+
+    const panelKW =
+      panelPowerKW(panel);
 
     const panelQty =
-      panelKW && calc.actualPV > 0
-        ? Math.max(1, Math.ceil(calc.actualPV / panelKW))
+      panelKW &&
+      calc.actualPV > 0
+        ? Math.max(
+            1,
+            Math.ceil(
+              calc.actualPV /
+                panelKW,
+            ),
+          )
         : 1;
+
+    const savedBatteryCapacity =
+      batteryCapacityKWh(
+        batteryProduct,
+      );
+
+    const batteryQty =
+      savedBattery &&
+      savedBatteryCapacity &&
+      calc.batteryKWh > 0
+        ? Math.max(
+            1,
+            Math.ceil(
+              calc.batteryKWh /
+                savedBatteryCapacity,
+            ),
+          )
+        : savedBattery
+          ? 1
+          : recommendedBattery
+              ?.qtyNeeded ?? 1;
 
     setBuilderSelection({
       panelId: panel?.id ?? "",
-      inverterId: inverter?.id ?? "",
-      batteryId: battery?.product.id ?? "",
+      inverterId:
+        inverter?.id ?? "",
+      batteryId:
+        batteryProduct?.id ?? "",
       panelQty,
-      batteryQty: battery?.qtyNeeded ?? 1,
+      batteryQty,
     });
 
-    setBuilderMessage("");
+    const importedProducts = [
+      savedPanel,
+      savedInverter,
+      savedBattery,
+    ].filter(
+      (
+        product,
+      ): product is Product =>
+        Boolean(product),
+    );
+
+    setBuilderMessage(
+      importedProducts.length
+        ? `${importedProducts.length} catalogue selection${
+            importedProducts.length ===
+            1
+              ? ""
+              : "s"
+          } loaded from My System. Missing component categories were filled with planning recommendations.`
+        : "",
+    );
+
     setSystemBuilderOpen(true);
 
-    window.requestAnimationFrame(() => {
-      systemBuilderRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    });
+    window.requestAnimationFrame(
+      () => {
+        systemBuilderRef.current
+          ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+      },
+    );
   };
 
   const openBuilderPicker = (

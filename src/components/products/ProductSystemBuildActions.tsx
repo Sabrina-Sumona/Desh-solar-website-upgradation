@@ -25,6 +25,12 @@ type SystemBuildProduct = {
   addedAt: string;
 };
 
+type ToastState = {
+  message: string;
+  detail: string;
+  tone: "added" | "removed";
+} | null;
+
 const SYSTEM_BUILD_KEY =
   "deshSolarSystemBuildV1";
 
@@ -36,15 +42,20 @@ function readSystemBuild(): SystemBuildProduct[] {
   try {
     const parsed = JSON.parse(
       window.localStorage.getItem(
-        SYSTEM_BUILD_KEY
-      ) || "[]"
+        SYSTEM_BUILD_KEY,
+      ) || "[]",
     );
 
     return Array.isArray(parsed)
       ? parsed.filter(
-          (item) =>
-            item &&
-            typeof item.id === "string"
+          (
+            item,
+          ): item is SystemBuildProduct =>
+            Boolean(
+              item &&
+                typeof item.id === "string" &&
+                typeof item.category === "string",
+            ),
         )
       : [];
   } catch {
@@ -53,11 +64,11 @@ function readSystemBuild(): SystemBuildProduct[] {
 }
 
 function writeSystemBuild(
-  items: SystemBuildProduct[]
+  items: SystemBuildProduct[],
 ) {
   window.localStorage.setItem(
     SYSTEM_BUILD_KEY,
-    JSON.stringify(items)
+    JSON.stringify(items),
   );
 
   window.dispatchEvent(
@@ -68,35 +79,37 @@ function writeSystemBuild(
           items,
           count: items.length,
         },
-      }
-    )
+      },
+    ),
   );
 }
-
-type ToastState = {
-  message: string;
-  tone: "added" | "removed";
-} | null;
 
 export default function ProductSystemBuildActions({
   product,
 }: ProductSystemBuildActionsProps) {
   const [added, setAdded] =
     useState(false);
+
   const [toast, setToast] =
     useState<ToastState>(null);
+
   const toastTimerRef =
     useRef<number | null>(null);
 
   const showToast = (
     message: string,
-    tone: "added" | "removed"
+    detail: string,
+    tone: "added" | "removed",
   ) => {
-    setToast({ message, tone });
+    setToast({
+      message,
+      detail,
+      tone,
+    });
 
     if (toastTimerRef.current) {
       window.clearTimeout(
-        toastTimerRef.current
+        toastTimerRef.current,
       );
     }
 
@@ -104,7 +117,7 @@ export default function ProductSystemBuildActions({
       window.setTimeout(() => {
         setToast(null);
         toastTimerRef.current = null;
-      }, 2400);
+      }, 2800);
   };
 
   useEffect(() => {
@@ -113,8 +126,9 @@ export default function ProductSystemBuildActions({
 
       setAdded(
         items.some(
-          (item) => item.id === product.id
-        )
+          (item) =>
+            item.id === product.id,
+        ),
       );
     };
 
@@ -122,29 +136,30 @@ export default function ProductSystemBuildActions({
 
     window.addEventListener(
       "deshsolar:systembuildchange",
-      sync
+      sync,
     );
 
     window.addEventListener(
       "storage",
-      sync
+      sync,
     );
 
     return () => {
       window.removeEventListener(
         "deshsolar:systembuildchange",
-        sync
+        sync,
       );
 
       window.removeEventListener(
         "storage",
-        sync
+        sync,
       );
 
       if (toastTimerRef.current) {
         window.clearTimeout(
-          toastTimerRef.current
+          toastTimerRef.current,
         );
+
         toastTimerRef.current = null;
       }
     };
@@ -154,45 +169,82 @@ export default function ProductSystemBuildActions({
     const current = readSystemBuild();
 
     const exists = current.some(
-      (item) => item.id === product.id
+      (item) =>
+        item.id === product.id,
     );
 
-    if (exists) {
-      const next = current.filter(
-        (item) => item.id !== product.id
-      );
+    try {
+      if (exists) {
+        const next = current.filter(
+          (item) =>
+            item.id !== product.id,
+        );
+
+        writeSystemBuild(next);
+        setAdded(false);
+
+        showToast(
+          "Removed from My System",
+          product.name,
+          "removed",
+        );
+
+        return;
+      }
+
+      /*
+       * The interactive builder currently has one primary slot
+       * for each catalogue category (panel / inverter / battery).
+       * Replacing an existing item from the same category keeps
+       * "My System" deterministic when the builder loads it.
+       */
+      const sameCategoryItem =
+        current.find(
+          (item) =>
+            item.category ===
+            product.category,
+        );
+
+      const next: SystemBuildProduct[] = [
+        ...current.filter(
+          (item) =>
+            item.category !==
+            product.category,
+        ),
+        {
+          id: product.id,
+          name: product.name,
+          category: product.category,
+          categoryLabel:
+            product.categoryLabel,
+          brandLabel:
+            product.brandLabel,
+          power: product.power,
+          image: product.image,
+          priceText:
+            product.priceText,
+          addedAt:
+            new Date().toISOString(),
+        },
+      ];
 
       writeSystemBuild(next);
-      setAdded(false);
+      setAdded(true);
+
       showToast(
-        "Removed from My System",
-        "removed"
+        sameCategoryItem
+          ? `${product.categoryLabel} updated in My System`
+          : "Added to My System",
+        product.name,
+        "added",
       );
-      return;
+    } catch {
+      showToast(
+        "Could not update My System",
+        "Please check browser storage and try again.",
+        "removed",
+      );
     }
-
-    const next: SystemBuildProduct[] = [
-      ...current,
-      {
-        id: product.id,
-        name: product.name,
-        category: product.category,
-        categoryLabel:
-          product.categoryLabel,
-        brandLabel: product.brandLabel,
-        power: product.power,
-        image: product.image,
-        priceText: product.priceText,
-        addedAt: new Date().toISOString(),
-      },
-    ];
-
-    writeSystemBuild(next);
-    setAdded(true);
-    showToast(
-      "Added to My System",
-      "added"
-    );
   };
 
   return (
@@ -201,7 +253,9 @@ export default function ProductSystemBuildActions({
         <button
           type="button"
           className={`pdBuilderButton pdBuilderUseButton${
-            added ? " isAdded" : ""
+            added
+              ? " isAdded"
+              : ""
           }`}
           onClick={toggleSystemBuild}
           aria-pressed={added}
@@ -218,7 +272,7 @@ export default function ProductSystemBuildActions({
 
         <Link
           className="pdBuilderButton pdBuilderButtonSecondary"
-          href="/build-your-system"
+          href="/build-your-system?source=products"
         >
           View My System →
         </Link>
@@ -244,9 +298,17 @@ export default function ProductSystemBuildActions({
           </span>
 
           <div>
-            <small>BUILD YOUR SYSTEM</small>
-            <strong>{toast.message}</strong>
-            <span>{product.name}</span>
+            <small>
+              BUILD YOUR SYSTEM
+            </small>
+
+            <strong>
+              {toast.message}
+            </strong>
+
+            <span>
+              {toast.detail}
+            </span>
           </div>
         </div>
       )}
