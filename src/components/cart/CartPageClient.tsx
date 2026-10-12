@@ -475,9 +475,14 @@ export default function CartPageClient() {
             your load, backup target and installation conditions.
           </p>
 
+          {/*
+            TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+            Re-enable after Build Your System approval.
+
           <Link href="/build-your-system">
             Build Your System →
           </Link>
+          */}
         </div>
       </section>
     </main>

@@ -58,6 +58,9 @@ const MAIN_NAV_LINKS = [
 ];
 
 const FEATURE_LINKS = [
+  /*
+   * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+   * Re-enable after Engineering Lab approval.
   {
     label: "Engineering Lab",
     href: "/engineering-lab",
@@ -65,6 +68,7 @@ const FEATURE_LINKS = [
     className: "navFeatureEngineering",
     mobileClassName: "mobileFeatureEngineering",
   },
+   */
   {
     label: "Customer Support",
     href: "/customer-support",
@@ -72,6 +76,9 @@ const FEATURE_LINKS = [
     className: "navFeatureSupport",
     mobileClassName: "mobileFeatureSupport",
   },
+  /*
+   * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+   * Re-enable after Build Your System approval.
   {
     label: "Build Your System",
     href: "/build-your-system",
@@ -79,6 +86,7 @@ const FEATURE_LINKS = [
     className: "navFeatureBuilder",
     mobileClassName: "mobileFeatureBuilder",
   },
+   */
 ];
 
 const CART_KEY = "deshSolarCartV1";
@@ -722,6 +730,10 @@ export default function Header() {
                     ))}
                   </div>
 
+                  {/*
+                    TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+                    Re-enable after Build Your System approval.
+
                   <Link
                     href="/build-your-system"
                     className="megaBuildLink"
@@ -731,6 +743,7 @@ export default function Header() {
 
                     <b>→</b>
                   </Link>
+                  */}
                 </div>
               </div>
             </div>

@@ -2,10 +2,12 @@ import CinematicIntro from "@/components/home/CinematicIntro";
 import HomeGateway from "@/components/home/HomeGateway";
 import EnergyJourney from "@/components/home/EnergyJourney";
 import LiveEnergyStory from "@/components/home/LiveEnergyStory";
-import MiniSystemBuilder from "@/components/home/MiniSystemBuilder";
+// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+// import MiniSystemBuilder from "@/components/home/MiniSystemBuilder";
 import FeaturedProjects from "@/components/home/FeaturedProjects";
 import TechnologyStack from "@/components/home/TechnologyStack";
-import EngineeringLabPreview from "@/components/home/EngineeringLabPreview";
+// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+// import EngineeringLabPreview from "@/components/home/EngineeringLabPreview";
 import WhyDeshSolar from "@/components/home/WhyDeshSolar";
 import CustomerJourney from "@/components/home/CustomerJourney";
 import BangladeshMission from "@/components/home/BangladeshMission";
@@ -16,10 +18,12 @@ import "@/styles/home-cinematic.css";
 import "@/styles/home-gateway.css";
 import "@/styles/home-energy-journey.css";
 import "@/styles/home-live-energy-story.css";
-import "@/styles/home-mini-system-builder.css";
+// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+// import "@/styles/home-mini-system-builder.css";
 import "@/styles/home-featured-projects.css";
 import "@/styles/home-technology-stack.css";
-import "@/styles/home-engineering-lab.css";
+// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+// import "@/styles/home-engineering-lab.css";
 import "@/styles/home-why-desh-solar.css";
 import "@/styles/home-customer-journey.css";
 import "@/styles/home-bangladesh-mission.css";
@@ -33,10 +37,14 @@ export default function Home() {
       <HomeGateway />
       <EnergyJourney />
       <LiveEnergyStory />
+      {/* TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
       <MiniSystemBuilder />
+      */}
       <FeaturedProjects />
       <TechnologyStack />
+      {/* TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
       <EngineeringLabPreview />
+      */}
       <WhyDeshSolar />
       <CustomerJourney />
       <BangladeshMission />

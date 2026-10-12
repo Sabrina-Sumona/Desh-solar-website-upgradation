@@ -118,6 +118,9 @@ const SHOWCASES: ProjectShowcase[] = [
 ];
 
 
+/*
+ * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+ * Re-enable together with the "Build a Similar System" modal action.
 function getSimilarSystemHref(
   project: ProjectShowcase,
 ) {
@@ -167,6 +170,7 @@ function getSimilarSystemHref(
 
   return `/build-your-system?${params.toString()}`;
 }
+ */
 
 export default function ProjectsPageClient() {
   const [filter, setFilter] = useState<ProjectCategory>("all");
@@ -415,9 +419,14 @@ export default function ProjectsPageClient() {
             </p>
           </div>
           <div className="projectsCtaActions">
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link className="projectsBtn" href="/build-your-system">
               Build Your System →
             </Link>
+            */}
             <Link className="projectsBtn secondary" href="/contact">
               Contact Desh Solar →
             </Link>
@@ -500,6 +509,10 @@ export default function ProjectsPageClient() {
               </div>
 
               <div className="projectModalActions">
+                {/*
+                  TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURES
+                  Re-enable after Build Your System and Engineering Lab approval.
+
                 <Link
                   className="projectsBtn"
                   href={getSimilarSystemHref(modalProject)}
@@ -509,6 +522,7 @@ export default function ProjectsPageClient() {
                 <Link className="projectsBtn secondary" href="/engineering-lab">
                   Open Engineering Lab →
                 </Link>
+                */}
                 <Link className="projectsBtn secondary" href="/contact">
                   Discuss a Project →
                 </Link>

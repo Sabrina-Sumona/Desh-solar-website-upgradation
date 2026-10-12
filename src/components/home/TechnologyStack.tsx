@@ -245,10 +245,17 @@ export default function TechnologyStack() {
               WANT TO GO DEEPER?
             </small>
 
+            {/*
+              PHASE 2 COPY — restore when Engineering Lab is re-enabled.
             <strong>
               Explore products or use
               Desh Solar&apos;s
               engineering tools.
+            </strong>
+            */}
+            <strong>
+              Explore Desh Solar&apos;s solar
+              technology and product catalogue.
             </strong>
           </div>
 
@@ -264,6 +271,10 @@ export default function TechnologyStack() {
               </span>
             </Link>
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Engineering Lab approval.
+
             <Link
               href="/engineering-lab"
               className="technologySecondaryAction"
@@ -274,6 +285,7 @@ export default function TechnologyStack() {
                 ↗
               </span>
             </Link>
+            */}
           </div>
         </div>
       </div>

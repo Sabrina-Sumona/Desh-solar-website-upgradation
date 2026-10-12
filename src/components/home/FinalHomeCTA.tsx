@@ -32,6 +32,10 @@ export default function FinalHomeCTA() {
         </p>
 
         <div className="finalHomeCTAActions">
+          {/*
+            TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+            Re-enable after Build Your System approval.
+
           <Link
             href="/build-your-system"
             className="finalHomeCTAPrimary"
@@ -42,6 +46,7 @@ export default function FinalHomeCTA() {
               →
             </span>
           </Link>
+          */}
 
           <Link
             href="/contact"

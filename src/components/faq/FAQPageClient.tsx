@@ -50,7 +50,8 @@ const faqItems: FaqItem[] = [
     question: "How do I choose the right solar panel, inverter or battery?",
     answer:
       "Start with the energy requirement rather than only the product model. Load, backup target, electrical phase, available solar input and system compatibility should be considered before final equipment selection.",
-    link: { href: "/build-your-system", label: "Build Your System →" },
+    // PHASE 2 LINK — restore when Build Your System is re-enabled.
+    // link: { href: "/build-your-system", label: "Build Your System →" },
   },
   {
     category: "Products",
@@ -64,8 +65,12 @@ const faqItems: FaqItem[] = [
     question: "What information is useful before planning a solar system?",
     answer:
       "Useful starting information includes your monthly electricity use, connected appliances or major loads, desired backup time, usable roof or site area and electrical phase if known.",
-    link: { href: "/build-your-system", label: "Start System Planning →" },
+    // PHASE 2 LINK — restore when Build Your System is re-enabled.
+    // link: { href: "/build-your-system", label: "Start System Planning →" },
   },
+  /*
+   * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURES
+   * Re-enable after Engineering Lab and Build Your System approval.
   {
     category: "Solar Planning",
     question: "Can I estimate my system before contacting Desh Solar?",
@@ -73,12 +78,14 @@ const faqItems: FaqItem[] = [
       "Yes. Build Your System can help create a preliminary system profile, while the Engineering Lab provides tools for generation, battery, inverter, roof, load and compatibility checks.",
     link: { href: "/engineering-lab", label: "Open Engineering Lab →" },
   },
+   */
   {
     category: "Solar Planning",
     question: "Does the same solar system work for every home or business?",
     answer:
       "No. System requirements change with load profile, backup needs, roof or site conditions, electrical phase and the intended operating pattern. Product selection should follow the actual requirement.",
-    link: { href: "/build-your-system", label: "Build Your System →" },
+    // PHASE 2 LINK — restore when Build Your System is re-enabled.
+    // link: { href: "/build-your-system", label: "Build Your System →" },
   },
   {
     category: "Solar Planning",
@@ -495,12 +502,17 @@ export default function FAQPageClient() {
               <i>→</i>
             </Link>
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link href="/build-your-system">
               <span>02</span>
               <b>Build Your System</b>
               <small>Create a preliminary solar-system profile.</small>
               <i>→</i>
             </Link>
+            */}
 
             <Link href="/customer-support">
               <span>03</span>

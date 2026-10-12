@@ -39,10 +39,15 @@ const capabilities: Record<CapabilityKey, CapabilityData> = {
     text: "A complete solar solution connects PV generation, inverter capacity, battery storage, protection and the real site loads.",
     checks: [
       ["Typical question", "How much PV, inverter and storage should work together?"],
-      ["Best next page", "Use Build Your System for a preliminary system profile."],
+      // PHASE 2 COPY — restore when Build Your System is re-enabled.
+      // ["Best next page", "Use Build Your System for a preliminary system profile."],
+      ["Best next page", "Discuss the complete system requirement with Desh Solar."],
     ],
-    href: "/build-your-system",
-    label: "Build a System →",
+    // PHASE 2 LINK — restore when Build Your System is re-enabled.
+    // href: "/build-your-system",
+    // label: "Build a System →",
+    href: "/contact",
+    label: "Contact Desh Solar →",
   },
   planning: {
     kicker: "SYSTEM PLANNING",
@@ -50,10 +55,15 @@ const capabilities: Record<CapabilityKey, CapabilityData> = {
     text: "Load, surge, backup hours, roof area, phase and electricity use shape the preliminary architecture before final product selection.",
     checks: [
       ["Typical question", "What does this property actually need?"],
-      ["Best next page", "Use the Engineering Lab and Build Your System together."],
+      // PHASE 2 COPY — restore when Engineering Lab / Build Your System are re-enabled.
+      // ["Best next page", "Use the Engineering Lab and Build Your System together."],
+      ["Best next page", "Discuss the site and energy requirement with Desh Solar."],
     ],
-    href: "/tools-and-technology",
-    label: "Open Engineering Lab →",
+    // PHASE 2 LINK — restore when Engineering Lab is re-enabled.
+    // href: "/tools-and-technology",
+    // label: "Open Engineering Lab →",
+    href: "/contact",
+    label: "Contact Desh Solar →",
   },
   installation: {
     kicker: "INSTALLATION",
@@ -292,9 +302,15 @@ export default function AboutPageClient() {
               <span>⌂</span><b>Installation</b><small>Site integration</small>
             </Link>
             <i>→</i>
+            {/*
+              PHASE 2 LINK — restore when Build Your System is re-enabled.
             <Link className="systemFlowNode final" href="/build-your-system">
               <span>●</span><b>Energy System</b><small>Complete architecture</small>
             </Link>
+            */}
+            <div className="systemFlowNode final">
+              <span>●</span><b>Energy System</b><small>Complete architecture</small>
+            </div>
           </div>
 
           <div className="systemPrinciples">
@@ -373,7 +389,10 @@ export default function AboutPageClient() {
             <Link className="ecoNode n1" href="/products"><span>▤</span><b>Products</b><small>Equipment</small></Link>
             <Link className="ecoNode n2" href="/projects"><span>⌂</span><b>Projects</b><small>Applications</small></Link>
             <Link className="ecoNode n3" href="/tools-and-technology"><span>↯</span><b>Engineering</b><small>Tools + tech</small></Link>
+            {/* PHASE 2 LINK — restore when Build Your System is re-enabled.
             <Link className="ecoNode n4" href="/build-your-system"><span>◇</span><b>Planning</b><small>System builder</small></Link>
+            */}
+            <div className="ecoNode n4"><span>◇</span><b>Planning</b><small>System planning</small></div>
             <Link className="ecoNode n5" href="/customer-support"><span>?</span><b>Support</b><small>After-sales</small></Link>
             <Link className="ecoNode n6" href="/contact"><span>☎</span><b>Consultation</b><small>Customer contact</small></Link>
             <div className="ecoRing r1" />
@@ -398,7 +417,10 @@ export default function AboutPageClient() {
             <article><span>02</span><b>Engineering-led selection</b><p>Load, backup, phase, PV potential and compatibility are considered before final equipment decisions.</p></article>
             <article><span>03</span><b>Product authenticity focus</b><p>The published company FAQ positions products as genuine/authentic and backed by applicable manufacturer documentation.</p></article>
             <article><span>04</span><b>Nationwide customer reach</b><p>The published delivery information states service across Bangladesh.</p></article>
+            {/* PHASE 2 COPY — restore when Engineering Lab / Build Your System are re-enabled.
             <article><span>05</span><b>Technical guidance</b><p>The redesigned Engineering Lab and Build Your System tools support better early-stage decisions.</p></article>
+            */}
+            <article><span>05</span><b>Technical guidance</b><p>Load, backup, phase, PV potential and compatibility support better early-stage decisions.</p></article>
             <article><span>06</span><b>After-sales pathway</b><p>Customer Support provides dedicated product, system, installation and warranty-assistance routes.</p></article>
           </div>
         </section>
@@ -413,7 +435,10 @@ export default function AboutPageClient() {
 
           <div className="journeyTrack">
             <Link href="/products"><span>01</span><b>DISCOVER</b><small>Products + projects</small></Link><i>→</i>
+            {/* PHASE 2 LINK — restore when Build Your System is re-enabled.
             <Link href="/build-your-system"><span>02</span><b>PLAN</b><small>Loads + backup + roof</small></Link><i>→</i>
+            */}
+            <Link href="/contact"><span>02</span><b>PLAN</b><small>Discuss your requirement</small></Link><i>→</i>
             <Link href="/tools-and-technology"><span>03</span><b>VERIFY</b><small>Engineering checks</small></Link><i>→</i>
             <Link href="/products"><span>04</span><b>SELECT</b><small>Equipment path</small></Link><i>→</i>
             <Link href="/projects"><span>05</span><b>INSTALL</b><small>Project execution</small></Link><i>→</i>
@@ -452,6 +477,10 @@ export default function AboutPageClient() {
           </div>
         </section>
 
+        {/*
+          TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+          Re-enable after Engineering Lab approval.
+
         <section className="aboutSection engineeringTeaser">
           <div className="engineeringTeaserCopy">
             <div className="demoEyebrow">Engineering Lab</div>
@@ -469,18 +498,26 @@ export default function AboutPageClient() {
             <Link href="/engineering-lab#energy-simulator"><span>◇</span><b>Energy Flow</b><small>Day / night simulator</small></Link>
           </div>
         </section>
+        */}
 
         <div className="ctaBand aboutFinalCta">
           <div>
             <h3>From a solar product to a complete energy system.</h3>
+            {/* PHASE 2 COPY — restore when Build Your System is re-enabled.
             <p>
               Explore the catalogue, build a preliminary system or talk directly
               with Desh Solar.
             </p>
+            */}
+            <p>
+              Explore the catalogue or talk directly with Desh Solar.
+            </p>
           </div>
           <div className="demoActions">
             <Link className="demoBtn" href="/products">Explore Products →</Link>
+            {/* PHASE 2 LINK — restore when Build Your System is re-enabled.
             <Link className="demoBtn secondary" href="/build-your-system">Build Your System →</Link>
+            */}
             <Link className="demoBtn secondary" href="/contact">Contact Us →</Link>
           </div>
         </div>

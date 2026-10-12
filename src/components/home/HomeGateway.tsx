@@ -98,6 +98,10 @@ export default function HomeGateway() {
             className="homeGatewayActions"
             aria-label="Solar planning actions"
           >
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link
               href="/build-your-system"
               className="homeGatewayButton homeGatewayButtonPrimary"
@@ -111,6 +115,7 @@ export default function HomeGateway() {
                 →
               </span>
             </Link>
+            */}
 
             <Link
               href="/products"
@@ -172,6 +177,10 @@ export default function HomeGateway() {
 
             {/* ENGINEERING */}
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Engineering Lab approval.
+
             <Link
               href="/engineering-lab"
               className="homeGatewayCapability"
@@ -190,6 +199,7 @@ export default function HomeGateway() {
                 Compatibility
               </div>
             </Link>
+            */}
 
             {/* SUPPORT */}
 

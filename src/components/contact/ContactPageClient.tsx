@@ -35,8 +35,11 @@ const routeMeta: Record<ContactRoute, RouteMeta> = {
       "Share the basic property and energy requirement. You can provide more technical details later.",
     summary: "Solar Project Consultation",
     next: "Complete the project details and send the request.",
-    link: "/build-your-system",
-    linkLabel: "Need more planning first? Build Your System →",
+    // PHASE 2 LINK — restore when Build Your System is re-enabled.
+    // link: "/build-your-system",
+    // linkLabel: "Need more planning first? Build Your System →",
+    link: "",
+    linkLabel: "",
   },
   product: {
     title: "Product Inquiry",
@@ -889,6 +892,10 @@ export default function ContactPageClient() {
                     </select>
                   </label>
                 </div>
+                {/*
+                  TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+                  Re-enable after Build Your System approval.
+
                 <div className="builderBridge">
                   <div>
                     <small>NOT SURE WHAT SYSTEM YOU NEED?</small>
@@ -896,6 +903,7 @@ export default function ContactPageClient() {
                   </div>
                   <Link href="/build-your-system">Open Build Your System →</Link>
                 </div>
+                */}
               </div>
 
               <div className={`contactDynamicBlock ${route === "product" ? "active" : ""}`}>
@@ -1288,7 +1296,10 @@ export default function ContactPageClient() {
             </div>
           </div>
         </section>
-
+        
+        {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURES
+              Re-enable after Engineering Lab and Build Your System approval.
         <section className="prepareSection">
           <div className="contactSectionHead">
             <div>
@@ -1329,7 +1340,7 @@ export default function ContactPageClient() {
             </div>
           </div>
         </section>
-
+      */}
 
       </div>
 

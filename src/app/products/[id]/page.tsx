@@ -7,7 +7,8 @@ import ProductDetailsActions from "@/components/products/ProductDetailsActions";
 import ProductImageGallery from "@/components/products/ProductImageGallery";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
-import ProductSystemBuildActions from "@/components/products/ProductSystemBuildActions";
+// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+// import ProductSystemBuildActions from "@/components/products/ProductSystemBuildActions";
 import SystemPackageBreakdown from "@/components/products/SystemPackageBreakdown";
 import { products, type Product } from "@/data/products";
 
@@ -623,6 +624,10 @@ export default async function ProductDetailsPage({
         </div>
       </section>
 
+      {/*
+        TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+        Re-enable after Build Your System approval.
+
       <section className="pdBuilderBand">
         <div className="pdShell pdBuilderBandInner">
           <div>
@@ -640,6 +645,7 @@ export default async function ProductDetailsPage({
           />
         </div>
       </section>
+      */}
 
       {relatedProducts.length > 0 && (
         <section className="pdSection pdRelatedSection">

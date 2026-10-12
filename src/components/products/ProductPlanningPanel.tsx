@@ -39,8 +39,11 @@ export default function ProductPlanningPanel({
       return {
         label: "Complete system / package",
         result: "Review against your actual load profile",
+        // PHASE 2 COPY — restore when Build Your System is re-enabled.
+        // note:
+        //   "Use Build Your System to check connected load, surge, backup hours and PV planning before final package selection.",
         note:
-          "Use Build Your System to check connected load, surge, backup hours and PV planning before final package selection.",
+          "Check connected load, surge, backup hours and PV planning before final package selection.",
       };
     }
 

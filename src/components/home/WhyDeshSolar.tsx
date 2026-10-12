@@ -13,12 +13,16 @@ const REASONS: Reason[] = [
     description:
       "Start with the energy requirement, then work toward the right system architecture and equipment.",
   },
+  /*
+   * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+   * Re-enable after Engineering Lab approval.
   {
     icon: "⌁",
     title: "Engineering Tools",
     description:
       "Use practical planning tools to explore generation, backup, inverter sizing and other system considerations.",
   },
+   */
   {
     icon: "↯",
     title: "Complete Solar Ecosystem",
@@ -137,6 +141,10 @@ export default function WhyDeshSolar() {
               </span>
             </Link>
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link
               href="/build-your-system"
               className="whyDeshSolarPrimary"
@@ -147,6 +155,7 @@ export default function WhyDeshSolar() {
                 →
               </span>
             </Link>
+            */}
           </div>
         </div>
       </div>

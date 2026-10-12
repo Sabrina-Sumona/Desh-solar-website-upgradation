@@ -151,6 +151,10 @@ export default function CustomerJourney() {
               </span>
             </Link>
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link
               href="/build-your-system"
               className="customerJourneyPrimary"
@@ -161,6 +165,7 @@ export default function CustomerJourney() {
                 →
               </span>
             </Link>
+            */}
           </div>
         </div>
       </div>

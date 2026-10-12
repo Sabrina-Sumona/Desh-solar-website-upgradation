@@ -56,11 +56,15 @@ export default function ProductQuickView({
   const profile = getProductPlanningProfile(product);
   const activeKeys = getActiveFlowKeys(product.category);
 
+  /*
+   * TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+   * Re-enable together with the "Use in My System" action below.
   const buildHref =
     `/build-your-system?selectedProduct=${encodeURIComponent(product.id)}` +
     `&productType=${encodeURIComponent(product.category)}` +
     `&selectedName=${encodeURIComponent(product.name)}` +
     `&selectedRating=${encodeURIComponent(product.power)}`;
+   */
 
   const askHref =
     `/contact-us?source=product` +
@@ -164,9 +168,14 @@ export default function ProductQuickView({
               View Product Details →
             </Link>
 
+            {/*
+              TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
+              Re-enable after Build Your System approval.
+
             <Link href={buildHref}>
               Use in My System →
             </Link>
+            */}
 
             <Link className="secondary" href={askHref}>
               Ask About Product →
