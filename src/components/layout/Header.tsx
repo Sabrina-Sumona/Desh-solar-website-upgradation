@@ -98,31 +98,21 @@ function getStoredCartItems(): HeaderCartItem[] {
   }
 
   try {
-    const parsed = JSON.parse(
-      window.localStorage.getItem(CART_KEY) || "[]"
-    );
+    const parsed = JSON.parse(window.localStorage.getItem(CART_KEY) || "[]");
 
     if (!Array.isArray(parsed)) {
       return [];
     }
 
     return parsed
-      .filter(
-        (item) =>
-          item &&
-          typeof item.id !== "undefined"
-      )
+      .filter((item) => item && typeof item.id !== "undefined")
       .map((item) => ({
         id: String(item.id),
         name:
-          typeof item.name === "string" &&
-          item.name.trim()
+          typeof item.name === "string" && item.name.trim()
             ? item.name
             : "Product",
-        qty: Math.max(
-          1,
-          Number(item.qty) || 1
-        ),
+        qty: Math.max(1, Number(item.qty) || 1),
       }));
   } catch {
     return [];
@@ -177,38 +167,27 @@ export default function Header() {
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchSuggestionsOpen, setSearchSuggestionsOpen] =
-    useState(false);
-  const [productsMenuOpen, setProductsMenuOpen] =
-    useState(false);
+  const [searchSuggestionsOpen, setSearchSuggestionsOpen] = useState(false);
+  const [productsMenuOpen, setProductsMenuOpen] = useState(false);
   const [cartToast, setCartToast] = useState<{
     type: "added" | "removed";
     productName: string;
   } | null>(null);
 
-  const previousCartItemsRef =
-    useRef<HeaderCartItem[]>([]);
-  const cartToastTimerRef =
-    useRef<number | null>(null);
-  const desktopSearchInputRef =
-    useRef<HTMLInputElement | null>(null);
-  const mobileSearchInputRef =
-    useRef<HTMLInputElement | null>(null);
+  const previousCartItemsRef = useRef<HeaderCartItem[]>([]);
+  const cartToastTimerRef = useRef<number | null>(null);
+  const desktopSearchInputRef = useRef<HTMLInputElement | null>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement | null>(null);
 
   const matchingProducts = useMemo(() => {
-    const query = searchQuery
-      .trim()
-      .toLowerCase();
+    const query = searchQuery.trim().toLowerCase();
 
     if (!query) {
       return [];
     }
 
     return products
-      .filter(
-        (product) =>
-          product.category !== "system"
-      )
+      .filter((product) => product.category !== "system")
       .filter((product) => {
         const searchableText = [
           product.name,
@@ -227,142 +206,78 @@ export default function Header() {
   }, [searchQuery]);
 
   useEffect(() => {
-    const showCartToast = (
-      type: "added" | "removed",
-      productName: string
-    ) => {
+    const showCartToast = (type: "added" | "removed", productName: string) => {
       setCartToast({
         type,
         productName,
       });
 
       if (cartToastTimerRef.current !== null) {
-        window.clearTimeout(
-          cartToastTimerRef.current
-        );
+        window.clearTimeout(cartToastTimerRef.current);
       }
 
-      cartToastTimerRef.current =
-        window.setTimeout(() => {
-          setCartToast(null);
-          cartToastTimerRef.current = null;
-        }, 2400);
+      cartToastTimerRef.current = window.setTimeout(() => {
+        setCartToast(null);
+        cartToastTimerRef.current = null;
+      }, 2400);
     };
 
-    const syncCart = (
-      showToast = false
-    ) => {
-      const currentItems =
-        getStoredCartItems();
-      const previousItems =
-        previousCartItemsRef.current;
+    const syncCart = (showToast = false) => {
+      const currentItems = getStoredCartItems();
+      const previousItems = previousCartItemsRef.current;
 
-      setCartCount(
-        currentItems.reduce(
-          (total, item) =>
-            total + item.qty,
-          0
-        )
-      );
+      setCartCount(currentItems.reduce((total, item) => total + item.qty, 0));
 
       if (showToast) {
-        const previousIds = new Set(
-          previousItems.map(
-            (item) => item.id
-          )
+        const previousIds = new Set(previousItems.map((item) => item.id));
+
+        const currentIds = new Set(currentItems.map((item) => item.id));
+
+        const addedItem = currentItems.find(
+          (item) => !previousIds.has(item.id),
         );
 
-        const currentIds = new Set(
-          currentItems.map(
-            (item) => item.id
-          )
+        const removedItem = previousItems.find(
+          (item) => !currentIds.has(item.id),
         );
-
-        const addedItem =
-          currentItems.find(
-            (item) =>
-              !previousIds.has(item.id)
-          );
-
-        const removedItem =
-          previousItems.find(
-            (item) =>
-              !currentIds.has(item.id)
-          );
 
         if (addedItem) {
-          showCartToast(
-            "added",
-            addedItem.name
-          );
+          showCartToast("added", addedItem.name);
         } else if (removedItem) {
-          showCartToast(
-            "removed",
-            removedItem.name
-          );
+          showCartToast("removed", removedItem.name);
         }
       }
 
-      previousCartItemsRef.current =
-        currentItems;
+      previousCartItemsRef.current = currentItems;
     };
 
     syncCart(false);
 
-    const handleCartChange = () =>
-      syncCart(true);
+    const handleCartChange = () => syncCart(true);
 
-    const handleStorage = () =>
-      syncCart(true);
+    const handleStorage = () => syncCart(true);
 
-    const handlePassiveSync = () =>
-      syncCart(false);
+    const handlePassiveSync = () => syncCart(false);
 
-    window.addEventListener(
-      "deshsolar:cartchange",
-      handleCartChange
-    );
+    window.addEventListener("deshsolar:cartchange", handleCartChange);
 
-    window.addEventListener(
-      "storage",
-      handleStorage
-    );
+    window.addEventListener("storage", handleStorage);
 
-    window.addEventListener(
-      "focus",
-      handlePassiveSync
-    );
+    window.addEventListener("focus", handlePassiveSync);
 
-    window.addEventListener(
-      "pageshow",
-      handlePassiveSync
-    );
+    window.addEventListener("pageshow", handlePassiveSync);
 
     return () => {
-      window.removeEventListener(
-        "deshsolar:cartchange",
-        handleCartChange
-      );
+      window.removeEventListener("deshsolar:cartchange", handleCartChange);
 
-      window.removeEventListener(
-        "storage",
-        handleStorage
-      );
+      window.removeEventListener("storage", handleStorage);
 
-      window.removeEventListener(
-        "focus",
-        handlePassiveSync
-      );
+      window.removeEventListener("focus", handlePassiveSync);
 
-      window.removeEventListener(
-        "pageshow",
-        handlePassiveSync
-      );
+      window.removeEventListener("pageshow", handlePassiveSync);
 
       if (cartToastTimerRef.current !== null) {
-        window.clearTimeout(
-          cartToastTimerRef.current
-        );
+        window.clearTimeout(cartToastTimerRef.current);
       }
     };
   }, []);
@@ -372,40 +287,31 @@ export default function Header() {
       return;
     }
 
-    const originalOverflow =
-      document.body.style.overflow;
+    const originalOverflow = document.body.style.overflow;
 
     document.body.style.overflow = "hidden";
 
     return () => {
-      document.body.style.overflow =
-        originalOverflow;
+      document.body.style.overflow = originalOverflow;
     };
   }, [mobileOpen]);
 
   useEffect(() => {
-    const mobileViewport =
-      window.matchMedia(
-        MOBILE_NAV_QUERY
-      );
+    const mobileViewport = window.matchMedia(MOBILE_NAV_QUERY);
 
-    const resetNavigationOnLayoutChange =
-      () => {
-        setMobileOpen(false);
-        setProductsMenuOpen(false);
-        setSearchOpen(false);
-        setSearchSuggestionsOpen(false);
-      };
+    const resetNavigationOnLayoutChange = () => {
+      setMobileOpen(false);
+      setProductsMenuOpen(false);
+      setSearchOpen(false);
+      setSearchSuggestionsOpen(false);
+    };
 
-    mobileViewport.addEventListener(
-      "change",
-      resetNavigationOnLayoutChange
-    );
+    mobileViewport.addEventListener("change", resetNavigationOnLayoutChange);
 
     return () => {
       mobileViewport.removeEventListener(
         "change",
-        resetNavigationOnLayoutChange
+        resetNavigationOnLayoutChange,
       );
     };
   }, []);
@@ -432,9 +338,7 @@ export default function Header() {
   }, []);
 
   const openSearch = useCallback(
-    (
-      inputRef: RefObject<HTMLInputElement | null>
-    ) => {
+    (inputRef: RefObject<HTMLInputElement | null>) => {
       setMobileOpen(false);
       setProductsMenuOpen(false);
       setCartOpen(false);
@@ -444,7 +348,7 @@ export default function Header() {
         inputRef.current?.focus();
       });
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -452,24 +356,16 @@ export default function Header() {
       return;
     }
 
-    const handleKeyDown = (
-      event: KeyboardEvent
-    ) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         closeSearch();
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      handleKeyDown
-    );
+    window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener(
-        "keydown",
-        handleKeyDown
-      );
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [searchOpen, closeSearch]);
 
@@ -478,13 +374,10 @@ export default function Header() {
       setProductsMenuOpen(false);
 
       const urlSearchQuery =
-        new URLSearchParams(
-          window.location.search
-        ).get("search") || "";
+        new URLSearchParams(window.location.search).get("search") || "";
 
       const hasSearchResult =
-        pathname === "/products" &&
-        urlSearchQuery.trim().length > 0;
+        pathname === "/products" && urlSearchQuery.trim().length > 0;
 
       if (hasSearchResult) {
         setSearchQuery(urlSearchQuery);
@@ -498,23 +391,14 @@ export default function Header() {
       setSearchSuggestionsOpen(false);
     };
 
-    const frameId =
-      window.requestAnimationFrame(
-        syncSearchFromUrl
-      );
+    const frameId = window.requestAnimationFrame(syncSearchFromUrl);
 
-    window.addEventListener(
-      "popstate",
-      syncSearchFromUrl
-    );
+    window.addEventListener("popstate", syncSearchFromUrl);
 
     return () => {
       window.cancelAnimationFrame(frameId);
 
-      window.removeEventListener(
-        "popstate",
-        syncSearchFromUrl
-      );
+      window.removeEventListener("popstate", syncSearchFromUrl);
     };
   }, [pathname]);
 
@@ -523,17 +407,12 @@ export default function Header() {
       setProductsMenuOpen(false);
     };
 
-    window.addEventListener(
-      "scroll",
-      closeProductsMenuOnScroll,
-      { passive: true }
-    );
+    window.addEventListener("scroll", closeProductsMenuOnScroll, {
+      passive: true,
+    });
 
     return () => {
-      window.removeEventListener(
-        "scroll",
-        closeProductsMenuOnScroll
-      );
+      window.removeEventListener("scroll", closeProductsMenuOnScroll);
     };
   }, []);
 
@@ -541,12 +420,9 @@ export default function Header() {
     const query = searchQuery.trim();
 
     if (!query) {
-      const input =
-        window.matchMedia(
-          MOBILE_NAV_QUERY
-        ).matches
-          ? mobileSearchInputRef.current
-          : desktopSearchInputRef.current;
+      const input = window.matchMedia(MOBILE_NAV_QUERY).matches
+        ? mobileSearchInputRef.current
+        : desktopSearchInputRef.current;
 
       input?.focus();
       return;
@@ -555,16 +431,9 @@ export default function Header() {
     setSearchOpen(true);
     setSearchSuggestionsOpen(false);
 
-    const searchUrl =
-      `/products?search=${encodeURIComponent(
-        query
-      )}`;
+    const searchUrl = `/products?search=${encodeURIComponent(query)}`;
 
-    if (
-      window.location.pathname +
-        window.location.search ===
-      searchUrl
-    ) {
+    if (window.location.pathname + window.location.search === searchUrl) {
       window.location.reload();
       return;
     }
@@ -573,7 +442,7 @@ export default function Header() {
   }, [router, searchQuery]);
 
   const handleSearchIconClick = (
-    inputRef: RefObject<HTMLInputElement | null>
+    inputRef: RefObject<HTMLInputElement | null>,
   ) => {
     if (!searchOpen) {
       openSearch(inputRef);
@@ -588,40 +457,26 @@ export default function Header() {
     performSearch();
   };
 
-  const submitSearch = (
-    event: FormEvent<HTMLFormElement>
-  ) => {
+  const submitSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     performSearch();
   };
 
   const clearSearchAndReload = useCallback(
-    (
-      inputRef: RefObject<HTMLInputElement | null>
-    ) => {
+    (inputRef: RefObject<HTMLInputElement | null>) => {
       setSearchQuery("");
       setSearchSuggestionsOpen(false);
 
-      const currentUrl =
-        new URL(window.location.href);
+      const currentUrl = new URL(window.location.href);
 
-      if (
-        currentUrl.searchParams.has(
-          "search"
-        )
-      ) {
-        currentUrl.searchParams.delete(
-          "search"
-        );
+      if (currentUrl.searchParams.has("search")) {
+        currentUrl.searchParams.delete("search");
 
-        const remainingParams =
-          currentUrl.searchParams.toString();
+        const remainingParams = currentUrl.searchParams.toString();
 
         const targetUrl =
           currentUrl.pathname +
-          (remainingParams
-            ? `?${remainingParams}`
-            : "") +
+          (remainingParams ? `?${remainingParams}` : "") +
           currentUrl.hash;
 
         window.location.href = targetUrl;
@@ -632,7 +487,7 @@ export default function Header() {
         inputRef.current?.focus();
       });
     },
-    []
+    [],
   );
 
   const isActive = (href: string) => {
@@ -673,9 +528,7 @@ export default function Header() {
           {/* PRODUCT SEARCH */}
 
           <form
-            className={`navSearchDock ${
-              searchOpen ? "isOpen" : ""
-            }`}
+            className={`navSearchDock ${searchOpen ? "isOpen" : ""}`}
             role="search"
             onSubmit={submitSearch}
           >
@@ -689,46 +542,33 @@ export default function Header() {
                 type="search"
                 value={searchQuery}
                 onChange={(event) => {
-                  const value =
-                    event.target.value;
+                  const value = event.target.value;
 
                   setSearchQuery(value);
 
-                  setSearchSuggestionsOpen(
-                    value.trim().length > 0
-                  );
+                  setSearchSuggestionsOpen(value.trim().length > 0);
                 }}
                 onFocus={() => {
                   if (searchQuery.trim()) {
-                    setSearchSuggestionsOpen(
-                      true
-                    );
+                    setSearchSuggestionsOpen(true);
                   }
                 }}
                 placeholder="Search products..."
                 autoComplete="off"
                 aria-label="Search products"
-                tabIndex={
-                  searchOpen ? 0 : -1
-                }
+                tabIndex={searchOpen ? 0 : -1}
               />
 
               <button
                 type="button"
                 className="navSearchExtensionClose"
                 aria-label={
-                  searchQuery
-                    ? "Clear product search"
-                    : "Close product search"
+                  searchQuery ? "Clear product search" : "Close product search"
                 }
-                tabIndex={
-                  searchOpen ? 0 : -1
-                }
+                tabIndex={searchOpen ? 0 : -1}
                 onClick={() => {
                   if (searchQuery) {
-                    clearSearchAndReload(
-                      desktopSearchInputRef
-                    );
+                    clearSearchAndReload(desktopSearchInputRef);
                     return;
                   }
 
@@ -747,11 +587,7 @@ export default function Header() {
                     : "Close product search"
                 }
                 tabIndex={searchOpen ? 0 : -1}
-                onClick={() =>
-                  handleSearchIconClick(
-                    desktopSearchInputRef
-                  )
-                }
+                onClick={() => handleSearchIconClick(desktopSearchInputRef)}
               >
                 <SearchIcon />
               </button>
@@ -769,220 +605,129 @@ export default function Header() {
               }
               aria-expanded={searchOpen}
               aria-controls="desktopProductSearchExtension"
-              onClick={() =>
-                handleSearchIconClick(
-                  desktopSearchInputRef
-                )
-              }
+              onClick={() => handleSearchIconClick(desktopSearchInputRef)}
             >
               <SearchIcon />
             </button>
 
-            {searchOpen &&
-              searchSuggestionsOpen &&
-              searchQuery.trim() && (
-                <div
-                  className="navSearchSuggestions navSearchSuggestionsDesktop"
-                  role="listbox"
-                  aria-label="Matching products"
-                >
-                  {matchingProducts.length >
-                  0 ? (
-                    <>
-                      <div className="navSearchSuggestionList">
-                        {matchingProducts.map(
-                          (product) => (
-                            <Link
-                              key={
-                                product.id
-                              }
-                              href={`/products/${product.id}`}
-                              className="navSearchSuggestionItem"
-                              onClick={() =>
-                                setSearchSuggestionsOpen(
-                                  false
-                                )
-                              }
-                            >
-                              <span className="navSearchSuggestionImage">
-                                <Image
-                                  src={
-                                    product.image
-                                  }
-                                  alt=""
-                                  width={
-                                    56
-                                  }
-                                  height={
-                                    48
-                                  }
-                                />
-                              </span>
+            {searchOpen && searchSuggestionsOpen && searchQuery.trim() && (
+              <div
+                className="navSearchSuggestions navSearchSuggestionsDesktop"
+                role="listbox"
+                aria-label="Matching products"
+              >
+                {matchingProducts.length > 0 ? (
+                  <>
+                    <div className="navSearchSuggestionList">
+                      {matchingProducts.map((product) => (
+                        <Link
+                          key={product.id}
+                          href={`/products/${product.id}`}
+                          className="navSearchSuggestionItem"
+                          onClick={() => setSearchSuggestionsOpen(false)}
+                        >
+                          <span className="navSearchSuggestionImage">
+                            <Image
+                              src={product.image}
+                              alt=""
+                              width={56}
+                              height={48}
+                            />
+                          </span>
 
-                              <span className="navSearchSuggestionInfo">
-                                <small>
-                                  {
-                                    product.brandLabel
-                                  }
-                                  {
-                                    " · "
-                                  }
-                                  {
-                                    product.categoryLabel
-                                  }
-                                </small>
+                          <span className="navSearchSuggestionInfo">
+                            <small>
+                              {product.brandLabel}
+                              {" · "}
+                              {product.categoryLabel}
+                            </small>
 
-                                <strong>
-                                  {
-                                    product.name
-                                  }
-                                </strong>
+                            <strong>{product.name}</strong>
 
-                                <span>
-                                  {
-                                    product.priceText
-                                  }
+                            <span>
+                              {product.priceText}
 
-                                  {product.power
-                                    ? ` · ${product.power}`
-                                    : ""}
-                                </span>
-                              </span>
+                              {product.power ? ` · ${product.power}` : ""}
+                            </span>
+                          </span>
 
-                              <b aria-hidden="true">
-                                →
-                              </b>
-                            </Link>
-                          )
-                        )}
-                      </div>
-
-                      <button
-                        type="button"
-                        className="navSearchViewAll"
-                        onClick={
-                          performSearch
-                        }
-                      >
-                        <span>
-                          View all
-                          matching
-                          products
-                        </span>
-
-                        <b aria-hidden="true">
-                          →
-                        </b>
-                      </button>
-                    </>
-                  ) : (
-                    <div className="navSearchNoResults">
-                      <strong>
-                        No matching products
-                      </strong>
-
-                      <span>
-                        Try a product name,
-                        brand, category or
-                        capacity.
-                      </span>
+                          <b aria-hidden="true">→</b>
+                        </Link>
+                      ))}
                     </div>
-                  )}
-                </div>
-              )}
+
+                    <button
+                      type="button"
+                      className="navSearchViewAll"
+                      onClick={performSearch}
+                    >
+                      <span>View all matching products</span>
+
+                      <b aria-hidden="true">→</b>
+                    </button>
+                  </>
+                ) : (
+                  <div className="navSearchNoResults">
+                    <strong>No matching products</strong>
+
+                    <span>
+                      Try a product name, brand, category or capacity.
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </form>
 
           {/* PRODUCTS */}
 
           <div
             className="navMegaWrap"
-            onMouseEnter={() =>
-              setProductsMenuOpen(true)
-            }
-            onMouseLeave={() =>
-              setProductsMenuOpen(false)
-            }
+            onMouseEnter={() => setProductsMenuOpen(true)}
+            onMouseLeave={() => setProductsMenuOpen(false)}
           >
             <Link
               href="/products"
-              aria-current={
-                isActive("/products")
-                  ? "page"
-                  : undefined
-              }
+              aria-current={isActive("/products") ? "page" : undefined}
               className={`navItem navInteractiveItem ${
-                isActive("/products")
-                  ? "navItemActive"
-                  : ""
+                isActive("/products") ? "navItemActive" : ""
               }`}
-              onClick={() =>
-                setProductsMenuOpen(false)
-              }
+              onClick={() => setProductsMenuOpen(false)}
             >
               <span className="navItemGlow" />
 
-              <span className="navItemText">
-                Products
-              </span>
+              <span className="navItemText">Products</span>
             </Link>
 
-            <div
-              className={`navMegaPanel ${
-                productsMenuOpen
-                  ? "isOpen"
-                  : ""
-              }`}
-            >
+            <div className={`navMegaPanel ${productsMenuOpen ? "isOpen" : ""}`}>
               <div className="megaAmbientGlow" />
 
               <div className="megaGrid">
                 <div className="megaGroup">
-                  <div className="megaLabel">
-                    Solar Products
-                  </div>
+                  <div className="megaLabel">Solar Products</div>
 
                   <div className="megaLinks">
-                    {PRODUCT_LINKS.map(
-                      (item) => (
-                        <Link
-                          href={
-                            item.href
-                          }
-                          key={
-                            item.label
-                          }
-                          onClick={() =>
-                            setProductsMenuOpen(
-                              false
-                            )
-                          }
-                        >
-                          <i>
-                            {item.icon}
-                          </i>
+                    {PRODUCT_LINKS.map((item) => (
+                      <Link
+                        href={item.href}
+                        key={item.label}
+                        onClick={() => setProductsMenuOpen(false)}
+                      >
+                        <i>{item.icon}</i>
 
-                          <span>
-                            {item.label}
-                          </span>
+                        <span>{item.label}</span>
 
-                          <b>→</b>
-                        </Link>
-                      )
-                    )}
+                        <b>→</b>
+                      </Link>
+                    ))}
                   </div>
 
                   <Link
                     href="/build-your-system"
                     className="megaBuildLink"
-                    onClick={() =>
-                      setProductsMenuOpen(
-                        false
-                      )
-                    }
+                    onClick={() => setProductsMenuOpen(false)}
                   >
-                    <span>
-                      Build Your System
-                    </span>
+                    <span>Build Your System</span>
 
                     <b>→</b>
                   </Link>
@@ -993,35 +738,24 @@ export default function Header() {
 
           {/* STANDARD NAVIGATION */}
 
-          {MAIN_NAV_LINKS.map(
-            (item) => {
-              const active =
-                isActive(item.href);
+          {MAIN_NAV_LINKS.map((item) => {
+            const active = isActive(item.href);
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={
-                    active
-                      ? "page"
-                      : undefined
-                  }
-                  className={`navItem navInteractiveItem ${
-                    active
-                      ? "navItemActive"
-                      : ""
-                  }`}
-                >
-                  <span className="navItemGlow" />
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={`navItem navInteractiveItem ${
+                  active ? "navItemActive" : ""
+                }`}
+              >
+                <span className="navItemGlow" />
 
-                  <span className="navItemText">
-                    {item.label}
-                  </span>
-                </Link>
-              );
-            }
-          )}
+                <span className="navItemText">{item.label}</span>
+              </Link>
+            );
+          })}
 
           {/* UPGRADED FEATURES */}
 
@@ -1029,94 +763,54 @@ export default function Header() {
             className="navFeatureBlock"
             aria-label="Desh Solar upgraded features"
           >
-            <span
-              className="navFeatureAmbient"
-              aria-hidden="true"
-            />
+            <span className="navFeatureAmbient" aria-hidden="true" />
 
-            <span
-              className="navFeatureSweep"
-              aria-hidden="true"
-            />
+            <span className="navFeatureSweep" aria-hidden="true" />
 
-            {FEATURE_LINKS.map(
-              (item) => {
-                const active =
-                  isActive(item.href);
+            {FEATURE_LINKS.map((item) => {
+              const active = isActive(item.href);
 
-                return (
-                  <Link
-                    href={item.href}
-                    key={item.href}
-                    aria-current={
-                      active
-                        ? "page"
-                        : undefined
-                    }
-                    className={`navFeatureItem ${
-                      item.className
-                    } ${
-                      active
-                        ? "navFeatureActive"
-                        : ""
-                    }`}
-                  >
-                    <span
-                      className="navFeatureIcon"
-                      aria-hidden="true"
-                    >
-                      {item.icon}
-                    </span>
+              return (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`navFeatureItem ${item.className} ${
+                    active ? "navFeatureActive" : ""
+                  }`}
+                >
+                  <span className="navFeatureIcon" aria-hidden="true">
+                    {item.icon}
+                  </span>
 
-                    <span className="navFeatureText">
-                      {item.label}
-                    </span>
-                  </Link>
-                );
-              }
-            )}
+                  <span className="navFeatureText">{item.label}</span>
+                </Link>
+              );
+            })}
           </div>
 
           {/* CART */}
 
           <button
             type="button"
-            aria-current={
-              isActive("/cart")
-                ? "page"
-                : undefined
-            }
+            aria-current={isActive("/cart") ? "page" : undefined}
             aria-expanded={cartOpen}
             aria-controls="cartQuickDrawer"
-            className={`navCart ${
-              isActive("/cart")
-                ? "navCartActive"
-                : ""
-            }`}
+            className={`navCart ${isActive("/cart") ? "navCartActive" : ""}`}
             aria-label={`Open shopping cart. ${cartCount} ${
-              cartCount === 1
-                ? "item"
-                : "items"
+              cartCount === 1 ? "item" : "items"
             } in cart`}
             onClick={openCart}
           >
-            <span
-              className="navCartGlow"
-              aria-hidden="true"
-            />
+            <span className="navCartGlow" aria-hidden="true" />
 
             <span className="navCartIcon">
               <CartIcon />
             </span>
 
-            <span className="navCartLabel">
-              Cart
-            </span>
+            <span className="navCartLabel">Cart</span>
 
-            <span
-              className="cartCount"
-              aria-hidden="true"
-            >
+            <span className="cartCount" aria-hidden="true">
               {cartCount}
             </span>
           </button>
@@ -1126,11 +820,7 @@ export default function Header() {
 
         <div className="navMobileTools">
           <form
-            className={`navMobileInlineSearch ${
-              searchOpen
-                ? "isOpen"
-                : ""
-            }`}
+            className={`navMobileInlineSearch ${searchOpen ? "isOpen" : ""}`}
             role="search"
             onSubmit={submitSearch}
           >
@@ -1145,11 +835,7 @@ export default function Header() {
                   : "Open product search"
               }
               aria-expanded={searchOpen}
-              onClick={() =>
-                handleSearchIconClick(
-                  mobileSearchInputRef
-                )
-              }
+              onClick={() => handleSearchIconClick(mobileSearchInputRef)}
             >
               <SearchIcon />
             </button>
@@ -1159,28 +845,21 @@ export default function Header() {
               type="search"
               value={searchQuery}
               onChange={(event) => {
-                const value =
-                  event.target.value;
+                const value = event.target.value;
 
                 setSearchQuery(value);
 
-                setSearchSuggestionsOpen(
-                  value.trim().length > 0
-                );
+                setSearchSuggestionsOpen(value.trim().length > 0);
               }}
               onFocus={() => {
                 if (searchQuery.trim()) {
-                  setSearchSuggestionsOpen(
-                    true
-                  );
+                  setSearchSuggestionsOpen(true);
                 }
               }}
               placeholder="Search products..."
               autoComplete="off"
               aria-label="Search products"
-              tabIndex={
-                searchOpen ? 0 : -1
-              }
+              tabIndex={searchOpen ? 0 : -1}
             />
 
             {searchOpen && (
@@ -1188,15 +867,11 @@ export default function Header() {
                 type="button"
                 className="navMobileInlineSearchClose"
                 aria-label={
-                  searchQuery
-                    ? "Clear product search"
-                    : "Close product search"
+                  searchQuery ? "Clear product search" : "Close product search"
                 }
                 onClick={() => {
                   if (searchQuery) {
-                    clearSearchAndReload(
-                      mobileSearchInputRef
-                    );
+                    clearSearchAndReload(mobileSearchInputRef);
                     return;
                   }
 
@@ -1207,166 +882,102 @@ export default function Header() {
               </button>
             )}
 
-            {searchOpen &&
-              searchSuggestionsOpen &&
-              searchQuery.trim() && (
-                <div
-                  className="navSearchSuggestions navSearchSuggestionsMobile"
-                  role="listbox"
-                  aria-label="Matching products"
-                >
-                  {matchingProducts.length >
-                  0 ? (
-                    <>
-                      <div className="navSearchSuggestionList">
-                        {matchingProducts.map(
-                          (product) => (
-                            <Link
-                              key={
-                                product.id
-                              }
-                              href={`/products/${product.id}`}
-                              className="navSearchSuggestionItem"
-                              onClick={() =>
-                                setSearchSuggestionsOpen(
-                                  false
-                                )
-                              }
-                            >
-                              <span className="navSearchSuggestionImage">
-                                <Image
-                                  src={
-                                    product.image
-                                  }
-                                  alt=""
-                                  width={
-                                    56
-                                  }
-                                  height={
-                                    48
-                                  }
-                                />
-                              </span>
+            {searchOpen && searchSuggestionsOpen && searchQuery.trim() && (
+              <div
+                className="navSearchSuggestions navSearchSuggestionsMobile"
+                role="listbox"
+                aria-label="Matching products"
+              >
+                {matchingProducts.length > 0 ? (
+                  <>
+                    <div className="navSearchSuggestionList">
+                      {matchingProducts.map((product) => (
+                        <Link
+                          key={product.id}
+                          href={`/products/${product.id}`}
+                          className="navSearchSuggestionItem"
+                          onClick={() => setSearchSuggestionsOpen(false)}
+                        >
+                          <span className="navSearchSuggestionImage">
+                            <Image
+                              src={product.image}
+                              alt=""
+                              width={56}
+                              height={48}
+                            />
+                          </span>
 
-                              <span className="navSearchSuggestionInfo">
-                                <small>
-                                  {
-                                    product.brandLabel
-                                  }
-                                  {
-                                    " · "
-                                  }
-                                  {
-                                    product.categoryLabel
-                                  }
-                                </small>
+                          <span className="navSearchSuggestionInfo">
+                            <small>
+                              {product.brandLabel}
+                              {" · "}
+                              {product.categoryLabel}
+                            </small>
 
-                                <strong>
-                                  {
-                                    product.name
-                                  }
-                                </strong>
+                            <strong>{product.name}</strong>
 
-                                <span>
-                                  {
-                                    product.priceText
-                                  }
+                            <span>
+                              {product.priceText}
 
-                                  {product.power
-                                    ? ` · ${product.power}`
-                                    : ""}
-                                </span>
-                              </span>
+                              {product.power ? ` · ${product.power}` : ""}
+                            </span>
+                          </span>
 
-                              <b aria-hidden="true">
-                                →
-                              </b>
-                            </Link>
-                          )
-                        )}
-                      </div>
-
-                      <button
-                        type="button"
-                        className="navSearchViewAll"
-                        onClick={
-                          performSearch
-                        }
-                      >
-                        <span>
-                          View all matching
-                          products
-                        </span>
-
-                        <b aria-hidden="true">
-                          →
-                        </b>
-                      </button>
-                    </>
-                  ) : (
-                    <div className="navSearchNoResults">
-                      <strong>
-                        No matching products
-                      </strong>
-
-                      <span>
-                        Try a product name,
-                        brand, category or
-                        capacity.
-                      </span>
+                          <b aria-hidden="true">→</b>
+                        </Link>
+                      ))}
                     </div>
-                  )}
-                </div>
-              )}
+
+                    <button
+                      type="button"
+                      className="navSearchViewAll"
+                      onClick={performSearch}
+                    >
+                      <span>View all matching products</span>
+
+                      <b aria-hidden="true">→</b>
+                    </button>
+                  </>
+                ) : (
+                  <div className="navSearchNoResults">
+                    <strong>No matching products</strong>
+
+                    <span>
+                      Try a product name, brand, category or capacity.
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
           </form>
 
           <button
             type="button"
             className={`navMobileCartButton ${
-              isActive("/cart")
-                ? "navMobileCartButtonActive"
-                : ""
+              isActive("/cart") ? "navMobileCartButtonActive" : ""
             }`}
-            aria-current={
-              isActive("/cart")
-                ? "page"
-                : undefined
-            }
+            aria-current={isActive("/cart") ? "page" : undefined}
             aria-expanded={cartOpen}
             aria-controls="cartQuickDrawer"
             aria-label={`Open shopping cart. ${cartCount} ${
-              cartCount === 1
-                ? "item"
-                : "items"
+              cartCount === 1 ? "item" : "items"
             } in cart`}
             onClick={openCart}
           >
-            <span
-              className="navMobileCartIcon"
-              aria-hidden="true"
-            >
+            <span className="navMobileCartIcon" aria-hidden="true">
               <CartIcon />
             </span>
 
-            <span
-              className="navMobileCartCount"
-              aria-hidden="true"
-            >
+            <span className="navMobileCartCount" aria-hidden="true">
               {cartCount}
             </span>
           </button>
 
           <button
             type="button"
-            className={`navToggle ${
-              mobileOpen
-                ? "active"
-                : ""
-            }`}
+            className={`navToggle ${mobileOpen ? "active" : ""}`}
             aria-label={
-              mobileOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
+              mobileOpen ? "Close navigation menu" : "Open navigation menu"
             }
             aria-expanded={mobileOpen}
             aria-controls="mobileMenu"
@@ -1374,9 +985,7 @@ export default function Header() {
               setSearchOpen(false);
               setProductsMenuOpen(false);
 
-              setMobileOpen(
-                (open) => !open
-              );
+              setMobileOpen((open) => !open);
             }}
           >
             <span />
@@ -1387,22 +996,12 @@ export default function Header() {
       </nav>
 
       {searchOpen && (
-        <div
-          className="mobileSearchLayoutSpacer"
-          aria-hidden="true"
-        />
+        <div className="mobileSearchLayoutSpacer" aria-hidden="true" />
       )}
 
       {/* MOBILE MENU */}
 
-      <div
-        id="mobileMenu"
-        className={`mobileMenu ${
-          mobileOpen
-            ? "open"
-            : ""
-        }`}
-      >
+      <div id="mobileMenu" className={`mobileMenu ${mobileOpen ? "open" : ""}`}>
         <span
           className="mobileMenuAmbient mobileMenuAmbientOne"
           aria-hidden="true"
@@ -1418,119 +1017,73 @@ export default function Header() {
             <Link
               href="/products"
               onClick={closeMobileMenu}
-              aria-current={
-                isActive("/products")
-                  ? "page"
-                  : undefined
-              }
+              aria-current={isActive("/products") ? "page" : undefined}
               className={`mobilePrimaryLink ${
-                isActive("/products")
-                  ? "mobilePrimaryActive"
-                  : ""
+                isActive("/products") ? "mobilePrimaryActive" : ""
               }`}
             >
               <span className="mobilePrimaryGlow" />
 
-              <span className="mobilePrimaryText">
-                Products
-              </span>
+              <span className="mobilePrimaryText">Products</span>
 
               <b>→</b>
             </Link>
 
-            {MAIN_NAV_LINKS.map(
-              (item) => {
-                const active =
-                  isActive(item.href);
+            {MAIN_NAV_LINKS.map((item) => {
+              const active = isActive(item.href);
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={
-                      closeMobileMenu
-                    }
-                    aria-current={
-                      active
-                        ? "page"
-                        : undefined
-                    }
-                    className={`mobilePrimaryLink ${
-                      active
-                        ? "mobilePrimaryActive"
-                        : ""
-                    }`}
-                  >
-                    <span className="mobilePrimaryGlow" />
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeMobileMenu}
+                  aria-current={active ? "page" : undefined}
+                  className={`mobilePrimaryLink ${
+                    active ? "mobilePrimaryActive" : ""
+                  }`}
+                >
+                  <span className="mobilePrimaryGlow" />
 
-                    <span className="mobilePrimaryText">
-                      {item.label}
-                    </span>
+                  <span className="mobilePrimaryText">{item.label}</span>
 
-                    <b>→</b>
-                  </Link>
-                );
-              }
-            )}
+                  <b>→</b>
+                </Link>
+              );
+            })}
           </div>
 
           <div className="mobileFeatureGroup">
-            <span
-              className="mobileFeatureAmbient"
-              aria-hidden="true"
-            />
+            <span className="mobileFeatureAmbient" aria-hidden="true" />
 
-            <span
-              className="mobileFeatureSweep"
-              aria-hidden="true"
-            />
+            <span className="mobileFeatureSweep" aria-hidden="true" />
 
-            <div className="mobileFeatureLabel">
-              Upgraded Solar Features
-            </div>
+            <div className="mobileFeatureLabel">Upgraded Solar Features</div>
 
-            {FEATURE_LINKS.map(
-              (item) => {
-                const active =
-                  isActive(item.href);
+            {FEATURE_LINKS.map((item) => {
+              const active = isActive(item.href);
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`mobileFeatureLink ${
-                      item.mobileClassName
-                    } ${
-                      active
-                        ? "mobileFeatureActive"
-                        : ""
-                    }`}
-                    aria-current={
-                      active
-                        ? "page"
-                        : undefined
-                    }
-                    onClick={
-                      closeMobileMenu
-                    }
-                  >
-                    <span className="mobileFeatureLinkGlow" />
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`mobileFeatureLink ${item.mobileClassName} ${
+                    active ? "mobileFeatureActive" : ""
+                  }`}
+                  aria-current={active ? "page" : undefined}
+                  onClick={closeMobileMenu}
+                >
+                  <span className="mobileFeatureLinkGlow" />
 
-                    <span>
-                      <i>
-                        {item.icon}
-                      </i>
+                  <span>
+                    <i>{item.icon}</i>
 
-                      <span className="mobileFeatureText">
-                        {item.label}
-                      </span>
-                    </span>
+                    <span className="mobileFeatureText">{item.label}</span>
+                  </span>
 
-                    <b>→</b>
-                  </Link>
-                );
-              }
-            )}
+                  <b>→</b>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -1545,17 +1098,12 @@ export default function Header() {
           role="status"
           aria-live="polite"
         >
-          <span
-            className="headerCartToastPointer"
-            aria-hidden="true"
-          />
+          <span className="headerCartToastPointer" aria-hidden="true" />
 
           <small>CART</small>
 
           <strong>
-            {cartToast.type === "added"
-              ? "Added to Cart"
-              : "Removed from Cart"}
+            {cartToast.type === "added" ? "Added to Cart" : "Removed from Cart"}
           </strong>
 
           <span className="headerCartToastProduct">
@@ -1564,10 +1112,7 @@ export default function Header() {
         </div>
       )}
 
-      <CartQuickDrawer
-        open={cartOpen}
-        onClose={closeCart}
-      />
+      <CartQuickDrawer open={cartOpen} onClose={closeCart} />
     </header>
   );
 }

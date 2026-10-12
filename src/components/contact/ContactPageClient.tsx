@@ -1323,7 +1323,7 @@ export default function ContactPageClient() {
               <h3>Prepare the technical numbers first.</h3>
               <p>Use the Engineering Lab or Build Your System to calculate a better preliminary profile before contacting Desh Solar.</p>
               <div className="demoActions">
-                <Link className="demoBtn" href="/tools-and-technology">Engineering Lab →</Link>
+                <Link className="demoBtn" href="/engineering-lab">Engineering Lab →</Link>
                 <Link className="demoBtn secondary" href="/build-your-system">Build Your System →</Link>
               </div>
             </div>
