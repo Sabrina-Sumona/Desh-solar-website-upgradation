@@ -267,7 +267,20 @@ export default function ProjectsPageClient() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        closeProjectModal();
+        setModalProjectId(null);
+
+        const url =
+          new URL(window.location.href);
+
+        url.searchParams.delete(
+          "project",
+        );
+
+        window.history.replaceState(
+          window.history.state,
+          "",
+          `${url.pathname}${url.search}${url.hash}`,
+        );
       }
     };
 

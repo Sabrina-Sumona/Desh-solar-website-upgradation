@@ -386,7 +386,6 @@ export default function BuildYourSystemClient() {
   ] = useState<Product[]>([]);
 
   const [systemBuilderOpen, setSystemBuilderOpen] = useState(false);
-  const [builderMounted, setBuilderMounted] = useState(false);
   const [builderPicker, setBuilderPicker] = useState<BuilderProductCategory | null>(null);
   const [builderMessage, setBuilderMessage] = useState("");
   const [contactModalOpen, setContactModalOpen] = useState(false);
@@ -1040,10 +1039,6 @@ export default function BuildYourSystemClient() {
   ]);
 
   useEffect(() => {
-    setBuilderMounted(true);
-  }, []);
-
-  useEffect(() => {
     if (!contactModalOpen) return;
 
     const previousOverflow =
@@ -1055,7 +1050,8 @@ export default function BuildYourSystemClient() {
       event: KeyboardEvent,
     ) => {
       if (event.key === "Escape") {
-        closeBuilderContactModal();
+        setBuilderContactError("");
+        setContactModalOpen(false);
       }
     };
 
@@ -2731,8 +2727,8 @@ export default function BuildYourSystemClient() {
           </section>
         )}
 
-        {builderMounted &&
-          contactModalOpen &&
+        {contactModalOpen &&
+          typeof document !== "undefined" &&
           createPortal(
             <div
               className="bysContactBackdrop"
@@ -2909,7 +2905,9 @@ export default function BuildYourSystemClient() {
             document.body,
           )}
 
-        {builderMounted && builderPicker && createPortal(
+        {builderPicker &&
+          typeof document !== "undefined" &&
+          createPortal(
           <div
             className="bysPickerBackdrop"
             role="presentation"
