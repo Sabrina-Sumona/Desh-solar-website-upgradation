@@ -328,6 +328,19 @@ export default function ContactPageClient() {
     visitPurpose,
   ]);
 
+  const scrollToContactRequestStart = () => {
+    if (typeof window === "undefined") return;
+
+    // Wait for the selected route UI to render before scrolling.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document
+          .getElementById("contact-request-start")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  };
+
   const selectRoute = (nextRoute: ContactRoute, scroll = false) => {
     setRoute(nextRoute);
     setStatus("idle");
@@ -336,11 +349,7 @@ export default function ContactPageClient() {
     setWhatsAppFallbackUrl("");
 
     if (scroll) {
-      window.setTimeout(() => {
-        document
-          .getElementById("consultation")
-          ?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 30);
+      scrollToContactRequestStart();
     }
   };
 
@@ -783,7 +792,7 @@ export default function ContactPageClient() {
         </section>
 
         <section className="contactConsultationSection" id="consultation">
-          <div className="contactFormCard">
+          <div className="contactFormCard" id="contact-request-start">
             <div className="contactFormHead">
               <div>
                 <div className="demoEyebrow">{route === "review" ? "Customer Review" : "Contact & Consultation Request"}</div>
