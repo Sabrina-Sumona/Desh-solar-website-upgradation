@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useMemo, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from "react";
 
 type SupportType =
   | "System Support"
@@ -241,6 +241,7 @@ const initialForm: FormState = {
 
 export default function CustomerSupportClient() {
   const wizardRef = useRef<HTMLElement | null>(null);
+  const mobileStepTrackRef = useRef<HTMLDivElement | null>(null);
   const [step, setStep] = useState(0);
   const [supportType, setSupportType] = useState<SupportType>("System Support");
   const [issue, setIssue] = useState("");
@@ -300,17 +301,49 @@ export default function CustomerSupportClient() {
     if (key === "product") setCheckedItems([]);
   };
 
+  const scrollToWizardStart = () => {
+    if (typeof window === "undefined") return;
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        wizardRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
+    });
+  };
+
+  useEffect(() => {
+    const track = mobileStepTrackRef.current;
+    if (!track) return;
+
+    const activeButton = track.querySelector<HTMLButtonElement>(
+      `[data-step="${step}"]`,
+    );
+
+    if (!activeButton) return;
+
+    const targetLeft =
+      activeButton.offsetLeft -
+      (track.clientWidth - activeButton.offsetWidth) / 2;
+
+    track.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: "smooth",
+    });
+  }, [step]);
+
   const chooseSupportType = (type: SupportType) => {
     setSupportType(type);
+    setStep(0);
     setIssue("");
     setCheckedItems([]);
     setTicketRef("");
     setSubmitStatus("idle");
     setSubmitMessage("");
     setWhatsAppFallbackUrl("");
-    window.setTimeout(() => {
-      wizardRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 0);
+    scrollToWizardStart();
   };
 
   const chooseIssue = (value: string) => {
@@ -323,7 +356,15 @@ export default function CustomerSupportClient() {
   };
 
   const goToStep = (value: number) => {
-    setStep(Math.max(0, Math.min(5, value)));
+    const nextStep = Math.max(0, Math.min(5, value));
+    setStep(nextStep);
+
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 860px)").matches
+    ) {
+      scrollToWizardStart();
+    }
   };
 
   const continueStep = () => {
@@ -653,8 +694,31 @@ export default function CustomerSupportClient() {
             <span>Customer Care</span>
             <b>Step {step + 1} of 6</b>
           </div>
+
           <div className="supportMobileBar">
             <span style={{ width: `${progress}%` }} />
+          </div>
+
+          <div
+            aria-label="Support request steps"
+            className="supportMobileStepTrack"
+            ref={mobileStepTrackRef}
+          >
+            {navSteps.map(([title], index) => (
+              <button
+                aria-current={step === index ? "step" : undefined}
+                className={`supportMobileStepChip ${
+                  step === index ? "active" : ""
+                } ${index < step ? "complete" : ""}`}
+                data-step={index}
+                key={title}
+                onClick={() => goToStep(index)}
+                type="button"
+              >
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <b>{title}</b>
+              </button>
+            ))}
           </div>
         </div>
 
@@ -682,7 +746,7 @@ export default function CustomerSupportClient() {
             ))}
           </aside>
 
-          <div className="supportWizard">
+          <div className="supportWizard" data-active-step={step + 1}>
             <div className="supportProgress">
               <span style={{ width: `${progress}%` }} />
             </div>

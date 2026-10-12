@@ -1944,3 +1944,81 @@
       0.75;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — ENERGY JOURNEY
+   ========================================================= */
+
+.systemTechSection,
+.systemTechHeader,
+.systemTechLayout,
+.systemTechVisualizer,
+.systemTechDetails,
+.systemTechFlowGrid,
+.systemTechInverterColumn,
+.systemNode {
+  min-width: 0;
+}
+
+.systemTechTitle,
+.systemNodeTitle,
+.systemNodeText,
+.detailsHeadline,
+.detailsDescription,
+.detailsMetaValue {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .systemTechHeader,
+  .systemTechLayout {
+    width: min(94vw, 1040px);
+  }
+
+  .systemTechVisualizer {
+    min-height: 470px;
+  }
+
+  .systemTechDetails {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.72fr);
+    gap: 22px;
+  }
+}
+
+@media (max-width: 900px) {
+  .systemTechHeader,
+  .systemTechLayout {
+    width: min(92vw, 720px);
+  }
+
+  .systemTechFlowGrid {
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 640px) {
+  .systemTechHeader,
+  .systemTechLayout {
+    width: calc(100% - 32px);
+  }
+
+  .systemTechDetails {
+    width: 100%;
+  }
+
+  .detailsMetaGrid {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .systemTechVisualizer,
+  .systemTechDetails {
+    padding-inline: 14px;
+  }
+
+  .systemNode {
+    height: auto;
+    min-height: 124px;
+  }
+}

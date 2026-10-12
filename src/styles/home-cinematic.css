@@ -707,3 +707,79 @@
     font-size: 16px;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — CINEMATIC INTRO
+   ========================================================= */
+
+.heroCopy,
+.sceneCopy,
+.bridge > div {
+  min-width: 0;
+}
+
+.heroCopy h1,
+.sceneCopy h2,
+.bridge h2,
+.bridge p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1023px) {
+  .heroCopy,
+  .sceneCopy,
+  .sceneCopy.right {
+    max-width: min(760px, 86vw);
+  }
+
+  .bridge {
+    min-height: 62vh;
+    padding-inline: clamp(28px, 7vw, 72px);
+  }
+}
+
+@media (max-width: 720px) {
+  .heroCopy h1 {
+    font-size: clamp(42px, 13.5vw, 53px);
+  }
+
+  .sceneCopy h2 {
+    font-size: clamp(37px, 11.8vw, 45px);
+  }
+
+  .heroCopy p,
+  .sceneCopy p {
+    max-width: 100%;
+    font-size: clamp(14px, 3.8vw, 16px);
+  }
+
+  .bridge h2 {
+    font-size: clamp(43px, 13vw, 68px);
+  }
+
+  .flowRow {
+    gap: 8px;
+  }
+
+  .flowNode {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 380px) {
+  .heroCopy,
+  .sceneCopy,
+  .sceneCopy.right {
+    right: 6vw;
+    left: 6vw;
+  }
+
+  .heroCopy h1 {
+    font-size: clamp(39px, 12.8vw, 48px);
+  }
+
+  .sceneCopy h2 {
+    font-size: clamp(34px, 11vw, 41px);
+  }
+}

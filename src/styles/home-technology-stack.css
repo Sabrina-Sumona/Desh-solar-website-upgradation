@@ -906,3 +906,58 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — TECHNOLOGY STACK
+   ========================================================= */
+
+.technologyStackInner,
+.technologyStackHeader,
+.technologyStackFlow,
+.technologyStackFlowItem,
+.technologyCard,
+.technologyStackFooter,
+.technologyStackActions {
+  min-width: 0;
+}
+
+.technologyCardBody h3,
+.technologyCardBody p,
+.technologyStackFooter strong {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .technologyStack {
+    padding-inline: 5vw;
+  }
+
+  .technologyStackFlow {
+    gap: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .technologyStack {
+    padding-inline: 16px;
+  }
+
+  .technologySystemPath > div {
+    gap: 6px;
+  }
+
+  .technologySystemPath span {
+    white-space: normal;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .technologyCard {
+    min-height: 0;
+  }
+
+  .technologyCardMedia {
+    height: 165px;
+  }
+}

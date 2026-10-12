@@ -802,3 +802,75 @@
   }
 }
 
+
+/* =========================================================
+   RESPONSIVE HARDENING — PROJECTS
+   ========================================================= */
+
+.projectsPage,
+.projectsHero,
+.projectsGrid,
+.projectCard,
+.projectCardBody,
+.projectProcess,
+.projectProcessFlow,
+.projectsCta,
+.projectModal,
+.projectModalContent,
+.projectModalDetails {
+  min-width: 0;
+}
+
+.projectsHeroCopy h1,
+.projectsHeroCopy p,
+.projectCardBody h3,
+.projectCardBody p,
+.projectProcessCopy p,
+.projectsCta p,
+.projectModalContent h2,
+.projectModalSubtitle {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 721px) and (max-width: 900px) {
+  .projectsPage {
+    padding-inline: 4vw;
+  }
+
+  .projectsHero {
+    padding: 22px;
+  }
+}
+
+@media (max-width: 720px) {
+  .projectsPage {
+    padding-inline: 14px;
+  }
+
+  .projectsHeroCopy h1 {
+    font-size: clamp(38px, 11.5vw, 43px);
+  }
+
+  .projectsCtaActions,
+  .projectModalActions {
+    width: 100%;
+  }
+
+  .projectsBtn {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .projectProcessFlow {
+    grid-template-columns: 1fr;
+  }
+
+  .projectProcessFlow > div {
+    min-height: 92px;
+  }
+
+  .projectsCtaActions .projectsBtn {
+    width: 100%;
+  }
+}

@@ -1897,3 +1897,81 @@
     width: 100%;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — PRODUCT DETAILS
+   ========================================================= */
+
+.pdPage,
+.pdShell,
+.pdHeroGrid,
+.pdHeroContent,
+.pdPriceBlock,
+.pdContactRow,
+.pdPurchaseControls,
+.pdSpecGrid,
+.pdRoleLayout,
+.pdGuidanceGrid,
+.pdRelatedGrid,
+.pdFinalCta {
+  min-width: 0;
+}
+
+.pdHeroContent h1,
+.pdWhy,
+.pdSnapshotNote,
+.pdSpecCard,
+.pdGuidanceGrid p,
+.pdFinalCta p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .pdShell {
+    width: min(94vw, 920px);
+  }
+
+  .pdHeroGrid {
+    gap: 34px;
+  }
+}
+
+@media (max-width: 720px) {
+  .pdShell {
+    width: calc(100% - 28px);
+  }
+
+  .pdFinalCta {
+    width: calc(100% - 28px);
+    margin-top: 46px;
+    margin-bottom: 46px;
+  }
+
+  .pdFinalCta > div:last-child {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .pdContactRow,
+  .pdDetailCartAddedControls {
+    grid-template-columns: 1fr;
+  }
+
+  .pdContactRow a,
+  .pdDetailCartAddedControls > * {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .pdFinalCta > div:last-child {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .pdFinalCta a {
+    width: 100%;
+  }
+}

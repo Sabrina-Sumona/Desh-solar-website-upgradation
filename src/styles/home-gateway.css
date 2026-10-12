@@ -1142,3 +1142,86 @@
       none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — HOME GATEWAY
+   ========================================================= */
+
+.homeGateway,
+.homeGatewayInner,
+.homeGatewayContent,
+.homeGatewayActions,
+.homeGatewayCapabilityGrid,
+.homeGatewayCapability {
+  min-width: 0;
+}
+
+.homeGatewayTitle,
+.homeGatewayDescription,
+.homeGatewayCapabilityValue {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 951px) and (max-width: 1180px) {
+  .homeGatewayInner {
+    width: min(1420px, 92vw);
+  }
+
+  .homeGatewayTitle {
+    font-size: clamp(62px, 7.6vw, 92px);
+  }
+
+  .homeGatewayCapabilityGrid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 950px) {
+  .homeGatewayInner {
+    width: min(900px, 90vw);
+  }
+
+  .homeGatewayCapabilityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .homeGatewayCapability:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 720px) {
+  .homeGatewayInner {
+    width: 90vw;
+  }
+
+  .homeGatewayTitle {
+    font-size: clamp(46px, 13.5vw, 68px);
+  }
+
+  .homeGatewayActions {
+    flex-wrap: wrap;
+  }
+
+  .homeGatewayButton {
+    min-width: 0;
+  }
+
+  .homeGatewayCapabilityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .homeGatewayCapability:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 440px) {
+  .homeGatewayInner {
+    width: calc(100% - 32px);
+  }
+
+  .homeGatewayEyebrow {
+    max-width: 100%;
+  }
+}

@@ -1,0 +1,33 @@
+DESH SOLAR — RESPONSIVE STYLES V2
+Generated: 2026-10-12
+
+Scope:
+- Global shell/header/footer responsive hardening
+- Active homepage responsive hardening
+- Products / Packages
+- Product Details
+- Projects
+- About
+- Contact
+- FAQ
+- Customer Support
+
+Key goals:
+- reduce horizontal overflow
+- improve 721–1023px tablet/small-laptop behaviour
+- safer 360–430px mobile layouts
+- fluid headings and card widths
+- stack controls/forms where appropriate
+- improve touch targets and mobile form input sizing
+- preserve approved desktop visual direction
+
+Not changed:
+- Build Your System and Engineering Lab visual CSS (features are hidden for Phase 1)
+- CartPageClient.module.css and ProductPlanningPanel.module.css were not included in the uploaded archive
+
+After replacing src/styles, run:
+npm run lint
+npm run build
+
+Then test at:
+360, 390, 430, 768, 1024, 1280, 1366, 1440, 1920px

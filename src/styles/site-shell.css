@@ -7299,3 +7299,126 @@ span:nth-child(3) {
     display: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — OCT 2026
+   Preserves the approved desktop shell while improving
+   intermediate laptop/tablet/mobile behaviour.
+   ========================================================= */
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}
+
+img,
+video,
+svg,
+canvas {
+  max-width: 100%;
+}
+
+.nav,
+.navLinks,
+.navMobileTools,
+.mobileMenu,
+.footer,
+.footerBrand,
+.footerQuickLinks,
+.footerContact,
+.copyright {
+  min-width: 0;
+}
+
+.footer a,
+.footer p,
+.footer span,
+.footer b {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1023px) {
+  .nav {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .mobileMenu {
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: calc(100dvh - 68px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobileMenu a,
+  .mobileMenu button {
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 720px) {
+  .nav {
+    gap: 8px;
+    padding-inline: clamp(12px, 4vw, 18px);
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brandLogoImage {
+    width: clamp(138px, 40vw, 165px);
+    max-width: 100%;
+    height: auto;
+  }
+
+  .navMobileTools {
+    gap: 6px;
+  }
+
+  .mobileMenu {
+    padding-inline: clamp(16px, 5vw, 24px);
+    padding-bottom: max(22px, env(safe-area-inset-bottom));
+  }
+
+  .footer {
+    width: 100%;
+    padding-inline: clamp(18px, 6vw, 32px);
+  }
+
+  .footerMap {
+    min-height: 132px;
+  }
+}
+
+@media (max-width: 380px) {
+  .brandLogoImage {
+    width: clamp(128px, 39vw, 145px);
+  }
+
+  .footer {
+    padding-inline: 16px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .navToggle,
+  .navMobileCartButton,
+  .navMobileInlineSearchToggle {
+    touch-action: manipulation;
+  }
+}

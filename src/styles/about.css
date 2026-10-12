@@ -951,3 +951,63 @@
     padding-top:10px;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — ABOUT
+   ========================================================= */
+
+.aboutPrototype,
+.aboutPrototype .aboutCompactHero,
+.aboutPrototype .aboutPillars,
+.aboutPrototype .aboutSection,
+.aboutPrototype .capabilityWorkspace,
+.aboutPrototype .capabilityGrid,
+.aboutPrototype .productSystemFlow,
+.aboutPrototype .ecosystem,
+.aboutPrototype .trustFacts,
+.aboutPrototype .demoActions {
+  min-width: 0;
+}
+
+.aboutPrototype h1,
+.aboutPrototype h2,
+.aboutPrototype h3,
+.aboutPrototype p,
+.aboutPrototype b,
+.aboutPrototype small {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .aboutPrototype .aboutCompactHero,
+  .aboutPrototype .aboutSection {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .aboutPrototype .trustActions,
+  .aboutPrototype .demoActions {
+    grid-template-columns: 1fr;
+  }
+
+  .aboutPrototype .demoBtn {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutPrototype .whoSystemCard.battery {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+
+  .aboutPrototype .aboutHeroCopy h1 {
+    font-size: clamp(32px, 10.5vw, 37px);
+  }
+
+  .aboutPrototype .ecosystem {
+    width: 100%;
+    overflow: visible;
+  }
+}

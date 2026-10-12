@@ -1233,3 +1233,74 @@
   }
 }
 
+
+/* =========================================================
+   RESPONSIVE HARDENING — FAQ
+   ========================================================= */
+
+.faqMain,
+.faqHero,
+.faqBrowser,
+.faqSearchArea,
+.faqSearchWrap,
+.faqContentShell,
+.faqListColumn,
+.faqHelpSection,
+.faqHelpGrid {
+  min-width: 0;
+}
+
+.faqHero h1,
+.faqHeroCopy > p,
+.faqQuestionText b,
+.faqAnswer p,
+.faqHelpGrid b,
+.faqHelpGrid small {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 821px) and (max-width: 1100px) {
+  .faqHero {
+    gap: 4vw;
+  }
+
+  .faqContentShell {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 820px) {
+  .faqHero,
+  .faqBrowser,
+  .faqHelpSection {
+    padding-left: 4vw;
+    padding-right: 4vw;
+  }
+
+  .faqCategoryTabs {
+    scroll-snap-type: x proximity;
+    overscroll-behavior-inline: contain;
+  }
+
+  .faqCategoryTabs button {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 560px) {
+  .faqHero,
+  .faqBrowser,
+  .faqHelpSection {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .faqSearchWrap input {
+    font-size: 16px;
+  }
+
+  .faqSearchArea {
+    grid-template-columns: 1fr;
+  }
+}

@@ -675,3 +675,32 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — WHY DESH SOLAR
+   ========================================================= */
+
+.whyDeshSolarInner,
+.whyDeshSolarHeader,
+.whyDeshSolarGrid,
+.whyDeshSolarCard,
+.whyDeshSolarFooter,
+.whyDeshSolarActions {
+  min-width: 0;
+}
+
+.whyDeshSolarCard h3,
+.whyDeshSolarCard p,
+.whyDeshSolarFooter strong {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .whyDeshSolar {
+    padding-inline: 16px;
+  }
+
+  .whyDeshSolarCard {
+    min-height: 0;
+  }
+}

@@ -945,3 +945,39 @@
       none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — CUSTOMER JOURNEY
+   ========================================================= */
+
+.customerJourneyInner,
+.customerJourneyHeader,
+.customerJourneyTrack,
+.customerJourneyItem,
+.customerJourneyCard,
+.customerJourneyFooter,
+.customerJourneyActions {
+  min-width: 0;
+}
+
+.customerJourneyCard h3,
+.customerJourneyCard p,
+.customerJourneyFooter strong {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 721px) and (max-width: 1150px) {
+  .customerJourneyTrack {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .customerJourney {
+    padding-inline: 16px;
+  }
+
+  .customerJourneyCard {
+    min-height: 0;
+  }
+}

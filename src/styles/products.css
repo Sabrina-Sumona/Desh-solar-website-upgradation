@@ -2310,3 +2310,95 @@
   }
 }
 
+
+/* =========================================================
+   RESPONSIVE HARDENING — PRODUCTS / PACKAGES
+   ========================================================= */
+
+.productsPage,
+.plCompactHero,
+.productsCatalogSection,
+.catalogToolbar,
+.realProductGrid,
+.realProduct,
+.realProductBody,
+.pqvdDrawer,
+.pqvdContent,
+.pcDialog {
+  min-width: 0;
+}
+
+.realProductBody h3,
+.realProductBody p,
+.plCompactHero h1,
+.plCompactHero p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .productsCatalogSection {
+    padding-inline: 3vw;
+  }
+
+  .catalogToolbar {
+    gap: 7px;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 899px) {
+  .catalogToolbar {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) auto;
+  }
+
+  .catalogToolbar .piExtraFilter {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .productsCatalogSection {
+    padding-inline: 14px;
+  }
+
+  .realProduct {
+    grid-template-columns: minmax(118px, 38vw) minmax(0, 1fr);
+  }
+
+  .realProductMedia {
+    min-width: 0;
+  }
+
+  .piCardActionGrid button,
+  .piDetailsPrimary,
+  .piAddCartAction {
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width: 360px) {
+  .plCompactHero,
+  .productsCatalogSection {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .realProduct {
+    display: block;
+    min-height: 0;
+  }
+
+  .realProductMedia {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+    border-right: 0;
+  }
+
+  .realProductBody {
+    padding: 12px;
+  }
+
+  .plQuickCategories.isFixed {
+    left: 8px;
+    right: 8px;
+  }
+}

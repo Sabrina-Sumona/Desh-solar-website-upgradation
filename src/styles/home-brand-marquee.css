@@ -348,3 +348,44 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — BRAND MARQUEE
+   ========================================================= */
+
+.brandMarqueeViewport,
+.brandMarqueeTrack,
+.brandMarqueeGroup,
+.brandMarqueeLogo {
+  min-width: 0;
+}
+
+@media (max-width: 420px) {
+  .brandMarqueeTop {
+    width: calc(100% - 32px);
+  }
+
+  .brandMarqueeLogo {
+    width: 136px;
+    height: 50px;
+  }
+
+  .brandMarqueeLogoImage,
+  .brandLogoHuawei,
+  .brandLogoCrown,
+  .brandLogoHithium,
+  .brandLogoLvtopsun,
+  .brandLogoWalton,
+  .brandLogoJinko,
+  .brandLogoLongi,
+  .brandLogoSako,
+  .brandLogoDjdc,
+  .brandLogoGrowatt,
+  .brandLogoGoodwe,
+  .brandLogoHaier {
+    width: 116px;
+    height: 35px;
+    max-width: 116px;
+    max-height: 35px;
+  }
+}

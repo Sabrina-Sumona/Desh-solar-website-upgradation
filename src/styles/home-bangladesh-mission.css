@@ -1368,3 +1368,48 @@
       none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — BANGLADESH MISSION
+   ========================================================= */
+
+.bangladeshMissionInner,
+.bangladeshMissionContent,
+.bangladeshMissionVisual,
+.bangladeshMissionMapStage,
+.bangladeshMissionRegionFooter {
+  min-width: 0;
+}
+
+.bangladeshMissionTitle,
+.bangladeshMissionDescription,
+.bangladeshMissionRegionText {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 951px) and (max-width: 1200px) {
+  .bangladeshMissionInner {
+    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+    gap: clamp(32px, 4vw, 58px);
+  }
+
+  .bangladeshMissionMapStage {
+    width: min(500px, 82%);
+  }
+}
+
+@media (max-width: 720px) {
+  .bangladeshMission {
+    padding-inline: 16px;
+  }
+
+  .bangladeshMissionMapStage {
+    width: min(400px, 92vw);
+  }
+}
+
+@media (max-width: 380px) {
+  .bangladeshMissionMapStage {
+    width: 94vw;
+  }
+}

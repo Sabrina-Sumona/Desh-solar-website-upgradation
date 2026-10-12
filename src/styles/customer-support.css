@@ -568,3 +568,452 @@ radial-gradient(circle at 72% 20%,rgba(104,201,245,.10),transparent 25%),linear-
   }
 }
 
+
+/* =========================================================
+   RESPONSIVE HARDENING — CUSTOMER SUPPORT
+   ========================================================= */
+
+.customerSupportPrototype,
+.customerSupportPrototype .supportHero,
+.customerSupportPrototype .supportHours,
+.customerSupportPrototype .supportFormGrid,
+.customerSupportPrototype .urgencyGrid,
+.customerSupportPrototype .supportField {
+  min-width: 0;
+}
+
+.customerSupportPrototype .supportHero h1,
+.customerSupportPrototype .supportHero p,
+.customerSupportPrototype .supportField,
+.customerSupportPrototype .urgencyBtn {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 861px) and (max-width: 1180px) {
+  .customerSupportPrototype .supportHero {
+    gap: 3vw;
+  }
+}
+
+@media (max-width: 720px) {
+  .customerSupportPrototype .supportHero {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .customerSupportPrototype .supportFormGrid,
+  .customerSupportPrototype .urgencyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .customerSupportPrototype .supportInput,
+  .customerSupportPrototype .supportSelect,
+  .customerSupportPrototype .supportTextarea {
+    font-size: 16px;
+  }
+
+  .customerSupportPrototype .supportPrimary,
+  .customerSupportPrototype .supportSecondary {
+    min-height: 44px;
+  }
+}
+
+/* =========================================================
+   CUSTOMER SUPPORT — MOBILE GUIDED FLOW V3
+   Uses the uploaded production CSS as the base.
+   ========================================================= */
+
+.customerSupportPrototype .supportStep.active {
+  animation: supportStepEnter 220ms ease both;
+}
+
+@keyframes supportStepEnter {
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 860px) {
+  /*
+   * The app header is 68px on mobile and the progress panel is sticky.
+   * This keeps Step 01/02/03... headings visible after Continue / Back.
+   */
+  .customerSupportPrototype .supportWizardShell {
+    scroll-margin-top: 172px;
+  }
+
+  .customerSupportPrototype .supportMobileProgress {
+    padding: 9px max(14px, 4vw) 10px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+  }
+
+  .customerSupportPrototype .supportMobileProgressTop {
+    align-items: center;
+  }
+
+  .customerSupportPrototype .supportMobileProgressTop span {
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .customerSupportPrototype .supportMobileBar {
+    overflow: hidden;
+    border-radius: 999px;
+  }
+
+  .customerSupportPrototype .supportMobileBar span {
+    border-radius: inherit;
+  }
+
+  .customerSupportPrototype .supportMobileStepTrack {
+    display: flex;
+    gap: 7px;
+    width: 100%;
+    margin-top: 9px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 1px 1px 3px;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .customerSupportPrototype .supportMobileStepTrack::-webkit-scrollbar {
+    display: none;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip {
+    display: grid;
+    grid-template-columns: 27px minmax(0, 1fr);
+    align-items: center;
+    gap: 7px;
+    flex: 0 0 auto;
+    min-width: 112px;
+    min-height: 40px;
+    padding: 6px 9px 6px 6px;
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.018);
+    color: #8298a2;
+    text-align: left;
+    cursor: pointer;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+    touch-action: manipulation;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip > span {
+    display: grid;
+    place-items: center;
+    width: 27px;
+    height: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 8px;
+    color: #91a6af;
+    font-size: 8px;
+    font-weight: 900;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip > b {
+    overflow: hidden;
+    color: inherit;
+    font-size: 9px;
+    line-height: 1.18;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip.complete {
+    border-color: rgba(184, 246, 106, 0.13);
+    color: #a9c6b3;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip.complete > span {
+    border-color: rgba(184, 246, 106, 0.23);
+    color: #b8f66a;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip.active {
+    border-color: rgba(104, 201, 245, 0.30);
+    background: rgba(104, 201, 245, 0.075);
+    color: #f0f7f9;
+    box-shadow: inset 0 0 20px rgba(104, 201, 245, 0.035);
+  }
+
+  .customerSupportPrototype .supportMobileStepChip.active > span {
+    border-color: #68c9f5;
+    background: #68c9f5;
+    color: #061017;
+  }
+
+  .customerSupportPrototype .supportWizard {
+    scroll-margin-top: 172px;
+  }
+
+  .customerSupportPrototype .supportStep {
+    min-height: 0;
+    padding: 24px max(14px, 5vw) 96px;
+  }
+
+  .customerSupportPrototype .supportStepHead {
+    margin-bottom: 20px;
+  }
+
+  .customerSupportPrototype .supportStepHead h2 {
+    margin-top: 8px;
+    font-size: clamp(30px, 8.4vw, 40px);
+    line-height: 1.04;
+  }
+
+  .customerSupportPrototype .supportWizardFooter {
+    display: grid;
+    grid-template-columns: auto minmax(74px, 1fr) auto;
+    align-items: center;
+    gap: 8px;
+    padding:
+      10px
+      max(14px, 4vw)
+      max(10px, env(safe-area-inset-bottom));
+    box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.22);
+  }
+
+  .customerSupportPrototype .supportWizardFooter button {
+    min-width: 82px;
+    min-height: 44px;
+    padding-inline: 13px;
+  }
+
+  .customerSupportPrototype .supportWizardFooter .primary {
+    min-width: 106px;
+  }
+
+  .customerSupportPrototype .supportStepCount {
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .customerSupportPrototype .issueCard,
+  .customerSupportPrototype .quickCheck,
+  .customerSupportPrototype .urgencyBtn,
+  .customerSupportPrototype .evidenceBox,
+  .customerSupportPrototype .reviewCard,
+  .customerSupportPrototype .ticketCreated {
+    min-width: 0;
+  }
+
+  .customerSupportPrototype .supportInput,
+  .customerSupportPrototype .supportSelect,
+  .customerSupportPrototype .supportTextarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 720px) {
+  .customerSupportPrototype .supportTypeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .customerSupportPrototype .supportTypeCard {
+    min-height: 158px;
+    padding: 17px;
+  }
+
+  .customerSupportPrototype .supportTypeIcon {
+    margin-bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .customerSupportPrototype .supportTypesSection,
+  .customerSupportPrototype .supportFaq {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .customerSupportPrototype .supportSectionHead {
+    margin-bottom: 20px;
+  }
+
+  .customerSupportPrototype .supportSectionHead h2 {
+    font-size: clamp(34px, 10.8vw, 44px);
+    line-height: 1.02;
+  }
+
+  /*
+   * Compact support-type cards on phones.
+   */
+  .customerSupportPrototype .supportTypeGrid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .customerSupportPrototype .supportTypeCard {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-areas:
+      "icon title"
+      "icon description";
+    column-gap: 12px;
+    row-gap: 4px;
+    align-items: center;
+    min-height: 0;
+    padding: 13px;
+    border-radius: 15px;
+  }
+
+  .customerSupportPrototype .supportTypeIcon {
+    grid-area: icon;
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    border-radius: 12px;
+  }
+
+  .customerSupportPrototype .supportTypeCard b {
+    grid-area: title;
+    align-self: end;
+    font-size: 14px;
+  }
+
+  .customerSupportPrototype .supportTypeCard small {
+    grid-area: description;
+    align-self: start;
+    margin-top: 0;
+    font-size: 10px;
+    line-height: 1.42;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip {
+    min-width: 101px;
+    min-height: 39px;
+  }
+
+  .customerSupportPrototype .supportStep {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .customerSupportPrototype .issueGrid {
+    gap: 8px;
+  }
+
+  .customerSupportPrototype .issueCard {
+    min-height: 0;
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .customerSupportPrototype .supportFormGrid,
+  .customerSupportPrototype .urgencyGrid,
+  .customerSupportPrototype .evidenceGrid,
+  .customerSupportPrototype .reviewGrid {
+    gap: 8px;
+  }
+
+  .customerSupportPrototype .quickCheck {
+    padding: 13px;
+  }
+
+  .customerSupportPrototype .evidenceBox {
+    min-height: 116px;
+  }
+
+  .customerSupportPrototype .reviewCard,
+  .customerSupportPrototype .reviewDescription {
+    padding: 14px;
+  }
+
+  .customerSupportPrototype .submitDemoBtn {
+    width: 100%;
+    min-height: 46px;
+  }
+
+  .customerSupportPrototype .ticketCreated .supportHeroActions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .customerSupportPrototype .ticketCreated .supportPrimary,
+  .customerSupportPrototype .ticketCreated .supportSecondary {
+    width: 100%;
+  }
+
+  .customerSupportPrototype .supportWizardFooter {
+    grid-template-columns: minmax(74px, 0.82fr) auto minmax(98px, 1fr);
+  }
+
+  .customerSupportPrototype .supportWizardFooter button {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .customerSupportPrototype .supportWizardFooter .primary {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .customerSupportPrototype .supportMobileProgress {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip {
+    min-width: 94px;
+    grid-template-columns: 25px minmax(0, 1fr);
+    gap: 6px;
+    padding-right: 7px;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip > span {
+    width: 25px;
+    height: 25px;
+  }
+
+  .customerSupportPrototype .supportMobileStepChip > b {
+    font-size: 8px;
+  }
+
+  .customerSupportPrototype .supportStep {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .customerSupportPrototype .supportWizardFooter {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .customerSupportPrototype .supportWizardFooter button {
+    padding-inline: 9px;
+    font-size: 9px;
+  }
+
+  .customerSupportPrototype .supportStepCount {
+    font-size: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .customerSupportPrototype .supportStep.active {
+    animation: none;
+  }
+
+  .customerSupportPrototype .supportMobileStepTrack {
+    scroll-behavior: auto;
+  }
+}

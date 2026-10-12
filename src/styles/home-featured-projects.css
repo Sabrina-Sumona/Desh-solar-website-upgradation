@@ -639,3 +639,43 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — FEATURED PROJECTS
+   ========================================================= */
+
+.featuredProjectsHeader,
+.featuredProjectsFooter,
+.featuredProjectsViewport,
+.featuredProjectsTrack,
+.featuredProjectsGroup,
+.featuredProjectCard,
+.featuredProjectBody {
+  min-width: 0;
+}
+
+.featuredProjectBody h3,
+.featuredProjectBody p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .featuredProjectsHeader,
+  .featuredProjectsFooter {
+    width: calc(100% - 32px);
+  }
+
+  .featuredProjectCard {
+    width: min(84vw, 360px);
+  }
+}
+
+@media (max-width: 420px) {
+  .featuredProjectCard {
+    width: min(86vw, 330px);
+  }
+
+  .featuredProjectImage {
+    height: 220px;
+  }
+}

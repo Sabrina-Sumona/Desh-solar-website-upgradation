@@ -1170,3 +1170,68 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — LIVE ENERGY STORY
+   ========================================================= */
+
+.liveEnergyInner,
+.liveEnergyHeader,
+.liveEnergyExperience,
+.liveEnergyVisual,
+.liveEnergyDashboard,
+.liveEnergyMetrics,
+.liveEnergyControl {
+  min-width: 0;
+}
+
+.liveEnergyHeader h2,
+.liveEnergyHeaderCopy p,
+.liveEnergyDashboardHeader h3,
+.liveEnergyMetric strong,
+.liveEnergyMetric span {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 901px) and (max-width: 1180px) {
+  .liveEnergyInner {
+    width: min(94vw, 1040px);
+  }
+
+  .liveEnergyVisual {
+    min-height: 620px;
+  }
+}
+
+@media (max-width: 720px) {
+  .liveEnergyInner {
+    width: 100%;
+  }
+
+  .liveEnergyVisualLegend {
+    max-width: 100%;
+  }
+
+  .liveEnergyMetrics {
+    gap: 9px;
+  }
+
+  .liveEnergyControlTop {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .liveEnergyStory {
+    padding-inline: 16px;
+  }
+
+  .liveEnergyVisual,
+  .liveEnergyDashboard {
+    padding-inline: 14px;
+  }
+
+  .liveEnergyMetrics {
+    grid-template-columns: 1fr;
+  }
+}

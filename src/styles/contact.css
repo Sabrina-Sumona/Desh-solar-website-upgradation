@@ -1706,3 +1706,84 @@
     font-size: 25px;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — CONTACT
+   ========================================================= */
+
+.contactHubPage,
+.contactCompactHero,
+.contactRouteGrid,
+.contactConsultationSection,
+.contactFormCard,
+.contactFormGrid,
+.contactReachGrid,
+.contactPhonePanel,
+.contactSocialPanel,
+.showroomSection,
+.departmentGrid,
+.contactResultPanel {
+  min-width: 0;
+}
+
+.contactCompactHero h1,
+.contactCompactHero p,
+.contactRouteCard b,
+.contactRouteCard small,
+.contactFormHead h2,
+.contactFormHead p,
+.contactPhonePanel h2,
+.contactPhonePanel p,
+.showroomCopy p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .contactRouteGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .contactCompactHero {
+    align-items: flex-start;
+  }
+
+  .contactHeroActions {
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 720px) {
+  .contactCompactHero,
+  .contactRouteSection,
+  .contactConsultationSection,
+  .contactReachGrid,
+  .showroomSection,
+  .departmentRouter,
+  .contactToolsBridge {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .contactRouteCard {
+    min-height: 94px;
+  }
+
+  .contactFormGrid input,
+  .contactFormGrid select,
+  .contactNotesLabel textarea {
+    font-size: 16px;
+  }
+
+  .contactHeroActions > *,
+  .contactSubmitRow button,
+  .contactUploadButton {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 420px) {
+  .directPhoneNumbers a,
+  .contactPhonePanel .directPhoneNumbers a {
+    font-size: clamp(17px, 5.5vw, 20px);
+  }
+}

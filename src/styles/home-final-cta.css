@@ -630,3 +630,40 @@
       none;
   }
 }
+
+/* =========================================================
+   RESPONSIVE HARDENING — FINAL HOME CTA
+   ========================================================= */
+
+.finalHomeCTAInner,
+.finalHomeCTAActions,
+.finalHomeCTABottomLine {
+  min-width: 0;
+}
+
+.finalHomeCTA h2,
+.finalHomeCTAInner > p,
+.finalHomeCTABottomLine span {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .finalHomeCTA {
+    padding-inline: 16px;
+  }
+
+  .finalHomeCTA h2 {
+    width: 100%;
+    font-size: clamp(46px, 14vw, 76px);
+  }
+}
+
+@media (max-width: 380px) {
+  .finalHomeCTA h2 {
+    font-size: clamp(42px, 13.5vw, 58px);
+  }
+
+  .finalHomeCTABottomLine {
+    width: 100%;
+  }
+}
