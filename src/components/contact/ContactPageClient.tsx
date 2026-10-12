@@ -791,7 +791,10 @@ export default function ContactPageClient() {
           </div>
         </section>
 
-        <section className="contactConsultationSection" id="consultation">
+        <section
+          className={`contactConsultationSection ${route === "support" ? "supportOnly" : ""}`}
+          id="consultation"
+        >
           <div className="contactFormCard" id="contact-request-start">
             <div className="contactFormHead">
               <div>
@@ -799,10 +802,32 @@ export default function ContactPageClient() {
                 <h2>{activeMeta.title}</h2>
                 <p>{activeMeta.intro}</p>
               </div>
-              <span className="contactDemoBadge">Website Request • Secure submission</span>
+              <span className="contactDemoBadge">
+                {route === "support" ? "Guided Support • Dedicated workflow" : "Website Request • Secure submission"}
+              </span>
             </div>
 
             <form id="advancedContactForm" noValidate onSubmit={handleSubmit}>
+              {route === "support" ? (
+                <div className="contactSupportRedirectOnly">
+                  <div className="supportRouteMessage">
+                    <span>?</span>
+                    <div>
+                      <small>EXISTING CUSTOMER / SYSTEM SUPPORT</small>
+                      <h3>Use the guided Customer Support Center.</h3>
+                      <p>
+                        Warranty, installation, order/delivery, product support and system
+                        issues use a dedicated support workflow. Continue there so Desh Solar
+                        receives the correct technical context.
+                      </p>
+                      <Link className="demoBtn" href="/customer-support">
+                        Open Customer Support →
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
               <div className="contactFormGrid">
                 <label>
                   Full Name
@@ -955,22 +980,6 @@ export default function ContactPageClient() {
                 </Link>
               </div>
 
-              <div className={`contactDynamicBlock supportRedirectBlock ${route === "support" ? "active" : ""}`}>
-                <div className="supportRouteMessage">
-                  <span>?</span>
-                  <div>
-                    <small>EXISTING CUSTOMER / SYSTEM SUPPORT</small>
-                    <h3>Use the guided Customer Support Center.</h3>
-                    <p>
-                      Warranty, installation, order/delivery, product support and system issues already have a dedicated support workflow.
-                    </p>
-                    <Link className="demoBtn" href="/customer-support">
-                      Open Customer Support →
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
               <div className={`contactDynamicBlock ${route === "visit" ? "active" : ""}`}>
                 <div className="contactBlockTitle">
                   <span>SHOWROOM VISIT</span>
@@ -1062,45 +1071,47 @@ export default function ContactPageClient() {
               </div>
 
               <div className="contactSubmitRow">
-                {route !== "support" && (
-                  <button className="demoBtn" type="submit" disabled={status === "submitting"}>
-                    {status === "submitting"
-                      ? "Preparing WhatsApp…"
-                      : route === "review"
-                        ? "Submit Review via WhatsApp →"
-                        : "Send Request via WhatsApp →"}
-                  </button>
-                )}
+                <button className="demoBtn" type="submit" disabled={status === "submitting"}>
+                  {status === "submitting"
+                    ? "Preparing WhatsApp…"
+                    : route === "review"
+                      ? "Submit Review via WhatsApp →"
+                      : "Send Request via WhatsApp →"}
+                </button>
                 <span className={status === "success" ? "success" : ""}>{statusMessage}</span>
               </div>
+                </>
+              )}
             </form>
           </div>
 
-          <aside className="contactSummaryCard">
-            <div className="contactSummarySticky">
-              <small>LIVE REQUEST SUMMARY</small>
-              <h3>{activeMeta.summary}</h3>
-              <div className="summaryRows">
-                <div><span>Name</span><b>{cleanText(name) || "Not provided"}</b></div>
-                <div><span>Phone</span><b>{cleanText(phone) || "Not provided"}</b></div>
-                <div><span>Location</span><b>{cleanText(location) || "Not provided"}</b></div>
-                <div><span>Route</span><b>{activeMeta.title}</b></div>
-                <div><span>{route === "review" ? "Review" : "Project / Product"}</span><b>{detail}</b></div>
-                <div><span>Status</span><b>{status === "success" ? "Sent" : "Draft"}</b></div>
+          {route !== "support" && (
+            <aside className="contactSummaryCard">
+              <div className="contactSummarySticky">
+                <small>LIVE REQUEST SUMMARY</small>
+                <h3>{activeMeta.summary}</h3>
+                <div className="summaryRows">
+                  <div><span>Name</span><b>{cleanText(name) || "Not provided"}</b></div>
+                  <div><span>Phone</span><b>{cleanText(phone) || "Not provided"}</b></div>
+                  <div><span>Location</span><b>{cleanText(location) || "Not provided"}</b></div>
+                  <div><span>Route</span><b>{activeMeta.title}</b></div>
+                  <div><span>{route === "review" ? "Review" : "Project / Product"}</span><b>{detail}</b></div>
+                  <div><span>Status</span><b>{status === "success" ? "Sent" : "Draft"}</b></div>
+                </div>
+                <div className="summaryNextStep">
+                  <small>NEXT BEST STEP</small>
+                  <b>{activeMeta.next}</b>
+                </div>
+                {activeMeta.link && (
+                  activeMeta.link.startsWith("#") ? (
+                    <a href={activeMeta.link}>{activeMeta.linkLabel}</a>
+                  ) : (
+                    <Link href={activeMeta.link}>{activeMeta.linkLabel}</Link>
+                  )
+                )}
               </div>
-              <div className="summaryNextStep">
-                <small>NEXT BEST STEP</small>
-                <b>{activeMeta.next}</b>
-              </div>
-              {activeMeta.link && (
-                activeMeta.link.startsWith("#") ? (
-                  <a href={activeMeta.link}>{activeMeta.linkLabel}</a>
-                ) : (
-                  <Link href={activeMeta.link}>{activeMeta.linkLabel}</Link>
-                )
-              )}
-            </div>
-          </aside>
+            </aside>
+          )}
         </section>
 
         {status === "success" && (
