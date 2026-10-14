@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="900" fill="#F3F5F4"/>
+  <rect x="330" y="210" width="540" height="360" rx="28" fill="#FFFFFF" stroke="#D9DFDC" stroke-width="4"/>
+  <circle cx="600" cy="390" r="92" fill="#ECF1EF"/>
+  <path d="M565 420L600 350L635 420H565Z" fill="#94A39D"/>
+  <rect x="478" y="620" width="244" height="18" rx="9" fill="#CAD3CF"/>
+  <text x="600" y="700" text-anchor="middle" fill="#5E6A65" font-size="38" font-family="Arial, Helvetica, sans-serif">DESH SOLAR</text>
+  <text x="600" y="752" text-anchor="middle" fill="#89938F" font-size="25" font-family="Arial, Helvetica, sans-serif">Product image coming soon</text>
+</svg>

@@ -69,6 +69,24 @@ export function getProductPlanningProfile(
     };
   }
 
+  if (product.category === "ips") {
+    return {
+      role: product.role || "Backup Conversion + Control",
+      why:
+        "IPS / UPS selection should follow the real connected load, startup surge, battery voltage, backup-time target and charger capability.",
+      tool: "inverter",
+    };
+  }
+
+  if (product.category === "component") {
+    return {
+      role: product.role || "Balance of System",
+      why:
+        "Protection, cable, controller, connector and mounting products must be sized from the electrical and mechanical design; a matching-looking part is not enough.",
+      tool: "system",
+    };
+  }
+
   return {
     role: product.role || "Complete Solar System",
     why:
@@ -88,6 +106,14 @@ export function getActiveFlowKeys(
 
   if (category === "portable") {
     return ["battery", "load"];
+  }
+
+  if (category === "ips") {
+    return ["inverter", "load"];
+  }
+
+  if (category === "component") {
+    return ["inverter"];
   }
 
   if (
@@ -175,4 +201,3 @@ export function isPortablePanelProduct(
     `${product.name} ${product.search}`
   );
 }
-

@@ -7,8 +7,7 @@ import ProductDetailsActions from "@/components/products/ProductDetailsActions";
 import ProductImageGallery from "@/components/products/ProductImageGallery";
 import ProductTechnicalDetails from "@/components/products/ProductTechnicalDetails";
 import ProductPlanningPanel from "@/components/products/ProductPlanningPanel";
-// TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
-// import ProductSystemBuildActions from "@/components/products/ProductSystemBuildActions";
+import ProductSystemBuildActions from "@/components/products/ProductSystemBuildActions";
 import SystemPackageBreakdown from "@/components/products/SystemPackageBreakdown";
 import { products, type Product } from "@/data/products";
 
@@ -27,6 +26,10 @@ const categoryDescriptions: Record<Product["category"], string> = {
     "A power-conversion component that manages how energy moves between the solar array, electrical loads and the wider system.",
   battery:
     "An energy-storage component used to keep electrical energy available for backup or later use.",
+  ips:
+    "A backup-power / UPS product that manages stored energy and delivers usable AC power to connected loads.",
+  component:
+    "A solar/electrical balance-of-system component used for control, protection, cabling, connection, lighting or mounting.",
   portable:
     "A compact portable-power solution designed to keep useful electrical energy available away from a fixed installation.",
   system:
@@ -40,6 +43,10 @@ const categoryRoleDescriptions: Record<Product["category"], string> = {
     "This product sits at the conversion and control stage. The exact energy path depends on whether the listed model is on-grid, off-grid or hybrid.",
   battery:
     "This product sits at the storage stage. It stores electrical energy so the system can use it when generation or grid supply is not available.",
+  ips:
+    "This product sits between stored/grid energy and the loads, providing backup-power conversion, transfer and control depending on the exact model.",
+  component:
+    "This component supports the solar/electrical path through protection, control, connection, cabling, mounting or another balance-of-system function.",
   portable:
     "This product combines stored energy and usable output in a portable format, so storage and load delivery happen inside one compact product.",
   system:
@@ -63,6 +70,14 @@ function isRoleActive(
 
   if (category === "portable") {
     return role === "battery" || role === "load";
+  }
+
+  if (category === "ips") {
+    return role === "inverter" || role === "load";
+  }
+
+  if (category === "component") {
+    return role === "inverter";
   }
 
   return category === role;
@@ -89,6 +104,14 @@ function getOperationType(product: Product) {
 
   if (product.category === "portable") {
     return "Portable Power";
+  }
+
+  if (product.category === "ips") {
+    return name.includes("ups") ? "UPS / Backup Power" : "IPS / Backup Power";
+  }
+
+  if (product.category === "component") {
+    return product.subcategory || "Solar / Electrical Component";
   }
 
   if (product.category === "panel") {
@@ -118,6 +141,10 @@ function getPlanningNote(product: Product) {
       return "Inverter selection should be checked against connected load, surge requirement, system voltage, solar input and the intended grid / backup architecture.";
     case "battery":
       return "Battery selection should be checked against required backup energy, compatible system voltage, charge / discharge limits and the intended inverter.";
+    case "ips":
+      return "IPS / UPS selection should be checked against connected load, surge demand, battery/system voltage, required backup time and charging requirements.";
+    case "component":
+      return "Component selection should be checked against system voltage/current, AC or DC use, breaking/protection rating, conductor size and the exact installation architecture.";
     case "portable":
       return "Portable-power selection should be checked against the devices you need to run, their combined wattage and the required runtime.";
     case "system":
@@ -133,6 +160,10 @@ function getTechnicalReview(product: Product) {
       return "Confirm the exact model datasheet, AC phase, PV input range, battery compatibility where applicable and protection requirements before installation.";
     case "battery":
       return "Confirm nominal voltage, usable energy, BMS compatibility, current limits, communication requirements and the applicable warranty before final selection.";
+    case "ips":
+      return "Confirm rated VA/W output, waveform, battery voltage, charger limits, transfer behaviour, supported battery type and warranty for the exact IPS / UPS model.";
+    case "component":
+      return "Confirm the exact model, AC/DC rating, voltage, current, poles, protection class, cable/connector compatibility and applicable standard before installation.";
     case "portable":
       return "Confirm usable capacity, continuous output, surge capability, available ports, charging methods and runtime for your intended devices.";
     case "system":
@@ -214,6 +245,24 @@ function getCapacityMetric(
       family: "inverter",
       value: kilowatts,
     };
+  }
+
+  if (product.category === "ips") {
+    const va = firstNumber(
+      power + " " + product.name,
+      /(\d+(?:\.\d+)?)\s*k?va\b/i
+    );
+
+    if (va !== null) {
+      return { family: "ips-va", value: va };
+    }
+
+    const watts = firstNumber(
+      power + " " + product.name,
+      /(\d+(?:\.\d+)?)\s*w\b/i
+    );
+
+    return watts === null ? null : { family: "ips-w", value: watts };
   }
 
   if (product.category === "portable") {
@@ -624,10 +673,6 @@ export default async function ProductDetailsPage({
         </div>
       </section>
 
-      {/*
-        TEMPORARILY HIDDEN FOR INITIAL PRODUCTION RELEASE — PHASE 2 FEATURE
-        Re-enable after Build Your System approval.
-
       <section className="pdBuilderBand">
         <div className="pdShell pdBuilderBandInner">
           <div>
@@ -645,7 +690,6 @@ export default async function ProductDetailsPage({
           />
         </div>
       </section>
-      */}
 
       {relatedProducts.length > 0 && (
         <section className="pdSection pdRelatedSection">

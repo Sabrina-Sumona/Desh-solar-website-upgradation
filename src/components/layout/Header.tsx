@@ -32,9 +32,19 @@ const PRODUCT_LINKS = [
     icon: "▣",
   },
   {
+    label: "IPS / UPS",
+    href: "/products?category=ips-ups",
+    icon: "⌁",
+  },
+  {
     label: "Portable Power",
     href: "/products?category=portable",
     icon: "⚡",
+  },
+  {
+    label: "Components & Protection",
+    href: "/products?category=component",
+    icon: "⊕",
   },
 ];
 
