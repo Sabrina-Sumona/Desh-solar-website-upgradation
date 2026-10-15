@@ -395,6 +395,130 @@ function getPortableContent(
   };
 }
 
+
+function getIpsContent(
+  product: Product,
+  operationType: string
+): CategoryTechnicalContent {
+  const source = `${product.name} ${product.power} ${product.search}`;
+  const phase = findPhase(source);
+  const voltage = findVoltage(source);
+
+  return {
+    eyebrow: "IPS / UPS TECHNICAL VIEW",
+    title: "Backup architecture and battery compatibility.",
+    intro:
+      "IPS and UPS products should be selected around load demand, battery-bank voltage, charging behaviour and transfer requirements. Catalogue values are a starting point; confirm the exact model before installation.",
+    facts: [
+      {
+        label: "CATALOGUE RATING",
+        value: product.power,
+        note: "Catalogue rating",
+      },
+      {
+        label: "SYSTEM TYPE",
+        value: operationType || "IPS / UPS",
+      },
+      {
+        label: "NOMINAL VOLTAGE",
+        value: voltage ?? "Confirm exact model",
+      },
+      {
+        label: "AC PHASE",
+        value: phase ?? "Confirm exact model",
+      },
+      {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
+      },
+      {
+        label: "PRIMARY APPLICATION",
+        value: compactList(product.bestFor),
+      },
+      {
+        label: "WARRANTY REFERENCE",
+        value: product.warranty,
+      },
+    ],
+    confirmTitle: "Confirm before IPS / UPS selection",
+    confirmItems: [
+      "Continuous output power and surge capability",
+      "Input / output voltage and AC phase",
+      "Supported battery-bank voltage and battery chemistry",
+      "Built-in charger rating and solar-input support where applicable",
+      "Transfer time, waveform and bypass behaviour",
+      "Protection functions, installation requirements and warranty terms",
+    ],
+  };
+}
+
+function getComponentContent(
+  product: Product
+): CategoryTechnicalContent {
+  return {
+    eyebrow: "COMPONENT TECHNICAL VIEW",
+    title: "Compatibility, rating and installation details.",
+    intro:
+      "Solar components and protection devices must be matched to the electrical and mechanical requirements of the complete system. Confirm the exact model rating before installation.",
+    facts: [
+      {
+        label: "CATALOGUE RATING",
+        value: product.power || "Confirm exact model",
+        note: "Catalogue value",
+      },
+      {
+        label: "CATEGORY",
+        value: product.categoryLabel,
+      },
+      {
+        label: "PHYSICAL DIMENSIONS",
+        value: formatDimensions(
+          product.physical?.dimensionsMm
+        ),
+      },
+      {
+        label: "WEIGHT",
+        value: formatWeight(
+          product.physical?.weightKg
+        ),
+      },
+      {
+        label: "PRIMARY APPLICATION",
+        value: compactList(product.bestFor),
+      },
+      {
+        label: "SYSTEM ROLE",
+        value: product.role,
+      },
+      {
+        label: "BRAND",
+        value: product.brandLabel,
+      },
+      {
+        label: "WARRANTY REFERENCE",
+        value: product.warranty,
+      },
+    ],
+    confirmTitle: "Confirm before component installation",
+    confirmItems: [
+      "Exact voltage, current, power or protection rating",
+      "Cable size, connector type or terminal requirements where applicable",
+      "DC / AC suitability and polarity requirements",
+      "Compatibility with the selected inverter, battery and PV array",
+      "Environmental / IP rating and mounting requirements",
+      "Applicable standards, installation instructions and warranty terms",
+    ],
+  };
+}
+
 function getSystemContent(
   product: Product,
   operationType: string
@@ -454,8 +578,12 @@ function getContent(
       return getInverterContent(product, operationType);
     case "battery":
       return getBatteryContent(product);
+    case "ips":
+      return getIpsContent(product, operationType);
     case "portable":
       return getPortableContent(product);
+    case "component":
+      return getComponentContent(product);
     case "system":
       return getSystemContent(product, operationType);
   }

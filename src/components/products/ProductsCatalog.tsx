@@ -12,6 +12,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react";
 import {
   productApplications,
@@ -21,6 +22,8 @@ import {
 } from "@/data/products";
 
 type SortValue = "featured" | "price-low" | "price-high" | "power-high";
+type ProductApplication = Product["apps"][number];
+type ApplicationFilter = ProductApplication | "all";
 
 type ProductsCatalogProps = {
   catalogMode?: "products" | "packages";
@@ -157,9 +160,31 @@ const VALID_SORT_VALUES = new Set<SortValue>([
   "power-high",
 ]);
 
-const VALID_APPLICATION_VALUES = new Set(
+const VALID_APPLICATION_VALUES = new Set<string>(
   productApplications.map((item) => item.value)
 );
+
+function subscribeToCart(onStoreChange: () => void) {
+  const handleCartChange = () => onStoreChange();
+
+  window.addEventListener(
+    "deshsolar:cartchange",
+    handleCartChange
+  );
+  window.addEventListener("storage", handleCartChange);
+
+  return () => {
+    window.removeEventListener(
+      "deshsolar:cartchange",
+      handleCartChange
+    );
+    window.removeEventListener("storage", handleCartChange);
+  };
+}
+
+function getServerCartQuantity() {
+  return 0;
+}
 
 function CatalogQuerySync({
   onQueryChange,
@@ -169,7 +194,7 @@ function CatalogQuerySync({
     search: string,
     page: number,
     brand: string,
-    application: string,
+    application: ApplicationFilter,
     sort: SortValue
   ) => void;
 }) {
@@ -203,12 +228,12 @@ function CatalogQuerySync({
         ? requestedPage
         : 1;
 
-    const nextApplication =
+    const nextApplication: ApplicationFilter =
       requestedApplication === "all" ||
       VALID_APPLICATION_VALUES.has(
         requestedApplication
       )
-        ? requestedApplication
+        ? (requestedApplication as ApplicationFilter)
         : "all";
 
     const nextSort =
@@ -257,38 +282,21 @@ function ProductCard({
   onCompare: (product: Product) => void;
   catalogMode: "products" | "packages";
 }) {
-  const [cartQuantity, setCartQuantity] = useState(0);
-
-  const syncCartQuantity = () => {
+  const getCartQuantitySnapshot = useCallback(() => {
     const item = readCart().find(
       (cartItem) => String(cartItem.id) === product.id
     );
 
-    setCartQuantity(
-      item ? Math.max(1, Number(item.qty) || 1) : 0
-    );
-  };
-
-  useEffect(() => {
-    syncCartQuantity();
-
-    const handleCartChange = () => syncCartQuantity();
-    const handleStorage = () => syncCartQuantity();
-
-    window.addEventListener(
-      "deshsolar:cartchange",
-      handleCartChange
-    );
-    window.addEventListener("storage", handleStorage);
-
-    return () => {
-      window.removeEventListener(
-        "deshsolar:cartchange",
-        handleCartChange
-      );
-      window.removeEventListener("storage", handleStorage);
-    };
+    return item
+      ? Math.max(1, Number(item.qty) || 1)
+      : 0;
   }, [product.id]);
+
+  const cartQuantity = useSyncExternalStore(
+    subscribeToCart,
+    getCartQuantitySnapshot,
+    getServerCartQuantity
+  );
 
   const updateCartQuantity = (nextQuantity: number) => {
     const items = readCart();
@@ -303,7 +311,6 @@ function ProductCard({
           : items;
 
       writeCart(nextItems);
-      setCartQuantity(0);
       return;
     }
 
@@ -330,7 +337,6 @@ function ProductCard({
     }
 
     writeCart(items);
-    setCartQuantity(nextQuantity);
   };
 
   const addToCart = () => {
@@ -495,7 +501,8 @@ export default function ProductsCatalog({
   const pathname = usePathname();
   const [category, setCategory] = useState("all");
   const [brand, setBrand] = useState("all");
-  const [application, setApplication] = useState("all");
+  const [application, setApplication] =
+    useState<ApplicationFilter>("all");
   const [sort, setSort] = useState<SortValue>("featured");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -610,7 +617,7 @@ export default function ProductsCatalog({
       nextSearch: string,
       nextPage: number,
       nextBrand: string,
-      nextApplication: string,
+      nextApplication: ApplicationFilter,
       nextSort: SortValue
     ) => {
       setCategory(
@@ -642,7 +649,7 @@ export default function ProductsCatalog({
       nextCategory?: string;
       nextSearch?: string;
       nextBrand?: string;
-      nextApplication?: string;
+      nextApplication?: ApplicationFilter;
       nextSort?: SortValue;
     } = {}) => {
       setCurrentPage(1);
@@ -673,7 +680,6 @@ export default function ProductsCatalog({
 
   useEffect(() => {
     if (isPackageCatalog) {
-      setQuickCategoriesFixed(false);
       return;
     }
 
@@ -708,7 +714,10 @@ export default function ProductsCatalog({
       );
     };
 
-    updateQuickCategoryDock();
+    const initialFrame =
+      window.requestAnimationFrame(
+        updateQuickCategoryDock
+      );
 
     window.addEventListener(
       "scroll",
@@ -721,6 +730,7 @@ export default function ProductsCatalog({
     );
 
     return () => {
+      window.cancelAnimationFrame(initialFrame);
       window.removeEventListener(
         "scroll",
         updateQuickCategoryDock
@@ -863,15 +873,30 @@ export default function ProductsCatalog({
 
   useEffect(() => {
     if (
-      !isPackageCatalog &&
-      currentPage !== safeCurrentPage
+      isPackageCatalog ||
+      currentPage === safeCurrentPage
     ) {
-      setCurrentPage(safeCurrentPage);
+      return;
     }
+
+    updateCatalogUrl({
+      nextCategory: category,
+      nextSearch: search,
+      nextBrand: brand,
+      nextApplication: application,
+      nextSort: sort,
+      nextPage: safeCurrentPage,
+    });
   }, [
+    application,
+    brand,
+    category,
     currentPage,
     isPackageCatalog,
     safeCurrentPage,
+    search,
+    sort,
+    updateCatalogUrl,
   ]);
 
   const goToPage = useCallback(
@@ -1056,7 +1081,7 @@ export default function ProductsCatalog({
       <section
         ref={catalogSectionRef}
         className={`productsCatalogSection${
-          quickCategoriesFixed
+          !isPackageCatalog && quickCategoriesFixed
             ? " quickCategoriesDocked"
             : ""
         }`}
@@ -1186,7 +1211,8 @@ export default function ProductsCatalog({
             className="catalogSelect piExtraFilter"
             value={application}
             onChange={(event) => {
-              const value = event.target.value;
+              const value =
+                event.target.value as ApplicationFilter;
               setApplication(value);
               resetToFirstPage({
                 nextApplication: value,
