@@ -2841,6 +2841,267 @@ function productToGeneratedRecord(
   };
 }
 
+
+
+/**
+ * DESH_SOLAR_CROWN_CANONICAL_NORMALIZATION_V1
+ *
+ * Canonical Crown / Crown Micro normalization.
+ *
+ * Why this exists:
+ * Some source listings expose Crown Micro products simply as "Crown" and omit
+ * a reliable model field. Without canonicalization those listings become
+ * separate products and cannot reuse the already-approved Crown Micro images.
+ */
+function applyCrownCanonicalNormalization(
+  input
+) {
+  const item = {
+    ...input,
+  };
+
+  const rawBrand =
+    String(
+      item.brandLabel ||
+        ""
+    ).trim();
+
+  if (
+    !/^crown(?:\s+micro)?$/i.test(
+      rawBrand
+    )
+  ) {
+    return item;
+  }
+
+  item.brandLabel =
+    "Crown Micro";
+
+  item.brand =
+    slugify(
+      item.brandLabel
+    );
+
+  const sourceText =
+    `${item.title || ""} ${item.model || ""}`
+      .replace(
+        /\s+/g,
+        " "
+      )
+      .trim();
+
+  const lower =
+    sourceText.toLowerCase();
+
+  let canonicalModel =
+    item.model || "";
+
+  let canonicalTitle =
+    item.title;
+
+  let classification =
+    item.classification;
+
+  /**
+   * Three genuine Crown Micro LiFePO4 products that were previously
+   * imported without model IDs.
+   */
+  if (
+    /12\.8\s*v/.test(
+      lower
+    ) &&
+    /100\s*ah/.test(
+      lower
+    ) &&
+    /lithium|lifepo4/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "CMLB-12.8V-100";
+
+    canonicalTitle =
+      "Crown Micro CMLB-12.8V-100 12.8V 100Ah LiFePO4 Battery";
+
+    classification = {
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    };
+  } else if (
+    /12\.8\s*v/.test(
+      lower
+    ) &&
+    /200\s*ah/.test(
+      lower
+    ) &&
+    /lithium|lifepo4/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "CMLB-12.8V-200";
+
+    canonicalTitle =
+      "Crown Micro CMLB-12.8V-200 12.8V 200Ah LiFePO4 Battery";
+
+    classification = {
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    };
+  } else if (
+    /25\.6\s*v/.test(
+      lower
+    ) &&
+    /100\s*ah/.test(
+      lower
+    ) &&
+    /lithium|lifepo4/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "CMLB-25.6V-100";
+
+    canonicalTitle =
+      "Crown Micro CMLB-25.6V-100 25.6V 100Ah LiFePO4 Battery";
+
+    classification = {
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    };
+  }
+
+  /**
+   * Three source listings that duplicate existing Crown Micro products.
+   *
+   * Giving them the exact same canonical model creates the same strongKey,
+   * so the normal importer merge logic combines their prices / source URLs
+   * instead of creating duplicate customer-facing products.
+   */
+  if (
+    /arceus/.test(
+      lower
+    ) &&
+    /5\.8\s*kw/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "ARCEUS-5.8KW";
+
+    canonicalTitle =
+      "Crown Micro ARCEUS-5.8KW 48V PV-6000W MPPT Solar Inverter";
+
+    classification = {
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    };
+  } else if (
+    /xavier/.test(
+      lower
+    ) &&
+    /(?:^|[^0-9.])3\s*kw\b/.test(
+      lower
+    ) &&
+    /24\s*v/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "X-3KW-PF1";
+
+    canonicalTitle =
+      "Crown Micro Xavier X-3KW-PF1 PV-3000 24V Solar Inverter";
+
+    classification = {
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    };
+  } else if (
+    /xavier/.test(
+      lower
+    ) &&
+    /(?:^|[^0-9.])4\s*kw\b/.test(
+      lower
+    ) &&
+    /24\s*v/.test(
+      lower
+    )
+  ) {
+    canonicalModel =
+      "XAVIER-II-4KW";
+
+    canonicalTitle =
+      "Crown Micro XAVIER-II-4KW 24V PV-5000W MPPT Solar Inverter";
+
+    classification = {
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    };
+  }
+
+  item.model =
+    canonicalModel;
+
+  item.title =
+    canonicalTitle;
+
+  item.classification =
+    classification;
+
+  /**
+   * Recalculate the dedupe key AFTER Crown normalization.
+   */
+  item.strongKey =
+    item.model
+      ? `model:${normalizeText(
+          item.brandLabel
+        )}:${normalizeText(
+          item.model
+        )}`
+      : `name:${normalizeText(
+          item.title
+        )}`;
+
+  return item;
+}
+
 async function main() {
   await fs.mkdir(
     REPORT_DIR,
@@ -2917,7 +3178,9 @@ async function main() {
           );
 
         allDiscovered.push(
-          parsed
+          applyCrownCanonicalNormalization(
+            parsed
+          )
         );
       } catch (
         error
