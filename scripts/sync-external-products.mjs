@@ -3102,6 +3102,432 @@ function applyCrownCanonicalNormalization(
   return item;
 }
 
+
+
+/**
+ * DESH_SOLAR_SAKO_CANONICAL_NORMALIZATION_V1
+ *
+ * Canonicalizes SAKO models before importer deduplication.
+ *
+ * Confirmed merges:
+ * - LI-SUN 51.2V 300Ah duplicate listings
+ * - E-SUN 2K / 2KVA 12V duplicate listings
+ * - SVC 10KVA duplicate listings
+ *
+ * Alpha-W and Alpha-RSS remain separate.
+ * Li-Max and Li-Sun remain separate.
+ */
+function applySakoCanonicalNormalization(input) {
+  const item = { ...input };
+
+  if (
+    !/^sako$/i.test(
+      String(item.brandLabel || "").trim()
+    )
+  ) {
+    return item;
+  }
+
+  item.brandLabel = "SAKO";
+  item.brand = slugify(item.brandLabel);
+
+  const text =
+    `${item.title || ""} ${item.model || ""}`
+      .replace(/[-–—]/g, "-")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  const lower = text.toLowerCase();
+
+  const has = (pattern) =>
+    pattern.test(lower);
+
+  const setCanonical = ({
+    model,
+    title,
+    category,
+    label,
+    subcategory,
+  }) => {
+    if (model) {
+      item.model = model;
+    }
+
+    if (title) {
+      item.title = title;
+    }
+
+    if (category) {
+      item.classification = {
+        category,
+        label:
+          label ||
+          item.classification?.label ||
+          category,
+        subcategory:
+          subcategory ||
+          item.classification?.subcategory ||
+          "",
+      };
+    }
+  };
+
+  // -------------------------
+  // LI-MAX BATTERIES
+  // -------------------------
+
+  if (
+    !has(/li[-\s]*sun/) &&
+    has(/12(?:\.8)?\s*v/) &&
+    has(/100\s*ah/) &&
+    has(/lifepo|lithium/)
+  ) {
+    setCanonical({
+      model: "LI-MAX-12.8V100AH",
+      title:
+        "SAKO Li-Max 12.8V 100Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    !has(/li[-\s]*sun/) &&
+    has(/12\.8\s*v/) &&
+    has(/200\s*ah/) &&
+    has(/lifepo|lithium/)
+  ) {
+    setCanonical({
+      model: "LI-MAX-12.8V200AH",
+      title:
+        "SAKO Li-Max 12.8V 200Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    !has(/li[-\s]*sun/) &&
+    has(/25\.6\s*v/) &&
+    has(/100\s*ah/) &&
+    has(/lifepo|lithium/)
+  ) {
+    setCanonical({
+      model: "LI-MAX-25.6V100AH",
+      title:
+        "SAKO Li-Max 25.6V 100Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  }
+
+  // -------------------------
+  // LI-SUN BATTERIES
+  // -------------------------
+
+  if (
+    has(/li[-\s]*sun/) &&
+    has(/25\.6\s*v/) &&
+    has(/100\s*ah/)
+  ) {
+    setCanonical({
+      model: "SK-25.6V100AH",
+      title:
+        "SAKO Li-Sun 25.6V 100Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    has(/li[-\s]*sun/) &&
+    has(/25\.6\s*v/) &&
+    has(/200\s*ah/)
+  ) {
+    setCanonical({
+      model: "SK-25.6V200AH",
+      title:
+        "SAKO Li-Sun 25.6V 200Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    has(/li[-\s]*sun/) &&
+    has(/51\.2\s*v/) &&
+    has(/100\s*ah/)
+  ) {
+    setCanonical({
+      model: "SK-51.2V100AH",
+      title:
+        "SAKO Li-Sun 51.2V 100Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    has(/li[-\s]*sun/) &&
+    has(/51\.2\s*v/) &&
+    has(/200\s*ah/)
+  ) {
+    setCanonical({
+      model: "SK-51.2V200AH",
+      title:
+        "SAKO Li-Sun 51.2V 200Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  } else if (
+    has(/li[-\s]*sun/) &&
+    has(/51\.2\s*v/) &&
+    has(/300\s*ah/)
+  ) {
+    setCanonical({
+      model: "SK-51.2V300AH",
+      title:
+        "SAKO Li-Sun 51.2V 300Ah LiFePO4 Lithium Battery",
+      category: "battery",
+      label: "Battery",
+      subcategory: "Lithium Battery",
+    });
+  }
+
+  // -------------------------
+  // E-SUN INVERTERS
+  // -------------------------
+
+  if (
+    has(/e[-\s]*sun/) &&
+    has(/1\.2\s*k(?:va|w)?/)
+  ) {
+    setCanonical({
+      model: "E-SUN-1.2K",
+      title:
+        "SAKO E-SUN 1.2K 12V Off-Grid Hybrid Inverter",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/e[-\s]*sun/) &&
+    has(/(?:^|[^0-9.])2\s*k(?:va|w)?/) &&
+    has(/12\s*v/)
+  ) {
+    setCanonical({
+      model: "E-SUN-2K",
+      title:
+        "SAKO E-SUN 2K 12V Off-Grid Hybrid Inverter",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/e[-\s]*sun/) &&
+    has(/(?:^|[^0-9.])3(?:\.0)?\s*k(?:va|w)?/) &&
+    has(/24\s*v/)
+  ) {
+    setCanonical({
+      model: "E-SUN-3K",
+      title:
+        "SAKO E-SUN 3K 24V Off-Grid Hybrid Inverter",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/e[-\s]*sun/) &&
+    has(/4\.2\s*kva/) &&
+    has(/24\s*v/)
+  ) {
+    setCanonical({
+      model: "E-SUN-4.2KVA",
+      title:
+        "SAKO E-SUN 4.2KVA 24V Off-Grid Hybrid Inverter",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    });
+  }
+
+  // -------------------------
+  // SUNON-V
+  // -------------------------
+
+  if (
+    has(/sunon[-\s]*v/) &&
+    has(/4\.5\s*k/) &&
+    has(/24\s*v/)
+  ) {
+    setCanonical({
+      model: "SUNON-V-4.5K",
+      title:
+        "SAKO SUNON-V 4.5K 24V Off-Grid Hybrid Inverter",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory:
+        "Off-Grid Hybrid Inverter",
+    });
+  }
+
+  // -------------------------
+  // ALPHA-W
+  // -------------------------
+
+  if (
+    has(/alpha[-\s]*w[-\s]*ess/) &&
+    has(/300\s*w/)
+  ) {
+    setCanonical({
+      model:
+        "ALPHA-W-ESS-300W",
+      title:
+        "SAKO Alpha-W ESS 300W Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  } else if (
+    has(/alpha[-\s]*w[-\s]*ess/) &&
+    has(/500\s*w/)
+  ) {
+    setCanonical({
+      model:
+        "ALPHA-W-ESS-500W",
+      title:
+        "SAKO Alpha-W ESS 500W Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  } else if (
+    has(/alpha[-\s]*w[-\s]*ess/) &&
+    has(/1000\s*w/)
+  ) {
+    setCanonical({
+      model:
+        "ALPHA-W-ESS-1000W",
+      title:
+        "SAKO Alpha-W ESS 1000W Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  }
+
+  // -------------------------
+  // ALPHA-RSS / RES
+  // Keep separate from Alpha-W.
+  // -------------------------
+
+  if (
+    !has(/alpha[-\s]*w/) &&
+    has(/ess/) &&
+    has(/300\s*w/) &&
+    has(/900\s*wh/)
+  ) {
+    setCanonical({
+      model:
+        "RES-300W-900Wh",
+      title:
+        "SAKO Alpha-RSS 300W 900Wh Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  } else if (
+    !has(/alpha[-\s]*w/) &&
+    has(/ess/) &&
+    has(/500\s*w/) &&
+    has(/1\s*kwh/)
+  ) {
+    setCanonical({
+      model:
+        "RES-500W-1kWh",
+      title:
+        "SAKO Alpha-RSS 500W 1kWh Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  } else if (
+    !has(/alpha[-\s]*w/) &&
+    has(/ess/) &&
+    has(/1000\s*w/) &&
+    has(/2\s*kwh/)
+  ) {
+    setCanonical({
+      model:
+        "RES-1000W-2kWh",
+      title:
+        "SAKO Alpha-RSS 1000W 2kWh Portable Power Station",
+      category:
+        "portable",
+      label:
+        "Portable Power",
+      subcategory:
+        "Portable Power Station",
+    });
+  }
+
+  // -------------------------
+  // SVC 10KVA DUPLICATE
+  // -------------------------
+
+  if (
+    has(/svc/) &&
+    has(/10\s*kva/)
+  ) {
+    setCanonical({
+      model:
+        "SVC-N-10000VA",
+      title:
+        "SAKO SVC-N-10000VA 10kVA Single Phase Servo Automatic Voltage Stabilizer",
+      category:
+        "component",
+      label:
+        "Components & Protection",
+      subcategory:
+        "AVR / Voltage Stabilizer",
+    });
+  }
+
+  item.power =
+    extractPower(
+      item.title
+    );
+
+  item.strongKey =
+    item.model
+      ? `model:${normalizeText(
+          item.brandLabel
+        )}:${normalizeText(
+          item.model
+        )}`
+      : `name:${normalizeText(
+          item.title
+        )}`;
+
+  return item;
+}
+
 async function main() {
   await fs.mkdir(
     REPORT_DIR,
@@ -3178,8 +3604,10 @@ async function main() {
           );
 
         allDiscovered.push(
-          applyCrownCanonicalNormalization(
-            parsed
+          applySakoCanonicalNormalization(
+            applyCrownCanonicalNormalization(
+              parsed
+            )
           )
         );
       } catch (
