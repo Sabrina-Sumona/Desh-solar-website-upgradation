@@ -592,9 +592,6 @@ function normalizeBrandCandidate(value = "") {
     return "";
   }
 
-  /**
-   * Reject specification values accidentally exposed as brands.
-   */
   if (
     /^\d+(?:\.\d+)?\s*(?:w|kw|wh|kwh|v|a|ah|va|kva|mm|mm2|mm²|hp)?$/i.test(
       cleaned
@@ -630,10 +627,6 @@ function canonicalizeBrand(
   const cleanCandidate =
     normalizeBrandCandidate(candidate);
 
-  /**
-   * Prefer title/breadcrumb evidence.
-   * This fixes source labels like Brands, 4, Heavy, Solar, etc.
-   */
   const inferredFromProduct =
     inferCanonicalBrandFromText(
       `${title} ${breadcrumb}`
@@ -656,9 +649,6 @@ function canonicalizeBrand(
     return canonicalCandidate;
   }
 
-  /**
-   * Preserve unknown but plausible manufacturer names.
-   */
   return cleanCandidate;
 }
 
@@ -701,29 +691,6 @@ function extractModel(
   productLd,
   title
 ) {
-  /**
-   * Some source sites expose shortened or incorrect SKU / MPN values.
-   *
-   * For known product families where the title contains a clearly more
-   * complete model, prefer the exact model written in the title.
-   *
-   * Examples:
-   *
-   * ARCEUS-3      -> ARCEUS-3.6KW
-   * NOVA-9        -> NOVA-9.8KW
-   * 5KW-PF1       -> X-1.5KW-PF1
-   * blank/partial -> XAVIER-II-5.6KW
-   * VOLTMORE-*    -> VMGI-*
-   */
-
-  /**
-   * Handles:
-   *   Xavier-II 5.6KW
-   *   XAVIER-II-3.6KW
-   *
-   * Normalized output:
-   *   XAVIER-II-5.6KW
-   */
   const xavierSpaced =
     title.match(
       /\bXAVIER-II[\s-]+(\d+(?:\.\d+)?KW)\b/i
@@ -736,21 +703,7 @@ function extractModel(
   }
 
   const preferredTitlePatterns = [
-    /**
-     * VOLTMORE may appear before VMGI in the title.
-     * We intentionally keep only the actual VMGI model.
-     *
-     * Examples:
-     * VMGI-1KW-SP
-     * VMGI-3.6KW-SP
-     * VMGI-25KW
-     * VMGI-350KW-1
-     */
     /\bVMGI-\d+(?:\.\d+)?KW(?:-(?:SP|\d+))?\b/i,
-
-    /**
-     * Crown Micro off-grid families.
-     */
     /\bARCEUS-\d+(?:\.\d+)?KW\b/i,
     /\bELEGO-VI-\d+(?:\.\d+)?KW\b/i,
     /\bNOVA-\d+(?:\.\d+)?KW\b/i,
@@ -772,9 +725,6 @@ function extractModel(
     }
   }
 
-  /**
-   * For all other products, keep a good structured MPN/model/SKU.
-   */
   const direct =
     productLd?.mpn ||
     productLd?.model ||
@@ -792,14 +742,6 @@ function extractModel(
     ).trim();
   }
 
-  /**
-   * Generic title fallback.
-   *
-   * Supports model-like tokens such as:
-   * JKM620N-66HL4M-BDV
-   * SUN-6K-SG03LP1
-   * SPF-6000-ES
-   */
   const tokens =
     title.match(
       /\b(?=[A-Z0-9.-]{4,}\b)(?=[A-Z0-9.-]*[A-Z])(?=[A-Z0-9.-]*\d)[A-Z0-9]+(?:-[A-Z0-9.]+)+\b/gi
@@ -821,12 +763,6 @@ function classify(
       `${title} ${breadcrumb} ${categoryText}`
     );
 
-  /**
-   * 1. COMPLETE SYSTEM / PACKAGE
-   *
-   * Package detection must stay first because package titles may contain
-   * battery, inverter, panel, cable, UPS or IPS.
-   */
   if (
     /combo package|complete solar|solar system|pump package|full solar combo|ips combo package|solar combo/.test(
       text
@@ -846,9 +782,6 @@ function classify(
     };
   }
 
-  /**
-   * 2. PORTABLE POWER
-   */
   if (
     /portable power station|portable ups power/.test(
       text
@@ -865,12 +798,6 @@ function classify(
         "Portable Power Station",
     };
   }
-
-  /**
-   * 3. COMPONENTS / ACCESSORIES
-   *
-   * These intentionally run before battery/panel detection.
-   */
 
   if (
     /\bmc4\b|solar connector|pv connector/.test(
@@ -1210,9 +1137,6 @@ function classify(
     };
   }
 
-  /**
-   * 4. IPS / UPS
-   */
   if (
     /home ips|solar ips|home ups|online ups|\bips\b|\bups\b/.test(
       text
@@ -1245,9 +1169,6 @@ function classify(
     };
   }
 
-  /**
-   * 5. SOLAR PANEL
-   */
   if (
     /solar panel|photovoltaic|\bpv panel\b|bifacial.*panel/.test(
       text
@@ -1273,9 +1194,6 @@ function classify(
     };
   }
 
-  /**
-   * 6. BATTERY
-   */
   if (
     /battery|lifepo4|lead acid|tubular/.test(
       text
@@ -1307,9 +1225,6 @@ function classify(
     };
   }
 
-  /**
-   * 7. INVERTER
-   */
   if (
     /inverter/.test(
       text
@@ -1349,9 +1264,6 @@ function classify(
     };
   }
 
-  /**
-   * 8. FALLBACK COMPONENT
-   */
   return {
     category:
       "component",
@@ -1529,9 +1441,6 @@ function roleFor(category) {
   );
 }
 
-/**
- * Source-site images are only internal reference.
- */
 function collectReferenceImageUrls(
   productLd,
   $,
@@ -1719,12 +1628,6 @@ function priceTextFromLd(
   return dom || null;
 }
 
-/**
- * Source price priority:
- * 1. JSON-LD
- * 2. WooCommerce sale price
- * 3. Main product price
- */
 function numericSourcePrice(
   productLd,
   $
@@ -2072,10 +1975,6 @@ function extensionFromContentType(
   return ".jpg";
 }
 
-/**
- * Reference image only.
- * Never used as production product.image.
- */
 async function downloadReferenceImage(
   url,
   basename
@@ -2395,19 +2294,6 @@ function approvedImageSort(
   };
 }
 
-/**
- * Production image lookup.
- *
- * Put approved images in:
- *
- * public/assets/products/
- *
- * Example:
- *
- * growatt-spf-6000-es-plus.jpg
- * growatt-spf-6000-es-plus-1.jpg
- * growatt-spf-6000-es-plus-2.jpg
- */
 async function resolveApprovedProductImages(
   product,
   id
@@ -2788,10 +2674,6 @@ function productToGeneratedRecord(
     warranty:
       "Confirm current manufacturer / Desh Solar warranty",
 
-    /**
-     * Customer-facing images:
-     * approved production folder only.
-     */
     image:
       item.approvedImages.main,
 
@@ -2812,10 +2694,6 @@ function productToGeneratedRecord(
       10000 +
       index,
 
-    /**
-     * Internal metadata.
-     * Never display source information to customers.
-     */
     sourceSites:
       item.sources,
 
@@ -2841,17 +2719,8 @@ function productToGeneratedRecord(
   };
 }
 
-
-
 /**
  * DESH_SOLAR_CROWN_CANONICAL_NORMALIZATION_V1
- *
- * Canonical Crown / Crown Micro normalization.
- *
- * Why this exists:
- * Some source listings expose Crown Micro products simply as "Crown" and omit
- * a reliable model field. Without canonicalization those listings become
- * separate products and cannot reuse the already-approved Crown Micro images.
  */
 function applyCrownCanonicalNormalization(
   input
@@ -2902,10 +2771,6 @@ function applyCrownCanonicalNormalization(
   let classification =
     item.classification;
 
-  /**
-   * Three genuine Crown Micro LiFePO4 products that were previously
-   * imported without model IDs.
-   */
   if (
     /12\.8\s*v/.test(
       lower
@@ -2989,13 +2854,6 @@ function applyCrownCanonicalNormalization(
     };
   }
 
-  /**
-   * Three source listings that duplicate existing Crown Micro products.
-   *
-   * Giving them the exact same canonical model creates the same strongKey,
-   * so the normal importer merge logic combines their prices / source URLs
-   * instead of creating duplicate customer-facing products.
-   */
   if (
     /arceus/.test(
       lower
@@ -3085,9 +2943,6 @@ function applyCrownCanonicalNormalization(
   item.classification =
     classification;
 
-  /**
-   * Recalculate the dedupe key AFTER Crown normalization.
-   */
   item.strongKey =
     item.model
       ? `model:${normalizeText(
@@ -3102,20 +2957,8 @@ function applyCrownCanonicalNormalization(
   return item;
 }
 
-
-
 /**
  * DESH_SOLAR_SAKO_CANONICAL_NORMALIZATION_V1
- *
- * Canonicalizes SAKO models before importer deduplication.
- *
- * Confirmed merges:
- * - LI-SUN 51.2V 300Ah duplicate listings
- * - E-SUN 2K / 2KVA 12V duplicate listings
- * - SVC 10KVA duplicate listings
- *
- * Alpha-W and Alpha-RSS remain separate.
- * Li-Max and Li-Sun remain separate.
  */
 function applySakoCanonicalNormalization(input) {
   const item = { ...input };
@@ -3172,10 +3015,6 @@ function applySakoCanonicalNormalization(input) {
     }
   };
 
-  // -------------------------
-  // LI-MAX BATTERIES
-  // -------------------------
-
   if (
     !has(/li[-\s]*sun/) &&
     has(/12(?:\.8)?\s*v/) &&
@@ -3219,10 +3058,6 @@ function applySakoCanonicalNormalization(input) {
       subcategory: "Lithium Battery",
     });
   }
-
-  // -------------------------
-  // LI-SUN BATTERIES
-  // -------------------------
 
   if (
     has(/li[-\s]*sun/) &&
@@ -3291,10 +3126,6 @@ function applySakoCanonicalNormalization(input) {
     });
   }
 
-  // -------------------------
-  // E-SUN INVERTERS
-  // -------------------------
-
   if (
     has(/e[-\s]*sun/) &&
     has(/1\.2\s*k(?:va|w)?/)
@@ -3352,10 +3183,6 @@ function applySakoCanonicalNormalization(input) {
     });
   }
 
-  // -------------------------
-  // SUNON-V
-  // -------------------------
-
   if (
     has(/sunon[-\s]*v/) &&
     has(/4\.5\s*k/) &&
@@ -3371,10 +3198,6 @@ function applySakoCanonicalNormalization(input) {
         "Off-Grid Hybrid Inverter",
     });
   }
-
-  // -------------------------
-  // ALPHA-W
-  // -------------------------
 
   if (
     has(/alpha[-\s]*w[-\s]*ess/) &&
@@ -3425,11 +3248,6 @@ function applySakoCanonicalNormalization(input) {
         "Portable Power Station",
     });
   }
-
-  // -------------------------
-  // ALPHA-RSS / RES
-  // Keep separate from Alpha-W.
-  // -------------------------
 
   if (
     !has(/alpha[-\s]*w/) &&
@@ -3487,10 +3305,6 @@ function applySakoCanonicalNormalization(input) {
     });
   }
 
-  // -------------------------
-  // SVC 10KVA DUPLICATE
-  // -------------------------
-
   if (
     has(/svc/) &&
     has(/10\s*kva/)
@@ -3506,6 +3320,470 @@ function applySakoCanonicalNormalization(input) {
         "Components & Protection",
       subcategory:
         "AVR / Voltage Stabilizer",
+    });
+  }
+
+  item.power =
+    extractPower(
+      item.title
+    );
+
+  item.strongKey =
+    item.model
+      ? `model:${normalizeText(
+          item.brandLabel
+        )}:${normalizeText(
+          item.model
+        )}`
+      : `name:${normalizeText(
+          item.title
+        )}`;
+
+  return item;
+}
+
+/**
+ * DESH_SOLAR_SOLIS_CANONICAL_NORMALIZATION_V1
+ */
+function applySolisCanonicalNormalization(
+  input
+) {
+  const item = {
+    ...input,
+  };
+
+  if (
+    !/^solis$/i.test(
+      String(
+        item.brandLabel ||
+        ""
+      ).trim()
+    )
+  ) {
+    return item;
+  }
+
+  item.brandLabel =
+    "Solis";
+
+  item.brand =
+    slugify(
+      item.brandLabel
+    );
+
+  const title =
+    String(
+      item.title ||
+      ""
+    )
+      .replace(
+        /\s+/g,
+        " "
+      )
+      .trim();
+
+  const sourceText =
+    `${title} ${item.model || ""}`
+      .replace(
+        /[–—]/g,
+        "-"
+      )
+      .replace(
+        /\s+/g,
+        " "
+      )
+      .trim();
+
+  const lower =
+    sourceText.toLowerCase();
+
+  const has =
+    (pattern) =>
+      pattern.test(
+        lower
+      );
+
+  const setCanonical = ({
+    model,
+    title:
+      canonicalTitle,
+    category,
+    label,
+    subcategory,
+  }) => {
+    if (
+      model !==
+      undefined
+    ) {
+      item.model =
+        model;
+    }
+
+    if (
+      canonicalTitle
+    ) {
+      item.title =
+        canonicalTitle;
+    }
+
+    if (category) {
+      item.classification = {
+        category,
+
+        label:
+          label ||
+          item.classification
+            ?.label ||
+          category,
+
+        subcategory:
+          subcategory ||
+          item.classification
+            ?.subcategory ||
+          "",
+      };
+    }
+  };
+
+  if (
+    (
+      has(
+        /3\s*kw/
+      ) ||
+      has(
+        /3k\b/
+      )
+    ) &&
+    has(
+      /total package price/
+    )
+  ) {
+    setCanonical({
+      model:
+        "",
+
+      title:
+        "Solis 3kW Hybrid Solar System Package",
+
+      category:
+        "system",
+
+      label:
+        "Complete System",
+
+      subcategory:
+        "Solar Package",
+    });
+  } else if (
+    (
+      has(
+        /6\s*kw/
+      ) ||
+      has(
+        /6k\b/
+      )
+    ) &&
+    has(
+      /total package price/
+    )
+  ) {
+    setCanonical({
+      model:
+        "",
+
+      title:
+        "Solis 6kW Hybrid Solar System Package",
+
+      category:
+        "system",
+
+      label:
+        "Complete System",
+
+      subcategory:
+        "Solar Package",
+    });
+  } else if (
+    has(/s6[-\s]*eh1p3k[-\s]*l[-\s]*plus/)
+  ) {
+    setCanonical({
+      model: "S6-EH1P3K-L-PLUS",
+      title:
+        "Solis 3kW Single Phase Hybrid Solar Inverter S6-EH1P3K-L-PLUS",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory: "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/s6[-\s]*eh1p5k[-\s]*l[-\s]*plus/)
+  ) {
+    setCanonical({
+      model: "S6-EH1P5K-L-PLUS",
+      title:
+        "Solis 5kW Single Phase Hybrid Solar Inverter S6-EH1P5K-L-PLUS",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory: "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/s6[-\s]*eh1p6k[-\s]*l[-\s]*plus/)
+  ) {
+    setCanonical({
+      model: "S6-EH1P6K-L-PLUS",
+      title:
+        "Solis 6kW Single Phase Hybrid Solar Inverter S6-EH1P6K-L-PLUS",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory: "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(/s6[-\s]*eh1p8k[-\s]*l[-\s]*plus/)
+  ) {
+    setCanonical({
+      model: "S6-EH1P8K-L-PLUS",
+      title:
+        "Solis 8kW Single Phase Hybrid Solar Inverter S6-EH1P8K-L-PLUS",
+      category: "inverter",
+      label: "Solar Inverter",
+      subcategory: "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    (
+      has(
+        /intellihome[-\s]*5kwh[-\s]*od/
+      ) ||
+      (
+        has(
+          /5\s*kwh/
+        ) &&
+        has(
+          /51\.2\s*v/
+        ) &&
+        has(
+          /battery/
+        )
+      )
+    ) &&
+    !has(
+      /16\s*kwh/
+    )
+  ) {
+    setCanonical({
+      model:
+        "IntelliHome-5kWh-OD",
+
+      title:
+        "Solis IntelliHome-5kWh-OD 51.2V 100Ah 5kWh LiFePO4 Battery",
+
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    });
+  } else if (
+    has(
+      /intellihome[-\s]*16kwh[-\s]*od/
+    ) ||
+    (
+      has(
+        /16\s*kwh/
+      ) &&
+      has(
+        /51\.2\s*v/
+      ) &&
+      has(
+        /battery/
+      )
+    )
+  ) {
+    setCanonical({
+      model:
+        "IntelliHome-16kWh-OD",
+
+      title:
+        "Solis IntelliHome-16kWh-OD 51.2V 314Ah 16kWh LiFePO4 Battery",
+
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    });
+  } else if (
+    has(
+      /flexcore[-\s]*id/
+    ) &&
+    (
+      has(
+        /60\.27\s*kwh/
+      ) ||
+      has(
+        /60\s*kwh/
+      )
+    )
+  ) {
+    setCanonical({
+      model:
+        "FlexCore-ID-60kWh",
+
+      title:
+        "Solis FlexCore-ID-60kWh 60.27kWh High Voltage LFP Battery System",
+
+      category:
+        "battery",
+
+      label:
+        "Battery",
+
+      subcategory:
+        "Lithium Battery",
+    });
+  } else if (
+    has(
+      /18\s*kw/
+    ) &&
+    has(
+      /single phase/
+    ) &&
+    (
+      has(
+        /low voltage energy storage/
+      ) ||
+      has(
+        /s6[-\s]*eh1p18k03[-\s]*nv[-\s]*yd[-\s]*l/
+      )
+    )
+  ) {
+    setCanonical({
+      model:
+        "S6-EH1P18K03-NV-YD-L",
+
+      title:
+        "Solis 18kW Single Phase Hybrid Inverter S6-EH1P18K03-NV-YD-L",
+
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(
+      /12\s*kw/
+    ) &&
+    has(
+      /three phase/
+    ) &&
+    has(
+      /hybrid/
+    )
+  ) {
+    setCanonical({
+      model:
+        "S6-EH3P12K02-NV-YD-L",
+
+      title:
+        "Solis 12kW Three Phase 48V Hybrid Inverter S6-EH3P12K02-NV-YD-L",
+
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(
+      /15\s*kw/
+    ) &&
+    has(
+      /three phase/
+    ) &&
+    has(
+      /hybrid/
+    )
+  ) {
+    setCanonical({
+      model:
+        "S6-EH3P15K02-NV-YD-L",
+
+      title:
+        "Solis 15kW Three Phase 48V Hybrid Inverter S6-EH3P15K02-NV-YD-L",
+
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(
+      /18\s*kw/
+    ) &&
+    has(
+      /three phase/
+    ) &&
+    has(
+      /hybrid/
+    )
+  ) {
+    setCanonical({
+      model:
+        "S6-EH3P18K02-NV-YD-L",
+
+      title:
+        "Solis 18kW Three Phase 48V Hybrid Inverter S6-EH3P18K02-NV-YD-L",
+
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "On-Grid Hybrid Inverter",
+    });
+  } else if (
+    has(
+      /50\s*kw/
+    ) &&
+    has(
+      /three phase/
+    ) &&
+    has(
+      /hybrid/
+    )
+  ) {
+    setCanonical({
+      model:
+        "S6-EH3P50K-H",
+
+      title:
+        "Solis 50kW Three Phase High Voltage Hybrid Inverter S6-EH3P50K-H",
+
+      category:
+        "inverter",
+
+      label:
+        "Solar Inverter",
+
+      subcategory:
+        "On-Grid Hybrid Inverter",
     });
   }
 
@@ -3545,9 +3823,6 @@ async function main() {
     }
   );
 
-  /**
-   * Do not recreate reference folder if reference downloads are disabled.
-   */
   if (
     DOWNLOAD_REFERENCE_IMAGES
   ) {
@@ -3604,9 +3879,11 @@ async function main() {
           );
 
         allDiscovered.push(
-          applySakoCanonicalNormalization(
-            applyCrownCanonicalNormalization(
-              parsed
+          applySolisCanonicalNormalization(
+            applySakoCanonicalNormalization(
+              applyCrownCanonicalNormalization(
+                parsed
+              )
             )
           )
         );
@@ -3798,10 +4075,6 @@ async function main() {
         item.strongKey
       )}`;
 
-    /**
-     * Optional reference images.
-     * Never customer-facing.
-     */
     item.referenceImages =
       await syncReferenceImages(
         item,
@@ -3809,9 +4082,6 @@ async function main() {
         imageFailures
       );
 
-    /**
-     * Production storefront images.
-     */
     item.approvedImages =
       await resolveApprovedProductImages(
         item,
@@ -3849,9 +4119,6 @@ async function main() {
     "utf8"
   );
 
-  /**
-   * Internal catalogue/source audit.
-   */
   const sourceRows =
     unique.flatMap(
       (item) =>
