@@ -164,8 +164,16 @@ function decodeHtml(text = "") {
 }
 
 /**
- * Remove source-store branding and obvious store-only title suffixes.
+ * Remove source-store branding and source-site SEO suffixes.
  * Standalone "IPS" stays because IPS is also a valid product type.
+ *
+ * Examples:
+ *   "Luminous Eco Watt Neo 1050 Ã‚Â» Best Price Only At"
+ *     -> "Luminous Eco Watt Neo 1050"
+ *   "Home UPS Eco Volt+ 1550 Ã‚Â» Best Price in BD"
+ *     -> "Home UPS Eco Volt+ 1550"
+ *   "Luminous 10 Amp Solar Charge Controller in Bangladesh."
+ *     -> "Luminous 10 Amp Solar Charge Controller"
  */
 function cleanSourceBranding(value = "") {
   const original = decodeHtml(String(value));
@@ -175,17 +183,38 @@ function cleanSourceBranding(value = "") {
   }
 
   const cleaned = original
+    // Source-store branding.
     .replace(/\bips\s*bazar\s*bd\b/gi, " ")
     .replace(/\bips\s*bazar\b/gi, " ")
     .replace(/\bipsbazarbd(?:\.com)?\b/gi, " ")
     .replace(/\bsolar\s*\.\s*com\s*\.\s*bd\b/gi, " ")
     .replace(/\bsolar\s+com\s+bd\b/gi, " ")
     .replace(/\bsolarbd\b/gi, " ")
-    .replace(/\s*[-–—|:]\s*solar\s*bd\s*$/gi, "")
-    .replace(/\s*[»›]+\s*$/g, "")
+    .replace(/\s*[-Ã¢â‚¬â€œÃ¢â‚¬â€|:]\s*solar\s*bd\s*$/gi, "")
+
+    // Source-site SEO price suffixes.
+    .replace(
+      /\s*[Ã‚Â»Ã¢â‚¬Âº|:\-Ã¢â‚¬â€œÃ¢â‚¬â€]+\s*(?:best\s+price(?:\s+only)?(?:\s+(?:at|in\s+(?:bangladesh|bd)))?|price\s+in\s+(?:bangladesh|bd)|only\s+at|best)\s*[.!]*$/gi,
+      ""
+    )
+    .replace(
+      /\s+\b(?:best\s+price(?:\s+only)?(?:\s+(?:at|in\s+(?:bangladesh|bd)))?|price\s+in\s+(?:bangladesh|bd)|only\s+at)\b\s*[.!]*$/gi,
+      ""
+    )
+    .replace(/\s+\bbest\s+price\s+at\b\s*[.!]*$/gi, "")
+    .replace(/\s+\bbest\s+price\s+only\s+at\b\s*[.!]*$/gi, "")
+    .replace(/\s+\bbest\s+price\s+in\s+bangladesh\b\s*[.!]*$/gi, "")
+    .replace(/\s+\bbest\s+price\s+in\s+bd\b\s*[.!]*$/gi, "")
+
+    // Standalone location suffixes used for SEO.
+    .replace(/\s+\bin\s+bangladesh\b\s*[.!]*$/gi, "")
+    .replace(/\s+\bin\s+bd\b\s*[.!]*$/gi, "")
+
+    // Empty punctuation / separators left after cleanup.
+    .replace(/\s*[Ã‚Â»Ã¢â‚¬Âº]+\s*$/g, "")
     .replace(/\(\s*\)|\[\s*\]/g, " ")
-    .replace(/\s*[-–—|:]+\s*$/g, "")
-    .replace(/^\s*[-–—|:]+\s*/g, "")
+    .replace(/\s*[-Ã¢â‚¬â€œÃ¢â‚¬â€|:]+\s*$/g, "")
+    .replace(/^\s*[-Ã¢â‚¬â€œÃ¢â‚¬â€|:]+\s*/g, "")
     .replace(/\s+([,;])/g, "$1")
     .replace(/\s{2,}/g, " ")
     .trim();
@@ -578,7 +607,7 @@ function normalizeBrandCandidate(value = "") {
   const cleaned = cleanSourceBranding(
     decodeHtml(String(value))
   )
-    .replace(/[»|]+/g, " ")
+    .replace(/[Ã‚Â»|]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 
@@ -593,7 +622,7 @@ function normalizeBrandCandidate(value = "") {
   }
 
   if (
-    /^\d+(?:\.\d+)?\s*(?:w|kw|wh|kwh|v|a|ah|va|kva|mm|mm2|mm²|hp)?$/i.test(
+    /^\d+(?:\.\d+)?\s*(?:w|kw|wh|kwh|v|a|ah|va|kva|mm|mm2|mmÃ‚Â²|hp)?$/i.test(
       cleaned
     )
   ) {
@@ -1727,7 +1756,7 @@ function formatBdtPrice(
     return "Contact for price";
   }
 
-  return `৳${new Intl.NumberFormat(
+  return `Tk ${new Intl.NumberFormat(
     "en-BD",
     {
       maximumFractionDigits:
@@ -1735,7 +1764,6 @@ function formatBdtPrice(
     }
   ).format(value)}`;
 }
-
 async function parseProduct(
   source,
   url
@@ -2976,7 +3004,7 @@ function applySakoCanonicalNormalization(input) {
 
   const text =
     `${item.title || ""} ${item.model || ""}`
-      .replace(/[-–—]/g, "-")
+      .replace(/[-Ã¢â‚¬â€œÃ¢â‚¬â€]/g, "-")
       .replace(/\s+/g, " ")
       .trim();
 
@@ -3385,7 +3413,7 @@ function applySolisCanonicalNormalization(
   const sourceText =
     `${title} ${item.model || ""}`
       .replace(
-        /[–—]/g,
+        /[Ã¢â‚¬â€œÃ¢â‚¬â€]/g,
         "-"
       )
       .replace(
@@ -4550,3 +4578,7 @@ main().catch(
       1;
   }
 );
+
+
+
+
