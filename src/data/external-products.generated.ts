@@ -15738,8 +15738,8 @@ export const externalProducts = [
     ],
     "search": "microtek 1450 solar inverter microtek ips ups solar ips see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/microtek-microtek-1450-solar-inverter.webp",
+    "importedGallery": ["/assets/products/microtek-microtek-1450-solar-inverter.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
@@ -16136,8 +16136,8 @@ export const externalProducts = [
     ],
     "search": "microtek solar pcu 2035 24v microtek ips ups solar ips 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/microtek-microtek-solar-pcu-2035-24v.webp",
+    "importedGallery": ["/assets/products/microtek-microtek-solar-pcu-2035-24v.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
