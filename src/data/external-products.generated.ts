@@ -15857,8 +15857,8 @@ export const externalProducts = [
     ],
     "search": "microtek jumbo 3500 home ups microtek ips ups ups see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/microtek-microtek-jumbo-3500-home-ups.webp",
+    "importedGallery": ["/assets/products/microtek-microtek-jumbo-3500-home-ups.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
@@ -15895,8 +15895,8 @@ export const externalProducts = [
     ],
     "search": "microtek jumbo ups jm sw 5500 48v microtek ips ups ups 48v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/microtek-microtek-jumbo-ups-jm-sw-5500-48v.webp",
+    "importedGallery": ["/assets/products/microtek-microtek-jumbo-ups-jm-sw-5500-48v.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
@@ -16214,8 +16214,8 @@ export const externalProducts = [
     ],
     "search": "microtek solar pcu 2350 24v microtek ips ups solar ips 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/microtek-microtek-solar-pcu-2350-24v.webp",
+    "importedGallery": ["/assets/products/microtek-microtek-solar-pcu-2350-24v.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
