@@ -18014,7 +18014,7 @@ export const externalProducts = [
   },
   {
     "id": "ext-longi-longi-610w-n-type-solar-panel-8c3ad758",
-    "name": "Longi 610W N- Type Solar Panel",
+    "name": "LONGi LR5-72HTH-580M 580W Solar Panel",
     "category": "panel",
     "categoryLabel": "Solar Panel",
     "subcategory": "Solar Panel",
@@ -18032,8 +18032,8 @@ export const externalProducts = [
     ],
     "search": "longi 610w n type solar panel longi solar panel solar panel 610w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/longi-longi-610w-n-type-solar-panel.webp",
+    "importedGallery": ["/assets/products/longi-longi-610w-n-type-solar-panel.webp"],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
