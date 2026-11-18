@@ -17764,8 +17764,8 @@ export const externalProducts = [
     ],
     "search": "jinko 615w tiger neo jkm615n 66hl4m bdv bifacial solar panel jinko solar jkm615n 66hl4m bdv solar panel bifacial solar panel 615w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jkm615n-66hl4m-bdv.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jkm615n-66hl4m-bdv.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17802,8 +17802,8 @@ export const externalProducts = [
     ],
     "search": "jinko 625w bifacial with dual glass solar panel jinko solar solar panel bifacial solar panel 625w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-625w-bifacial-with-dual-glass-solar-panel.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-625w-bifacial-with-dual-glass-solar-panel.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17841,8 +17841,8 @@ export const externalProducts = [
     ],
     "search": "jinko 650w tiger neo 3 jkm650n 66ql6 bdv bifacial solar panel jinko solar jkm650n 66ql6 bdv solar panel bifacial solar panel 650w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jkm650n-66ql6-bdv.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jkm650n-66ql6-bdv.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -21042,8 +21042,8 @@ export const externalProducts = [
     ],
     "search": "jinko 620w tiger neo bifacial jkm620n 66hl4m bdv solar panel 10 pics panels jinko solar jkm620n 66hl4m bdv complete system solar package 620w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jkm620n-66hl4m-bdv.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jkm620n-66hl4m-bdv.webp"],
     "role": "Complete Solar System",
     "bestFor": [
       "Solar Package",
