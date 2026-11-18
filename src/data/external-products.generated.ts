@@ -18189,8 +18189,8 @@ export const externalProducts = [
     ],
     "search": "longi lr4 60hpb 350m 350w half cut mono solar panel longi lr4 60hpb 350m solar panel solar panel 350w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/longi-lr4-60hpb-350m.webp",
+    "importedGallery": ["/assets/products/longi-lr4-60hpb-350m.webp"],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18228,8 +18228,8 @@ export const externalProducts = [
     ],
     "search": "longi lr4 60hpb 355m 355w half cut mono solar panel longi lr4 60hpb 355m solar panel solar panel 355w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/longi-lr4-60hpb-355m.webp",
+    "importedGallery": ["/assets/products/longi-lr4-60hpb-355m.webp"],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
