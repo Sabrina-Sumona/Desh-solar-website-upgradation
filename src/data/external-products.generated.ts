@@ -18150,8 +18150,8 @@ export const externalProducts = [
     ],
     "search": "longi horizon solar panel 225w 12v longi solar panel solar panel 225w 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/longi-longi-horizon-solar-panel-225w-12v.webp",
+    "importedGallery": ["/assets/products/longi-longi-horizon-solar-panel-225w-12v.webp"],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
