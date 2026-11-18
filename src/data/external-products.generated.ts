@@ -18267,8 +18267,8 @@ export const externalProducts = [
     ],
     "search": "longi lr4 72hbd 445m 445w bifacial half cut mono solar panel longi lr4 72hbd 445m solar panel bifacial solar panel 445w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/longi-lr4-72hbd-445m.webp",
+    "importedGallery": ["/assets/products/longi-lr4-72hbd-445m.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
