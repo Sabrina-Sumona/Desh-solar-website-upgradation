@@ -20176,8 +20176,8 @@ export const externalProducts = [
     ],
     "search": "ecoflow e2000 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ecoflow-ecoflow-e2000-portable-power-station.webp",
+    "importedGallery": ["/assets/products/ecoflow-ecoflow-e2000-portable-power-station.webp"],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
