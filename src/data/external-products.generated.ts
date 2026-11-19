@@ -17649,8 +17649,8 @@ export const externalProducts = [
     ],
     "search": "jinko 585w n type bifacial solar panel jinko solar solar panel bifacial solar panel 585w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17687,8 +17687,8 @@ export const externalProducts = [
     ],
     "search": "jinko 585w n type bifacial solar panel official jinko solar solar panel bifacial solar panel 585w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel-official.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel-official.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17956,8 +17956,8 @@ export const externalProducts = [
     ],
     "search": "jinko solar tiger neo n type 580w jinko solar solar panel solar panel 580w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-solar-tiger-neo-n-type-580w-best-price.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-solar-tiger-neo-n-type-580w-best-price.webp"],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
