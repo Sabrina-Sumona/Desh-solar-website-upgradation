@@ -17725,8 +17725,8 @@ export const externalProducts = [
     ],
     "search": "jinko 615w n type bifacial solar panel official jinko solar solar panel bifacial solar panel 615w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-615w-n-type-bifacial-solar-panel-official.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-615w-n-type-bifacial-solar-panel-official.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
