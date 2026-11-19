@@ -17879,8 +17879,8 @@ export const externalProducts = [
     ],
     "search": "jinko 715w bifacial with dual glass solar panel jinko solar solar panel bifacial solar panel 715w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jinko-715w-bifacial-with-dual-glass-solar-panel.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jinko-715w-bifacial-with-dual-glass-solar-panel.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17918,8 +17918,8 @@ export const externalProducts = [
     ],
     "search": "jinko 720w tiger neo jkm720n 66hl5 bdv bifacial solar panel jinko solar jkm720n 66hl5 bdv solar panel bifacial solar panel 720w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/jinko-solar-jkm720n-66hl5-bdv.webp",
+    "importedGallery": ["/assets/products/jinko-solar-jkm720n-66hl5-bdv.webp"],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
