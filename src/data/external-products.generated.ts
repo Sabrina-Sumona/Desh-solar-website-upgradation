@@ -2044,8 +2044,10 @@ export const externalProducts = [
     ],
     "search": "ingco 12v cordless drill 1 5ah 2x battery ingco battery battery 12v 1 5ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-12v-cordless-drill-1-5ah-2x-battery.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-12v-cordless-drill-1-5ah-2x-battery.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Battery",
@@ -2082,8 +2084,10 @@ export const externalProducts = [
     ],
     "search": "ingco 12v cordless impact driver dual battery ingco battery battery 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-12v-cordless-impact-driver-dual-battery.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-12v-cordless-impact-driver-dual-battery.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Battery",
@@ -2120,8 +2124,10 @@ export const externalProducts = [
     ],
     "search": "ingco 16v brushless cordless drill dual battery ingco battery battery 16v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-16v-brushless-cordless-drill-dual-battery.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-16v-brushless-cordless-drill-dual-battery.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Battery",
@@ -2158,8 +2164,10 @@ export const externalProducts = [
     ],
     "search": "ingco 16v lithium battery 2 0ah ingco battery lithium battery 16v 2 0ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-16v-lithium-battery-2-0ah.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-16v-lithium-battery-2-0ah.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Lithium Battery",
@@ -2196,8 +2204,10 @@ export const externalProducts = [
     ],
     "search": "ingco 16v m16 battery charger ingco battery battery 16v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-16v-m16-battery-charger.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-16v-m16-battery-charger.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Battery",
@@ -2234,8 +2244,10 @@ export const externalProducts = [
     ],
     "search": "ingco lithium 1 5ah battery ingco battery lithium battery 1 5ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-lithium-1-5ah-battery.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-lithium-1-5ah-battery.webp"
+    ],
     "role": "Storage",
     "bestFor": [
       "Lithium Battery",
@@ -4149,8 +4161,10 @@ export const externalProducts = [
     ],
     "search": "ingco 12v cordless drill 1 5ah ingco components and protection solar accessory 12v 1 5ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-12v-cordless-drill-1-5ah.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-12v-cordless-drill-1-5ah.webp"
+    ],
     "role": "Balance of System",
     "bestFor": [
       "Solar Accessory",
@@ -4187,8 +4201,10 @@ export const externalProducts = [
     ],
     "search": "ingco 4v cordless screwdriver ingco components and protection solar accessory 4v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-4v-cordless-screwdriver.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-4v-cordless-screwdriver.webp"
+    ],
     "role": "Balance of System",
     "bestFor": [
       "Solar Accessory",
@@ -4225,8 +4241,10 @@ export const externalProducts = [
     ],
     "search": "ingco 4v lithium cordless screwdriver ingco components and protection solar accessory 4v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-4v-lithium-cordless-screwdriver.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-4v-lithium-cordless-screwdriver.webp"
+    ],
     "role": "Balance of System",
     "bestFor": [
       "Solar Accessory",
@@ -4263,8 +4281,10 @@ export const externalProducts = [
     ],
     "search": "ingco 8v cordless screwdriver 1 5ah ingco components and protection solar accessory 8v 1 5ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/ingco-ingco-8v-cordless-screwdriver-1-5ah.webp",
+    "importedGallery": [
+      "/assets/products/ingco-ingco-8v-cordless-screwdriver-1-5ah.webp"
+    ],
     "role": "Balance of System",
     "bestFor": [
       "Solar Accessory",
@@ -15739,7 +15759,9 @@ export const externalProducts = [
     "search": "microtek 1450 solar inverter microtek ips ups solar ips see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/microtek-microtek-1450-solar-inverter.webp",
-    "importedGallery": ["/assets/products/microtek-microtek-1450-solar-inverter.webp"],
+    "importedGallery": [
+      "/assets/products/microtek-microtek-1450-solar-inverter.webp"
+    ],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
@@ -15858,7 +15880,9 @@ export const externalProducts = [
     "search": "microtek jumbo 3500 home ups microtek ips ups ups see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/microtek-microtek-jumbo-3500-home-ups.webp",
-    "importedGallery": ["/assets/products/microtek-microtek-jumbo-3500-home-ups.webp"],
+    "importedGallery": [
+      "/assets/products/microtek-microtek-jumbo-3500-home-ups.webp"
+    ],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
@@ -15896,7 +15920,9 @@ export const externalProducts = [
     "search": "microtek jumbo ups jm sw 5500 48v microtek ips ups ups 48v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/microtek-microtek-jumbo-ups-jm-sw-5500-48v.webp",
-    "importedGallery": ["/assets/products/microtek-microtek-jumbo-ups-jm-sw-5500-48v.webp"],
+    "importedGallery": [
+      "/assets/products/microtek-microtek-jumbo-ups-jm-sw-5500-48v.webp"
+    ],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
@@ -16137,7 +16163,9 @@ export const externalProducts = [
     "search": "microtek solar pcu 2035 24v microtek ips ups solar ips 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/microtek-microtek-solar-pcu-2035-24v.webp",
-    "importedGallery": ["/assets/products/microtek-microtek-solar-pcu-2035-24v.webp"],
+    "importedGallery": [
+      "/assets/products/microtek-microtek-solar-pcu-2035-24v.webp"
+    ],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
@@ -16215,7 +16243,9 @@ export const externalProducts = [
     "search": "microtek solar pcu 2350 24v microtek ips ups solar ips 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/microtek-microtek-solar-pcu-2350-24v.webp",
-    "importedGallery": ["/assets/products/microtek-microtek-solar-pcu-2350-24v.webp"],
+    "importedGallery": [
+      "/assets/products/microtek-microtek-solar-pcu-2350-24v.webp"
+    ],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Solar IPS",
@@ -17650,7 +17680,9 @@ export const externalProducts = [
     "search": "jinko 585w n type bifacial solar panel jinko solar solar panel bifacial solar panel 585w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17688,7 +17720,9 @@ export const externalProducts = [
     "search": "jinko 585w n type bifacial solar panel official jinko solar solar panel bifacial solar panel 585w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel-official.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel-official.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-585w-n-type-bifacial-solar-panel-official.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17726,7 +17760,9 @@ export const externalProducts = [
     "search": "jinko 615w n type bifacial solar panel official jinko solar solar panel bifacial solar panel 615w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-615w-n-type-bifacial-solar-panel-official.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-615w-n-type-bifacial-solar-panel-official.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-615w-n-type-bifacial-solar-panel-official.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17765,7 +17801,9 @@ export const externalProducts = [
     "search": "jinko 615w tiger neo jkm615n 66hl4m bdv bifacial solar panel jinko solar jkm615n 66hl4m bdv solar panel bifacial solar panel 615w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jkm615n-66hl4m-bdv.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jkm615n-66hl4m-bdv.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jkm615n-66hl4m-bdv.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17803,7 +17841,9 @@ export const externalProducts = [
     "search": "jinko 625w bifacial with dual glass solar panel jinko solar solar panel bifacial solar panel 625w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-625w-bifacial-with-dual-glass-solar-panel.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-625w-bifacial-with-dual-glass-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-625w-bifacial-with-dual-glass-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17842,7 +17882,9 @@ export const externalProducts = [
     "search": "jinko 650w tiger neo 3 jkm650n 66ql6 bdv bifacial solar panel jinko solar jkm650n 66ql6 bdv solar panel bifacial solar panel 650w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jkm650n-66ql6-bdv.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jkm650n-66ql6-bdv.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jkm650n-66ql6-bdv.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17880,7 +17922,9 @@ export const externalProducts = [
     "search": "jinko 715w bifacial with dual glass solar panel jinko solar solar panel bifacial solar panel 715w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-715w-bifacial-with-dual-glass-solar-panel.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-715w-bifacial-with-dual-glass-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-715w-bifacial-with-dual-glass-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17919,7 +17963,9 @@ export const externalProducts = [
     "search": "jinko 720w tiger neo jkm720n 66hl5 bdv bifacial solar panel jinko solar jkm720n 66hl5 bdv solar panel bifacial solar panel 720w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jkm720n-66hl5-bdv.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jkm720n-66hl5-bdv.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jkm720n-66hl5-bdv.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -17957,7 +18003,9 @@ export const externalProducts = [
     "search": "jinko solar tiger neo n type 580w jinko solar solar panel solar panel 580w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jinko-solar-tiger-neo-n-type-580w-best-price.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jinko-solar-tiger-neo-n-type-580w-best-price.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jinko-solar-tiger-neo-n-type-580w-best-price.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18033,7 +18081,9 @@ export const externalProducts = [
     "search": "longi 610w n type solar panel longi solar panel solar panel 610w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-longi-610w-n-type-solar-panel.webp",
-    "importedGallery": ["/assets/products/longi-longi-610w-n-type-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/longi-longi-610w-n-type-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18072,7 +18122,9 @@ export const externalProducts = [
     "search": "longi hi mo 7 615w n type bifacial solar panel lr8 66hgd 615m longi lr8 66hgd 615m solar panel bifacial solar panel 615w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr8-66hgd-615m.webp",
-    "importedGallery": ["/assets/products/longi-lr8-66hgd-615m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr8-66hgd-615m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18111,7 +18163,9 @@ export const externalProducts = [
     "search": "longi hi mo 9 lr9 66hyd 750m bifacial solar panel longi lr9 66hyd 750m solar panel bifacial solar panel see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr9-66hyd-750m.webp",
-    "importedGallery": ["/assets/products/longi-lr9-66hyd-750m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr9-66hyd-750m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18151,7 +18205,9 @@ export const externalProducts = [
     "search": "longi horizon solar panel 225w 12v longi solar panel solar panel 225w 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-longi-horizon-solar-panel-225w-12v.webp",
-    "importedGallery": ["/assets/products/longi-longi-horizon-solar-panel-225w-12v.webp"],
+    "importedGallery": [
+      "/assets/products/longi-longi-horizon-solar-panel-225w-12v.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18190,7 +18246,9 @@ export const externalProducts = [
     "search": "longi lr4 60hpb 350m 350w half cut mono solar panel longi lr4 60hpb 350m solar panel solar panel 350w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr4-60hpb-350m.webp",
-    "importedGallery": ["/assets/products/longi-lr4-60hpb-350m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr4-60hpb-350m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18229,7 +18287,9 @@ export const externalProducts = [
     "search": "longi lr4 60hpb 355m 355w half cut mono solar panel longi lr4 60hpb 355m solar panel solar panel 355w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr4-60hpb-355m.webp",
-    "importedGallery": ["/assets/products/longi-lr4-60hpb-355m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr4-60hpb-355m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18268,7 +18328,9 @@ export const externalProducts = [
     "search": "longi lr4 72hbd 445m 445w bifacial half cut mono solar panel longi lr4 72hbd 445m solar panel bifacial solar panel 445w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr4-72hbd-445m.webp",
-    "importedGallery": ["/assets/products/longi-lr4-72hbd-445m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr4-72hbd-445m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18307,7 +18369,9 @@ export const externalProducts = [
     "search": "longi lr5 54hth 430m 430w half cut mono solar panel longi lr5 54hth 430m solar panel solar panel 430w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr5-54hth-430m.webp",
-    "importedGallery": ["/assets/products/longi-lr5-54hth-430m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr5-54hth-430m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18346,7 +18410,9 @@ export const externalProducts = [
     "search": "longi lr5 72hbd 545m 545w bifacial half cut mono solar panel longi lr5 72hbd 545m solar panel bifacial solar panel 545w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr5-72hbd-545m.webp",
-    "importedGallery": ["/assets/products/longi-lr5-72hbd-545m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr5-72hbd-545m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18385,7 +18451,9 @@ export const externalProducts = [
     "search": "longi lr8 66hgd 610m 610w bifacial half cut mono solar panel longi lr8 66hgd 610m solar panel bifacial solar panel 610w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/longi-lr8-66hgd-610m.webp",
-    "importedGallery": ["/assets/products/longi-lr8-66hgd-610m.webp"],
+    "importedGallery": [
+      "/assets/products/longi-lr8-66hgd-610m.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18499,7 +18567,9 @@ export const externalProducts = [
     "search": "rec 370 watt solar panel 24v rec solar panel solar panel 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-370-watt-solar-panel-24v-best-price-at.webp",
-    "importedGallery": ["/assets/products/rec-rec-370-watt-solar-panel-24v-best-price-at.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-370-watt-solar-panel-24v-best-price-at.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18537,7 +18607,9 @@ export const externalProducts = [
     "search": "rec alpha pro m 600w heterojunction mono solar panel rec solar panel solar panel 600w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pro-m-600w-heterojunction-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pro-m-600w-heterojunction-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pro-m-600w-heterojunction-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18575,7 +18647,9 @@ export const externalProducts = [
     "search": "rec alpha pro m 610w heterojunction mono solar panel rec solar panel solar panel 610w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pro-m-610w-heterojunction-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pro-m-610w-heterojunction-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pro-m-610w-heterojunction-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18613,7 +18687,9 @@ export const externalProducts = [
     "search": "rec alpha pro m bifacial 610w heterojunction solar panel rec solar panel bifacial solar panel 610w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pro-m-bifacial-610w-heterojunction-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pro-m-bifacial-610w-heterojunction-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pro-m-bifacial-610w-heterojunction-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Bifacial Solar Panel",
@@ -18651,7 +18727,9 @@ export const externalProducts = [
     "search": "rec alpha pure r 400w heterojunction mono solar panel rec solar panel solar panel 400w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pure-r-400w-heterojunction-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pure-r-400w-heterojunction-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pure-r-400w-heterojunction-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18689,7 +18767,9 @@ export const externalProducts = [
     "search": "rec alpha pure r 410w heterojunction mono solar panel rec solar panel solar panel 410w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pure-r-410w-heterojunction-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pure-r-410w-heterojunction-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pure-r-410w-heterojunction-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18727,7 +18807,9 @@ export const externalProducts = [
     "search": "rec alpha pure rx 450w heterojunction mono solar panel rec solar panel solar panel 450w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-alpha-pure-rx-450w-heterojunction-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-alpha-pure-rx-450w-heterojunction-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-alpha-pure-rx-450w-heterojunction-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18765,7 +18847,9 @@ export const externalProducts = [
     "search": "rec twinpeak 4 375w solar panel rec solar panel solar panel 375w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-twinpeak-4-375w-solar-panel-best-price-at.webp",
-    "importedGallery": ["/assets/products/rec-rec-twinpeak-4-375w-solar-panel-best-price-at.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-twinpeak-4-375w-solar-panel-best-price-at.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18803,7 +18887,9 @@ export const externalProducts = [
     "search": "rec twinpeak 4 black series 365w half cut mono solar panel rec solar panel solar panel 365w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-twinpeak-4-black-series-365w-half-cut-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-twinpeak-4-black-series-365w-half-cut-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-twinpeak-4-black-series-365w-half-cut-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18841,7 +18927,9 @@ export const externalProducts = [
     "search": "rec twinpeak 4 series 365w half cut mono solar panel rec solar panel solar panel 365w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-twinpeak-4-series-365w-half-cut-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-twinpeak-4-series-365w-half-cut-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-twinpeak-4-series-365w-half-cut-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18879,7 +18967,9 @@ export const externalProducts = [
     "search": "rec twinpeak 4 series 375w half cut mono solar panel rec solar panel solar panel 375w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-twinpeak-4-series-375w-half-cut-mono-solar-panel.webp",
-    "importedGallery": ["/assets/products/rec-rec-twinpeak-4-series-375w-half-cut-mono-solar-panel.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-twinpeak-4-series-375w-half-cut-mono-solar-panel.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -18917,7 +19007,9 @@ export const externalProducts = [
     "search": "rec twinpeak 5 series 400w all black mono solar rec solar panel solar panel 400w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/rec-rec-twinpeak-5-series-400w-all-black-mono-solar.webp",
-    "importedGallery": ["/assets/products/rec-rec-twinpeak-5-series-400w-all-black-mono-solar.webp"],
+    "importedGallery": [
+      "/assets/products/rec-rec-twinpeak-5-series-400w-all-black-mono-solar.webp"
+    ],
     "role": "Generation",
     "bestFor": [
       "Solar Panel",
@@ -19907,7 +19999,9 @@ export const externalProducts = [
     "search": "ecoflow delta 2 max portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-2-max-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-2-max-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-2-max-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -19945,7 +20039,9 @@ export const externalProducts = [
     "search": "ecoflow delta 3 air 1000 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-3-air-1000-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-3-air-1000-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-3-air-1000-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -19983,7 +20079,9 @@ export const externalProducts = [
     "search": "ecoflow delta 3 air 2000 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-3-air-2000-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-3-air-2000-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-3-air-2000-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20021,7 +20119,9 @@ export const externalProducts = [
     "search": "ecoflow delta 3 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-3-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-3-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-3-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20061,7 +20161,9 @@ export const externalProducts = [
     "search": "ecoflow delta pro 3 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-pro-3-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-pro-3-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-pro-3-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20099,7 +20201,9 @@ export const externalProducts = [
     "search": "ecoflow delta pro portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-pro-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-pro-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-pro-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20139,7 +20243,9 @@ export const externalProducts = [
     "search": "ecoflow delta pro ultra portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-delta-pro-ultra-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-delta-pro-ultra-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-delta-pro-ultra-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20177,7 +20283,9 @@ export const externalProducts = [
     "search": "ecoflow e2000 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-e2000-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-e2000-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-e2000-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20215,7 +20323,9 @@ export const externalProducts = [
     "search": "ecoflow river 2 max portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-river-2-max-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-river-2-max-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-river-2-max-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20255,7 +20365,9 @@ export const externalProducts = [
     "search": "ecoflow river 2 portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-river-2-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-river-2-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-river-2-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -20293,7 +20405,9 @@ export const externalProducts = [
     "search": "ecoflow river 2 pro portable power station ecoflow portable power portable power station see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/ecoflow-ecoflow-river-2-pro-portable-power-station.webp",
-    "importedGallery": ["/assets/products/ecoflow-ecoflow-river-2-pro-portable-power-station.webp"],
+    "importedGallery": [
+      "/assets/products/ecoflow-ecoflow-river-2-pro-portable-power-station.webp"
+    ],
     "role": "Portable Storage",
     "bestFor": [
       "Portable Backup",
@@ -21043,7 +21157,9 @@ export const externalProducts = [
     "search": "jinko 620w tiger neo bifacial jkm620n 66hl4m bdv solar panel 10 pics panels jinko solar jkm620n 66hl4m bdv complete system solar package 620w",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
     "image": "/assets/products/jinko-solar-jkm620n-66hl4m-bdv.webp",
-    "importedGallery": ["/assets/products/jinko-solar-jkm620n-66hl4m-bdv.webp"],
+    "importedGallery": [
+      "/assets/products/jinko-solar-jkm620n-66hl4m-bdv.webp"
+    ],
     "role": "Complete Solar System",
     "bestFor": [
       "Solar Package",
