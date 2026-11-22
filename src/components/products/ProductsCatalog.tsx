@@ -1428,7 +1428,7 @@ export default function ProductsCatalog({
         .productsPaginationSummary {
           font-size: 13px;
           line-height: 1.5;
-          color: rgba(15, 23, 42, 0.62);
+          color: #b8cbd5;
           text-align: center;
         }
 
@@ -1501,7 +1501,7 @@ export default function ProductsCatalog({
         .productsPaginationEllipsis {
           min-width: 24px;
           text-align: center;
-          color: rgba(15, 23, 42, 0.5);
+          color: #d4e2e9;
           font-weight: 700;
         }
 
