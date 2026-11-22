@@ -5933,8 +5933,8 @@ export const externalProducts = [
     ],
     "search": "smarten prime plus mppt controller 50ah 12 24v smarten components and protection charge controller 50ah 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.jpg",
+    "importedGallery": ["/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.jpg"],
     "role": "Balance of System",
     "bestFor": [
       "Charge Controller",
@@ -16681,8 +16681,8 @@ export const externalProducts = [
     ],
     "search": "smarten ips nova 1100va machine only bes smarten ips ups home ips 1100va",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/smarten-smarten-ips-nova-1100va-machine-only-bes.jpg",
+    "importedGallery": ["/assets/products/smarten-smarten-ips-nova-1100va-machine-only-bes.jpg"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "Home IPS",
@@ -16833,8 +16833,8 @@ export const externalProducts = [
     ],
     "search": "smarten nova 700va 12v pure sine wave home ups smarten ips ups ups 700va 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/smarten-smarten-nova-700va-12v-pure-sine-wave-home-ups.jpg",
+    "importedGallery": ["/assets/products/smarten-smarten-nova-700va-12v-pure-sine-wave-home-ups.jpg"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
