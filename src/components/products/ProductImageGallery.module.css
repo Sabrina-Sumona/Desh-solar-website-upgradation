@@ -367,3 +367,53 @@
     transition: none;
   }
 }
+
+
+/* DETAIL_IMAGE_CONTAIN_FIX_START
+   Product detail main image only.
+   Lightbox remains unchanged.
+*/
+
+.mainImage {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    padding: 0;
+}
+
+.mainImage > img {
+    position: absolute;
+    inset: 0;
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+    max-height: 100%;
+
+    box-sizing: border-box;
+    padding: 18px;
+
+    object-fit: contain;
+    object-position: center;
+
+    transform: none;
+}
+
+/* Prevent automatic zoom on hover */
+.mainImage:hover > img {
+    transform: none;
+}
+
+@media (max-width: 720px) {
+    .mainImage > img {
+        padding: 8px;
+    }
+}
+
+/* DETAIL_IMAGE_CONTAIN_FIX_END */
