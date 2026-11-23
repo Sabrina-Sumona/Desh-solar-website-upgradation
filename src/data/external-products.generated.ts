@@ -5933,8 +5933,8 @@ export const externalProducts = [
     ],
     "search": "smarten prime plus mppt controller 50ah 12 24v smarten components and protection charge controller 50ah 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.jpg",
-    "importedGallery": ["/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.jpg"],
+    "image": "/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.webp",
+    "importedGallery": ["/assets/products/smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.webp"],
     "role": "Balance of System",
     "bestFor": [
       "Charge Controller",
@@ -16795,8 +16795,8 @@ export const externalProducts = [
     ],
     "search": "smarten nova 1500va sine wave ips cum ups smarten ips ups ups 1500va",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/smarten-smarten-nova-1500va-sine-wave-ips-cum-ups.webp",
+    "importedGallery": ["/assets/products/smarten-smarten-nova-1500va-sine-wave-ips-cum-ups.webp"],
     "role": "Backup Conversion + Control",
     "bestFor": [
       "UPS",
