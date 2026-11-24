@@ -1380,3 +1380,36 @@
 @media (prefers-reduced-motion: reduce) {
   .liveMoonSkyAuraV2 { animation: none; }
 }
+
+/* DESH_SOLAR_MOBILE_GRID_AND_TICKS_V1_START */
+/* On phones, the overscanned SVG was pushing GRID/tower against the clipped
+   left edge. Keep the original 900x570 viewBox and all SVG artwork unchanged;
+   reduce only the mobile overscan so the labels fit in the rounded card. */
+@media (max-width: 720px) {
+  .liveEnergyVisual .liveEnergySvg {
+    left: -14px;
+    right: -14px;
+    width: calc(100% + 28px);
+  }
+
+  /* Compensate for the SVG scaling so Solar Array, GRID, Loads and Battery
+     labels stay readable on a phone. The desktop font size is untouched. */
+  .liveEnergyVisual .liveSvgLabel {
+    font-size: 17px;
+    letter-spacing: 0.075em;
+  }
+}
+
+/* Native 20px range thumb: its center moves between x=10px and width-10px.
+   The tick row must therefore use a 10px inset on both sides. The earlier
+   phone-only width:100% + inherited margins made the labels drift right. */
+@media (max-width: 520px) {
+  .liveEnergyControl .liveEnergyTicks {
+    width: auto;
+    margin: 10px 10px 0;
+    height: 18px;
+    font-size: 9px;
+    line-height: 1.1;
+  }
+}
+/* DESH_SOLAR_MOBILE_GRID_AND_TICKS_V1_END */
