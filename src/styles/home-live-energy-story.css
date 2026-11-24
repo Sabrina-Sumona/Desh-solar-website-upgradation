@@ -647,19 +647,31 @@
   cursor: pointer;
 }
 
+/* Energy Story slider covers 05:00–24:00 (19 hours).
+   Tick positions must follow clock time, not five equal flex intervals.
+   A 10px inset matches the center of the 20px slider thumb. */
 .liveEnergyTicks {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: 9px;
+  position: relative;
+  height: 16px;
+  margin: 9px 10px 0;
   color: #91a6af;
   font-size: 9px;
   font-weight: 700;
 }
 
 .liveEnergyTicks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
   white-space: nowrap;
 }
+
+/* Positions = (tick hour - 5) / (24 - 5) * 100%. */
+.liveEnergyTicks span:nth-child(1) { left: 0%; }
+.liveEnergyTicks span:nth-child(2) { left: 21.052632%; }
+.liveEnergyTicks span:nth-child(3) { left: 42.105263%; }
+.liveEnergyTicks span:nth-child(4) { left: 68.421053%; }
+.liveEnergyTicks span:nth-child(5) { left: 100%; }
 
 .liveEnergyDisclaimer {
   display: flex;
