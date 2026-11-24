@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal, flushSync } from "react-dom";
 import { products, type Product } from "@/data/products";
+import { calculatePreliminaryRoof, suggestedUsableRoofPercent } from "@/lib/deshsolar/roofSizing";
 
 type PropertyType =
   | "Home"
@@ -60,6 +61,7 @@ type BuilderState = {
   backupHours: number;
   roofArea: number;
   roofType: string;
+  roofUsablePercent: number;
   shade: number;
   solarOffset: number;
   qty: Record<string, number>;
@@ -374,7 +376,11 @@ export default function BuildYourSystemClient() {
   const [backupHours, setBackupHours] = useState(4);
   const [customBackup, setCustomBackup] = useState("");
   const [roofArea, setRoofArea] = useState(800);
+  const [roofAreaMode, setRoofAreaMode] = useState<"area" | "dimensions">("area");
+  const [roofLength, setRoofLength] = useState(0);
+  const [roofWidth, setRoofWidth] = useState(0);
   const [roofType, setRoofType] = useState("Flat concrete roof");
+  const [roofUsablePercent, setRoofUsablePercent] = useState(70);
   const [shade, setShade] = useState(1);
   const [solarOffset, setSolarOffset] = useState(70);
   const [qty, setQty] = useState<Record<string, number>>(emptyQty);
@@ -408,8 +414,8 @@ export default function BuildYourSystemClient() {
   const loadProfile = propertyLoadProfiles[property];
 
   const state: BuilderState = useMemo(
-    () => ({ property, goal, bill, units, tariff, phase, dayUse, backupHours, roofArea, roofType, shade, solarOffset, qty }),
-    [property, goal, bill, units, tariff, phase, dayUse, backupHours, roofArea, roofType, shade, solarOffset, qty],
+    () => ({ property, goal, bill, units, tariff, phase, dayUse, backupHours, roofArea, roofType, roofUsablePercent, shade, solarOffset, qty }),
+    [property, goal, bill, units, tariff, phase, dayUse, backupHours, roofArea, roofType, roofUsablePercent, shade, solarOffset, qty],
   );
 
   const calc = useMemo(() => {
@@ -436,12 +442,21 @@ export default function BuildYourSystemClient() {
     const effectiveUnits = state.units > 0 ? state.units : state.bill / Math.max(1, state.tariff);
     const dailyUseCalc = effectiveUnits / 30;
     const desiredEnergy = dailyUseCalc * (state.solarOffset / 100);
-    const targetPV = desiredEnergy / (4.5 * 0.82);
-    const roofPotential = (state.roofArea / 65) * state.shade;
-    const pvPlanning = state.roofArea > 0 ? Math.max(0, Math.min(targetPV, roofPotential)) : targetPV;
-    const panelCount = pvPlanning > 0 ? Math.max(1, Math.ceil((pvPlanning * 1000) / 590)) : 0;
-    const actualPV = panelCount * 0.59;
-    const dailyGen = actualPV * 4.5 * 0.82;
+    // Shading changes energy yield, not how many panels physically fit.
+    const targetPV = desiredEnergy / (4.5 * 0.82 * state.shade);
+    const roof = calculatePreliminaryRoof({
+      totalAreaSqFt: state.roofArea,
+      usablePercent: state.roofUsablePercent,
+      panelWatts: 590,
+      requiredPVKWp: targetPV,
+    });
+    const roofPotential = roof.roofPotential;
+    const usableRoofArea = roof.usableRoofArea;
+    const roofLimited = roof.roofLimited;
+    const pvPlanning = Math.min(targetPV, roofPotential);
+    const panelCount = roof.panelCount;
+    const actualPV = roof.installedPV;
+    const dailyGen = actualPV * 4.5 * 0.82 * state.shade;
     const monthlyGen = dailyGen * 30;
     const annualGen = dailyGen * 365;
     const coveredUnits = Math.min(effectiveUnits, monthlyGen);
@@ -496,6 +511,8 @@ export default function BuildYourSystemClient() {
       dailyUse: dailyUseCalc,
       targetPV,
       roofPotential,
+      usableRoofArea,
+      roofLimited,
       pvPlanning,
       panelCount,
       actualPV,
@@ -528,8 +545,11 @@ export default function BuildYourSystemClient() {
       `Backup target: ${round1(state.backupHours)} hours`,
       `Suggested inverter class: ${calc.inverterClass} kW`,
       `Planning battery energy: ${round1(calc.batteryKWh)} kWh`,
-      `Usable roof / installation area: ${fmt(state.roofArea)} sq ft`,
+      `Entered roof / installation area: ${fmt(state.roofArea)} sq ft`,
       `Roof type: ${state.roofType}`,
+      `Assumed usable area: ${state.roofUsablePercent}% / ${fmt(calc.usableRoofArea)} sq ft`,
+      `Theoretical roof PV capacity: ${round1(calc.roofPotential)} kWp`,
+      `Roof-constrained recommendation: ${calc.roofLimited ? "Yes — engineering review needed" : "No"}`,
       `Target solar offset: ${state.solarOffset}%`,
       `Planning PV: ${round1(calc.actualPV)} kWp`,
       `Panel estimate: ${calc.panelCount} × 590W equivalent`,
@@ -2121,20 +2141,35 @@ export default function BuildYourSystemClient() {
               <div className="bysStepHeader">
                 <div className="bysStepKicker">Step 05 • Roof</div>
                 <h2>How much usable installation area is available?</h2>
-                <p>The roof visualization uses a simplified space allowance per 590 W panel, including a planning margin for access and spacing. Final placement still requires a site survey.</p>
+                <p>Enter total installation area or roof dimensions. Desh Solar first estimates usable space, then calculates a conservative planning capacity. Final placement needs a site survey.</p>
               </div>
               <div className="bysRoofLayout">
                 <div className="bysRoofControls">
-                  <div className="bysField"><label>Usable rooftop / installation area (sq ft)</label><input className="bysInput" min={0} type="number" value={roofArea} onChange={(e) => setRoofArea(Math.max(0, Number(e.target.value) || 0))} /></div>
-                  <div className="bysField"><label>Roof / installation type</label><select className="bysSelect" value={roofType} onChange={(e) => setRoofType(e.target.value)}><option>Flat concrete roof</option><option>Metal / industrial roof</option><option>Ground mount</option><option>Other / not sure</option></select></div>
-                  <div className="bysField"><label>Approximate shading condition</label><select className="bysSelect" value={shade} onChange={(e) => setShade(Number(e.target.value))}><option value="1">Low shading</option><option value=".9">Some shading / obstruction</option><option value=".75">Significant shading</option><option value=".85">Not sure</option></select></div>
+                  <div className="bysField"><label>Roof / installation type</label><select className="bysSelect" value={roofType} onChange={(e) => { const value = e.target.value; setRoofType(value); setRoofUsablePercent(suggestedUsableRoofPercent(value)); }}><option>Flat concrete roof</option><option>Metal / industrial roof</option><option>Ground mount</option><option>Other / not sure</option></select></div>
+                  <div className="bysField"><label>Area input method</label><select className="bysSelect" value={roofAreaMode} onChange={(e) => { const next = e.target.value === "dimensions" ? "dimensions" : "area"; setRoofAreaMode(next); if (next === "dimensions") setRoofArea(roofLength * roofWidth); }}><option value="area">Total area in square feet</option><option value="dimensions">Length × width (feet)</option></select></div>
+                  {roofAreaMode === "area" ? (
+                    <div className="bysField"><label>Total roof / installation area (sq ft)</label><input className="bysInput" min={0} type="number" value={roofArea} onChange={(e) => setRoofArea(Math.max(0, Number(e.target.value) || 0))} /></div>
+                  ) : (
+                    <>
+                      <div className="bysField"><label>Length (ft)</label><input className="bysInput" min={0} type="number" value={roofLength} onChange={(e) => { const v = Math.max(0, Number(e.target.value) || 0); setRoofLength(v); setRoofArea(v * roofWidth); }} /></div>
+                      <div className="bysField"><label>Width (ft)</label><input className="bysInput" min={0} type="number" value={roofWidth} onChange={(e) => { const v = Math.max(0, Number(e.target.value) || 0); setRoofWidth(v); setRoofArea(v * roofLength); }} /><div className="bysFieldHelp">Total footprint: {fmt(roofArea)} sq ft</div></div>
+                    </>
+                  )}
+                  <div className="bysField"><label>Estimated usable area (%)</label><input className="bysInput" min={0} max={100} step={1} type="number" value={roofUsablePercent} onChange={(e) => setRoofUsablePercent(clamp(Number(e.target.value) || 0, 0, 100))} /><div className="bysFieldHelp">Initial assumption: 70% concrete, 80% tin/metal; adjust if needed. Final site measurement required.</div></div>
+                  <div className="bysField"><label>Approximate shading condition</label><select className="bysSelect" value={shade} onChange={(e) => setShade(Number(e.target.value))}><option value="1">Low shading</option><option value=".9">Some shading / obstruction</option><option value=".75">Significant shading</option><option value=".85">Not sure</option></select><div className="bysFieldHelp">Shading reduces estimated generation, not physical roof area.</div></div>
                   <div className="bysRangeWrap"><label className="bysRangeLabel">Target solar offset</label><input className="bysRange" max={100} min={30} step={5} type="range" value={solarOffset} onChange={(e) => setSolarOffset(Number(e.target.value))} /><div className="bysRangeLabels"><span>30%</span><b>{solarOffset}%</b><span>100%</span></div></div>
                 </div>
                 <div className="bysRoofViz">
+                  <div className="bysRoofCapacityResult" role="status" aria-live="polite">
+                    <span>YOUR ROOF CAN FIT</span>
+                    <strong>{round1(calc.roofPotential)} kWp</strong>
+                    <small>{fmt(calc.usableRoofArea)} sq ft estimated usable area • {roofUsablePercent}% of {fmt(roofArea)} sq ft</small>
+                  </div>
                   <div className="bysPanelField" style={{ gridTemplateColumns: `repeat(${roofColumns}, 1fr)` }}>
                     {Array.from({ length: visibleRoofPanels }).map((_, index) => <span className="bysRoofPanel" key={index} />)}
                   </div>
-                  <div className="bysRoofLabel"><div><span>Approx. panel count</span><b>{calc.panelCount ? `${calc.panelCount} panels` : "—"}</b></div><div><span>Roof-limited PV potential</span><b>{calc.roofPotential ? `${round1(calc.roofPotential)} kWp potential` : "—"}</b></div></div>
+                  <div className="bysRoofLabel"><div><span>Estimated usable area</span><b>{fmt(calc.usableRoofArea)} sq ft</b></div><div><span>Roof capacity limit</span><b>{round1(calc.roofPotential)} kWp</b></div><div><span>Energy-sized array</span><b>{calc.panelCount ? `${calc.panelCount} × 590W` : "No panels fit / needed"}</b></div></div>
+                  {calc.roofLimited && <p className="bysFieldHelp" role="status">The roof estimate is smaller than the energy target. The PV recommendation has been capped at the available area; alternatives require technical review.</p>}
                 </div>
               </div>
             </section>
@@ -2169,7 +2204,8 @@ export default function BuildYourSystemClient() {
                       <div className="bysResultMetric"><span>Planning Surge</span><b>{fmt(calc.peak)} W</b></div>
                       <div className="bysResultMetric"><span>Inverter Class</span><b>{calc.inverterClass} kW class</b></div>
                       <div className="bysResultMetric"><span>Battery Planning</span><b>{round1(calc.batteryKWh)} kWh</b></div>
-                      <div className="bysResultMetric"><span>PV Planning</span><b>{round1(calc.actualPV)} kWp</b></div>
+                      <div className="bysResultMetric"><span>PV Planning (energy-sized)</span><b>{round1(calc.actualPV)} kWp</b></div>
+                      <div className="bysResultMetric"><span>Roof Can Fit (maximum)</span><b>{round1(calc.roofPotential)} kWp</b></div>
                       <div className="bysResultMetric"><span>590W Panel Count</span><b>{calc.panelCount ? `${calc.panelCount} × 590W` : "—"}</b></div>
                     </div>
                   </div>
@@ -2220,7 +2256,7 @@ export default function BuildYourSystemClient() {
                   <div className="bysWhyList">
                     <div className="bysWhy"><b>Why this inverter class?</b><p>{calc.running ? `Your selected appliances total about ${fmt(calc.running)} W. The planner adds the largest startup-surge event and 15% headroom, producing a peak planning figure of about ${fmt(calc.peak)} W and routing you to the next practical inverter class.` : "Add appliances so the builder can estimate continuous load, startup surge and inverter headroom."}</p></div>
                     <div className="bysWhy"><b>Why this battery capacity?</b><p>{calc.running ? `The storage estimate uses the selected ${round1(backupHours)}-hour target with simplified inverter efficiency and reserve factors. Real battery sizing must also consider C-rate, BMS current limits, temperature and allowable depth of discharge.` : "Battery capacity will be based on the selected planning load and desired backup duration."}</p></div>
-                    <div className="bysWhy"><b>Why this PV size?</b><p>The PV calculation targets {solarOffset}% of roughly {fmt(calc.effectiveUnits)} monthly units, then checks the result against about {fmt(roofArea)} sq ft of usable area and the selected shading condition. The final panel layout needs a site survey.</p></div>
+                    <div className="bysWhy"><b>Why this PV size?</b><p>The PV calculation targets {solarOffset}% of roughly {fmt(calc.effectiveUnits)} monthly units. The proposed array is capped by {fmt(calc.usableRoofArea)} sq ft of estimated usable installation area (from {fmt(roofArea)} sq ft entered and {roofUsablePercent}% usability). Shading affects the generation estimate separately. Final panel placement and structure require a site survey.</p></div>
                   </div>
                 </section>
 
@@ -2236,6 +2272,7 @@ export default function BuildYourSystemClient() {
                   <Link href="/contact?source=builder">Request Engineering Review →</Link>
                   <button className="secondary" type="button" onClick={restart}>Start Again</button>
                 </div>
+                {calc.roofLimited && <div className="bysDisclaimer" role="status">ROOF LIMIT: Estimated usable area cannot accommodate the full calculated energy target. The shown PV recommendation is area-capped; assess another roof, ground installation or adjusted energy target with an engineer.</div>}
                 <div className="bysDisclaimer">This tool is an educational/preliminary planner. Actual solar generation, savings, battery runtime and equipment selection depend on site survey, weather, shading, duty cycle, surge, phase, cable/protection design, battery limits, inverter compatibility and approved engineering. Verify current products, prices, stock, specifications and warranty terms with Desh Solar.</div>
               </div>
             </section>
@@ -2257,7 +2294,8 @@ export default function BuildYourSystemClient() {
               <div className="bysLiveMetric"><span>Planning surge</span><b>{fmt(calc.peak)} W</b></div>
               <div className="bysLiveMetric"><span>Inverter class</span><b>{calc.inverterClass} kW class</b></div>
               <div className="bysLiveMetric"><span>Battery</span><b>{round1(calc.batteryKWh)} kWh</b></div>
-              <div className="bysLiveMetric"><span>PV</span><b>{calc.actualPV > 0 ? `${round1(calc.actualPV)} kWp` : "—"}</b></div>
+              <div className="bysLiveMetric"><span>Recommended PV</span><b>{calc.actualPV > 0 ? `${round1(calc.actualPV)} kWp` : "—"}</b></div>
+              <div className="bysLiveMetric"><span>Roof Can Fit</span><b>{round1(calc.roofPotential)} kWp</b></div>
               <div className="bysLiveMetric"><span>Panel count</span><b>{calc.panelCount ? `${calc.panelCount} × 590W` : "—"}</b></div>
             </div>
             <div className="bysLiveProfile"><small>Current planning path</small><b>{calc.path}</b></div>
