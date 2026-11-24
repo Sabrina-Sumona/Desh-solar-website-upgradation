@@ -548,6 +548,27 @@ export default function LiveEnergyStory() {
                   </feMerge>
                 </filter>
 
+                {/* DESH_SOLAR_MOON_VISIBLE_V2: self-contained lunar light */}
+                <radialGradient id="liveMoonSkyAuraV2" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#e3f3ff" stopOpacity="0.53" />
+                  <stop offset="32%" stopColor="#a9d5f7" stopOpacity="0.30" />
+                  <stop offset="68%" stopColor="#8abbe6" stopOpacity="0.10" />
+                  <stop offset="100%" stopColor="#8abbe6" stopOpacity="0" />
+                </radialGradient>
+                <linearGradient id="liveMoonFaceV2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor="#ffffff" />
+                  <stop offset="58%" stopColor="#e3f2ff" />
+                  <stop offset="100%" stopColor="#afd2ec" />
+                </linearGradient>
+                {/* DESH_SOLAR_MOON_ALIGNED_V3: single centered crescent — crater clipping */}
+                <clipPath id="liveMoonLitSurfaceV3">
+                  <path d="M723 55 C704 54 690 68 690 85 C690 103 704 117 723 116 C711 109 705 99 705 85 C705 71 711 61 723 55 Z" />
+                </clipPath>
+                <mask id="liveMoonCrescentV2" maskUnits="userSpaceOnUse" x="670" y="35" width="115" height="115">
+                  <rect x="670" y="35" width="115" height="115" fill="white" />
+                  <circle cx="738" cy="74" r="29" fill="black" />
+                </mask>
+
                 <mask
                   id="liveMoonMask"
                   maskUnits="userSpaceOnUse"
@@ -571,7 +592,26 @@ export default function LiveEnergyStory() {
                     fill="black"
                   />
                 </mask>
+                {/* Decorative ambient sky light, positioned with the sun. */}
+                <radialGradient id="liveMovingSunGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#ffe3a0" stopOpacity="0.38" />
+                  <stop offset="42%" stopColor="#ffe8b8" stopOpacity="0.16" />
+                  <stop offset="100%" stopColor="#ffe9bf" stopOpacity="0" />
+                </radialGradient>
               </defs>
+
+              {/* Light stays behind the house, follows the sun precisely. */}
+              {isDay && (
+                <circle
+                  cx={`${celestialX}%`}
+                  cy={`${celestialY}%`}
+                  r="235"
+                  fill="url(#liveMovingSunGlow)"
+                  opacity={0.2 + 0.8 * Math.max(0, Math.sin(sunProgress * Math.PI))}
+                  pointerEvents="none"
+                  aria-hidden="true"
+                />
+              )}
 
               <g className="liveCelestial">
                 {isDay ? (
@@ -592,14 +632,22 @@ export default function LiveEnergyStory() {
                     />
                   </>
                 ) : (
-                  <circle
-                    cx="720"
-                    cy="85"
-                    r="24"
-                    className="liveMoon"
-                    filter="url(#softGlow)"
-                    mask="url(#liveMoonMask)"
-                  />
+                  <>
+                    {/* DESH_SOLAR_MOON_ALIGNED_V3: single centered crescent */}
+                    <circle cx="707" cy="85" r="78" className="liveMoonSkyAuraV2" />
+                    {/* DESH_SOLAR_MOON_TILT_15: rotate crescent and details together */}
+                    <g transform="rotate(15 707 85)">
+                      <path
+                        d="M723 55 C704 54 690 68 690 85 C690 103 704 117 723 116 C711 109 705 99 705 85 C705 71 711 61 723 55 Z"
+                        className="liveMoonFaceV2"
+                      />
+                      <g className="liveMoonDetailsV2" clipPath="url(#liveMoonLitSurfaceV3)">
+                        <circle cx="698" cy="78" r="2.5" />
+                        <circle cx="696" cy="93" r="2.1" />
+                        <circle cx="707" cy="106" r="1.8" />
+                      </g>
+                    </g>
+                  </>
                 )}
               </g>
 
@@ -783,7 +831,7 @@ export default function LiveEnergyStory() {
               {/* SOLAR PANEL -> INVERTER */}
 
               <path
-                d="M432 250 C405 279 329 282 262 302 L262 443 C272 450 281 452 292 452"
+                d="M432 250 C396 282 298 275 270 309 C253 330 263 396 263 430 C263 446 277 452 292 452"
                 className={`liveFlowLine liveFlowSolar ${
                   hasFlow("solar")
                     ? "active"
@@ -852,7 +900,7 @@ export default function LiveEnergyStory() {
               {/* INVERTER -> LOAD */}
 
               <path
-                d="M384 442 L410 442 L410 352 C410 328 428 316 441 316"
+                d="M384 442 C402 442 411 434 411 418 C411 400 409 375 411 353 C413 331 425 316 441 316"
                 className="liveFlowLine liveFlowLoad active"
               />
 
@@ -905,7 +953,7 @@ export default function LiveEnergyStory() {
               {/* INVERTER <-> BATTERY */}
 
               <path
-                d="M384 468 C398 496 410 518 440 520 L590 520 C610 520 620 500 628 492"
+                d="M384 472 C401 472 406 499 423 500 C472 501 535 501 583 500 C602 499 605 475 615 475"
                 className={`liveFlowLine liveFlowBattery ${
                   hasFlow(
                     "battery-charge"

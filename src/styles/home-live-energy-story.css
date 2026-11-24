@@ -1235,3 +1235,135 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* DESH SOLAR ENERGY STORY — NATURAL DAYLIGHT v1 */
+/* Only the environment is brightened: never recolor the home or devices. */
+.liveEnergyVisual {
+  isolation: isolate;
+}
+
+/* DESH SOLAR ENERGY STORY — SOFT DAYLIGHT v2 */
+.liveEnergyVisual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(
+      180deg,
+      #a8c1cc 0%,
+      #bacbcd 40%,
+      #b9c8c2 75%,
+      #91ada7 100%
+    );
+  transition: opacity 700ms ease;
+}
+
+.liveEnergyStory--day .liveEnergyVisual::before {
+  opacity: 0.94;
+}
+
+.liveEnergyStory--twilight .liveEnergyVisual::before {
+  opacity: 0.26;
+}
+
+/* Keep the existing SVG artwork fully on top of the bright environment. */
+.liveEnergyVisual .liveEnergySvg {
+  z-index: 1;
+}
+
+/* Scene-only readability enhancements against the pale daytime sky. */
+.liveEnergyStory--day .liveSvgLabel {
+  fill: #355063;
+}
+
+.liveEnergyStory--day .liveGridTower path,
+.liveEnergyStory--day .liveGridTower line {
+  stroke: rgba(56, 85, 101, 0.7);
+}
+
+.liveEnergyStory--day .liveGround {
+  stroke: rgba(70, 125, 103, 0.42);
+}
+
+.liveEnergyStory--day .liveEnergyVisualLegend span {
+  color: #385160;
+}
+
+.liveEnergyStory--day .liveEnergyPhaseBadge {
+  color: #3d5361;
+  border-color: rgba(45, 78, 94, 0.15);
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.liveEnergyStory--day .liveSunCore {
+  fill: #f7bd4b;
+}
+
+.liveEnergyStory--day .liveSunHalo {
+  fill: rgba(255, 201, 82, 0.18);
+  stroke: rgba(233, 168, 48, 0.32);
+}
+
+.liveEnergyStory--day .liveFlowSolar.active {
+  stroke: #d3962c;
+  filter: drop-shadow(0 0 4px rgba(184, 127, 25, 0.24));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liveEnergyVisual::before {
+    transition: none;
+  }
+}
+
+/* DESH SOLAR ENERGY STORY — MOVING SUN GLOW v3 */
+/* The fixed yellow gradient is now an SVG glow that follows the sun. */
+
+/* DESH SOLAR — SUN GLOW SKY OVERFLOW FIX */
+/* The sun glow is drawn in the inset SVG, but should not be clipped by
+   that SVG's own viewport. The outer rounded visual card still clips it. */
+.liveEnergyStory--day .liveEnergyVisual .liveEnergySvg,
+.liveEnergyStory--twilight .liveEnergyVisual .liveEnergySvg {
+  overflow: visible;
+}
+
+/* =========================================================
+   DESH_SOLAR_MOON_VISIBLE_V2 — night crescent emphasis
+   The moon is rendered only when isDay=false in the SVG.
+   The existing night background and the day lighting stay unchanged.
+   ========================================================= */
+.liveMoonSkyAuraV2 {
+  fill: url(#liveMoonSkyAuraV2);
+  opacity: 0.98;
+  pointer-events: none;
+  animation: liveMoonVisiblePulseV2 8s ease-in-out infinite alternate;
+}
+.liveMoonOrbitV2 {
+  fill: none;
+  stroke: rgba(203, 231, 255, 0.34);
+  stroke-width: 0.95;
+  pointer-events: none;
+}
+.liveMoonFaceV2 {
+  fill: url(#liveMoonFaceV2);
+  opacity: 1;
+  filter: drop-shadow(0 0 7px rgba(234, 247, 255, 0.85))
+          drop-shadow(0 0 17px rgba(154, 201, 241, 0.46));
+}
+.liveMoonDetailsV2 circle {
+  fill: rgba(91, 139, 169, 0.25);
+  pointer-events: none;
+}
+.liveEnergyStory--twilight .liveMoonSkyAuraV2 { opacity: 0.56; }
+.liveEnergyStory--twilight .liveMoonFaceV2 {
+  filter: drop-shadow(0 0 8px rgba(255, 219, 181, 0.52));
+}
+@keyframes liveMoonVisiblePulseV2 {
+  from { opacity: 0.84; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .liveMoonSkyAuraV2 { animation: none; }
+}
