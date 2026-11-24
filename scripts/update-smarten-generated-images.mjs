@@ -30,8 +30,8 @@ const approved = [
   {
     id: "ext-smarten-smarten-prime-plus-mppt-controller-50ah-12-24v-3cbb429e",
     name: "Smarten PRIME PLUS Mppt Controller 50ah 12/24v",
-    source: "smarten-prime-plus-50a-review.jpg",
-    filename: "smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.jpg",
+    source: "../high-resolution/smarten-prime-plus-50a-hq.webp",
+    filename: "smarten-smarten-prime-plus-mppt-controller-50ah-12-24v.webp",
   },
   {
     id: "ext-smarten-smarten-ips-nova-1100va-machine-only-bes-bee91c46",
