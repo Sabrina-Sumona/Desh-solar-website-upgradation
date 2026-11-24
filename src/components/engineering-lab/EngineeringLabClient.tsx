@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { calculatePreliminaryRoof, suggestedUsableRoofPercent } from "@/lib/deshsolar/roofSizing";
 
 const PAGE_HTML = String.raw`
 <section class="techIntro">
@@ -103,22 +104,28 @@ const PAGE_HTML = String.raw`
 <article class="toolPanel" data-panel="roof">
 <div class="toolForm">
 <div class="demoEyebrow">Roof + Panel Lab</div>
-<h3>Convert usable area into PV potential.</h3>
+<h3>Calculate how much solar your roof can fit.</h3>
 <div class="labFields">
-<label>Usable area (sq ft)<input id="roofArea" type="number" value="1200"/></label>
-<label>Panel power<select id="roofPanel"><option value="590">590 W</option><option value="625">625 W</option><option value="715">715 W</option></select></label>
-<label>Space allowance / panel (sq ft)<input id="roofSpace" max="50" min="18" type="number" value="30"/></label>
-<label>Layout factor<select id="roofFactor"><option value="1">Low constraints</option><option value=".9">Some constraints</option><option value=".75">Significant constraints</option></select></label>
+<label>Roof type<select id="roofType"><option value="Flat concrete roof">Concrete roof</option><option value="Metal / industrial roof">Tin shed / metal roof</option><option value="Ground mount">Ground mount (provisional)</option><option value="Other / not sure">Other / not sure</option></select></label>
+<label>Area input method<select id="roofMode"><option value="area">Total area (sq ft)</option><option value="dimensions">Length × width (ft)</option></select></label>
+<label data-roof-area="">Total roof area (sq ft)<input id="roofArea" min="0" step="0.1" type="number" value="1200"/></label>
+<label data-roof-dimensions="" hidden="">Length (ft)<input id="roofLength" min="0" step="0.1" type="number" value="40"/></label>
+<label data-roof-dimensions="" hidden="">Width (ft)<input id="roofWidth" min="0" step="0.1" type="number" value="30"/></label>
+<label>Estimated usable area (%)<input id="roofUsablePercent" max="100" min="0" step="1" type="number" value="70"/></label>
+<label>Panel rating for whole-panel estimate<select id="roofPanel"><option value="590">590 W</option><option value="625">625 W</option><option value="715">715 W</option></select></label>
 </div>
-<p class="toolDisclaimer">Roof shape, setbacks, tilt, mounting, shading and safe access change the final layout.</p>
+<p class="toolDisclaimer">Preliminary model: concrete defaults to 70% usable area, tin/metal to 80%; theoretical capacity is usable sq ft ÷ 65. These reproduce the supplied reference figures, but are not verified physical-layout rules. Panel dimensions, setbacks, access, wind/structural limits and shading require a site survey.</p>
 </div>
-<div class="toolResult">
-<small>ROOF-LIMITED PV POTENTIAL</small><strong id="roofPV">—</strong>
-<div class="resultTiles">
-<div><small>Panels</small><b id="roofPanels">—</b></div>
-<div><small>Approx. Area Used</small><b id="roofUsed">—</b></div>
+<div class="toolResult roofToolResult">
+<small>YOUR ROOF CAN FIT • THEORETICAL MAXIMUM</small><strong id="roofPV" aria-live="polite">—</strong>
+<div class="resultTiles roofResultTiles">
+<div><small>Total roof area</small><b id="roofGross">—</b></div>
+<div><small>Estimated usable area</small><b id="roofUsed">—</b></div>
+<div><small>Max whole-panel count</small><b id="roofPanels">—</b></div>
+<div><small>Whole-panel DC capacity</small><b id="roofInstalled">—</b></div>
 </div>
-<div class="panelField" id="roofVisual"></div>
+<p class="roofCapacityNote" id="roofCapacityNote">Area-based theoretical capacity is not a final module-layout design.</p>
+<div class="panelField" id="roofVisual" aria-hidden="true"></div>
 </div>
 </article>
 <article class="toolPanel" data-panel="load">
@@ -463,31 +470,81 @@ export default function EngineeringLabClient() {
     });
     inverter();
 
-    // Roof + panel planning
-    const roof = () => {
-      const area = Math.max(0, numberValue("roofArea", 1200));
-      const wattage = Math.max(1, numberValue("roofPanel", 590));
-      const space = Math.max(1, numberValue("roofSpace", 30));
-      const factor = clamp(numberValue("roofFactor", 1), 0.2, 1);
-      const panels = Math.max(0, Math.floor((area * factor) / space));
+    // Roof + panel planning: same shared model as Build Your System.
+    // The main kWp output is theoretical ROOF capacity, independent of panel
+    // rating, appliance load and electrical consumption. Whole-panel numbers
+    // are a separate, rounded-down preliminary illustration.
+    const showRoofAreaMode = () => {
+      const usingDimensions = field("roofMode")?.value === "dimensions";
+      $$<HTMLElement>("[data-roof-area]").forEach((item) => {
+        item.hidden = usingDimensions;
+      });
+      $$<HTMLElement>("[data-roof-dimensions]").forEach((item) => {
+        item.hidden = !usingDimensions;
+      });
+    };
 
-      text("roofPV", `${((panels * wattage) / 1000).toFixed(1)} kWp`);
-      text("roofPanels", panels);
-      text("roofUsed", `${Math.min(area, panels * space).toLocaleString()} sq ft`);
+    const roof = () => {
+      const usingDimensions = field("roofMode")?.value === "dimensions";
+      const totalArea = usingDimensions
+        ? Math.max(0, numberValue("roofLength", 0)) * Math.max(0, numberValue("roofWidth", 0))
+        : Math.max(0, numberValue("roofArea", 0));
+      const type = field("roofType")?.value ?? "Flat concrete roof";
+      const usablePercent = clamp(
+        numberValue("roofUsablePercent", suggestedUsableRoofPercent(type)),
+        0,
+        100,
+      );
+      const panelWatts = Math.max(0, numberValue("roofPanel", 590));
+      const estimate = calculatePreliminaryRoof({
+        totalAreaSqFt: totalArea,
+        usablePercent,
+        panelWatts,
+        requiredPVKWp: 0, // Roof capacity does not depend on energy demand.
+      });
+      const formatSqFt = (value: number) =>
+        `${value.toLocaleString("en-US", { maximumFractionDigits: 1 })} sq ft`;
+
+      text("roofPV", `${estimate.roofPotential.toFixed(1)} kWp`);
+      text("roofGross", formatSqFt(estimate.totalAreaSqFt));
+      text("roofUsed", formatSqFt(estimate.usableRoofArea));
+      text("roofPanels", estimate.maxPanelCount.toLocaleString("en-US"));
+      text(
+        "roofInstalled",
+        `${(estimate.maxPanelCount * panelWatts / 1000).toFixed(1)} kWp`,
+      );
+      text(
+        "roofCapacityNote",
+        `${usablePercent}% usable roof assumed. Theoretical potential: usable area ÷ 65 sq ft/kWp. Whole-panel count uses ${panelWatts} W modules and rounds down; actual physical fit needs panel dimensions and a site survey.`,
+      );
 
       const visual = $<HTMLElement>("#roofVisual");
       if (visual) {
         visual.innerHTML = Array.from(
-          { length: Math.min(40, panels) },
+          { length: Math.min(40, estimate.maxPanelCount) },
           () => "<span></span>",
         ).join("");
       }
     };
 
-    ["roofArea", "roofPanel", "roofSpace", "roofFactor"].forEach((id) => {
+    const roofTypeInput = field("roofType");
+    if (roofTypeInput) roofTypeInput.onchange = () => {
+      const usableInput = field("roofUsablePercent");
+      if (usableInput) {
+        usableInput.value = String(suggestedUsableRoofPercent(roofTypeInput.value));
+      }
+      roof();
+    };
+    const roofModeInput = field("roofMode");
+    if (roofModeInput) roofModeInput.onchange = () => {
+      showRoofAreaMode();
+      roof();
+    };
+    ["roofArea", "roofLength", "roofWidth", "roofPanel", "roofUsablePercent"].forEach((id) => {
       const input = field(id);
       if (input) input.oninput = roof;
     });
+    showRoofAreaMode();
     roof();
 
     // Quick connected-load calculator
