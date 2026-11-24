@@ -1,0 +1,97 @@
+/*
+ * DESH SOLAR — BACKDROP BALANCE (NOV 2026)
+ * Edit ONLY outer page/section canvases; never product cards, tiles, dialogs,
+ * controls, chart panels, nav elements, imagery or the day/night simulator.
+ *
+ * Dedicated override makes the adjustment easy to remove or fine-tune.
+ */
+
+:root {
+  --ds-site-bg: #182b35;       /* main slate-teal canvas */
+  --ds-site-bg-raised: #1b323b;/* alternating lighter section */
+  --ds-site-bg-deep: #142630;  /* transitional / cinematic base */
+}
+
+html body,
+body > main {
+  background: var(--ds-site-bg);
+}
+
+/* Product catalogue, packages and detail pages: dark existing cards stand out. */
+body main .productsPage,
+body main .pdPage {
+  background: var(--ds-site-bg);
+}
+
+/* Other complete pages: background-only override, no panels/cards touched. */
+body main .projectsPrototype,
+body main .projectsPage,
+body main .aboutPrototype,
+body main .contactHubPage,
+body main .faqPage,
+body main .faqPage .faqMain,
+body main .engineeringLabRoot,
+body main .engineeringLabRoot .demoPage,
+body main .customerSupportPrototype,
+body main .customerSupportPrototype .supportCenterPage,
+body main .buildSystemPrototype .bysPage {
+  background: var(--ds-site-bg);
+}
+
+/* Homepage: a calm, even slate-teal canvas for stronger card separation. */
+body main .miniSystemBuilder,
+body main .featuredProjects,
+body main .whyDeshSolar,
+body main .customerJourney,
+body main .engineeringLabPreview {
+  background: var(--ds-site-bg);
+}
+
+body main .technologyStack,
+body main .bangladeshMission,
+body main .finalHomeCTA {
+  background: var(--ds-site-bg);
+}
+
+body main .brandMarquee {
+  background: #050d13; /* DESH_SOLAR_BRAND_MARQUEE_DARK_V1 */
+}
+
+/* Video scenes retain their current overlays and image treatment. */
+
+/* The footer is an outer surface; keep header/navigation visually grounded. */
+
+/* Intentionally UNCHANGED:
+ * .realProduct, .pd* cards, .toolPanel, .bys* result panels,
+ * .liveEnergyVisual inner day/twilight/night skies and illustration,
+ * navbar, buttons, overlays, image surfaces, and modal backgrounds.
+ */
+
+/* DESH_SOLAR_MISSING_OUTER_SECTION_BACKGROUNDS_V1_START */
+/* Only the outer canvas behind the existing panels is lightened. The
+   cinematic .stage / trailer, gateway video, footer, and all cards retain
+   their original backgrounds. Energy Story's inner day/night sky is intact. */
+body main .liveEnergyStory {
+  background: var(--ds-site-bg);
+}
+
+/* The post-trailer bridge is a separate section, NOT the cinematic video. */
+body main .bridge {
+  background: var(--ds-site-bg);
+}
+/* DESH_SOLAR_MISSING_OUTER_SECTION_BACKGROUNDS_V1_END */
+
+/* DESH_SOLAR_CLEAN_CANVAS_AMBIENT_V1_START */
+/* These decorative, behind-content glows caused uneven pools of light after
+   the website backdrop was lightened. Keep foreground and SVG effects. */
+body main .miniSystemBuilderGlow,
+body main .featuredProjectsGlow,
+body main .technologyStackGlow,
+body main .engineeringLabGlow,
+body main .whyDeshSolarGlow,
+body main .bangladeshMissionAmbient,
+body main .finalHomeCTAGlow,
+body main .liveEnergyGlow {
+  opacity: 0;
+}
+/* DESH_SOLAR_CLEAN_CANVAS_AMBIENT_V1_END */

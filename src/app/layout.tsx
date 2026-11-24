@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 
 import "./globals.css";
 import "@/styles/site-shell.css";
+import "@/styles/site-backgrounds.css";
 
 export const metadata: Metadata = {
   title: {

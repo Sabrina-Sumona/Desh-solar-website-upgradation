@@ -1,5 +1,5 @@
 .page {
-  --cart-bg: #05090d;
+  --cart-bg: #182b35;
   --cart-panel: #08151d;
   --cart-text: #f4f8f9;
   --cart-muted: #8297a0;
@@ -10,13 +10,7 @@
 
   min-height: 100vh;
   padding-top: 76px;
-  background:
-    radial-gradient(
-      circle at 86% 6%,
-      rgba(89, 189, 255, 0.04),
-      transparent 26%
-    ),
-    var(--cart-bg);
+  background: var(--cart-bg);
   color: var(--cart-text);
 }
 

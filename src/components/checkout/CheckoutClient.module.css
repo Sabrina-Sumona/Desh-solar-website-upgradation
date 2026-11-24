@@ -7,13 +7,7 @@
   --line: rgba(255, 255, 255, 0.075);
   min-height: 100vh;
   padding-top: 76px;
-  background:
-    radial-gradient(
-      circle at 90% 8%,
-      rgba(89, 189, 255, 0.035),
-      transparent 26%
-    ),
-    #05090d;
+  background: #182b35;
   color: var(--text);
 }
 
