@@ -42,6 +42,25 @@ type CartItem = {
 
 const CART_KEY = "deshSolarCartV1";
 const PRODUCTS_PER_PAGE = 24;
+const PRODUCTS_PER_PAGE_FIVE_COLUMNS = 25;
+// Keep this breakpoint aligned with .realProductGrid in src/styles/products.css.
+const FIVE_COLUMN_MEDIA_QUERY = "(min-width: 1650px)";
+
+// A stable subscription makes page size reactive to viewport changes. The
+// server uses 24 to avoid hydration mismatches; wide clients switch to 25.
+function subscribeToFiveColumnGrid(onChange: () => void) {
+  const media = window.matchMedia(FIVE_COLUMN_MEDIA_QUERY);
+  media.addEventListener("change", onChange);
+  return () => media.removeEventListener("change", onChange);
+}
+
+function getFiveColumnGridSnapshot() {
+  return window.matchMedia(FIVE_COLUMN_MEDIA_QUERY).matches;
+}
+
+function getFiveColumnGridServerSnapshot() {
+  return false;
+}
 
 type PaginationItem = number | "ellipsis";
 
@@ -497,6 +516,14 @@ export default function ProductsCatalog({
 }: ProductsCatalogProps) {
   const isPackageCatalog =
     catalogMode === "packages";
+  const usesFiveColumnGrid = useSyncExternalStore(
+    subscribeToFiveColumnGrid,
+    getFiveColumnGridSnapshot,
+    getFiveColumnGridServerSnapshot
+  );
+  const productsPerPage = usesFiveColumnGrid
+    ? PRODUCTS_PER_PAGE_FIVE_COLUMNS
+    : PRODUCTS_PER_PAGE;
   const router = useRouter();
   const pathname = usePathname();
   const [category, setCategory] = useState("all");
@@ -817,7 +844,7 @@ export default function ProductsCatalog({
         1,
         Math.ceil(
           visibleProducts.length /
-            PRODUCTS_PER_PAGE
+            productsPerPage
         )
       );
 
@@ -835,14 +862,15 @@ export default function ProductsCatalog({
 
     const start =
       (safeCurrentPage - 1) *
-      PRODUCTS_PER_PAGE;
+      productsPerPage;
 
     return visibleProducts.slice(
       start,
-      start + PRODUCTS_PER_PAGE
+      start + productsPerPage
     );
   }, [
     isPackageCatalog,
+    productsPerPage,
     safeCurrentPage,
     visibleProducts,
   ]);
@@ -860,14 +888,14 @@ export default function ProductsCatalog({
     visibleProducts.length === 0
       ? 0
       : (safeCurrentPage - 1) *
-          PRODUCTS_PER_PAGE +
+          productsPerPage +
         1;
 
   const rangeEnd = isPackageCatalog
     ? visibleProducts.length
     : Math.min(
         safeCurrentPage *
-          PRODUCTS_PER_PAGE,
+          productsPerPage,
         visibleProducts.length
       );
 
