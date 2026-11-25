@@ -6819,7 +6819,7 @@ export const externalProducts = [
     ],
     "search": "total 4v lithium cordless screwdriver total components and protection solar accessory 4v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tsdli04062-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
@@ -6857,7 +6857,7 @@ export const externalProducts = [
     ],
     "search": "total 50m laser distance detector total components and protection solar accessory see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tmt55016-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
@@ -6895,7 +6895,7 @@ export const externalProducts = [
     ],
     "search": "total 70m laser distance detector total components and protection solar accessory see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tmt57026-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
@@ -6933,7 +6933,7 @@ export const externalProducts = [
     ],
     "search": "total digital ac clamp meter total components and protection solar accessory see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tmt762001-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
@@ -6971,7 +6971,7 @@ export const externalProducts = [
     ],
     "search": "total digital ac dc clamp meter total components and protection solar accessory see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tmt762002-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
@@ -7009,7 +7009,7 @@ export const externalProducts = [
     ],
     "search": "total t handle wrench screwdriver set 24 pcs total components and protection solar accessory see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/total-tacsd30186-official.webp",
     "importedGallery": [],
     "role": "Balance of System",
     "bestFor": [
