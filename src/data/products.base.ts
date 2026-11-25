@@ -387,7 +387,7 @@ export const products: Product[] = [
     ],
     "search": "hithium heroee maxpower 8 aio portable solar power station 5000w / 8000wh hithium portable power 5000 w / 8038.4wh home business backup portable large portable backup small business emergency power",
     "warranty": "5 years listed",
-    "image": "/assets/products-real/hithium-max8.jpg",
+    "image": "/assets/products/hithium-maxpower8-manufacturer-86e1d0b2f042.webp",
     "role": "Portable Storage",
     "bestFor": [
       "Large Portable Backup",
@@ -415,7 +415,7 @@ export const products: Product[] = [
     ],
     "search": "hithium heroee light 1 200w portable power station | lithium ips hithium portable power 200 w home backup portable small loads portable emergency backup",
     "warranty": "See current listing",
-    "image": "/assets/products-real/hithium-light200.webp",
+    "image": "/assets/products/hithium-heroee1-manufacturer-bf6963d38fcf.webp",
     "role": "Portable Storage",
     "bestFor": [
       "Small Loads",
@@ -443,7 +443,7 @@ export const products: Product[] = [
     ],
     "search": "hithium heroee light 1 500w portable power station hithium portable power 500 w / 1004.8wh home backup portable portable small loads emergency backup",
     "warranty": "See current listing",
-    "image": "/assets/products-real/hithium-light500.webp",
+    "image": "/assets/products/hithium-light1-manufacturer-84b4d1580829.webp",
     "role": "Portable Storage",
     "bestFor": [
       "Portable",
@@ -527,7 +527,7 @@ export const products: Product[] = [
     ],
     "search": "hithium heroee 16 lifepo4 lithium battery hithium lithium battery approx. 15kwh class home business backup long backup large home commercial",
     "warranty": "See current listing",
-    "image": "/assets/products-real/hithium16.webp",
+    "image": "/assets/products/hithium-heroee16-manufacturer-7e83dd7fc5ea.webp",
     "role": "Storage",
     "bestFor": [
       "Long Backup",
@@ -854,7 +854,7 @@ export const products: Product[] = [
     ],
     "search": "hithium heroee 4 12.8v 314ah 4kwh lifepo4 lithium battery hithium lithium battery 4kwh / 12.8v 314ah home backup 4kwh storage home backup lifepo4",
     "warranty": "See current listing",
-    "image": "/assets/products-real/hithium4.png",
+    "image": "/assets/products/hithium-neopower4-manufacturer-083fac1141dc.webp",
     "role": "Storage",
     "bestFor": [
       "4kWh Storage",
