@@ -983,7 +983,7 @@ export const externalProducts = [
     ],
     "search": "ecolith 12 8v 100ah lithium battery ecolith battery lithium battery 12 8v 100ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-12-8v-100ah-illustration.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -1021,7 +1021,7 @@ export const externalProducts = [
     ],
     "search": "ecolith 12 8v 200ah lithium battery ecolith battery lithium battery 12 8v 200ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-12-8v-200ah-illustration.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -1059,7 +1059,7 @@ export const externalProducts = [
     ],
     "search": "ecolith 25 6v 100ah lithium iron phosphate battery ecolith battery lithium battery 25 6v 100ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-25-6v-100ah-illustration.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -1097,7 +1097,7 @@ export const externalProducts = [
     ],
     "search": "ecolith power storage 314ah 16kwh lithium battery ecolith battery lithium battery 314ah 16kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-16kwh-314ah-illustration.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -1135,7 +1135,7 @@ export const externalProducts = [
     ],
     "search": "ecolith power storage 5kwh lithium battery ecolith battery lithium battery 5kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-5kwh-illustration.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -21039,7 +21039,7 @@ export const externalProducts = [
     ],
     "search": "savx 1500 inverter ecolith 100ah li ion battery pack ecolith complete system solar package 100ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-savx-1500-combo-approved.webp",
     "importedGallery": [],
     "role": "Complete Solar System",
     "bestFor": [
@@ -21077,7 +21077,7 @@ export const externalProducts = [
     ],
     "search": "savx 3000 inverter ecolith 25 6v 100ah li ion battery pack ecolith complete system solar package 25 6v 100ah",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/ecolith-savx-3000-combo-approved.webp",
     "importedGallery": [],
     "role": "Complete Solar System",
     "bestFor": [
