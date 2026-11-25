@@ -27,7 +27,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai 256v 100ah 26kwh c essaky25k h high voltage lithium battery akaiyai c essaky25k h battery lithium battery 256v 100ah 26kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-c-essaky25k-h-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -66,7 +66,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai 358v 100ah 36kwh c essaky35k h high voltage lithium battery akaiyai c essaky35k h battery lithium battery 358v 100ah 36kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-c-essaky35k-h-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -105,7 +105,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai 409v 100ah 41kwh c essaky40k h high voltage lithium battery akaiyai c essaky40k h battery lithium battery 409v 100ah 41kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-c-essaky40k-h-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -144,7 +144,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai 51 2v 314ah 16kwh a51r314 l lithium battery akaiyai a51r314 l battery lithium battery 51 2v 314ah 16kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-a51r314-l-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -183,7 +183,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai rackmaster pro a51r100 b 51 2v lithium battery akaiyai a51r100 b battery lithium battery 51 2v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-a51r100-b-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
@@ -224,7 +224,7 @@ export const externalProducts = [
     ],
     "search": "akaiyai stackflex dynamic a51r100 p 51 2v 5 12kwh lithium battery akaiyai a51r100 p battery lithium battery 51 2v 5 12kwh",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/akaiyai-a51r100-p-official.webp",
     "importedGallery": [],
     "role": "Storage",
     "bestFor": [
