@@ -8694,8 +8694,8 @@ export const externalProducts = [
     ],
     "search": "demuda 1 5kw 12v hybrid solar inverter dfhy 1 5kw eu demuda dfhy 1 5kw eu solar inverter off grid hybrid inverter 1 5kw 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/demuda-dfhy-3-6kw-shared.webp",
+    "importedGallery": ["/assets/products/demuda-dfhy-family-b.webp"],
     "role": "Conversion + Control",
     "bestFor": [
       "Off-Grid Hybrid Inverter",
@@ -8733,8 +8733,8 @@ export const externalProducts = [
     ],
     "search": "demuda 2 2kw 12v hybrid solar inverter dfhy 2 2kva eu demuda dfhy 2 2kva eu solar inverter off grid hybrid inverter 2 2kw 12v 2 2kva",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/demuda-dfhy-3-6kw-shared.webp",
+    "importedGallery": ["/assets/products/demuda-dfhy-family-b.webp"],
     "role": "Conversion + Control",
     "bestFor": [
       "Off-Grid Hybrid Inverter",
@@ -8772,8 +8772,8 @@ export const externalProducts = [
     ],
     "search": "demuda 3 6kw 24v hybrid solar inverter dfhy 3 6kw demuda dfhy 3 6kw solar inverter off grid hybrid inverter 3 6kw 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/demuda-dfhy-3-6kw-shared.webp",
+    "importedGallery": ["/assets/products/demuda-dfhy-family-a.webp"],
     "role": "Conversion + Control",
     "bestFor": [
       "Off-Grid Hybrid Inverter",
@@ -8811,8 +8811,8 @@ export const externalProducts = [
     ],
     "search": "demuda 4 2kw 24v hybrid solar inverter dfhy 4 2kw demuda dfhy 4 2kw solar inverter off grid hybrid inverter 4 2kw 24v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
-    "importedGallery": [],
+    "image": "/assets/products/demuda-dfhy-3-6kw-shared.webp",
+    "importedGallery": ["/assets/products/demuda-dfhy-family-a.webp"],
     "role": "Conversion + Control",
     "bestFor": [
       "Off-Grid Hybrid Inverter",
@@ -8849,7 +8849,7 @@ export const externalProducts = [
     ],
     "search": "demuda inverter wifi module remote monitor system demuda solar inverter solar inverter see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/demuda-wifi-module-official.webp",
     "importedGallery": [],
     "role": "Conversion + Control",
     "bestFor": [
