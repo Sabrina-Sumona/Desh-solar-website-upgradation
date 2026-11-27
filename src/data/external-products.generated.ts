@@ -16947,7 +16947,7 @@ export const externalProducts = [
     ],
     "search": "su vastika 1050 pure sine wave ips su vastika ips ups home ips see exact model specification",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/suvastika-1050-official.webp",
     "importedGallery": [],
     "role": "Backup Conversion + Control",
     "bestFor": [
@@ -16985,7 +16985,7 @@ export const externalProducts = [
     ],
     "search": "su vastika 1350 12v pure sign wave home ips ups su vastika ips ups ups 12v",
     "warranty": "Confirm current manufacturer / Desh Solar warranty",
-    "image": "/assets/products/product-placeholder.svg",
+    "image": "/assets/products/suvastika-1350-official.webp",
     "importedGallery": [],
     "role": "Backup Conversion + Control",
     "bestFor": [
